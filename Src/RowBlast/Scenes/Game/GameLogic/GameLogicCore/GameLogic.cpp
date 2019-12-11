@@ -118,14 +118,13 @@ GameLogic::GameLogic(Pht::IEngine& engine,
         effectManager,
         flyingBlocksAnimation
     },
-    mFallingPieceAnimation {*this, mFallingPieceStorage},
+    mFallingPieceAnimation {*this, mFallingPiece},
     mDraggedPieceStorage {gameScene},
     mDraggedPieceAnimation {engine, gameScene, *this, mDraggedPieceStorage},
     mAi {field},
     mDragInputHandler {engine, *this, gameScene, mDraggedPieceStorage},
-    mGestureInputHandler {*this, mFallingPieceStorage},
-    mClickInputHandler {engine, field, gameScene, *this, tutorial, mAi},
-    mFallingPiece {&mFallingPieceStorage} {
+    mGestureInputHandler {*this, mFallingPiece},
+    mClickInputHandler {engine, field, gameScene, *this, tutorial, mAi} {
     
     scrollController.SetGameLogic(*this);
 }
@@ -181,7 +180,7 @@ void GameLogic::Init(const Level& level) {
     
     mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::None;
     
-    mFallingPieceStorage.ResetBetweenGames();
+    mFallingPiece.ResetBetweenGames();
     
     UpdateLevelProgress();
 }
@@ -227,7 +226,6 @@ GameLogic::Result GameLogic::UpdateInLogicUpdateState(bool shouldUpdateLogic) {
     }
     
     HandleSettingsChange();
-    
     auto result = HandleNewMove();
     if (result != Result::None) {
         return result;
@@ -300,11 +298,11 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     auto& spawnedPieceType = pieceType ? *pieceType : *mCurrentMove.mPieceType ;
     auto rotation = CalculateFallingPieceRotation(spawnedPieceType, fallingPieceSpawnReason);
     auto spawnPosition = CalculateFallingPieceSpawnPos(spawnedPieceType, fallingPieceSpawnReason);
-    mFallingPiece->Spawn(spawnedPieceType, spawnPosition, rotation, mLevel->GetSpeed());
+    mFallingPiece.Spawn(spawnedPieceType, spawnPosition, rotation, mLevel->GetSpeed());
     
-    mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(*mFallingPiece),
-                                                mFallingPiece->GetIntPosition());
-    if (mGhostPieceRow > mFallingPiece->GetPosition().y) {
+    mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(mFallingPiece),
+                                                mFallingPiece.GetIntPosition());
+    if (mGhostPieceRow > mFallingPiece.GetPosition().y) {
         EndCurrentMove();
         return Result::GameOver;
     }
@@ -317,12 +315,12 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     }
     
     if (mControlType == ControlType::Click) {
-        mClickInputHandler.CalculateMoves(*mFallingPiece, GetMovesUsedIncludingCurrent() - 1);
+        mClickInputHandler.CalculateMoves(mFallingPiece, GetMovesUsedIncludingCurrent() - 1);
         mClickInputHandler.CreateNewSetOfVisibleMoves();
     }
     
     if (fallingPieceSpawnReason == FallingPieceSpawnReason::Switch) {
-        mTutorial.OnSwitchPiece(GetMovesUsedIncludingCurrent(), mFallingPiece->GetPieceType());
+        mTutorial.OnSwitchPiece(GetMovesUsedIncludingCurrent(), mFallingPiece.GetPieceType());
     }
 
     mFallingPieceScaleAnimation.StartScaleUp();
@@ -448,11 +446,11 @@ ControlType GameLogic::GetControlType() const {
 }
 
 void GameLogic::ManageMoveHistory(NewMoveReason newMoveReason) {
-    mFallingPieceStorage.UpdateId();
+    mFallingPiece.UpdateId();
 
     switch (newMoveReason) {
         case NewMoveReason::NewMove:
-            mCurrentMove.mId = mFallingPieceStorage.GetId();
+            mCurrentMove.mId = mFallingPiece.GetId();
             ++mMovesUsed;
             if (GetMovesUsedIncludingCurrent() > 1) {
                 mPreviousMove = mCurrentMoveTmp;
@@ -464,7 +462,7 @@ void GameLogic::ManageMoveHistory(NewMoveReason newMoveReason) {
             mTutorial.OnNewMove(GetMovesUsedIncludingCurrent());
             break;
         case NewMoveReason::UndoMove:
-            mCurrentMove.mId = mFallingPieceStorage.GetId();
+            mCurrentMove.mId = mFallingPiece.GetId();
             mCurrentMoveTmp = mCurrentMove;
             mPreviousMove = mCurrentMove;
             mScoreManager.OnUndoMove();
@@ -476,7 +474,7 @@ void GameLogic::ManageMoveHistory(NewMoveReason newMoveReason) {
 }
 
 bool GameLogic::AreNoMovesUsedYetIncludingUndos() const {
-    return mFallingPieceStorage.GetId() == 0;
+    return mFallingPiece.GetId() == 0;
 }
 
 void GameLogic::EndCurrentMove() {
@@ -485,11 +483,11 @@ void GameLogic::EndCurrentMove() {
 }
 
 void GameLogic::RemoveFallingPiece() {
-    mFallingPiece = nullptr;
+    mIsFallingPieceVisible = false;
 }
 
 void GameLogic::ShowFallingPiece() {
-    mFallingPiece = &mFallingPieceStorage;
+    mIsFallingPieceVisible = true;
 }
 
 void GameLogic::RemoveDraggedPiece() {
@@ -513,12 +511,12 @@ Pht::Vec2 GameLogic::CalculateFallingPieceSpawnPos(const Piece& pieceType,
         auto pieceNumEmptyBottompRows = pieceType.GetDimensions(rotation).mYmin;
         
         auto previousPieceNumEmptyBottomRows =
-            mFallingPiece->GetPieceType().GetDimensions(rotation).mYmin;
+            mFallingPiece.GetPieceType().GetDimensions(rotation).mYmin;
         
         auto yAdjust =
             static_cast<float>(previousPieceNumEmptyBottomRows - pieceNumEmptyBottompRows);
         
-        return Pht::Vec2 {startXPos + halfColumn, mFallingPiece->GetPosition().y + yAdjust};
+        return Pht::Vec2 {startXPos + halfColumn, mFallingPiece.GetPosition().y + yAdjust};
     }
     
     auto topRowInScreen =
@@ -598,11 +596,6 @@ void GameLogic::HandleClearedFilledRows(const Field::RemovedSubCells& removedSub
 }
 
 void GameLogic::HandleSettingsChange() {
-    // TODO: Cannot hand this check.
-    if (mFallingPiece == nullptr) {
-        return;
-    }
-    
     auto settingsChanged = false;
     
     if (mSettingsService.GetControlType() != mControlType && mTutorial.IsGestureControlsAllowed()) {
@@ -613,7 +606,7 @@ void GameLogic::HandleSettingsChange() {
         // TODO: Need to spawn piece in case we are going from drag controls to something else.
 
         if (mSettingsService.GetControlType() == ControlType::Click) {
-            mClickInputHandler.CalculateMoves(*mFallingPiece, GetMovesUsedIncludingCurrent() - 1);
+            mClickInputHandler.CalculateMoves(mFallingPiece, GetMovesUsedIncludingCurrent() - 1);
             mClickInputHandler.CreateNewSetOfVisibleMoves();
         }
         
@@ -740,6 +733,14 @@ int GameLogic::CalculateBonusPointsAtLevelCompleted() const {
     return mScoreManager.CalculateBonusPointsAtLevelCompleted(mMovesLeft);
 }
 
+const FallingPiece* GameLogic::GetFallingPiece() const {
+    if (mIsFallingPieceVisible) {
+        return &mFallingPiece;
+    }
+    
+    return nullptr;
+}
+
 bool GameLogic::IsFallingPieceVisibleAtNewMove() const {
     if (mControlType == ControlType::Drag && mLevel->GetSpeed() == 0.0f) {
         return false;
@@ -753,24 +754,24 @@ void GameLogic::UpdateFallingPieceYpos() {
         return;
     }
 
-    mFallingPiece->UpdateTime(mEngine.GetLastFrameSeconds());
+    mFallingPiece.UpdateTime(mEngine.GetLastFrameSeconds());
 
     auto newYPosition =
-        mFallingPiece->GetPosition().y - mFallingPiece->GetSpeed() * mEngine.GetLastFrameSeconds();
+        mFallingPiece.GetPosition().y - mFallingPiece.GetSpeed() * mEngine.GetLastFrameSeconds();
 
-    switch (mFallingPiece->GetState()) {
+    switch (mFallingPiece.GetState()) {
         case FallingPiece::State::Falling:
         case FallingPiece::State::BeingDraggedDown:
             if (newYPosition < mGhostPieceRow) {
-                mFallingPiece->GoToLandingState(mGhostPieceRow);
+                mFallingPiece.GoToLandingState(mGhostPieceRow);
             } else {
-                mFallingPiece->SetY(newYPosition);
-                if (mFallingPiece->GetPreviousIntY() != static_cast<int>(newYPosition)) {
+                mFallingPiece.SetY(newYPosition);
+                if (mFallingPiece.GetPreviousIntY() != static_cast<int>(newYPosition)) {
                     if (mControlType == ControlType::Click) {
-                        mClickInputHandler.UpdateMoves(*mFallingPiece,
+                        mClickInputHandler.UpdateMoves(mFallingPiece,
                                                        GetMovesUsedIncludingCurrent() - 1);
                     } else {
-                        auto& validMoves = mAi.FindValidMoves(*mFallingPiece,
+                        auto& validMoves = mAi.FindValidMoves(mFallingPiece,
                                                               GetMovesUsedIncludingCurrent() - 1);
                         mAllValidMoves = &validMoves.mMoves;
                     }
@@ -778,14 +779,14 @@ void GameLogic::UpdateFallingPieceYpos() {
             }
             break;
         case FallingPiece::State::Landing:
-            if (mFallingPiece->GetPosition().y != mGhostPieceRow) {
-                mFallingPiece->GoToFallingState(mLevel->GetSpeed());
+            if (mFallingPiece.GetPosition().y != mGhostPieceRow) {
+                mFallingPiece.GoToFallingState(mLevel->GetSpeed());
             } else {
                 auto lastFrameSeconds {mEngine.GetLastFrameSeconds()};
-                mFallingPiece->IncreaseTimeSinceTouchdown(lastFrameSeconds);
-                mFallingPiece->IncreaseTimeSinceMovement(lastFrameSeconds);
-                if (mFallingPiece->GetTimeSinceTouchdown() > mLandingMovementDuration ||
-                    mFallingPiece->GetTimeSinceMovement() > mLandingNoMovementDuration) {
+                mFallingPiece.IncreaseTimeSinceTouchdown(lastFrameSeconds);
+                mFallingPiece.IncreaseTimeSinceMovement(lastFrameSeconds);
+                if (mFallingPiece.GetTimeSinceTouchdown() > mLandingMovementDuration ||
+                    mFallingPiece.GetTimeSinceMovement() > mLandingNoMovementDuration) {
                     if (mDraggedPiece) {
                         CancelDraggingBecausePieceLands();
                     }
@@ -797,8 +798,8 @@ void GameLogic::UpdateFallingPieceYpos() {
 }
 
 void GameLogic::DropFallingPiece() {
-    bool finalMovementWasADrop {mFallingPiece->GetPosition().y > mGhostPieceRow + 1};
-    mFallingPiece->SetY(mGhostPieceRow);
+    bool finalMovementWasADrop {mFallingPiece.GetPosition().y > mGhostPieceRow + 1};
+    mFallingPiece.SetY(mGhostPieceRow);
     
     if (finalMovementWasADrop) {
         mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::DropWhoosh));
@@ -822,27 +823,27 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     mField.SaveState();
     
     auto clearedAnyFilledRows = false;
-    auto& pieceType = mFallingPiece->GetPieceType();
+    auto& pieceType = mFallingPiece.GetPieceType();
     if (IsBomb(pieceType)) {
         if (finalMovementWasADrop) {
-            mPieceDropParticleEffect.StartEffect(*mFallingPiece);
+            mPieceDropParticleEffect.StartEffect(mFallingPiece);
         }
 
         DetonateDroppedBomb();
     } else {
         auto impactedLevelBombs =
-            mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece),
-                                       mFallingPiece->GetIntPosition());
+            mField.DetectImpactedBombs(CreatePieceBlocks(mFallingPiece),
+                                       mFallingPiece.GetIntPosition());
         auto startBounceAnimation = false;
         
         if (finalMovementWasADrop) {
             startBounceAnimation = true;
             mCollapsingFieldAnimation.GoToBlocksBouncingState();
-            mPieceTrailParticleEffect.StartEffect(*mFallingPiece);
+            mPieceTrailParticleEffect.StartEffect(mFallingPiece);
         }
         
         mFlashingBlocksAnimation.ResetFlashingBlockAnimations();
-        mField.LandFallingPiece(*mFallingPiece, startBounceAnimation);
+        mField.LandFallingPiece(mFallingPiece, startBounceAnimation);
         mFlashingBlocksAnimation.Start(pieceType.GetColor());
         DetonateImpactedLevelBombs(impactedLevelBombs);
         
@@ -852,7 +853,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
                 auto removedSubCells = mField.ClearFilledRows();
                 if (!removedSubCells.IsEmpty()) {
                     clearedAnyFilledRows = true;
-                    HandleClearedFilledRows(removedSubCells, mFallingPiece->GetId());
+                    HandleClearedFilledRows(removedSubCells, mFallingPiece.GetId());
                     mCollapsingFieldAnimation.GoToInactiveState();
                     mCollapsingFieldAnimation.ResetBlockAnimations();
                     if (impactedLevelBombs.IsEmpty()) {
@@ -862,7 +863,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
                 break;
             }
             case Level::Objective::Build: {
-                auto slotsCoveredByPiece = mField.CalculatePieceFilledSlots(*mFallingPiece);
+                auto slotsCoveredByPiece = mField.CalculatePieceFilledSlots(mFallingPiece);
                 mScoreManager.OnFilledSlots(slotsCoveredByPiece);
                 break;
             }
@@ -889,13 +890,13 @@ void GameLogic::DetonateDroppedBomb() {
     GoToFieldExplosionsState();
     
     auto impactedLevelBombs =
-        mField.DetectImpactedBombs(CreatePieceBlocks(*mFallingPiece),
-                                   mFallingPiece->GetIntPosition());
+        mField.DetectImpactedBombs(CreatePieceBlocks(mFallingPiece),
+                                   mFallingPiece.GetIntPosition());
 
-    auto intPieceDetonationPos = mFallingPiece->GetIntPosition() + Pht::IVec2{1, 1};
-    auto pieceDetonationPos = mFallingPiece->GetRenderablePosition() + Pht::Vec2{1.0f, 1.0f};
+    auto intPieceDetonationPos = mFallingPiece.GetIntPosition() + Pht::IVec2{1, 1};
+    auto pieceDetonationPos = mFallingPiece.GetRenderablePosition() + Pht::Vec2{1.0f, 1.0f};
     
-    if (mFallingPiece->GetPieceType().IsRowBomb()) {
+    if (mFallingPiece.GetPieceType().IsRowBomb()) {
         if (!impactedLevelBombs.IsEmpty()) {
             auto& impactedLevelBomb = impactedLevelBombs.Front();
             switch (impactedLevelBomb.mKind) {
@@ -1119,7 +1120,7 @@ void GameLogic::RotatePreviewPiece(Rotation& previewPieceRotation,
 }
 
 void GameLogic::RotateFallingPiece(const Pht::TouchEvent& touchEvent) {
-    auto& pieceType = mFallingPiece->GetPieceType();
+    auto& pieceType = mFallingPiece.GetPieceType();
     if (!pieceType.CanRotateAroundZ()) {
         return;
     }
@@ -1134,7 +1135,7 @@ void GameLogic::RotateFallingPiece(const Pht::TouchEvent& touchEvent) {
         pieceType.GetGridNumColumns()
     };
     
-    auto position = mFallingPiece->GetIntPosition();
+    auto position = mFallingPiece.GetIntPosition();
     Field::CollisionResult collisionResult;
     mField.CheckCollision(collisionResult, pieceBlocks, position, Pht::IVec2{0, 0}, false);
     if (collisionResult.mIsCollision == IsCollision::Yes) {
@@ -1151,17 +1152,17 @@ void GameLogic::RotateFallingPiece(const Pht::TouchEvent& touchEvent) {
                                                              position,
                                                              newRotation,
                                                              pieceType)) {
-            mFallingPiece->SetRotation(newRotation);
+            mFallingPiece.SetRotation(newRotation);
         }
     }
 
-    mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(*mFallingPiece),
-                                                mFallingPiece->GetIntPosition());
+    mGhostPieceRow = mField.DetectCollisionDown(CreatePieceBlocks(mFallingPiece),
+                                                mFallingPiece.GetIntPosition());
 }
 
 Rotation GameLogic::CalculateNewRotation(const Pht::TouchEvent& touchEvent) {
-    auto numRotations = mFallingPiece->GetPieceType().GetNumRotations();
-    auto rotationInt = static_cast<int>(mFallingPiece->GetRotation());
+    auto numRotations = mFallingPiece.GetPieceType().GetNumRotations();
+    auto rotationInt = static_cast<int>(mFallingPiece.GetRotation());
     
     if (touchEvent.mLocation.x >= mEngine.GetInput().GetScreenInputSize().x / 2.0f) {
         return static_cast<Rotation>((rotationInt + 1) % numRotations);
@@ -1186,9 +1187,9 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
                 !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
                                                                  Pht::IVec2{freeXPos, position.y},
                                                                  newRotation,
-                                                                 mFallingPiece->GetPieceType())) {
-                mFallingPiece->SetX(freeXPos + halfColumn);
-                mFallingPiece->SetRotation(newRotation);
+                                                                 mFallingPiece.GetPieceType())) {
+                mFallingPiece.SetX(freeXPos + halfColumn);
+                mFallingPiece.SetRotation(newRotation);
             }
             break;
         }
@@ -1198,9 +1199,9 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
                 !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
                                                                  Pht::IVec2{freeXPos, position.y},
                                                                  newRotation,
-                                                                 mFallingPiece->GetPieceType())) {
-                mFallingPiece->SetX(freeXPos + halfColumn);
-                mFallingPiece->SetRotation(newRotation);
+                                                                 mFallingPiece.GetPieceType())) {
+                mFallingPiece.SetX(freeXPos + halfColumn);
+                mFallingPiece.SetRotation(newRotation);
             }
             break;
         }
@@ -1210,9 +1211,9 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
                 !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
                                                                  Pht::IVec2{position.x, freeYPos},
                                                                  newRotation,
-                                                                 mFallingPiece->GetPieceType())) {
-                mFallingPiece->SetY(freeYPos);
-                mFallingPiece->SetRotation(newRotation);
+                                                                 mFallingPiece.GetPieceType())) {
+                mFallingPiece.SetY(freeYPos);
+                mFallingPiece.SetRotation(newRotation);
             }
             break;
         }
@@ -1222,9 +1223,9 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
                 !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
                                                                  Pht::IVec2{position.x, freeYPos},
                                                                  newRotation,
-                                                                 mFallingPiece->GetPieceType())) {
-                mFallingPiece->SetY(freeYPos);
-                mFallingPiece->SetRotation(newRotation);
+                                                                 mFallingPiece.GetPieceType())) {
+                mFallingPiece.SetY(freeYPos);
+                mFallingPiece.SetRotation(newRotation);
             }
             break;
         }
@@ -1278,28 +1279,28 @@ bool GameLogic::IsThereRoomToSwitchPiece(const Piece& pieceType, Rotation rotati
 }
 
 void GameLogic::SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) {
-    auto pieceBlocks = CreatePieceBlocks(*mFallingPiece);
+    auto pieceBlocks = CreatePieceBlocks(mFallingPiece);
 
-    if (fallingPieceNewX - mFallingPiece->GetPosition().x > 0.0f) {
+    if (fallingPieceNewX - mFallingPiece.GetPosition().x > 0.0f) {
         auto collisionRight =
-            mField.DetectCollisionRight(pieceBlocks, mFallingPiece->GetIntPosition()) +
+            mField.DetectCollisionRight(pieceBlocks, mFallingPiece.GetIntPosition()) +
             halfColumn;
         
-        mFallingPiece->SetX(std::fmin(collisionRight, fallingPieceNewX));
+        mFallingPiece.SetX(std::fmin(collisionRight, fallingPieceNewX));
     } else {
         auto collisionLeft =
-            mField.DetectCollisionLeft(pieceBlocks, mFallingPiece->GetIntPosition()) +
+            mField.DetectCollisionLeft(pieceBlocks, mFallingPiece.GetIntPosition()) +
             halfColumn;
         
-        mFallingPiece->SetX(std::fmax(collisionLeft, fallingPieceNewX));
+        mFallingPiece.SetX(std::fmax(collisionLeft, fallingPieceNewX));
     }
 
-    mGhostPieceRow = mField.DetectCollisionDown(pieceBlocks, mFallingPiece->GetIntPosition());
+    mGhostPieceRow = mField.DetectCollisionDown(pieceBlocks, mFallingPiece.GetIntPosition());
     
     if (mBlastArea.IsActive()) {
         SetBlastAreaPositionAtGhostPiece();
-        Pht::IVec2 ghostPiecePosition {mFallingPiece->GetIntPosition().x, mGhostPieceRow};
-        auto blastRadiusKind = CalculateBlastRadiusKind(CreatePieceBlocks(*mFallingPiece),
+        Pht::IVec2 ghostPiecePosition {mFallingPiece.GetIntPosition().x, mGhostPieceRow};
+        auto blastRadiusKind = CalculateBlastRadiusKind(CreatePieceBlocks(mFallingPiece),
                                                         ghostPiecePosition);
         if (blastRadiusKind != mBlastArea.GetActiveKind()) {
             mBlastArea.Start(blastRadiusKind);
@@ -1316,23 +1317,23 @@ bool GameLogic::IsInFieldExplosionsState() const {
 }
 
 void GameLogic::StartBlastAreaAtGhostPiece() {
-    if (mFallingPiece == nullptr) {
+    if (!mIsFallingPieceVisible) {
         return;
     }
     
-    Pht::IVec2 ghostPiecePosition {mFallingPiece->GetIntPosition().x, mGhostPieceRow};
-    mBlastArea.Start(CalculateBlastRadiusKind(CreatePieceBlocks(*mFallingPiece),
+    Pht::IVec2 ghostPiecePosition {mFallingPiece.GetIntPosition().x, mGhostPieceRow};
+    mBlastArea.Start(CalculateBlastRadiusKind(CreatePieceBlocks(mFallingPiece),
                                               ghostPiecePosition));
     SetBlastAreaPositionAtGhostPiece();
 }
 
 void GameLogic::SetBlastAreaPositionAtGhostPiece() {
-    if (mFallingPiece == nullptr) {
+    if (!mIsFallingPieceVisible) {
         return;
     }
 
     Pht::Vec2 blastRadiusAnimationPos {
-        mFallingPiece->GetRenderablePosition().x + 1.0f,
+        mFallingPiece.GetRenderablePosition().x + 1.0f,
         static_cast<float>(mGhostPieceRow) + 1.0f
     };
 
@@ -1340,7 +1341,7 @@ void GameLogic::SetBlastAreaPositionAtGhostPiece() {
 }
 
 void GameLogic::StartBlastArea(const Pht::IVec2& position) {
-    mBlastArea.Start(CalculateBlastRadiusKind(CreatePieceBlocks(*mFallingPiece), position));
+    mBlastArea.Start(CalculateBlastRadiusKind(CreatePieceBlocks(mFallingPiece), position));
     
     Pht::Vec2 blastRadiusAnimationPos {
         static_cast<float>(position.x) + 1.0f,
@@ -1388,8 +1389,7 @@ bool GameLogic::HandleBeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     
     mScene.GetHud().HidePreviewPiece(draggedPieceIndex);
     
-    auto& validMoves = mAi.FindValidMoves(*mFallingPiece,
-                                          GetMovesUsedIncludingCurrent() - 1);
+    auto& validMoves = mAi.FindValidMoves(mFallingPiece, GetMovesUsedIncludingCurrent() - 1);
     mAllValidMoves = &validMoves.mMoves;
     
     mValidAreaAnimation.Start(validMoves.mMoves, pieceType, mDraggedPiece->GetRotation());
@@ -1399,22 +1399,20 @@ bool GameLogic::HandleBeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
 }
 
 void GameLogic::HandleDraggedPieceMoved() {
-    auto pieceBlocks = CreatePieceBlocks(*mFallingPiece);
+    auto pieceBlocks = CreatePieceBlocks(mFallingPiece);
     auto fallingPieceNewX =
         static_cast<float>(mDraggedPiece->GetFieldGridPosition().x) + halfColumn;
 
-    if (fallingPieceNewX - mFallingPiece->GetPosition().x > 0.0f) {
+    if (fallingPieceNewX - mFallingPiece.GetPosition().x > 0.0f) {
         auto collisionRight =
-            mField.DetectCollisionRight(pieceBlocks, mFallingPiece->GetIntPosition()) +
-            halfColumn;
+            mField.DetectCollisionRight(pieceBlocks, mFallingPiece.GetIntPosition()) + halfColumn;
         
-        mFallingPiece->SetX(std::fmin(collisionRight, fallingPieceNewX));
+        mFallingPiece.SetX(std::fmin(collisionRight, fallingPieceNewX));
     } else {
         auto collisionLeft =
-            mField.DetectCollisionLeft(pieceBlocks, mFallingPiece->GetIntPosition()) +
-            halfColumn;
+            mField.DetectCollisionLeft(pieceBlocks, mFallingPiece.GetIntPosition()) + halfColumn;
         
-        mFallingPiece->SetX(std::fmax(collisionLeft, fallingPieceNewX));
+        mFallingPiece.SetX(std::fmax(collisionLeft, fallingPieceNewX));
     }
 
     UpdateDraggedGhostPieceRowAndBlastArea();
