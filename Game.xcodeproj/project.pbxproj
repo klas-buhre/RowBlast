@@ -191,7 +191,7 @@
 		62216BFC21EB377E001CB9A1 /* NextPieceGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2521EB377E001CB9A1 /* NextPieceGenerator.cpp */; };
 		62216BFD21EB377E001CB9A1 /* Field.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2621EB377E001CB9A1 /* Field.cpp */; };
 		62216BFE21EB377E001CB9A1 /* ScoreManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2921EB377E001CB9A1 /* ScoreManager.cpp */; };
-		62216BFF21EB377E001CB9A1 /* FieldGravity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2B21EB377E001CB9A1 /* FieldGravity.cpp */; };
+		62216BFF21EB377E001CB9A1 /* FieldGravitySystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2B21EB377E001CB9A1 /* FieldGravitySystem.cpp */; };
 		62216C0021EB377F001CB9A1 /* ShortIPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2F21EB377E001CB9A1 /* ShortIPiece.cpp */; };
 		62216C0121EB377F001CB9A1 /* MirroredSevenPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B3021EB377E001CB9A1 /* MirroredSevenPiece.cpp */; };
 		62216C0221EB377F001CB9A1 /* BPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B3421EB377E001CB9A1 /* BPiece.cpp */; };
@@ -855,7 +855,7 @@
 		62216B1221EB377E001CB9A1 /* IGameLogic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IGameLogic.hpp; sourceTree = "<group>"; };
 		62216B1321EB377E001CB9A1 /* ScoreManager.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScoreManager.hpp; sourceTree = "<group>"; };
 		62216B1421EB377E001CB9A1 /* GestureInputHandler.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GestureInputHandler.cpp; sourceTree = "<group>"; };
-		62216B1521EB377E001CB9A1 /* FieldGravity.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FieldGravity.hpp; sourceTree = "<group>"; };
+		62216B1521EB377E001CB9A1 /* FieldGravitySystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FieldGravitySystem.hpp; sourceTree = "<group>"; };
 		62216B1621EB377E001CB9A1 /* FallingPiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FallingPiece.hpp; sourceTree = "<group>"; };
 		62216B1721EB377E001CB9A1 /* CollisionDetection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CollisionDetection.cpp; sourceTree = "<group>"; };
 		62216B1821EB377E001CB9A1 /* ScrollController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScrollController.cpp; sourceTree = "<group>"; };
@@ -877,7 +877,7 @@
 		62216B2821EB377E001CB9A1 /* Piece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Piece.hpp; sourceTree = "<group>"; };
 		62216B2921EB377E001CB9A1 /* ScoreManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScoreManager.cpp; sourceTree = "<group>"; };
 		62216B2A21EB377E001CB9A1 /* GestureInputHandler.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GestureInputHandler.hpp; sourceTree = "<group>"; };
-		62216B2B21EB377E001CB9A1 /* FieldGravity.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldGravity.cpp; sourceTree = "<group>"; };
+		62216B2B21EB377E001CB9A1 /* FieldGravitySystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldGravitySystem.cpp; sourceTree = "<group>"; };
 		62216B2D21EB377E001CB9A1 /* BigTrianglePiece.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BigTrianglePiece.hpp; sourceTree = "<group>"; };
 		62216B2E21EB377E001CB9A1 /* Bomb.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Bomb.hpp; sourceTree = "<group>"; };
 		62216B2F21EB377E001CB9A1 /* ShortIPiece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShortIPiece.cpp; sourceTree = "<group>"; };
@@ -2008,8 +2008,8 @@
 				62216B1D21EB377E001CB9A1 /* Field.hpp */,
 				62216B2321EB377E001CB9A1 /* FieldExplosionsStates.cpp */,
 				62216B1A21EB377E001CB9A1 /* FieldExplosionsStates.hpp */,
-				62216B2B21EB377E001CB9A1 /* FieldGravity.cpp */,
-				62216B1521EB377E001CB9A1 /* FieldGravity.hpp */,
+				62216B2B21EB377E001CB9A1 /* FieldGravitySystem.cpp */,
+				62216B1521EB377E001CB9A1 /* FieldGravitySystem.hpp */,
 				62216B2421EB377E001CB9A1 /* GameLogic.cpp */,
 				62216B1B21EB377E001CB9A1 /* GameLogic.hpp */,
 				62216B1421EB377E001CB9A1 /* GestureInputHandler.cpp */,
@@ -3770,7 +3770,7 @@
 				62216A8721EB376E001CB9A1 /* PurchaseCanceledDialogView.cpp in Sources */,
 				62780A87221C68130089BDE5 /* PortalCameraMovement.cpp in Sources */,
 				62216C1421EB377F001CB9A1 /* DiamondPiece.cpp in Sources */,
-				62216BFF21EB377E001CB9A1 /* FieldGravity.cpp in Sources */,
+				62216BFF21EB377E001CB9A1 /* FieldGravitySystem.cpp in Sources */,
 				62216C1A21EB377F001CB9A1 /* LevelLoader.cpp in Sources */,
 				62216BE621EB377E001CB9A1 /* MapConfirmationDialogController.cpp in Sources */,
 				62216A8A21EB376E001CB9A1 /* StringUtils.cpp in Sources */,

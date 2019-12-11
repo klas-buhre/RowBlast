@@ -5,7 +5,7 @@
 
 // Game includes.
 #include "Field.hpp"
-#include "FieldGravity.hpp"
+#include "FieldGravitySystem.hpp"
 #include "ScoreManager.hpp"
 #include "EffectManager.hpp"
 #include "FlyingBlocksAnimation.hpp"

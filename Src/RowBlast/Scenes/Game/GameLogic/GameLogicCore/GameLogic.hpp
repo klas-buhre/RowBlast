@@ -18,7 +18,7 @@
 #include "ClickInputHandler.hpp"
 #include "FallingPieceAnimation.hpp"
 #include "DraggedPieceAnimation.hpp"
-#include "FieldGravity.hpp"
+#include "FieldGravitySystem.hpp"
 #include "FieldExplosionsStates.hpp"
 #include "BlastArea.hpp"
 #include "ScoreManager.hpp"
