@@ -186,7 +186,7 @@
 		62216BF721EB377E001CB9A1 /* Cell.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B1921EB377E001CB9A1 /* Cell.cpp */; };
 		62216BF821EB377E001CB9A1 /* ClickInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B1E21EB377E001CB9A1 /* ClickInputHandler.cpp */; };
 		62216BF921EB377E001CB9A1 /* FallingPiece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B1F21EB377E001CB9A1 /* FallingPiece.cpp */; };
-		62216BFA21EB377E001CB9A1 /* FieldExplosionsStates.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2321EB377E001CB9A1 /* FieldExplosionsStates.cpp */; };
+		62216BFA21EB377E001CB9A1 /* FieldExplosionsSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2321EB377E001CB9A1 /* FieldExplosionsSystem.cpp */; };
 		62216BFB21EB377E001CB9A1 /* GameLogic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2421EB377E001CB9A1 /* GameLogic.cpp */; };
 		62216BFC21EB377E001CB9A1 /* NextPieceGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2521EB377E001CB9A1 /* NextPieceGenerator.cpp */; };
 		62216BFD21EB377E001CB9A1 /* Field.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B2621EB377E001CB9A1 /* Field.cpp */; };
@@ -860,7 +860,7 @@
 		62216B1721EB377E001CB9A1 /* CollisionDetection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CollisionDetection.cpp; sourceTree = "<group>"; };
 		62216B1821EB377E001CB9A1 /* ScrollController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ScrollController.cpp; sourceTree = "<group>"; };
 		62216B1921EB377E001CB9A1 /* Cell.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Cell.cpp; sourceTree = "<group>"; };
-		62216B1A21EB377E001CB9A1 /* FieldExplosionsStates.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FieldExplosionsStates.hpp; sourceTree = "<group>"; };
+		62216B1A21EB377E001CB9A1 /* FieldExplosionsSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FieldExplosionsSystem.hpp; sourceTree = "<group>"; };
 		62216B1B21EB377E001CB9A1 /* GameLogic.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameLogic.hpp; sourceTree = "<group>"; };
 		62216B1C21EB377E001CB9A1 /* NextPieceGenerator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NextPieceGenerator.hpp; sourceTree = "<group>"; };
 		62216B1D21EB377E001CB9A1 /* Field.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Field.hpp; sourceTree = "<group>"; };
@@ -869,7 +869,7 @@
 		62216B2021EB377E001CB9A1 /* CollisionDetection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CollisionDetection.hpp; sourceTree = "<group>"; };
 		62216B2121EB377E001CB9A1 /* ScrollController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ScrollController.hpp; sourceTree = "<group>"; };
 		62216B2221EB377E001CB9A1 /* Cell.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Cell.hpp; sourceTree = "<group>"; };
-		62216B2321EB377E001CB9A1 /* FieldExplosionsStates.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldExplosionsStates.cpp; sourceTree = "<group>"; };
+		62216B2321EB377E001CB9A1 /* FieldExplosionsSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldExplosionsSystem.cpp; sourceTree = "<group>"; };
 		62216B2421EB377E001CB9A1 /* GameLogic.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameLogic.cpp; sourceTree = "<group>"; };
 		62216B2521EB377E001CB9A1 /* NextPieceGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NextPieceGenerator.cpp; sourceTree = "<group>"; };
 		62216B2621EB377E001CB9A1 /* Field.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Field.cpp; sourceTree = "<group>"; };
@@ -2006,8 +2006,8 @@
 				62216B1621EB377E001CB9A1 /* FallingPiece.hpp */,
 				62216B2621EB377E001CB9A1 /* Field.cpp */,
 				62216B1D21EB377E001CB9A1 /* Field.hpp */,
-				62216B2321EB377E001CB9A1 /* FieldExplosionsStates.cpp */,
-				62216B1A21EB377E001CB9A1 /* FieldExplosionsStates.hpp */,
+				62216B2321EB377E001CB9A1 /* FieldExplosionsSystem.cpp */,
+				62216B1A21EB377E001CB9A1 /* FieldExplosionsSystem.hpp */,
 				62216B2B21EB377E001CB9A1 /* FieldGravitySystem.cpp */,
 				62216B1521EB377E001CB9A1 /* FieldGravitySystem.hpp */,
 				62216B2421EB377E001CB9A1 /* GameLogic.cpp */,
@@ -3657,7 +3657,7 @@
 				62216C2221EB377F001CB9A1 /* FallingPieceAnimation.cpp in Sources */,
 				62216A7E21EB376E001CB9A1 /* StoreMenuController.cpp in Sources */,
 				625698482182392C003A3A9D /* TextComponent.cpp in Sources */,
-				62216BFA21EB377E001CB9A1 /* FieldExplosionsStates.cpp in Sources */,
+				62216BFA21EB377E001CB9A1 /* FieldExplosionsSystem.cpp in Sources */,
 				625698552182392C003A3A9D /* Engine.cpp in Sources */,
 				625698052182392C003A3A9D /* ParametricSurface.cpp in Sources */,
 				6256984D2182392C003A3A9D /* SceneObject.cpp in Sources */,

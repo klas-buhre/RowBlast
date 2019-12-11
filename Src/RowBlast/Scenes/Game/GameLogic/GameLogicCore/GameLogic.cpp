@@ -240,7 +240,7 @@ GameLogic::Result GameLogic::UpdateInLogicUpdateState(bool shouldUpdateLogic) {
 }
 
 void GameLogic::UpdateInFieldExplosionsState() {
-    if (mFieldExplosions.Update() == FieldExplosionsStates::State::Inactive) {
+    if (mFieldExplosions.Update() == FieldExplosionsSystem::State::Inactive) {
         mState = State::LogicUpdate;
         RemoveClearedRowsAndPullDownLoosePieces();
     }

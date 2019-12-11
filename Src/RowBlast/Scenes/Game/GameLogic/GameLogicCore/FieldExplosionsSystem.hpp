@@ -1,5 +1,5 @@
-#ifndef FieldExplosionsStates_hpp
-#define FieldExplosionsStates_hpp
+#ifndef FieldExplosionsSystem_hpp
+#define FieldExplosionsSystem_hpp
 
 // Engine includes.
 #include "Vector.hpp"
@@ -16,14 +16,14 @@ namespace RowBlast {
     class EffectManager;
     class FlyingBlocksAnimation;
     
-    class FieldExplosionsStates {
+    class FieldExplosionsSystem {
     public:
         enum class State {
             Active,
             Inactive
         };
 
-        FieldExplosionsStates(Pht::IEngine& engine,
+        FieldExplosionsSystem(Pht::IEngine& engine,
                               Field& field,
                               FieldGravitySystem& fieldGravity,
                               ScoreManager& scoreManager,

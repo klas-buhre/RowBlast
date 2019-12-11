@@ -19,7 +19,7 @@
 #include "FallingPieceAnimation.hpp"
 #include "DraggedPieceAnimation.hpp"
 #include "FieldGravitySystem.hpp"
-#include "FieldExplosionsStates.hpp"
+#include "FieldExplosionsSystem.hpp"
 #include "BlastArea.hpp"
 #include "ScoreManager.hpp"
 #include "SettingsService.hpp"
@@ -329,7 +329,7 @@ namespace RowBlast {
         FallingPiece mFallingPiece;
         DraggedPiece mDraggedPiece;
         FieldGravitySystem mFieldGravity;
-        FieldExplosionsStates mFieldExplosions;
+        FieldExplosionsSystem mFieldExplosions;
         FallingPieceAnimation mFallingPieceAnimation;
         DraggedPieceAnimation mDraggedPieceAnimation;
         Ai mAi;

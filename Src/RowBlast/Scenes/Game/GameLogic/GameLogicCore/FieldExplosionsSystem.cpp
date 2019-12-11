@@ -1,4 +1,4 @@
-#include "FieldExplosionsStates.hpp"
+#include "FieldExplosionsSystem.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -43,7 +43,7 @@ namespace {
     }
 }
 
-FieldExplosionsStates::FieldExplosionsStates(Pht::IEngine& engine,
+FieldExplosionsSystem::FieldExplosionsSystem(Pht::IEngine& engine,
                                              Field& field,
                                              FieldGravitySystem& fieldGravity,
                                              ScoreManager& scoreManager,
@@ -56,12 +56,12 @@ FieldExplosionsStates::FieldExplosionsStates(Pht::IEngine& engine,
     mEffectManager {effectManager},
     mFlyingBlocksAnimation {flyingBlocksAnimation} {}
 
-void FieldExplosionsStates::Init() {
+void FieldExplosionsSystem::Init() {
     mExplosionsStates.Clear();
     mRowsToRemove.Clear();
 }
 
-FieldExplosionsStates::State FieldExplosionsStates::Update() {
+FieldExplosionsSystem::State FieldExplosionsSystem::Update() {
     auto dt = mEngine.GetLastFrameSeconds();
     
     for (auto i = 0; i < mExplosionsStates.Size();) {
@@ -80,8 +80,8 @@ FieldExplosionsStates::State FieldExplosionsStates::Update() {
     return State::Active;
 }
 
-FieldExplosionsStates::State
-FieldExplosionsStates::UpdateExplosionState(ExplosionState& explosionState, float dt) {
+FieldExplosionsSystem::State
+FieldExplosionsSystem::UpdateExplosionState(ExplosionState& explosionState, float dt) {
     switch (explosionState.mKind) {
         case ExplosionState::Kind::Bomb:
             return UpdateBombExplosionState(explosionState, dt);
@@ -94,8 +94,8 @@ FieldExplosionsStates::UpdateExplosionState(ExplosionState& explosionState, floa
     }
 }
 
-FieldExplosionsStates::State
-FieldExplosionsStates::UpdateBombExplosionState(ExplosionState& explosionState, float dt) {
+FieldExplosionsSystem::State
+FieldExplosionsSystem::UpdateBombExplosionState(ExplosionState& explosionState, float dt) {
     auto removeCorners = false;
     return UpdateGenericBombExplosionState(explosionState,
                                            bombExplosiveForceMagnitude,
@@ -105,8 +105,8 @@ FieldExplosionsStates::UpdateBombExplosionState(ExplosionState& explosionState, 
                                            dt);
 }
 
-FieldExplosionsStates::State
-FieldExplosionsStates::UpdateRowBombLaserState(ExplosionState& state, float dt) {
+FieldExplosionsSystem::State
+FieldExplosionsSystem::UpdateRowBombLaserState(ExplosionState& state, float dt) {
     auto& laserState = state.mLaserState;
     auto previousLeftColumn = static_cast<int>(laserState.mLeftCuttingProgress.mXPosition);
     auto previousRightColumn = static_cast<int>(laserState.mRightCuttingProgress.mXPosition);
@@ -132,7 +132,7 @@ FieldExplosionsStates::UpdateRowBombLaserState(ExplosionState& state, float dt) 
     return State::Active;
 }
 
-void FieldExplosionsStates::RemoveBlocksHitByLaser(ExplosionState& state,
+void FieldExplosionsSystem::RemoveBlocksHitByLaser(ExplosionState& state,
                                                    int leftColumn,
                                                    int rightColumn,
                                                    int row) {
@@ -161,7 +161,7 @@ void FieldExplosionsStates::RemoveBlocksHitByLaser(ExplosionState& state,
     }
 }
 
-void FieldExplosionsStates::UpdateLeftCuttingProgress(LaserState& laserState, int row, float dt) {
+void FieldExplosionsSystem::UpdateLeftCuttingProgress(LaserState& laserState, int row, float dt) {
     auto& cuttingProgress = laserState.mLeftCuttingProgress;
 
     switch (cuttingProgress.mState) {
@@ -197,7 +197,7 @@ void FieldExplosionsStates::UpdateLeftCuttingProgress(LaserState& laserState, in
     }
 }
 
-void FieldExplosionsStates::UpdateRightCuttingProgress(LaserState& laserState, int row, float dt) {
+void FieldExplosionsSystem::UpdateRightCuttingProgress(LaserState& laserState, int row, float dt) {
     auto& cuttingProgress = laserState.mRightCuttingProgress;
 
     switch (cuttingProgress.mState) {
@@ -233,8 +233,8 @@ void FieldExplosionsStates::UpdateRightCuttingProgress(LaserState& laserState, i
     }
 }
 
-FieldExplosionsStates::State
-FieldExplosionsStates::UpdateLevelBombExplosionState(ExplosionState& explosionState, float dt) {
+FieldExplosionsSystem::State
+FieldExplosionsSystem::UpdateLevelBombExplosionState(ExplosionState& explosionState, float dt) {
     auto removeCorners = true;
     return UpdateGenericBombExplosionState(explosionState,
                                            levelBombExplosiveForceMagnitude,
@@ -244,8 +244,8 @@ FieldExplosionsStates::UpdateLevelBombExplosionState(ExplosionState& explosionSt
                                            dt);
 }
 
-FieldExplosionsStates::State
-FieldExplosionsStates::UpdateBigBombExplosionState(ExplosionState& explosionState,
+FieldExplosionsSystem::State
+FieldExplosionsSystem::UpdateBigBombExplosionState(ExplosionState& explosionState,
                                                    float dt) {
     auto removeCorners = true;
     return UpdateGenericBombExplosionState(explosionState,
@@ -256,8 +256,8 @@ FieldExplosionsStates::UpdateBigBombExplosionState(ExplosionState& explosionStat
                                            dt);
 }
 
-FieldExplosionsStates::State
-FieldExplosionsStates::UpdateGenericBombExplosionState(ExplosionState& state,
+FieldExplosionsSystem::State
+FieldExplosionsSystem::UpdateGenericBombExplosionState(ExplosionState& state,
                                                        float explosiveForceMagnitude,
                                                        float explosionForceSpeed,
                                                        float explosionMaxReach,
@@ -330,7 +330,7 @@ FieldExplosionsStates::UpdateGenericBombExplosionState(ExplosionState& state,
     return State::Active;
 }
 
-void FieldExplosionsStates::RemoveRows() {
+void FieldExplosionsSystem::RemoveRows() {
     Pht::StaticVector<int, Field::maxNumRows> rowsToRemoveContainingAsteroidCells;
     
     for (auto i = 0; i < mRowsToRemove.Size();) {
@@ -369,7 +369,7 @@ void FieldExplosionsStates::RemoveRows() {
     }
 }
 
-bool FieldExplosionsStates::RowContainsAsteroid(int row) {
+bool FieldExplosionsSystem::RowContainsAsteroid(int row) {
     for (auto column = 0; column < mField.GetNumColumns(); ++column) {
         if (mField.GetCell(row, column).mFirstSubCell.IsAsteroid()) {
             return true;
@@ -379,7 +379,7 @@ bool FieldExplosionsStates::RowContainsAsteroid(int row) {
     return false;
 }
 
-void FieldExplosionsStates::DetonateBomb(const Pht::IVec2& position,
+void FieldExplosionsSystem::DetonateBomb(const Pht::IVec2& position,
                                          const Pht::Vec2& exactPosition) {
     mEffectManager.StartExplosion(exactPosition);
     
@@ -393,7 +393,7 @@ void FieldExplosionsStates::DetonateBomb(const Pht::IVec2& position,
     mExplosionsStates.PushBack(explosionState);
 }
 
-void FieldExplosionsStates::DetonateRowBomb(const Pht::IVec2& position,
+void FieldExplosionsSystem::DetonateRowBomb(const Pht::IVec2& position,
                                             const Pht::Vec2& exactPosition) {
     mEffectManager.StartLaser(exactPosition);
     
@@ -418,12 +418,12 @@ void FieldExplosionsStates::DetonateRowBomb(const Pht::IVec2& position,
     }
 }
 
-void FieldExplosionsStates::DetonateRowBomb(const Pht::IVec2& position) {
+void FieldExplosionsSystem::DetonateRowBomb(const Pht::IVec2& position) {
     Pht::Vec2 effectPosition {static_cast<float>(position.x), static_cast<float>(position.y)};
     DetonateRowBomb(position, effectPosition);
 }
 
-void FieldExplosionsStates::DetonateLevelBomb(const Pht::IVec2& position) {
+void FieldExplosionsSystem::DetonateLevelBomb(const Pht::IVec2& position) {
     Pht::Vec2 effectPosition {static_cast<float>(position.x), static_cast<float>(position.y)};
     mEffectManager.StartLevelBombExplosion(effectPosition);
     
@@ -437,7 +437,7 @@ void FieldExplosionsStates::DetonateLevelBomb(const Pht::IVec2& position) {
     mExplosionsStates.PushBack(explosionState);
 }
 
-void FieldExplosionsStates::DetonateBigBomb(const Pht::IVec2& position) {
+void FieldExplosionsSystem::DetonateBigBomb(const Pht::IVec2& position) {
     Pht::Vec2 effectPosition {static_cast<float>(position.x), static_cast<float>(position.y)};
     mEffectManager.StartBigExplosion(effectPosition);
     
