@@ -1,5 +1,5 @@
-#ifndef FieldGravity_hpp
-#define FieldGravity_hpp
+#ifndef FieldGravitySystem_hpp
+#define FieldGravitySystem_hpp
 
 // Engine includes.
 #include "Vector.hpp"
@@ -8,7 +8,7 @@
 #include "Field.hpp"
 
 namespace RowBlast {
-    class FieldGravity {
+    class FieldGravitySystem {
     public:
         struct PieceBlockCoord {
             Pht::IVec2 mPosition;
@@ -17,7 +17,7 @@ namespace RowBlast {
 
         using PieceBlockCoords = Pht::StaticVector<PieceBlockCoord, Field::maxNumColumns * Field::maxNumRows * 4>;
 
-        explicit FieldGravity(Field& field);
+        explicit FieldGravitySystem(Field& field);
         
         void Init();
         void PullDownLoosePieces();

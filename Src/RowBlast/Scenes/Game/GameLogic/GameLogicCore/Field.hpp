@@ -194,7 +194,7 @@ namespace RowBlast {
         
     private:
         friend class FieldAnalyzer;
-        friend class FieldGravity;
+        friend class FieldGravitySystem;
         
         void CopyGridNoAlloc(CellGrid& to, const CellGrid& from);
         bool IsCellAccordingToBlueprint(int row, int column) const;

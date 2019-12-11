@@ -328,7 +328,7 @@ namespace RowBlast {
         ScoreManager mScoreManager;
         FallingPiece mFallingPiece;
         DraggedPiece mDraggedPiece;
-        FieldGravity mFieldGravity;
+        FieldGravitySystem mFieldGravity;
         FieldExplosionsStates mFieldExplosions;
         FallingPieceAnimation mFallingPieceAnimation;
         DraggedPieceAnimation mDraggedPieceAnimation;

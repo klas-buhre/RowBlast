@@ -45,7 +45,7 @@ namespace {
 
 FieldExplosionsStates::FieldExplosionsStates(Pht::IEngine& engine,
                                              Field& field,
-                                             FieldGravity& fieldGravity,
+                                             FieldGravitySystem& fieldGravity,
                                              ScoreManager& scoreManager,
                                              EffectManager& effectManager,
                                              FlyingBlocksAnimation& flyingBlocksAnimation) :
