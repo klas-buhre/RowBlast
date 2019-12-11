@@ -225,10 +225,14 @@ GameLogic::Result GameLogic::UpdateInLogicUpdateState(bool shouldUpdateLogic) {
         return Result::None;
     }
     
-    HandleSettingsChange();
-    auto result = HandleNewMove();
-    if (result != Result::None) {
-        return result;
+    auto settingsChangeResult = HandleSettingsChange();
+    if (settingsChangeResult != Result::None) {
+        return settingsChangeResult;
+    }
+
+    auto newMoveResult = HandleNewMove();
+    if (newMoveResult != Result::None) {
+        return newMoveResult;
     }
     
     if (HandleUndo()) {
@@ -282,7 +286,7 @@ GameLogic::Result GameLogic::NewMove(NewMoveReason newMoveReason) {
     }
     
     if (IsFallingPieceVisibleAtNewMove()) {
-        return SpawnFallingPiece(FallingPieceSpawnReason::NewMove, nullptr);
+        return SpawnFallingPiece(FallingPieceSpawnReason::Other, nullptr);
     }
     
     return Result::None;
@@ -595,7 +599,7 @@ void GameLogic::HandleClearedFilledRows(const Field::RemovedSubCells& removedSub
     mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
 }
 
-void GameLogic::HandleSettingsChange() {
+GameLogic::Result GameLogic::HandleSettingsChange() {
     auto settingsChanged = false;
     
     if (mSettingsService.GetControlType() != mControlType && mTutorial.IsGestureControlsAllowed()) {
@@ -603,15 +607,20 @@ void GameLogic::HandleSettingsChange() {
         mCurrentMoveTmp.mPreviewPieceRotations = PieceRotations {};
         mPreviousMove.mPreviewPieceRotations = PieceRotations {};
         
-        // TODO: Need to spawn piece in case we are going from drag controls to something else.
+        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::ActivePieceAfterControlTypeChange;
+        
+        auto oldControlType = mControlType;
+        mControlType = mSettingsService.GetControlType();
+        auto result = HandleFallingPieceDuringControlTypeChange(oldControlType, mControlType);
+        if (result != Result::None) {
+            return result;
+        }
 
-        if (mSettingsService.GetControlType() == ControlType::Click) {
+        if (mControlType == ControlType::Click) {
             mClickInputHandler.CalculateMoves(mFallingPiece, GetMovesUsedIncludingCurrent() - 1);
             mClickInputHandler.CreateNewSetOfVisibleMoves();
         }
         
-        mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::ActivePieceAfterControlTypeChange;
-        mControlType = mSettingsService.GetControlType();
         settingsChanged = true;
     }
     
@@ -623,6 +632,26 @@ void GameLogic::HandleSettingsChange() {
     if (settingsChanged) {
         ManageBlastArea();
     }
+    
+    return Result::None;
+}
+
+GameLogic::Result GameLogic::HandleFallingPieceDuringControlTypeChange(ControlType oldControlType,
+                                                                       ControlType newControlType) {
+    if (mLevel->GetSpeed() == 0.0f) {
+        switch (oldControlType) {
+            case ControlType::Drag:
+                return SpawnFallingPiece(FallingPieceSpawnReason::Other, nullptr);
+            case ControlType::Click:
+            case ControlType::Swipe:
+                if (newControlType == ControlType::Drag) {
+                    RemoveFallingPiece();
+                }
+                break;
+        }
+    }
+
+    return Result::None;
 }
 
 void GameLogic::ManageBlastArea() {
@@ -1503,7 +1532,7 @@ const Move* GameLogic::GetValidMoveBelowDraggedPiece(int& ghostPieceRow) {
     Field::CollisionResult collisionResult;
     mField.CheckCollision(collisionResult, pieceBlocks, piecePosition, Pht::IVec2{0, 0}, false);
     if (collisionResult.mIsCollision != IsCollision::Yes) {
-        Rotation rotation = mDraggedPiece.GetRotation();
+        auto rotation = mDraggedPiece.GetRotation();
         auto rowIfDropped = mField.DetectCollisionDown(pieceBlocks, piecePosition);
         Pht::IVec2 positionIfDropped {piecePosition.x, rowIfDropped};
         Move moveIfDropped {.mPosition = positionIfDropped, rotation};

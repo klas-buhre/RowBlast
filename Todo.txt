@@ -65,18 +65,6 @@ Ongoing tasks:
 
 
     -Do:
-            -Need to spawn piece in case we are going from drag controls to click or swipe midgame.
-             Also need to remove falling piece if we change to drag controls midgame.
-        
-            When using drag controls, maybe the falling piece should only be        ~3 days
-            visible when the dragged piece is visible. At least it should
-            probably be like that if the drag controls and swipe controls are
-            split up like in the point in Maybe Section below. However, in
-            levels that has a falling piece speed then the falling piece has
-            to be visible all the time so that the player know and see when the
-            piece lands. Probably simplest if the left-most "active" piece is
-            the one thats is the falling piece since that is how it works
-            today.
         -3. Redesign the game HUD:                                                  ~3 days
             -Keep the active slot when using controls other than drag controls.
             -Maybe try to invert the gradient and add a shadow from the field.

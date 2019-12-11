@@ -204,10 +204,10 @@ namespace RowBlast {
         };
 
         enum class FallingPieceSpawnReason {
-            NewMove,
             Switch,
             BeginDraggingPiece,
-            RespawnActiveAfterStopDraggingPiece
+            RespawnActiveAfterStopDraggingPiece,
+            Other
         };
         
         enum class State {
@@ -253,7 +253,9 @@ namespace RowBlast {
         CascadeState HandleCascading();
         void HandleClearedFilledRows(const Field::RemovedSubCells& removedSubCells,
                                      Pht::Optional<int> landedPieceId = Pht::Optional<int>{});
-        void HandleSettingsChange();
+        Result HandleSettingsChange();
+        Result HandleFallingPieceDuringControlTypeChange(ControlType oldControlType,
+                                                         ControlType newControlType);
         bool IsFallingPieceVisibleAtNewMove() const;
         void UpdateFallingPieceYpos();
         void LandFallingPiece(bool finalMovementWasADrop);
