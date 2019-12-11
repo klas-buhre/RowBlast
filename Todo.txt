@@ -65,8 +65,6 @@ Ongoing tasks:
 
 
     -Do:
-            -Do the same changes
-             for mDraggedPiece. This is to prevent dereferencing a nullptr.
             -Need to spawn piece in case we are going from drag controls to click or swipe midgame.
              Also need to remove falling piece if we change to drag controls midgame.
         

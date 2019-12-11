@@ -138,6 +138,7 @@ namespace RowBlast {
         int GetMovesUsedIncludingCurrent() const;
         int CalculateBonusPointsAtLevelCompleted() const;
         const FallingPiece* GetFallingPiece() const;
+        const DraggedPiece* GetDraggedPiece() const;
         
         void SetMovesLeft(int movesLeft) {
             mMovesLeft = movesLeft;
@@ -149,10 +150,6 @@ namespace RowBlast {
         
         DraggedPieceAnimation& GetDraggedPieceAnimation() {
             return mDraggedPieceAnimation;
-        }
-        
-        const DraggedPiece* GetDraggedPiece() const {
-            return mDraggedPiece;
         }
         
         Pht::Optional<int> GetDraggedGhostPieceRow() const {
@@ -330,7 +327,7 @@ namespace RowBlast {
         float mCascadeWaitTime {0.0f};
         ScoreManager mScoreManager;
         FallingPiece mFallingPiece;
-        DraggedPiece mDraggedPieceStorage;
+        DraggedPiece mDraggedPiece;
         FieldGravity mFieldGravity;
         FieldExplosionsStates mFieldExplosions;
         FallingPieceAnimation mFallingPieceAnimation;
@@ -340,8 +337,8 @@ namespace RowBlast {
         DragInputHandler mDragInputHandler;
         GestureInputHandler mGestureInputHandler;
         ClickInputHandler mClickInputHandler;
-        DraggedPiece* mDraggedPiece {nullptr};
         bool mIsFallingPieceVisible {false};
+        bool mIsDraggedPieceVisible {false};
         bool mIsOngoingMove {false};
         NewMoveReason mNewMoveReason {NewMoveReason::None};
         MoveData mCurrentMove;
