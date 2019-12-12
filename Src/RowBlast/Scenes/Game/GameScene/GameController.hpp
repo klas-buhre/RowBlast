@@ -13,7 +13,7 @@
 #include "FlyingBlocksAnimation.hpp"
 #include "CollapsingFieldAnimationSystem.hpp"
 #include "FlashingBlocksAnimationSystem.hpp"
-#include "WeldsAnimationSystem.hpp"
+#include "BondsAnimationSystem.hpp"
 #include "BlueprintSlotsFilledAnimation.hpp"
 #include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
