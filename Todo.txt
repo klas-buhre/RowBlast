@@ -15,10 +15,6 @@ Backlog:
     -Wooden blocks are cleared and shattered only when blocks next to them are cleared by filling a
      row or by bombs.
     -Might have a vertical laser. Can be good to have when dealing with wooden blocks.
-    -Can have levels that have lots of spheres instead of blocks. The spheres have different colors
-     and you clear them by placing blocks of the same color noext to them. Must there be at least
-     2 or three of the same color in a row? Will 3 with same color in an L shape match or only in
-     a straight line? Can have ShortIPieces like in dr Mario with 2 colors.
   -Rendering:
     -Add dynamic batching of objects with very few indices and no rotation if the saved cost of
      eliminated state changes is greater than the cost of creating the batch. Then, the clouds can
@@ -65,7 +61,33 @@ Ongoing tasks:
 
 
     -Do:
-        -3. Redesign the game HUD:                                                  ~3 days
+        -1. The area covered by the piece path could be a bit brighter or darker.   ~3 days
+            It would be visible when the dragged piece is over a valid move and
+            the area would move when the dragged piece moves. The ghost piece
+            could be of the same style as the path area but a bit brighter.
+        -2. Can have levels that have lots of octagons (or circles) instead of      ~7 days
+            normal full blocks. The octagons/circles have different colors and
+            you clear them by placing blocks of the same color next to them.
+            If there is at least 3 neighbor cells in a straight line, with at
+            least one octagon and at least one block, with the same color, then
+            those cells are cleared. The octagons form bonds to neighbour cells
+            of the same color (to full blocks or other octagons). The octagons
+            are pulled down by gravity in the same way as colored blocks. Can
+            have ShortIPieces like in dr Mario with 2 different colors in the
+            same piece? That would go against the fundamental principle that
+            blocks of different color do not form bonds. Instead, we might only
+            have ShortIPiece with same colors and a new piece which would be like
+            a SevenPiece but with only two blocks. Or, we might have pieces with
+            different colors but without welds, which may fall appart when
+            landing over an edge.
+        -3. Number of preview pieces:                                               ~5 days
+            -Should it really always be 3 selectables? Maybe 2 is a better
+             number. Sometimes you could have 3 though. Maybe you always have
+             2 block pieces and when you get a special piece (bomb or laser)
+             then you have 3, which is like it is in Bubble Witch 3.
+            -Is it good to have 2 next preview pieces with regard to maximizing
+             revenue at out of moves?
+        -4. Redesign the game HUD:                                                  ~3 days
             -Keep the active slot when using controls other than drag controls.
             -Maybe try to invert the gradient and add a shadow from the field.
             -Maybe try a blue upper bar in the selectables container.
@@ -95,10 +117,6 @@ Ongoing tasks:
         -3. Maybe a short delay before clearing filled rows after piece lands?      ~2 days
             And a short particle effect with twinkles in the filled row before
             the blocks gets thrown away?
-        -3. The area covered by the piece path could be a bit brighter or darker.   ~3 days
-            It would be visible when the dragged piece is over a valid move and
-            the area would move when the dragged piece moves. The ghost piece
-            could be of the same style as the path area but a bit brighter.
         -3. Bombs and laser dragged piece with white or red transparent material    ~1 days
             instead of textures.
         -4. Maybe try a "PropellerPiece": XX                                        ~1 days
