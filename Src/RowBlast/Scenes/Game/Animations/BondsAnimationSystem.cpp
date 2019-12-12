@@ -97,7 +97,7 @@ void BondsAnimationSystem::AnimateUpBond(SubCell& subCell, const Pht::IVec2& pos
     auto subCellIsFlashing = subCell.mFlashingBlockAnimation.IsActive();
     
     if (position.y + 1 < mField.GetNumRows()) {
-        auto& upperCell {mField.GetCell(position + Pht::IVec2{0, 1})};
+        auto& upperCell = mField.GetCell(position + Pht::IVec2{0, 1});
 
         auto upperCellIsFlashing =
             upperCell.mFirstSubCell.mFlashingBlockAnimation.IsActive() ||

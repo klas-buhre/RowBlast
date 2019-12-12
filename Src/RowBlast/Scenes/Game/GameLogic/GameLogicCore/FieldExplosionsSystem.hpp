@@ -70,7 +70,7 @@ namespace RowBlast {
             
             Kind mKind;
             Pht::IVec2 mPosition;
-            int mNumClearedBlocks {0};
+            float mNumClearedBlocks {0.0f};
             BombExplosionState mBombExplosionState;
             LaserState mLaserState;
         };
