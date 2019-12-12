@@ -177,7 +177,7 @@ namespace RowBlast {
         Field mField;
         CollapsingFieldAnimationSystem mCollapsingFieldAnimation;
         FlashingBlocksAnimationSystem mFlashingBlocksAnimation;
-        WeldsAnimationSystem mWeldsAnimationSystem;
+        BondsAnimationSystem mBondsAnimationSystem;
         ScrollController mScrollController;
         ValidAreaAnimation mValidAreaAnimation;
         Pht::CameraShake mCameraShake;

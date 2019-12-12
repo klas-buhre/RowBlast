@@ -513,42 +513,42 @@ void LevelGoalDialogView::SetUpPreviewPiece(LevelStartPreviewPiece& previewPiece
                                                              BlockBrightness::Normal);
                 
                 blockSceneObject.SetRenderable(&blockRenderable);
-                SetUpBlockWelds(subCell, blockPosition, *previewPiece.mBlockSceneObjects);
+                SetUpBlockBonds(subCell, blockPosition, *previewPiece.mBlockSceneObjects);
             }
         }
     }
 }
 
-void LevelGoalDialogView::SetUpBlockWelds(const SubCell& subCell,
+void LevelGoalDialogView::SetUpBlockBonds(const SubCell& subCell,
                                           const Pht::Vec3& blockPos,
                                           SceneObjectPool& pool) {
-    auto& welds = subCell.mWelds;
-    if (welds.mUpLeft) {
-        SetUpBlockWeld({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, 0.0f},
+    auto& bonds = subCell.mBonds;
+    if (bonds.mUpLeft) {
+        SetUpBlockBond({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, 0.0f},
                        45.0f,
                        subCell,
                        pool);
     }
 
-    if (welds.mUpRight) {
-        SetUpBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, 0.0f},
+    if (bonds.mUpRight) {
+        SetUpBlockBond({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, 0.0f},
                        -45.0f,
                        subCell,
                        pool);
     }
 }
 
-void LevelGoalDialogView::SetUpBlockWeld(const Pht::Vec3& weldPosition,
+void LevelGoalDialogView::SetUpBlockBond(const Pht::Vec3& bondPosition,
                                          float rotation,
                                          const SubCell& subCell,
                                          SceneObjectPool& pool) {
     auto& sceneObject = pool.AccuireSceneObject();
     auto& transform = sceneObject.GetTransform();
     transform.SetRotation({0.0f, 0.0f, rotation});
-    transform.SetPosition(weldPosition);
+    transform.SetPosition(bondPosition);
     
-    auto& weldRenderable = mPieceResources.GetPreviewAslopeWeldRenderableObject(subCell.mColor);
-    sceneObject.SetRenderable(&weldRenderable);
+    auto& bondRenderable = mPieceResources.GetPreviewAslopeBondRenderableObject(subCell.mColor);
+    sceneObject.SetRenderable(&bondRenderable);
 }
 
 void LevelGoalDialogView::StartEffects() {

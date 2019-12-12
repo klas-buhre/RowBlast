@@ -22,42 +22,42 @@ namespace {
         }
     }
     
-    Welds RotateWeldsClockwise90Deg(const Welds& welds) {
-        Welds rotatedWelds;
+    Bonds RotateBondsClockwise90Deg(const Bonds& bonds) {
+        Bonds rotatedBonds;
         
-        if (welds.mUp) {
-            rotatedWelds.mRight = true;
+        if (bonds.mUp) {
+            rotatedBonds.mRight = true;
         }
 
-        if (welds.mUpRight) {
-            rotatedWelds.mDownRight = true;
+        if (bonds.mUpRight) {
+            rotatedBonds.mDownRight = true;
         }
         
-        if (welds.mRight) {
-            rotatedWelds.mDown = true;
+        if (bonds.mRight) {
+            rotatedBonds.mDown = true;
         }
 
-        if (welds.mDownRight) {
-            rotatedWelds.mDownLeft = true;
+        if (bonds.mDownRight) {
+            rotatedBonds.mDownLeft = true;
         }
 
-        if (welds.mDown) {
-            rotatedWelds.mLeft = true;
+        if (bonds.mDown) {
+            rotatedBonds.mLeft = true;
         }
 
-        if (welds.mDownLeft) {
-            rotatedWelds.mUpLeft = true;
+        if (bonds.mDownLeft) {
+            rotatedBonds.mUpLeft = true;
         }
 
-        if (welds.mLeft) {
-            rotatedWelds.mUp = true;
+        if (bonds.mLeft) {
+            rotatedBonds.mUp = true;
         }
 
-        if (welds.mUpLeft) {
-            rotatedWelds.mUpRight = true;
+        if (bonds.mUpLeft) {
+            rotatedBonds.mUpRight = true;
         }
 
-        return rotatedWelds;
+        return rotatedBonds;
     }
 }
 
@@ -97,8 +97,8 @@ const Pht::Optional<Piece::DuplicateMoveCheck>& Piece::GetDuplicateMoveCheck(Rot
     return mDuplicateMoveChecks[static_cast<int>(rotation)];
 }
 
-const Pht::Optional<Piece::TiltedWeldCheck>& Piece::GetTiltedWeldCheck(Rotation rotation) const {
-    return mTiltedWeldChecks[static_cast<int>(rotation)];
+const Pht::Optional<Piece::TiltedBondCheck>& Piece::GetTiltedBondCheck(Rotation rotation) const {
+    return mTiltedBondChecks[static_cast<int>(rotation)];
 }
 
 Pht::Vec2 Piece::GetCenterPosition(Rotation rotation) const {
@@ -188,11 +188,11 @@ void Piece::InitGrids(const FillGrid& fillGrid,
     AddExtremityCheckPositions(Rotation::Deg180);
     AddExtremityCheckPositions(Rotation::Deg270);
     
-    mTiltedWeldChecks.resize(4);
-    AddTiltedWeldCheck(Rotation::Deg0);
-    AddTiltedWeldCheck(Rotation::Deg90);
-    AddTiltedWeldCheck(Rotation::Deg180);
-    AddTiltedWeldCheck(Rotation::Deg270);
+    mTiltedBondChecks.resize(4);
+    AddTiltedBondCheck(Rotation::Deg0);
+    AddTiltedBondCheck(Rotation::Deg90);
+    AddTiltedBondCheck(Rotation::Deg180);
+    AddTiltedBondCheck(Rotation::Deg270);
 
     mDimensions.resize(4);
     AddDimensions(Rotation::Deg0);
@@ -239,7 +239,7 @@ CellGrid Piece::InitCellGrid(const Piece::FillGrid& fillGrid,
         for (auto column = 0; column < mGridNumColumns; column++) {
             auto& subCell = result[row][column].mFirstSubCell;
             subCell.mFill = fillGrid[row][column];
-            subCell.mWelds = MakeWelds(row, column, fillGrid);
+            subCell.mBonds = MakeBonds(row, column, fillGrid);
             subCell.mBlockKind = ToBlockKind(subCell.mFill);
             subCell.mColor = blockColor;
             subCell.mFlashingBlockAnimation.mState = FlashingBlockAnimationComponent::State::Waiting;
@@ -260,7 +260,7 @@ CellGrid Piece::RotateGridClockwise90Deg(const CellGrid& grid, Rotation newRotat
             auto& subCell = resultCell.mFirstSubCell;
             subCell.mRotation = newRotation;
             subCell.mFill = RotateCellFillClockwise90Deg(subCell.mFill);
-            subCell.mWelds = RotateWeldsClockwise90Deg(subCell.mWelds);
+            subCell.mBonds = RotateBondsClockwise90Deg(subCell.mBonds);
         }
     }
     
@@ -319,50 +319,50 @@ void Piece::SetPressedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject
     mPressedGhostPieceRenderable = std::move(renderable);
 }
 
-Welds Piece::MakeWelds(int row, int column, const Piece::FillGrid& fillGrid) {
-    Welds welds;
+Bonds Piece::MakeBonds(int row, int column, const Piece::FillGrid& fillGrid) {
+    Bonds bonds;
     
     if (!IsBlock(row, column, fillGrid)) {
-        return welds;
+        return bonds;
     }
     
     if (IsBlock(row + 1, column, fillGrid)) {
-        welds.mUp = true;
+        bonds.mUp = true;
     }
 
     if (IsBlock(row + 1, column + 1, fillGrid) &&
         !IsBlock(row + 1, column, fillGrid) && !IsBlock(row, column + 1, fillGrid)) {
-        welds.mUpRight = true;
+        bonds.mUpRight = true;
     }
 
     if (IsBlock(row, column + 1, fillGrid)) {
-        welds.mRight = true;
+        bonds.mRight = true;
     }
 
     if (IsBlock(row - 1, column + 1, fillGrid) &&
         !IsBlock(row, column + 1, fillGrid) && !IsBlock(row - 1, column, fillGrid)) {
-        welds.mDownRight = true;
+        bonds.mDownRight = true;
     }
 
     if (IsBlock(row - 1, column, fillGrid)) {
-        welds.mDown = true;
+        bonds.mDown = true;
     }
 
     if (IsBlock(row - 1, column - 1, fillGrid) &&
         !IsBlock(row - 1, column, fillGrid) && !IsBlock(row, column - 1, fillGrid)) {
-        welds.mDownLeft = true;
+        bonds.mDownLeft = true;
     }
     
     if (IsBlock(row, column - 1, fillGrid)) {
-        welds.mLeft = true;
+        bonds.mLeft = true;
     }
 
     if (IsBlock(row + 1, column - 1, fillGrid) &&
         !IsBlock(row + 1, column, fillGrid) && !IsBlock(row, column - 1, fillGrid)) {
-        welds.mUpLeft = true;
+        bonds.mUpLeft = true;
     }
 
-    return welds;
+    return bonds;
 }
 
 bool Piece::IsBlock(int row, int column, const Piece::FillGrid& fillGrid) {
@@ -447,34 +447,34 @@ void Piece::AddExtremityCheckPositions(Rotation rotation) {
     mLeftExtremityCheckPositions[index] = leftExtremityCheckPosition;
 }
 
-void Piece::AddTiltedWeldCheck(Rotation rotation) {
+void Piece::AddTiltedBondCheck(Rotation rotation) {
     const auto& grid = GetGrid(rotation);
     
     for (auto row = 0; row < mGridNumRows; ++row) {
         for (auto column = 0; column < mGridNumColumns; ++column) {
-            if (grid[row][column].mFirstSubCell.mWelds.mUpRight) {
-                TiltedWeldCheck tiltedWeldCheckValue {
-                    TiltedWeldCheck::Kind::DownLeftToUpRight,
+            if (grid[row][column].mFirstSubCell.mBonds.mUpRight) {
+                TiltedBondCheck tiltedBondCheckValue {
+                    TiltedBondCheck::Kind::DownLeftToUpRight,
                     Pht::IVec2{column, row}
                 };
                 
-                mTiltedWeldChecks[static_cast<int>(rotation)] = tiltedWeldCheckValue;
+                mTiltedBondChecks[static_cast<int>(rotation)] = tiltedBondCheckValue;
                 return;
             }
 
-            if (grid[row][column].mFirstSubCell.mWelds.mUpLeft) {
-                TiltedWeldCheck tiltedWeldCheckValue {
-                    TiltedWeldCheck::Kind::DownRightToUpLeft,
+            if (grid[row][column].mFirstSubCell.mBonds.mUpLeft) {
+                TiltedBondCheck tiltedBondCheckValue {
+                    TiltedBondCheck::Kind::DownRightToUpLeft,
                     Pht::IVec2{column, row}
                 };
                 
-                mTiltedWeldChecks[static_cast<int>(rotation)] = tiltedWeldCheckValue;
+                mTiltedBondChecks[static_cast<int>(rotation)] = tiltedBondCheckValue;
                 return;
             }
         }
     }
     
-    mTiltedWeldChecks[static_cast<int>(rotation)] = Pht::Optional<TiltedWeldCheck> {};
+    mTiltedBondChecks[static_cast<int>(rotation)] = Pht::Optional<TiltedBondCheck> {};
 }
 
 void Piece::AddDimensions(Rotation rotation) {

@@ -60,12 +60,12 @@ namespace RowBlast {
         Left
     };
     
-    struct WeldAnimation {
+    struct BondAnimation {
         enum class State {
-            WeldAppearing,
-            WeldAppearingAndSemiFlashing,
-            WeldAtFullScale,
-            WeldDisappearing,
+            BondAppearing,
+            BondAppearingAndSemiFlashing,
+            BondAtFullScale,
+            BondDisappearing,
             Inactive
         };
         
@@ -74,22 +74,22 @@ namespace RowBlast {
         }
         
         bool IsSemiFlashing() const {
-            return mState == State::WeldAppearingAndSemiFlashing;
+            return mState == State::BondAppearingAndSemiFlashing;
         }
         
         State mState {State::Inactive};
         float mScale {1.0f};
     };
     
-    struct WeldAnimationsComponent {
-        WeldAnimation mUp;
-        WeldAnimation mRight;
-        WeldAnimation mUpRight;
-        WeldAnimation mUpLeft;
-        WeldAnimation mDiagonal;
+    struct BondAnimationsComponent {
+        BondAnimation mUp;
+        BondAnimation mRight;
+        BondAnimation mUpRight;
+        BondAnimation mUpLeft;
+        BondAnimation mDiagonal;
     };
     
-    struct Welds {
+    struct Bonds {
         bool mUp {false};
         bool mUpRight {false};
         bool mRight {false};
@@ -112,7 +112,7 @@ namespace RowBlast {
         extern const int numBlockRenderables;
         extern const int numBlockColors;
         extern const int numBlockBrightness;
-        extern const int numWeldBrightness;
+        extern const int numBondBrightness;
     };
     
     struct FlashingBlockAnimationComponent {
@@ -167,7 +167,7 @@ namespace RowBlast {
         Pht::Vec2 mPosition {0.0f, 0.0f};
         BlockColor mColor {BlockColor::None};
         Rotation mRotation {Rotation::Deg0};
-        Welds mWelds;
+        Bonds mBonds;
         int mPieceId {0};
         bool mIsGrayLevelBlock {false};
         bool mIsPartOfIndivisiblePiece {false};
@@ -176,7 +176,7 @@ namespace RowBlast {
         bool mIsPulledDown {false};
         FallingBlockAnimationComponent mFallingBlockAnimation;
         FlashingBlockAnimationComponent mFlashingBlockAnimation;
-        WeldAnimationsComponent mWeldAnimations;
+        BondAnimationsComponent mBondAnimations;
     };
     
     struct Cell {

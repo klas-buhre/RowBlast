@@ -166,26 +166,26 @@ Intersection CollisionDetection::SubCellsIntersect(const SubCell& field,
     }
 }
 
-bool CollisionDetection::IsIllegalTiltedWeldPosition(const Field& field,
+bool CollisionDetection::IsIllegalTiltedBondPosition(const Field& field,
                                                      const Pht::IVec2& piecePosition,
                                                      Rotation pieceRotation,
                                                      const Piece& pieceType) {
-    auto& tiltedWeldCheck = pieceType.GetTiltedWeldCheck(pieceRotation);
-    if (!tiltedWeldCheck.HasValue()) {
+    auto& tiltedBondCheck = pieceType.GetTiltedBondCheck(pieceRotation);
+    if (!tiltedBondCheck.HasValue()) {
         return false;
     }
     
-    auto& tiltedWeldCheckValue = tiltedWeldCheck.GetValue();
-    auto checkPosition = piecePosition + tiltedWeldCheckValue.mPosition;
+    auto& tiltedBondCheckValue = tiltedBondCheck.GetValue();
+    auto checkPosition = piecePosition + tiltedBondCheckValue.mPosition;
     
-    switch (tiltedWeldCheckValue.mKind) {
-        case Piece::TiltedWeldCheck::Kind::DownLeftToUpRight:
+    switch (tiltedBondCheckValue.mKind) {
+        case Piece::TiltedBondCheck::Kind::DownLeftToUpRight:
             if (!field.GetCell(checkPosition.y + 1, checkPosition.x).IsEmpty() &&
                 !field.GetCell(checkPosition.y, checkPosition.x + 1).IsEmpty()) {
                 return true;
             }
             break;
-        case Piece::TiltedWeldCheck::Kind::DownRightToUpLeft:
+        case Piece::TiltedBondCheck::Kind::DownRightToUpLeft:
             if (!field.GetCell(checkPosition.y + 1, checkPosition.x).IsEmpty() &&
                 !field.GetCell(checkPosition.y, checkPosition.x - 1).IsEmpty()) {
                 return true;

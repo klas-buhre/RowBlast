@@ -53,13 +53,13 @@ namespace RowBlast {
         void UpdateValidArea();
         void UpdateFieldBlocks();
         void UpdateFieldBlock(const SubCell& subCell, bool isSecondSubCell);
-        void UpdateBlockWelds(const SubCell& subCell,
+        void UpdateBlockBonds(const SubCell& subCell,
                               const Pht::Vec3& blockPos,
                               SceneObjectPool& pool,
                               bool isSecondSubCell);
-        Pht::RenderableObject& GetWeldRenderable(WeldRenderableKind renderableKind,
+        Pht::RenderableObject& GetBondRenderable(BondRenderableKind renderableKind,
                                                  const SubCell& subCell,
-                                                 const WeldAnimation& weldAnimation);
+                                                 const BondAnimation& bondAnimation);
         void UpdateFallingPiece();
         Pht::Vec2 CalculateFallingPieceGridPosition(const FallingPiece& fallingPiece);
         void UpdateDraggedPiece();

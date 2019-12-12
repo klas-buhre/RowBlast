@@ -35,18 +35,18 @@ namespace {
         return block;
     }
     
-    void CreateWeld(Pht::GuiView& view,
+    void CreateBond(Pht::GuiView& view,
                     const Pht::Vec3& position,
-                    Pht::RenderableObject& weldRenderable,
+                    Pht::RenderableObject& bondRenderable,
                     float rotation,
                     Pht::SceneObject& parent) {
-        auto& weld = view.CreateSceneObject();
-        auto& transform = weld.GetTransform();
+        auto& bond = view.CreateSceneObject();
+        auto& transform = bond.GetTransform();
         transform.SetPosition(position);
         transform.SetScale(0.8f);
         transform.SetRotation({0.0f, 0.0f, rotation});
-        weld.SetRenderable(&weldRenderable);
-        parent.AddChild(weld);
+        bond.SetRenderable(&bondRenderable);
+        parent.AddChild(bond);
     }
 }
 
@@ -163,11 +163,11 @@ Pht::SceneObject& TutorialUtils::CreateTwoBlocks(Pht::GuiView& view,
     CreateBlock(view, {-halfCellSize, 0.0f, 0.0f}, blockRenderable, blocks);
     CreateBlock(view, {halfCellSize, 0.0f, 0.0f}, blockRenderable, blocks);
     
-    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+    auto& bondRenderable = pieceResources.GetBondRenderableObject(BondRenderableKind::Normal,
                                                                   color,
                                                                   BlockBrightness::Normal);
 
-    CreateWeld(view, {0.0f, 0.0f, halfCellSize}, weldRenderable, 0.0f, blocks);
+    CreateBond(view, {0.0f, 0.0f, halfCellSize}, bondRenderable, 0.0f, blocks);
     
     return blocks;
 }
@@ -255,12 +255,12 @@ Pht::SceneObject& TutorialUtils::CreateLPiece(Pht::GuiView& view,
     CreateBlock(view, {halfCellSize, -halfCellSize, 0.0f}, blockRenderable, lPiece);
     CreateBlock(view, {halfCellSize, halfCellSize, 0.0f}, blockRenderable, lPiece);
     
-    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+    auto& bondRenderable = pieceResources.GetBondRenderableObject(BondRenderableKind::Normal,
                                                                   BlockColor::Yellow,
                                                                   BlockBrightness::Normal);
 
-    CreateWeld(view, {0.0f, -halfCellSize, halfCellSize}, weldRenderable, 0.0f, lPiece);
-    CreateWeld(view, {halfCellSize, 0.0f, halfCellSize}, weldRenderable, 90.0f, lPiece);
+    CreateBond(view, {0.0f, -halfCellSize, halfCellSize}, bondRenderable, 0.0f, lPiece);
+    CreateBond(view, {halfCellSize, 0.0f, halfCellSize}, bondRenderable, 90.0f, lPiece);
     
     return lPiece;
 }
@@ -310,15 +310,15 @@ Pht::SceneObject& TutorialUtils::CreateBPiece(Pht::GuiView& view,
     CreateBlock(view, {0.0f, -halfCellSize, 0.0f}, blockRenderable, bPiece);
     CreateBlock(view, {2.0f * halfCellSize, -halfCellSize, 0.0f}, blockRenderable, bPiece);
     
-    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+    auto& bondRenderable = pieceResources.GetBondRenderableObject(BondRenderableKind::Normal,
                                                                   BlockColor::Blue,
                                                                   BlockBrightness::Normal);
 
-    CreateWeld(view, {halfCellSize, halfCellSize, halfCellSize}, weldRenderable, 0.0f, bPiece);
-    CreateWeld(view, {-halfCellSize, -halfCellSize, halfCellSize}, weldRenderable, 0.0f, bPiece);
-    CreateWeld(view, {halfCellSize, -halfCellSize, halfCellSize}, weldRenderable, 0.0f, bPiece);
-    CreateWeld(view, {0.0f, 0.0f, halfCellSize}, weldRenderable, 90.0f, bPiece);
-    CreateWeld(view, {2.0f * halfCellSize, 0.0f, halfCellSize}, weldRenderable, 90.0f, bPiece);
+    CreateBond(view, {halfCellSize, halfCellSize, halfCellSize}, bondRenderable, 0.0f, bPiece);
+    CreateBond(view, {-halfCellSize, -halfCellSize, halfCellSize}, bondRenderable, 0.0f, bPiece);
+    CreateBond(view, {halfCellSize, -halfCellSize, halfCellSize}, bondRenderable, 0.0f, bPiece);
+    CreateBond(view, {0.0f, 0.0f, halfCellSize}, bondRenderable, 90.0f, bPiece);
+    CreateBond(view, {2.0f * halfCellSize, 0.0f, halfCellSize}, bondRenderable, 90.0f, bPiece);
     
     return bPiece;
 }

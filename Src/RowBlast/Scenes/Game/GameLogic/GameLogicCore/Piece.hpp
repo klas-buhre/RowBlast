@@ -31,7 +31,7 @@ namespace RowBlast {
             Rotation mRotation;
         };
         
-        struct TiltedWeldCheck {
+        struct TiltedBondCheck {
             enum class Kind {
                 DownLeftToUpRight,
                 DownRightToUpLeft
@@ -52,7 +52,7 @@ namespace RowBlast {
         const Pht::Optional<Pht::IVec2>& GetLeftExtremityCheckPosition(Rotation rotation) const;
         const Dimensions& GetDimensions(Rotation rotation) const;
         const Pht::Optional<DuplicateMoveCheck>& GetDuplicateMoveCheck(Rotation rotation) const;
-        const Pht::Optional<TiltedWeldCheck>& GetTiltedWeldCheck(Rotation rotation) const;
+        const Pht::Optional<TiltedBondCheck>& GetTiltedBondCheck(Rotation rotation) const;
         Pht::Vec2 GetCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonSize(Rotation rotation) const;
@@ -127,12 +127,12 @@ namespace RowBlast {
                               BlockColor blockColor,
                               bool isIndivisible);
         CellGrid RotateGridClockwise90Deg(const CellGrid& grid, Rotation newRotation);
-        Welds MakeWelds(int row, int column, const Piece::FillGrid& fillGrid);
+        Bonds MakeBonds(int row, int column, const Piece::FillGrid& fillGrid);
         bool IsBlock(int row, int column, const Piece::FillGrid& fillGrid);
         void CalculateMinMax(int& yMax, int& xMin, int& xMax, const CellGrid& grid) const;
         void AddOverhangCheckPositions(Rotation rotation);
         void AddExtremityCheckPositions(Rotation rotation);
-        void AddTiltedWeldCheck(Rotation rotation);
+        void AddTiltedBondCheck(Rotation rotation);
         void AddDimensions(Rotation rotation);
         void InitClickGrids(const ClickGrid& clickGrid);
         ClickGrid RotateClickGridClockwise90Deg(const ClickGrid& grid, Rotation newRotation);
@@ -156,7 +156,7 @@ namespace RowBlast {
         std::vector<Pht::Optional<Pht::IVec2>> mLeftExtremityCheckPositions;
         std::vector<Dimensions> mDimensions;
         std::vector<Pht::Optional<DuplicateMoveCheck>> mDuplicateMoveChecks;
-        std::vector<Pht::Optional<TiltedWeldCheck>> mTiltedWeldChecks;
+        std::vector<Pht::Optional<TiltedBondCheck>> mTiltedBondChecks;
         std::vector<Pht::Vec2> mButtonCenterPositions;
         std::vector<Pht::Vec2> mButtonSizes;
     };

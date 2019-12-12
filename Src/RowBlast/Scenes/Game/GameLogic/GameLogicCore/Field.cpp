@@ -62,41 +62,41 @@ namespace {
         }
     }
 
-    void BreakDownWelds(SubCell& subCell) {
-        auto& welds = subCell.mWelds;
-        welds.mDownRight = false;
-        welds.mDown = false;
-        welds.mDownLeft = false;
+    void BreakDownBonds(SubCell& subCell) {
+        auto& bonds = subCell.mBonds;
+        bonds.mDownRight = false;
+        bonds.mDown = false;
+        bonds.mDownLeft = false;
     }
     
-    void BreakUpWelds(SubCell& subCell) {
-        auto& welds = subCell.mWelds;
-        welds.mUpRight = false;
-        welds.mUp = false;
-        welds.mUpLeft = false;
+    void BreakUpBonds(SubCell& subCell) {
+        auto& bonds = subCell.mBonds;
+        bonds.mUpRight = false;
+        bonds.mUp = false;
+        bonds.mUpLeft = false;
         
-        auto& animations = subCell.mWeldAnimations;
-        animations.mUp = WeldAnimation {};
-        animations.mUpRight = WeldAnimation {};
-        animations.mUpLeft = WeldAnimation {};
+        auto& animations = subCell.mBondAnimations;
+        animations.mUp = BondAnimation {};
+        animations.mUpRight = BondAnimation {};
+        animations.mUpLeft = BondAnimation {};
     }
     
-    void BreakRightWelds(SubCell& subCell) {
-        auto& welds = subCell.mWelds;
-        welds.mUpRight = false;
-        welds.mRight = false;
-        welds.mDownRight = false;
+    void BreakRightBonds(SubCell& subCell) {
+        auto& bonds = subCell.mBonds;
+        bonds.mUpRight = false;
+        bonds.mRight = false;
+        bonds.mDownRight = false;
         
-        auto& animations = subCell.mWeldAnimations;
-        animations.mUpRight = WeldAnimation {};
-        animations.mRight = WeldAnimation {};
+        auto& animations = subCell.mBondAnimations;
+        animations.mUpRight = BondAnimation {};
+        animations.mRight = BondAnimation {};
     }
     
-    void BreakLeftWelds(SubCell& subCell) {
-        auto& welds = subCell.mWelds;
-        welds.mDownLeft = false;
-        welds.mLeft = false;
-        welds.mUpLeft = false;
+    void BreakLeftBonds(SubCell& subCell) {
+        auto& bonds = subCell.mBonds;
+        bonds.mDownLeft = false;
+        bonds.mLeft = false;
+        bonds.mUpLeft = false;
     }
     
     PieceBlocks CreatePieceBlocks(const FallingPiece& fallingPiece) {
@@ -145,7 +145,7 @@ void Field::Init(const Level& level) {
     }
     
     mLowestVisibleRow = 0;
-    ManageWelds();
+    ManageBonds();
 
     mPreviousGrid = mGrid;
     mTempGrid = mGrid;
@@ -632,7 +632,7 @@ void Field::LandPieceBlocks(const PieceBlocks& pieceBlocks,
     }
 }
 
-void Field::ManageWelds() {
+void Field::ManageBonds() {
     auto lowestVisibleRow = mLowestVisibleRow - 1;
     if (lowestVisibleRow < 0) {
         lowestVisibleRow = 0;
@@ -643,9 +643,9 @@ void Field::ManageWelds() {
             auto& cell = mGrid[row][column];
             Pht::IVec2 position {column, row};
             
-            MakeDiagonalWeld(cell);
-            MakeWelds(cell.mFirstSubCell, position);
-            MakeWelds(cell.mSecondSubCell, position);
+            MakeDiagonalBond(cell);
+            MakeBonds(cell.mFirstSubCell, position);
+            MakeBonds(cell.mSecondSubCell, position);
         }
     }
     
@@ -654,51 +654,51 @@ void Field::ManageWelds() {
             auto& cell = mGrid[row][column];
             Pht::IVec2 position {column, row};
             
-            BreakRedundantWelds(cell.mFirstSubCell, position);
+            BreakRedundantBonds(cell.mFirstSubCell, position);
         }
     }
 }
 
-void Field::MakeDiagonalWeld(Cell& cell) {
+void Field::MakeDiagonalBond(Cell& cell) {
     auto& firstSubCell = cell.mFirstSubCell;
     auto& secondSubCell = cell.mSecondSubCell;
 
     if (!firstSubCell.IsEmpty() && !secondSubCell.IsEmpty() &&
-        firstSubCell.mColor == secondSubCell.mColor && !firstSubCell.mWelds.mDiagonal &&
-        !secondSubCell.mWelds.mDiagonal) {
+        firstSubCell.mColor == secondSubCell.mColor && !firstSubCell.mBonds.mDiagonal &&
+        !secondSubCell.mBonds.mDiagonal) {
 
-        firstSubCell.mWelds.mDiagonal = true;
-        secondSubCell.mWelds.mDiagonal = true;
-        WeldsAnimationSystem::StartWeldAppearingAnimation(secondSubCell.mWeldAnimations.mDiagonal);
+        firstSubCell.mBonds.mDiagonal = true;
+        secondSubCell.mBonds.mDiagonal = true;
+        BondsAnimationSystem::StartBondAppearingAnimation(secondSubCell.mBondAnimations.mDiagonal);
     }
 }
 
-void Field::MakeWelds(SubCell& subCell, const Pht::IVec2& position) {
+void Field::MakeBonds(SubCell& subCell, const Pht::IVec2& position) {
     if (subCell.IsEmpty() || subCell.mIsGrayLevelBlock || subCell.IsNonBlockObject()) {
         return;
     }
     
-    auto& welds = subCell.mWelds;
-    if (!welds.mUp && ShouldBeUpWeld(subCell, position)) {
-        welds.mUp = true;
-        WeldsAnimationSystem::StartWeldAppearingAnimation(subCell.mWeldAnimations.mUp);
+    auto& bonds = subCell.mBonds;
+    if (!bonds.mUp && ShouldBeUpBond(subCell, position)) {
+        bonds.mUp = true;
+        BondsAnimationSystem::StartBondAppearingAnimation(subCell.mBondAnimations.mUp);
     }
 
-    if (!welds.mRight && ShouldBeRightWeld(subCell, position)) {
-        welds.mRight = true;
-        WeldsAnimationSystem::StartWeldAppearingAnimation(subCell.mWeldAnimations.mRight);
+    if (!bonds.mRight && ShouldBeRightBond(subCell, position)) {
+        bonds.mRight = true;
+        BondsAnimationSystem::StartBondAppearingAnimation(subCell.mBondAnimations.mRight);
     }
     
-    if (!welds.mDown && ShouldBeDownWeld(subCell, position)) {
-        welds.mDown = true;
+    if (!bonds.mDown && ShouldBeDownBond(subCell, position)) {
+        bonds.mDown = true;
     }
     
-    if (!welds.mLeft && ShouldBeLeftWeld(subCell, position)) {
-        welds.mLeft = true;
+    if (!bonds.mLeft && ShouldBeLeftBond(subCell, position)) {
+        bonds.mLeft = true;
     }
 }
 
-bool Field::ShouldBeUpWeld(const SubCell& subCell, const Pht::IVec2& position) const {
+bool Field::ShouldBeUpBond(const SubCell& subCell, const Pht::IVec2& position) const {
     if (!subCell.FillsUpperCellSide()) {
         return false;
     }
@@ -724,7 +724,7 @@ bool Field::ShouldBeUpWeld(const SubCell& subCell, const Pht::IVec2& position) c
     return false;
 }
 
-bool Field::ShouldBeRightWeld(const SubCell& subCell, const Pht::IVec2& position) const {
+bool Field::ShouldBeRightBond(const SubCell& subCell, const Pht::IVec2& position) const {
     if (!subCell.FillsRightCellSide()) {
         return false;
     }
@@ -750,7 +750,7 @@ bool Field::ShouldBeRightWeld(const SubCell& subCell, const Pht::IVec2& position
     return false;
 }
 
-bool Field::ShouldBeDownWeld(const SubCell& subCell, const Pht::IVec2& position) const {
+bool Field::ShouldBeDownBond(const SubCell& subCell, const Pht::IVec2& position) const {
     if (!subCell.FillsLowerCellSide()) {
         return false;
     }
@@ -776,7 +776,7 @@ bool Field::ShouldBeDownWeld(const SubCell& subCell, const Pht::IVec2& position)
     return false;
 }
 
-bool Field::ShouldBeLeftWeld(const SubCell& subCell, const Pht::IVec2& position) const {
+bool Field::ShouldBeLeftBond(const SubCell& subCell, const Pht::IVec2& position) const {
     if (!subCell.FillsLeftCellSide()) {
         return false;
     }
@@ -802,42 +802,42 @@ bool Field::ShouldBeLeftWeld(const SubCell& subCell, const Pht::IVec2& position)
     return false;
 }
 
-void Field::BreakRedundantWelds(SubCell& subCell, const Pht::IVec2& position) {
+void Field::BreakRedundantBonds(SubCell& subCell, const Pht::IVec2& position) {
     if (subCell.IsEmpty() || subCell.mIsGrayLevelBlock || subCell.IsNonBlockObject()) {
         return;
     }
 
-    auto& welds = subCell.mWelds;
-    if (welds.mUpRight && UpRightWeldWouldBeRedundant(subCell, position)) {
-        welds.mUpRight = false;
-        WeldsAnimationSystem::StartWeldDisappearingAnimation(subCell.mWeldAnimations.mUpRight);
+    auto& bonds = subCell.mBonds;
+    if (bonds.mUpRight && UpRightBondWouldBeRedundant(subCell, position)) {
+        bonds.mUpRight = false;
+        BondsAnimationSystem::StartBondDisappearingAnimation(subCell.mBondAnimations.mUpRight);
     }
     
-    if (welds.mDownRight && DownRightWeldWouldBeRedundant(subCell, position)) {
-        welds.mDownRight = false;
+    if (bonds.mDownRight && DownRightBondWouldBeRedundant(subCell, position)) {
+        bonds.mDownRight = false;
     }
 
-    if (welds.mDownLeft && DownLeftWeldWouldBeRedundant(subCell, position)) {
-        welds.mDownLeft = false;
+    if (bonds.mDownLeft && DownLeftBondWouldBeRedundant(subCell, position)) {
+        bonds.mDownLeft = false;
     }
 
-    if (welds.mUpLeft && UpLeftWeldWouldBeRedundant(subCell, position)) {
-        welds.mUpLeft = false;
-        WeldsAnimationSystem::StartWeldDisappearingAnimation(subCell.mWeldAnimations.mUpLeft);
+    if (bonds.mUpLeft && UpLeftBondWouldBeRedundant(subCell, position)) {
+        bonds.mUpLeft = false;
+        BondsAnimationSystem::StartBondDisappearingAnimation(subCell.mBondAnimations.mUpLeft);
     }
 }
 
-bool Field::UpRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
-    if (subCell.mWelds.mUp) {
+bool Field::UpRightBondWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
+    if (subCell.mBonds.mUp) {
         auto& upperSubCell = mGrid[position.y + 1][position.x].mFirstSubCell;
-        if (upperSubCell.mWelds.mRight) {
+        if (upperSubCell.mBonds.mRight) {
             return true;
         }
     }
 
-    if (subCell.mWelds.mRight) {
+    if (subCell.mBonds.mRight) {
         auto& subCellToTheRight = mGrid[position.y][position.x + 1].mFirstSubCell;
-        if (subCellToTheRight.mWelds.mUp) {
+        if (subCellToTheRight.mBonds.mUp) {
             return true;
         }
     }
@@ -845,17 +845,17 @@ bool Field::UpRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2
     return false;
 }
 
-bool Field::DownRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
-    if (subCell.mWelds.mDown) {
+bool Field::DownRightBondWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
+    if (subCell.mBonds.mDown) {
         auto& lowerSubCell = mGrid[position.y - 1][position.x].mFirstSubCell;
-        if (lowerSubCell.mWelds.mRight) {
+        if (lowerSubCell.mBonds.mRight) {
             return true;
         }
     }
 
-    if (subCell.mWelds.mRight) {
+    if (subCell.mBonds.mRight) {
         auto& subCellToTheRight = mGrid[position.y][position.x + 1].mFirstSubCell;
-        if (subCellToTheRight.mWelds.mDown) {
+        if (subCellToTheRight.mBonds.mDown) {
             return true;
         }
     }
@@ -863,17 +863,17 @@ bool Field::DownRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVe
     return false;
 }
 
-bool Field::DownLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
-    if (subCell.mWelds.mDown) {
+bool Field::DownLeftBondWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
+    if (subCell.mBonds.mDown) {
         auto& lowerSubCell = mGrid[position.y - 1][position.x].mFirstSubCell;
-        if (lowerSubCell.mWelds.mLeft) {
+        if (lowerSubCell.mBonds.mLeft) {
             return true;
         }
     }
 
-    if (subCell.mWelds.mLeft) {
+    if (subCell.mBonds.mLeft) {
         auto& subCellToTheLeft = mGrid[position.y][position.x - 1].mFirstSubCell;
-        if (subCellToTheLeft.mWelds.mDown) {
+        if (subCellToTheLeft.mBonds.mDown) {
             return true;
         }
     }
@@ -881,17 +881,17 @@ bool Field::DownLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec
     return false;
 }
 
-bool Field::UpLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
-    if (subCell.mWelds.mUp) {
+bool Field::UpLeftBondWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const {
+    if (subCell.mBonds.mUp) {
         auto& upperSubCell = mGrid[position.y + 1][position.x].mFirstSubCell;
-        if (upperSubCell.mWelds.mLeft) {
+        if (upperSubCell.mBonds.mLeft) {
             return true;
         }
     }
 
-    if (subCell.mWelds.mLeft) {
+    if (subCell.mBonds.mLeft) {
         auto& subCellToTheLeft = mGrid[position.y][position.x - 1].mFirstSubCell;
-        if (subCellToTheLeft.mWelds.mUp) {
+        if (subCellToTheLeft.mBonds.mUp) {
             return true;
         }
     }
@@ -906,59 +906,59 @@ void Field::MergeTriangleBlocksIntoCube(const Pht::IVec2& position) {
     firstSubCell.mFill = Fill::Full;
     firstSubCell.mBlockKind = BlockKind::Full;
     
-    auto& firstSubCellWelds = firstSubCell.mWelds;
-    auto& secondSubCellWelds = cell.mSecondSubCell.mWelds;
-    firstSubCellWelds.mDiagonal = false;
+    auto& firstSubCellBonds = firstSubCell.mBonds;
+    auto& secondSubCellBonds = cell.mSecondSubCell.mBonds;
+    firstSubCellBonds.mDiagonal = false;
     
-    if (secondSubCellWelds.mRight) {
-        firstSubCellWelds.mRight = true;
+    if (secondSubCellBonds.mRight) {
+        firstSubCellBonds.mRight = true;
     }
 
-    if (secondSubCellWelds.mDownRight) {
-        firstSubCellWelds.mDownRight = true;
+    if (secondSubCellBonds.mDownRight) {
+        firstSubCellBonds.mDownRight = true;
     }
 
-    if (secondSubCellWelds.mDown) {
-        firstSubCellWelds.mDown = true;
+    if (secondSubCellBonds.mDown) {
+        firstSubCellBonds.mDown = true;
     }
 
-    if (secondSubCellWelds.mDownLeft) {
-        firstSubCellWelds.mDownLeft = true;
+    if (secondSubCellBonds.mDownLeft) {
+        firstSubCellBonds.mDownLeft = true;
     }
 
-    if (secondSubCellWelds.mLeft) {
-        firstSubCellWelds.mLeft = true;
+    if (secondSubCellBonds.mLeft) {
+        firstSubCellBonds.mLeft = true;
     }
 
-    if (secondSubCellWelds.mUpLeft) {
-        firstSubCellWelds.mUpLeft = true;
+    if (secondSubCellBonds.mUpLeft) {
+        firstSubCellBonds.mUpLeft = true;
     }
 
-    if (secondSubCellWelds.mUp) {
-        firstSubCellWelds.mUp = true;
+    if (secondSubCellBonds.mUp) {
+        firstSubCellBonds.mUp = true;
     }
 
-    if (secondSubCellWelds.mUpRight) {
-        firstSubCellWelds.mUpRight = true;
+    if (secondSubCellBonds.mUpRight) {
+        firstSubCellBonds.mUpRight = true;
     }
     
-    auto& firstSubCellWeldAnimations = firstSubCell.mWeldAnimations;
-    auto& secondSubCellWeldAnimations = cell.mSecondSubCell.mWeldAnimations;
+    auto& firstSubCellBondAnimations = firstSubCell.mBondAnimations;
+    auto& secondSubCellBondAnimations = cell.mSecondSubCell.mBondAnimations;
 
-    if (secondSubCellWeldAnimations.mUpLeft.IsActive()) {
-        firstSubCellWeldAnimations.mUpLeft = secondSubCellWeldAnimations.mUpLeft;
+    if (secondSubCellBondAnimations.mUpLeft.IsActive()) {
+        firstSubCellBondAnimations.mUpLeft = secondSubCellBondAnimations.mUpLeft;
     }
 
-    if (secondSubCellWeldAnimations.mUp.IsActive()) {
-        firstSubCellWeldAnimations.mUp = secondSubCellWeldAnimations.mUp;
+    if (secondSubCellBondAnimations.mUp.IsActive()) {
+        firstSubCellBondAnimations.mUp = secondSubCellBondAnimations.mUp;
     }
 
-    if (secondSubCellWeldAnimations.mUpRight.IsActive()) {
-        firstSubCellWeldAnimations.mUpRight = secondSubCellWeldAnimations.mUpRight;
+    if (secondSubCellBondAnimations.mUpRight.IsActive()) {
+        firstSubCellBondAnimations.mUpRight = secondSubCellBondAnimations.mUpRight;
     }
 
-    if (secondSubCellWeldAnimations.mRight.IsActive()) {
-        firstSubCellWeldAnimations.mRight = secondSubCellWeldAnimations.mRight;
+    if (secondSubCellBondAnimations.mRight.IsActive()) {
+        firstSubCellBondAnimations.mRight = secondSubCellBondAnimations.mRight;
     }
 
     cell.mSecondSubCell = SubCell {};
@@ -997,8 +997,8 @@ Field::RemovedSubCells Field::ClearFilledRows() {
                 ProcessSubCell(removedSubCells, firstSubCell, rowIndex, column);
                 ProcessSubCell(removedSubCells, secondSubCell, rowIndex, column);
                 
-                BreakCellDownWelds(rowIndex + 1, column);
-                BreakCellUpWelds(rowIndex - 1, column);
+                BreakCellDownBonds(rowIndex + 1, column);
+                BreakCellUpBonds(rowIndex - 1, column);
                 
                 firstSubCell = SubCell {};
                 firstSubCell.mBlockKind = BlockKind::ClearedRowBlock;
@@ -1033,8 +1033,8 @@ void Field::RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells)
         ProcessSubCell(removedSubCells, cell.mFirstSubCell, rowIndex, column);
         ProcessSubCell(removedSubCells, cell.mSecondSubCell, rowIndex, column);
         
-        BreakCellDownWelds(rowIndex + 1, column);
-        BreakCellUpWelds(rowIndex - 1, column);
+        BreakCellDownBonds(rowIndex + 1, column);
+        BreakCellUpBonds(rowIndex - 1, column);
         
         for (auto row = rowIndex; row < mNumRows - 1; ++row) {
             mGrid[row][column] = mGrid[row + 1][column];
@@ -1044,67 +1044,67 @@ void Field::RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells)
     }
 }
 
-void Field::BreakCellDownWelds(int row, int column) {
+void Field::BreakCellDownBonds(int row, int column) {
     if (row < mNumRows) {
         auto& cell = mGrid[row][column];
-        BreakDownWelds(cell.mFirstSubCell);
-        BreakDownWelds(cell.mSecondSubCell);
+        BreakDownBonds(cell.mFirstSubCell);
+        BreakDownBonds(cell.mSecondSubCell);
     }
 }
 
-void Field::BreakCellUpWelds(int row, int column) {
+void Field::BreakCellUpBonds(int row, int column) {
     if (row >= 0) {
         auto& cell = mGrid[row][column];
-        BreakUpWelds(cell.mFirstSubCell);
-        BreakUpWelds(cell.mSecondSubCell);
+        BreakUpBonds(cell.mFirstSubCell);
+        BreakUpBonds(cell.mSecondSubCell);
     }
 }
 
-void Field::BreakCellRightWelds(int row, int column) {
+void Field::BreakCellRightBonds(int row, int column) {
     if (column >= 0) {
         auto& cell = mGrid[row][column];
-        BreakRightWelds(cell.mFirstSubCell);
-        BreakRightWelds(cell.mSecondSubCell);
+        BreakRightBonds(cell.mFirstSubCell);
+        BreakRightBonds(cell.mSecondSubCell);
     }
 }
 
-void Field::BreakCellLeftWelds(int row, int column) {
+void Field::BreakCellLeftBonds(int row, int column) {
     if (column < mNumColumns) {
         auto& cell = mGrid[row][column];
-        BreakLeftWelds(cell.mFirstSubCell);
-        BreakLeftWelds(cell.mSecondSubCell);
+        BreakLeftBonds(cell.mFirstSubCell);
+        BreakLeftBonds(cell.mSecondSubCell);
     }
 }
 
-void Field::BreakLowerLeftWeld(int row, int column) {
+void Field::BreakLowerLeftBond(int row, int column) {
     if (column < mNumColumns && row < mNumRows) {
         auto& cell = mGrid[row][column];
-        cell.mFirstSubCell.mWelds.mDownLeft = false;
-        cell.mSecondSubCell.mWelds.mDownLeft = false;
+        cell.mFirstSubCell.mBonds.mDownLeft = false;
+        cell.mSecondSubCell.mBonds.mDownLeft = false;
     }
 }
 
-void Field::BreakUpperLeftWeld(int row, int column) {
+void Field::BreakUpperLeftBond(int row, int column) {
     if (column < mNumColumns && row >= 0) {
         auto& cell = mGrid[row][column];
-        cell.mFirstSubCell.mWelds.mUpLeft = false;
-        cell.mSecondSubCell.mWelds.mUpLeft = false;
+        cell.mFirstSubCell.mBonds.mUpLeft = false;
+        cell.mSecondSubCell.mBonds.mUpLeft = false;
     }
 }
 
-void Field::BreakUpperRightWeld(int row, int column) {
+void Field::BreakUpperRightBond(int row, int column) {
     if (column >= 0 && row >= 0) {
         auto& cell = mGrid[row][column];
-        cell.mFirstSubCell.mWelds.mUpRight = false;
-        cell.mSecondSubCell.mWelds.mUpRight = false;
+        cell.mFirstSubCell.mBonds.mUpRight = false;
+        cell.mSecondSubCell.mBonds.mUpRight = false;
     }
 }
 
-void Field::BreakLowerRightWeld(int row, int column) {
+void Field::BreakLowerRightBond(int row, int column) {
     if (column >= 0 && row < mNumRows) {
         auto& cell = mGrid[row][column];
-        cell.mFirstSubCell.mWelds.mDownRight = false;
-        cell.mSecondSubCell.mWelds.mDownRight = false;
+        cell.mFirstSubCell.mBonds.mDownRight = false;
+        cell.mSecondSubCell.mBonds.mDownRight = false;
     }
 }
 
@@ -1132,44 +1132,44 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
             
             if (!removeCorners) {
                 if (column == areaPos.x && row == areaPos.y) {
-                    BreakCellRightWelds(row, column);
-                    BreakCellUpWelds(row, column);
+                    BreakCellRightBonds(row, column);
+                    BreakCellUpBonds(row, column);
                     continue;
                 }
                 
                 if (column == areaPos.x + areaSize.x - 1 && row == areaPos.y) {
-                    BreakCellLeftWelds(row, column);
-                    BreakCellUpWelds(row, column);
+                    BreakCellLeftBonds(row, column);
+                    BreakCellUpBonds(row, column);
                     continue;
                 }
 
                 if (column == areaPos.x + areaSize.x - 1 && row == areaPos.y + areaSize.y - 1) {
-                    BreakCellLeftWelds(row, column);
-                    BreakCellDownWelds(row, column);
+                    BreakCellLeftBonds(row, column);
+                    BreakCellDownBonds(row, column);
                     continue;
                 }
 
                 if (column == areaPos.x && row == areaPos.y + areaSize.y - 1) {
-                    BreakCellRightWelds(row, column);
-                    BreakCellDownWelds(row, column);
+                    BreakCellRightBonds(row, column);
+                    BreakCellDownBonds(row, column);
                     continue;
                 }
             }
             
             if (column == areaPos.x) {
-                BreakCellRightWelds(row, column - 1);
+                BreakCellRightBonds(row, column - 1);
             }
 
             if (column == areaPos.x + areaSize.x - 1) {
-                BreakCellLeftWelds(row, column + 1);
+                BreakCellLeftBonds(row, column + 1);
             }
 
             if (row == areaPos.y || row == mLowestVisibleRow) {
-                BreakCellUpWelds(row - 1, column);
+                BreakCellUpBonds(row - 1, column);
             }
 
             if (row == areaPos.y + areaSize.y - 1) {
-                BreakCellDownWelds(row + 1, column);
+                BreakCellDownBonds(row + 1, column);
             }
             
             auto& cell = mGrid[row][column];
@@ -1187,19 +1187,19 @@ Field::RemovedSubCells Field::RemoveAreaOfSubCells(const Pht::IVec2& areaPos,
     }
     
     if (removeCorners) {
-        BreakLowerLeftWeld(areaPos.y + areaSize.y, areaPos.x + areaSize.x);
-        BreakUpperLeftWeld(areaPos.y - 1, areaPos.x + areaSize.x);
-        BreakUpperRightWeld(areaPos.y - 1, areaPos.x - 1);
-        BreakLowerRightWeld(areaPos.y + areaSize.y, areaPos.x - 1);
+        BreakLowerLeftBond(areaPos.y + areaSize.y, areaPos.x + areaSize.x);
+        BreakUpperLeftBond(areaPos.y - 1, areaPos.x + areaSize.x);
+        BreakUpperRightBond(areaPos.y - 1, areaPos.x - 1);
+        BreakLowerRightBond(areaPos.y + areaSize.y, areaPos.x - 1);
     } else {
-        BreakLowerLeftWeld(areaPos.y + areaSize.y, areaPos.x + areaSize.x - 1);
-        BreakLowerLeftWeld(areaPos.y + areaSize.y - 1, areaPos.x + areaSize.x);
-        BreakUpperLeftWeld(areaPos.y, areaPos.x + areaSize.x);
-        BreakUpperLeftWeld(areaPos.y - 1, areaPos.x + areaSize.x - 1);
-        BreakUpperRightWeld(areaPos.y - 1, areaPos.x);
-        BreakUpperRightWeld(areaPos.y, areaPos.x - 1);
-        BreakLowerRightWeld(areaPos.y + areaSize.y - 1, areaPos.x - 1);
-        BreakLowerRightWeld(areaPos.y + areaSize.y, areaPos.x);
+        BreakLowerLeftBond(areaPos.y + areaSize.y, areaPos.x + areaSize.x - 1);
+        BreakLowerLeftBond(areaPos.y + areaSize.y - 1, areaPos.x + areaSize.x);
+        BreakUpperLeftBond(areaPos.y, areaPos.x + areaSize.x);
+        BreakUpperLeftBond(areaPos.y - 1, areaPos.x + areaSize.x - 1);
+        BreakUpperRightBond(areaPos.y - 1, areaPos.x);
+        BreakUpperRightBond(areaPos.y, areaPos.x - 1);
+        BreakLowerRightBond(areaPos.y + areaSize.y - 1, areaPos.x - 1);
+        BreakLowerRightBond(areaPos.y + areaSize.y, areaPos.x);
     }
     
     return removedSubCells;

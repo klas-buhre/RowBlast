@@ -1082,12 +1082,12 @@ Pht::SceneObject& HowToPlayDialogView::CreateLPiece(const Pht::Vec3& position,
     CreateBlock({halfCellSize, -halfCellSize, 0.0f}, blockRenderable, lPiece);
     CreateBlock({halfCellSize, halfCellSize, 0.0f}, blockRenderable, lPiece);
     
-    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+    auto& bondRenderable = pieceResources.GetBondRenderableObject(BondRenderableKind::Normal,
                                                                   BlockColor::Yellow,
                                                                   BlockBrightness::Normal);
 
-    CreateWeld({0.0f, halfCellSize, halfCellSize}, weldRenderable, 0.0f, lPiece);
-    CreateWeld({halfCellSize, 0.0f, halfCellSize}, weldRenderable, 90.0f, lPiece);
+    CreateBond({0.0f, halfCellSize, halfCellSize}, bondRenderable, 0.0f, lPiece);
+    CreateBond({halfCellSize, 0.0f, halfCellSize}, bondRenderable, 90.0f, lPiece);
     
     return lPiece;
 }
@@ -1109,12 +1109,12 @@ Pht::SceneObject& HowToPlayDialogView::CreateIPiece(const Pht::Vec3& position,
     CreateBlock({0.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
     CreateBlock({halfCellSize * 2.0f, 0.0f, 0.0f}, blockRenderable, iPiece);
     
-    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+    auto& bondRenderable = pieceResources.GetBondRenderableObject(BondRenderableKind::Normal,
                                                                   BlockColor::Green,
                                                                   BlockBrightness::Normal);
 
-    CreateWeld({-halfCellSize, 0.0f, halfCellSize}, weldRenderable, 0.0f, iPiece);
-    CreateWeld({halfCellSize, 0.0f, halfCellSize}, weldRenderable, 0.0f, iPiece);
+    CreateBond({-halfCellSize, 0.0f, halfCellSize}, bondRenderable, 0.0f, iPiece);
+    CreateBond({halfCellSize, 0.0f, halfCellSize}, bondRenderable, 0.0f, iPiece);
     
     return iPiece;
 }
@@ -1139,15 +1139,15 @@ Pht::SceneObject& HowToPlayDialogView::CreateDPiece(const Pht::Vec3& position,
     CreateBlock({halfCellSize * 2.0f, -halfCellSize, 0.0f}, blockRenderable, dPiece);
 
 
-    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+    auto& bondRenderable = pieceResources.GetBondRenderableObject(BondRenderableKind::Normal,
                                                                   BlockColor::Red,
                                                                   BlockBrightness::Normal);
 
-    CreateWeld({-halfCellSize, halfCellSize, halfCellSize}, weldRenderable, 0.0f, dPiece);
-    CreateWeld({halfCellSize, halfCellSize, halfCellSize}, weldRenderable, 0.0f, dPiece);
-    CreateWeld({halfCellSize, -halfCellSize, halfCellSize}, weldRenderable, 0.0f, dPiece);
-    CreateWeld({0.0f, 0.0f, halfCellSize}, weldRenderable, 90.0f, dPiece);
-    CreateWeld({halfCellSize * 2.0f, 0.0f, halfCellSize}, weldRenderable, 90.0f, dPiece);
+    CreateBond({-halfCellSize, halfCellSize, halfCellSize}, bondRenderable, 0.0f, dPiece);
+    CreateBond({halfCellSize, halfCellSize, halfCellSize}, bondRenderable, 0.0f, dPiece);
+    CreateBond({halfCellSize, -halfCellSize, halfCellSize}, bondRenderable, 0.0f, dPiece);
+    CreateBond({0.0f, 0.0f, halfCellSize}, bondRenderable, 90.0f, dPiece);
+    CreateBond({halfCellSize * 2.0f, 0.0f, halfCellSize}, bondRenderable, 90.0f, dPiece);
     
     return dPiece;
 }
@@ -1168,11 +1168,11 @@ Pht::SceneObject& HowToPlayDialogView::CreateTwoBlocks(const Pht::Vec3& position
     CreateBlock({-halfCellSize, 0.0f, 0.0f}, blockRenderable, blocks);
     CreateBlock({halfCellSize, 0.0f, 0.0f}, blockRenderable, blocks);
     
-    auto& weldRenderable = pieceResources.GetWeldRenderableObject(WeldRenderableKind::Normal,
+    auto& bondRenderable = pieceResources.GetBondRenderableObject(BondRenderableKind::Normal,
                                                                   color,
                                                                   BlockBrightness::Normal);
 
-    CreateWeld({0.0f, 0.0f, halfCellSize}, weldRenderable, 0.0f, blocks);
+    CreateBond({0.0f, 0.0f, halfCellSize}, bondRenderable, 0.0f, blocks);
     
     return blocks;
 }
@@ -1296,17 +1296,17 @@ void HowToPlayDialogView::CreateBlock(const Pht::Vec3& position,
     parent.AddChild(block);
 }
 
-void HowToPlayDialogView::CreateWeld(const Pht::Vec3& position,
-                                     Pht::RenderableObject& weldRenderable,
+void HowToPlayDialogView::CreateBond(const Pht::Vec3& position,
+                                     Pht::RenderableObject& bondRenderable,
                                      float rotation,
                                      Pht::SceneObject& parent) {
-    auto& weld = CreateSceneObject();
-    auto& transform = weld.GetTransform();
+    auto& bond = CreateSceneObject();
+    auto& transform = bond.GetTransform();
     transform.SetPosition(position);
     transform.SetScale(0.8f);
     transform.SetRotation({0.0f, 0.0f, rotation});
-    weld.SetRenderable(&weldRenderable);
-    parent.AddChild(weld);
+    bond.SetRenderable(&bondRenderable);
+    parent.AddChild(bond);
 }
 
 Pht::SceneObject& HowToPlayDialogView::CreateLPieceGhostPiece(const Pht::Vec3& position,

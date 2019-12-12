@@ -82,10 +82,10 @@ namespace RowBlast {
         void SetUpPreviewPiece(LevelStartPreviewPiece& previewPiece,
                                const Piece& pieceType,
                                const Pht::Vec3& position);
-        void SetUpBlockWelds(const SubCell& subCell,
+        void SetUpBlockBonds(const SubCell& subCell,
                              const Pht::Vec3& blockPos,
                              SceneObjectPool& pool);
-        void SetUpBlockWeld(const Pht::Vec3& weldPosition,
+        void SetUpBlockBond(const Pht::Vec3& bondPosition,
                             float rotation,
                             const SubCell& subCell,
                             SceneObjectPool& pool);

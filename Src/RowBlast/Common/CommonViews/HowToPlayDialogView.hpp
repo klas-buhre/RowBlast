@@ -158,8 +158,8 @@ namespace RowBlast {
         void CreateBlock(const Pht::Vec3& position,
                          Pht::RenderableObject& blockRenderable,
                          Pht::SceneObject& parent);
-        void CreateWeld(const Pht::Vec3& position,
-                        Pht::RenderableObject& weldRenderable,
+        void CreateBond(const Pht::Vec3& position,
+                        Pht::RenderableObject& bondRenderable,
                         float rotation,
                         Pht::SceneObject& parent);
         Pht::SceneObject& CreateLPieceGhostPiece(const Pht::Vec3& position,

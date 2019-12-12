@@ -509,7 +509,7 @@
 		6270DC631FCB22AE00FB457D /* star.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC5A1FCB22AE00FB457D /* star.obj */; };
 		6270DC6D1FCB231B00FB457D /* ethnocentric_rg_it.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC6B1FCB231B00FB457D /* ethnocentric_rg_it.ttf */; };
 		6270DC6E1FCB231B00FB457D /* HussarBoldWeb.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6270DC6C1FCB231B00FB457D /* HussarBoldWeb.otf */; };
-		6276B7102040297E0075C468 /* weld_76.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6276B70F2040297D0075C468 /* weld_76.obj */; };
+		6276B7102040297E0075C468 /* bond_76.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6276B70F2040297D0075C468 /* bond_76.obj */; };
 		62780A87221C68130089BDE5 /* PortalCameraMovement.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62780A85221C68130089BDE5 /* PortalCameraMovement.cpp */; };
 		6278591C203AFB7C00494A4D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6278591B203AFB7C00494A4D /* Images.xcassets */; };
 		627A12C521B3085100EECA3B /* GuiViewManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 627A12C421B3085100EECA3B /* GuiViewManager.cpp */; };
@@ -1489,7 +1489,7 @@
 		6270DC5A1FCB22AE00FB457D /* star.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = star.obj; sourceTree = "<group>"; };
 		6270DC6B1FCB231B00FB457D /* ethnocentric_rg_it.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ethnocentric_rg_it.ttf; sourceTree = "<group>"; };
 		6270DC6C1FCB231B00FB457D /* HussarBoldWeb.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = HussarBoldWeb.otf; sourceTree = "<group>"; };
-		6276B70F2040297D0075C468 /* weld_76.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = weld_76.obj; sourceTree = "<group>"; };
+		6276B70F2040297D0075C468 /* bond_76.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bond_76.obj; sourceTree = "<group>"; };
 		62780A85221C68130089BDE5 /* PortalCameraMovement.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PortalCameraMovement.cpp; sourceTree = "<group>"; };
 		62780A86221C68130089BDE5 /* PortalCameraMovement.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PortalCameraMovement.hpp; sourceTree = "<group>"; };
 		6278591B203AFB7C00494A4D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -3145,7 +3145,7 @@
 				1766C7452360D0ED00C8E355 /* triangle_320_r270.obj */,
 				1766C7432360CF0300C8E355 /* triangle_320.obj */,
 				626940A4215932C800D9857A /* ufo_3620.obj */,
-				6276B70F2040297D0075C468 /* weld_76.obj */,
+				6276B70F2040297D0075C468 /* bond_76.obj */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -3456,7 +3456,7 @@
 				62B1CB8B210F8F8600D0F195 /* sky_upside_down.jpg in Resources */,
 				17E53FC9235E169E005B91E0 /* cube_428.obj in Resources */,
 				62B1CB7D210F8F8600D0F195 /* bomb_798_emission.jpg in Resources */,
-				6276B7102040297E0075C468 /* weld_76.obj in Resources */,
+				6276B7102040297E0075C468 /* bond_76.obj in Resources */,
 				62276E672274A96000679BC6 /* level49.json in Resources */,
 				62B1CB82210F8F8600D0F195 /* glow_lines.png in Resources */,
 				62276E812274A96000679BC6 /* level60.json in Resources */,

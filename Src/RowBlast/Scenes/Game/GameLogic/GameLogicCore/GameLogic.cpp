@@ -569,7 +569,7 @@ GameLogic::CascadeState GameLogic::HandleCascading() {
                 mCascadeState = CascadeState::WaitingToClearRows;
             } else {
                 mCascadeState = CascadeState::NotCascading;
-                mField.ManageWelds();
+                mField.ManageBonds();
             }
             break;
         case CascadeState::WaitingToClearRows:
@@ -916,7 +916,7 @@ void GameLogic::LandFallingPiece(bool finalMovementWasADrop) {
     }
     
     if (mState != State::FieldExplosions && mCascadeState == CascadeState::NotCascading) {
-        mField.ManageWelds();
+        mField.ManageBonds();
         PlayLandPieceSound();
     }
     
@@ -1185,7 +1185,7 @@ void GameLogic::RotateFallingPiece(const Pht::TouchEvent& touchEvent) {
         
         RotatateAndAdjustPosition(newRotation, pieceBlocks, position, collisionDirection);
     } else {
-        if (!CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+        if (!CollisionDetection::IsIllegalTiltedBondPosition(mField,
                                                              position,
                                                              newRotation,
                                                              pieceType)) {
@@ -1221,7 +1221,7 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
         case Direction::Right: {
             auto freeXPos = mField.DetectFreeSpaceLeft(pieceBlocks, position);
             if (position.x - freeXPos <= maxRotateAdjustment &&
-                !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+                !CollisionDetection::IsIllegalTiltedBondPosition(mField,
                                                                  Pht::IVec2{freeXPos, position.y},
                                                                  newRotation,
                                                                  mFallingPiece.GetPieceType())) {
@@ -1233,7 +1233,7 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
         case Direction::Left: {
             auto freeXPos = mField.DetectFreeSpaceRight(pieceBlocks, position);
             if (freeXPos - position.x <= maxRotateAdjustment &&
-                !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+                !CollisionDetection::IsIllegalTiltedBondPosition(mField,
                                                                  Pht::IVec2{freeXPos, position.y},
                                                                  newRotation,
                                                                  mFallingPiece.GetPieceType())) {
@@ -1245,7 +1245,7 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
         case Direction::Up: {
             auto freeYPos = mField.DetectFreeSpaceDown(pieceBlocks, position);
             if (position.y - freeYPos <= maxRotateAdjustment &&
-                !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+                !CollisionDetection::IsIllegalTiltedBondPosition(mField,
                                                                  Pht::IVec2{position.x, freeYPos},
                                                                  newRotation,
                                                                  mFallingPiece.GetPieceType())) {
@@ -1257,7 +1257,7 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
         case Direction::Down: {
             auto freeYPos = mField.DetectFreeSpaceUp(pieceBlocks, position);
             if (freeYPos - position.y <= maxRotateAdjustment &&
-                !CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+                !CollisionDetection::IsIllegalTiltedBondPosition(mField,
                                                                  Pht::IVec2{position.x, freeYPos},
                                                                  newRotation,
                                                                  mFallingPiece.GetPieceType())) {

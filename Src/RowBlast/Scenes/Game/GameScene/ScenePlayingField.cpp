@@ -41,17 +41,17 @@ namespace {
         return baseRotation + RotationToDeg(rotation);
     }
     
-    void UpdateBlockWeld(const Pht::Vec3& weldPosition,
+    void UpdateBlockBond(const Pht::Vec3& bondPosition,
                          float rotation,
                          float scale,
-                         Pht::RenderableObject& weldRenderableObject,
+                         Pht::RenderableObject& bondRenderableObject,
                          SceneObjectPool& pool) {
         auto& sceneObject = pool.AccuireSceneObject();
         auto& transform = sceneObject.GetTransform();
         transform.SetRotation({0.0f, 0.0f, rotation});
         transform.SetScale({scale, 1.0f, 1.0f});
-        transform.SetPosition(weldPosition);
-        sceneObject.SetRenderable(&weldRenderableObject);
+        transform.SetPosition(bondPosition);
+        sceneObject.SetRenderable(&bondRenderableObject);
     }
 }
 
@@ -261,81 +261,81 @@ void ScenePlayingField::UpdateFieldBlock(const SubCell& subCell, bool isSecondSu
                 auto& renderableObject =
                     mPieceResources.GetBlockRenderableObject(blockKind, color, brightness);
                 sceneObject.SetRenderable(&renderableObject);
-                UpdateBlockWelds(subCell, blockPosition, mScene.GetFieldBlocks(), isSecondSubCell);
+                UpdateBlockBonds(subCell, blockPosition, mScene.GetFieldBlocks(), isSecondSubCell);
             }
             break;
     }
 }
 
-void ScenePlayingField::UpdateBlockWelds(const SubCell& subCell,
+void ScenePlayingField::UpdateBlockBonds(const SubCell& subCell,
                                          const Pht::Vec3& blockPos,
                                          SceneObjectPool& pool,
                                          bool isSecondSubCell) {
-    auto& welds = subCell.mWelds;
-    auto& weldAnimations = subCell.mWeldAnimations;
+    auto& bonds = subCell.mBonds;
+    auto& bondAnimations = subCell.mBondAnimations;
     const auto cellSize = mScene.GetCellSize();
-    auto weldZ = blockPos.z + cellSize / 2.0f;
+    auto bondZ = blockPos.z + cellSize / 2.0f;
     
-    if (welds.mUpLeft || weldAnimations.mUpLeft.IsActive()) {
-        UpdateBlockWeld({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
+    if (bonds.mUpLeft || bondAnimations.mUpLeft.IsActive()) {
+        UpdateBlockBond({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, bondZ},
                         45.0f,
-                        weldAnimations.mUpLeft.mScale,
-                        GetWeldRenderable(WeldRenderableKind::Aslope, subCell, weldAnimations.mUpLeft),
+                        bondAnimations.mUpLeft.mScale,
+                        GetBondRenderable(BondRenderableKind::Aslope, subCell, bondAnimations.mUpLeft),
                         pool);
     }
     
-    if (welds.mUp || weldAnimations.mUp.IsActive()) {
-        UpdateBlockWeld({blockPos.x, blockPos.y + cellSize / 2.0f, weldZ},
+    if (bonds.mUp || bondAnimations.mUp.IsActive()) {
+        UpdateBlockBond({blockPos.x, blockPos.y + cellSize / 2.0f, bondZ},
                         -90.0f,
-                        weldAnimations.mUp.mScale,
-                        GetWeldRenderable(WeldRenderableKind::Normal, subCell, weldAnimations.mUp),
+                        bondAnimations.mUp.mScale,
+                        GetBondRenderable(BondRenderableKind::Normal, subCell, bondAnimations.mUp),
                         pool);
     }
     
-    if (welds.mUpRight || weldAnimations.mUpRight.IsActive()) {
-        UpdateBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, weldZ},
+    if (bonds.mUpRight || bondAnimations.mUpRight.IsActive()) {
+        UpdateBlockBond({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, bondZ},
                         -45.0f,
-                        weldAnimations.mUpRight.mScale,
-                        GetWeldRenderable(WeldRenderableKind::Aslope, subCell, weldAnimations.mUpRight),
+                        bondAnimations.mUpRight.mScale,
+                        GetBondRenderable(BondRenderableKind::Aslope, subCell, bondAnimations.mUpRight),
                         pool);
     }
 
-    if (welds.mRight || weldAnimations.mRight.IsActive()) {
-        UpdateBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y, weldZ},
+    if (bonds.mRight || bondAnimations.mRight.IsActive()) {
+        UpdateBlockBond({blockPos.x + cellSize / 2.0f, blockPos.y, bondZ},
                         0.0f,
-                        weldAnimations.mRight.mScale,
-                        GetWeldRenderable(WeldRenderableKind::Normal, subCell, weldAnimations.mRight),
+                        bondAnimations.mRight.mScale,
+                        GetBondRenderable(BondRenderableKind::Normal, subCell, bondAnimations.mRight),
                         pool);
     }
 
-    if (welds.mDiagonal && isSecondSubCell) {
-        auto& diagonalAnimation = weldAnimations.mDiagonal;
+    if (bonds.mDiagonal && isSecondSubCell) {
+        auto& diagonalAnimation = bondAnimations.mDiagonal;
         auto color = subCell.mColor;
         
         auto brightness =
             diagonalAnimation.IsSemiFlashing() ?
             BlockBrightness::SemiFlashing : subCell.mFlashingBlockAnimation.mBrightness;
         
-        auto& diagonalWeldRenderable =
-            mPieceResources.GetWeldRenderableObject(WeldRenderableKind::Diagonal, color, brightness);
+        auto& diagonalBondRenderable =
+            mPieceResources.GetBondRenderableObject(BondRenderableKind::Diagonal, color, brightness);
         
-        auto weldScale {weldAnimations.mDiagonal.mScale};
+        auto bondScale {bondAnimations.mDiagonal.mScale};
         
         switch (subCell.mFill) {
             case Fill::LowerRightHalf:
             case Fill::UpperLeftHalf:
-                UpdateBlockWeld({blockPos.x, blockPos.y, weldZ},
+                UpdateBlockBond({blockPos.x, blockPos.y, bondZ},
                                 -45.0f,
-                                weldScale,
-                                diagonalWeldRenderable,
+                                bondScale,
+                                diagonalBondRenderable,
                                 pool);
                 break;
             case Fill::LowerLeftHalf:
             case Fill::UpperRightHalf:
-                UpdateBlockWeld({blockPos.x, blockPos.y, weldZ},
+                UpdateBlockBond({blockPos.x, blockPos.y, bondZ},
                                 45.0f,
-                                weldScale,
-                                diagonalWeldRenderable,
+                                bondScale,
+                                diagonalBondRenderable,
                                 pool);
                 break;
             default:
@@ -344,16 +344,16 @@ void ScenePlayingField::UpdateBlockWelds(const SubCell& subCell,
     }
 }
 
-Pht::RenderableObject& ScenePlayingField::GetWeldRenderable(WeldRenderableKind renderableKind,
+Pht::RenderableObject& ScenePlayingField::GetBondRenderable(BondRenderableKind renderableKind,
                                                             const SubCell& subCell,
-                                                            const WeldAnimation& weldAnimation) {
+                                                            const BondAnimation& bondAnimation) {
     auto color = subCell.mColor;
     
     auto brightness =
-        weldAnimation.IsSemiFlashing() ?
+        bondAnimation.IsSemiFlashing() ?
         BlockBrightness::SemiFlashing : subCell.mFlashingBlockAnimation.mBrightness;
     
-    return mPieceResources.GetWeldRenderableObject(renderableKind, color, brightness);
+    return mPieceResources.GetBondRenderableObject(renderableKind, color, brightness);
 }
 
 void ScenePlayingField::UpdateFallingPiece() {
@@ -511,7 +511,7 @@ void ScenePlayingField::UpdatePieceBlocks(const Piece& pieceType,
                 
                 sceneObject.SetRenderable(&blockRenderableObject);
 
-                UpdateBlockWelds(subCell, blockPosition, pool, false);
+                UpdateBlockBonds(subCell, blockPosition, pool, false);
             }
         }
     }

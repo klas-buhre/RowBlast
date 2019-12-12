@@ -17,8 +17,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto numWeldRenderables = 3;
-    constexpr auto diagonalWeldAlpha = 0.5f;
+    constexpr auto numBondRenderables = 3;
+    constexpr auto diagonalBondAlpha = 0.5f;
     constexpr auto ghostPieceOpacity = 0.55f;
     constexpr auto cellSize = 1.25f;
     
@@ -85,22 +85,22 @@ namespace {
     }
     
     std::unique_ptr<Pht::RenderableObject>
-    ToWeldRenderableObject(WeldRenderableKind weldRenderableKind,
+    ToBondRenderableObject(BondRenderableKind bondRenderableKind,
                            const Pht::Material& material,
                            Pht::ISceneManager& sceneManager) {
-        switch (weldRenderableKind) {
-            case WeldRenderableKind::Normal:
+        switch (bondRenderableKind) {
+            case BondRenderableKind::Normal:
                 return sceneManager.CreateRenderableObject(Pht::QuadMesh {0.127f,
                                                                           0.95f,
-                                                                          std::string{"normalWeld"}},
+                                                                          std::string{"normalBond"}},
                                                            material);
-            case WeldRenderableKind::Aslope:
+            case BondRenderableKind::Aslope:
                 return sceneManager.CreateRenderableObject(Pht::QuadMesh {0.19f,
                                                                           0.68f,
-                                                                          std::string{"aslopeWeld"}},
+                                                                          std::string{"aslopeBond"}},
                                                            material);
-            case WeldRenderableKind::Diagonal:
-                return sceneManager.CreateRenderableObject(Pht::ObjMesh {"weld_76.obj", 0.95f},
+            case BondRenderableKind::Diagonal:
+                return sceneManager.CreateRenderableObject(Pht::ObjMesh {"bond_76.obj", 0.95f},
                                                            material);
         }
     }
@@ -112,8 +112,8 @@ PieceResources::PieceResources(Pht::IEngine& engine, const CommonResources& comm
     auto& sceneManager = engine.GetSceneManager();
     
     CreateBlocks(sceneManager, commonResources);
-    CreateWelds(sceneManager, commonResources);
-    CreatePreviewAslopeWelds(sceneManager, commonResources);
+    CreateBonds(sceneManager, commonResources);
+    CreatePreviewAslopeBonds(sceneManager, commonResources);
     CreateBombs(sceneManager);
 }
 
@@ -142,35 +142,35 @@ int PieceResources::CalcBlockIndex(BlockKind blockKind,
     return index;
 }
 
-Pht::RenderableObject& PieceResources::GetWeldRenderableObject(WeldRenderableKind weldRenderable,
+Pht::RenderableObject& PieceResources::GetBondRenderableObject(BondRenderableKind bondRenderable,
                                                                BlockColor color,
                                                                BlockBrightness brightness) const {
-    return *(mWelds[CalcWeldIndex(weldRenderable, color, brightness)]);
+    return *(mBonds[CalcBondIndex(bondRenderable, color, brightness)]);
 }
 
-int PieceResources::CalcWeldIndex(WeldRenderableKind weldRenderable,
+int PieceResources::CalcBondIndex(BondRenderableKind bondRenderable,
                                   BlockColor color,
                                   BlockBrightness brightness) const {
-    auto weldRenderableIndex = static_cast<int>(weldRenderable);
+    auto bondRenderableIndex = static_cast<int>(bondRenderable);
     auto colorIndex = static_cast<int>(color);
     auto brightnessIndex = static_cast<int>(brightness);
     
-    assert(weldRenderableIndex >= 0 && weldRenderableIndex < numWeldRenderables &&
+    assert(bondRenderableIndex >= 0 && bondRenderableIndex < numBondRenderables &&
            colorIndex >= 0 && colorIndex < Quantities::numBlockColors &&
-           brightnessIndex >= 0 && brightnessIndex < Quantities::numWeldBrightness);
+           brightnessIndex >= 0 && brightnessIndex < Quantities::numBondBrightness);
 
     auto index =
-        brightnessIndex * numWeldRenderables * Quantities::numBlockColors +
-        colorIndex * numWeldRenderables + weldRenderableIndex;
+        brightnessIndex * numBondRenderables * Quantities::numBlockColors +
+        colorIndex * numBondRenderables + bondRenderableIndex;
     
-    assert(index < mWelds.size());
+    assert(index < mBonds.size());
     return index;
 }
 
-Pht::RenderableObject& PieceResources::GetPreviewAslopeWeldRenderableObject(BlockColor color) const {
+Pht::RenderableObject& PieceResources::GetPreviewAslopeBondRenderableObject(BlockColor color) const {
     auto colorIndex = static_cast<int>(color);
     assert(colorIndex >= 0 && colorIndex < Quantities::numBlockColors);
-    return *(mPreviewAslopeWelds[static_cast<int>(color)]);
+    return *(mPreviewAslopeBonds[static_cast<int>(color)]);
 }
 
 void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager,
@@ -207,33 +207,33 @@ void PieceResources::CreateBlocks(Pht::ISceneManager& sceneManager,
     }
 }
 
-void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager,
+void PieceResources::CreateBonds(Pht::ISceneManager& sceneManager,
                                  const CommonResources& commonResources) {
-    auto numWelds = numWeldRenderables * Quantities::numBlockColors * Quantities::numWeldBrightness;
-    mWelds.resize(numWelds);
+    auto numBonds = numBondRenderables * Quantities::numBlockColors * Quantities::numBondBrightness;
+    mBonds.resize(numBonds);
     
-    for (auto weldRenderableIndex = 0;
-         weldRenderableIndex < numWeldRenderables;
-         ++weldRenderableIndex) {
+    for (auto bondRenderableIndex = 0;
+         bondRenderableIndex < numBondRenderables;
+         ++bondRenderableIndex) {
         
         for (auto colorIndex = 0; colorIndex < Quantities::numBlockColors; ++colorIndex) {
         
             for (auto brightnessIndex = 0;
-                 brightnessIndex < Quantities::numWeldBrightness;
+                 brightnessIndex < Quantities::numBondBrightness;
                  ++brightnessIndex) {
                 
-                auto weldRenderableKind = static_cast<WeldRenderableKind>(weldRenderableIndex);
+                auto bondRenderableKind = static_cast<BondRenderableKind>(bondRenderableIndex);
                 auto color = static_cast<BlockColor>(colorIndex);
                 auto brightness = static_cast<BlockBrightness>(brightnessIndex);
                 
                 auto material = ToMaterial(color, brightness, commonResources);
                 
-                if (weldRenderableKind == WeldRenderableKind::Diagonal) {
-                    material.SetOpacity(diagonalWeldAlpha);
+                if (bondRenderableKind == BondRenderableKind::Diagonal) {
+                    material.SetOpacity(diagonalBondAlpha);
                 }
                 
-                auto weldIndex = CalcWeldIndex(weldRenderableKind, color, brightness);
-                mWelds[weldIndex] = ToWeldRenderableObject(weldRenderableKind,
+                auto bondIndex = CalcBondIndex(bondRenderableKind, color, brightness);
+                mBonds[bondIndex] = ToBondRenderableObject(bondRenderableKind,
                                                            material,
                                                            sceneManager);
             }
@@ -241,9 +241,9 @@ void PieceResources::CreateWelds(Pht::ISceneManager& sceneManager,
     }
 }
 
-void PieceResources::CreatePreviewAslopeWelds(Pht::ISceneManager& sceneManager,
+void PieceResources::CreatePreviewAslopeBonds(Pht::ISceneManager& sceneManager,
                                               const CommonResources& commonResources) {
-    mPreviewAslopeWelds.resize(Quantities::numBlockColors);
+    mPreviewAslopeBonds.resize(Quantities::numBlockColors);
     
     for (auto colorIndex = 0; colorIndex < Quantities::numBlockColors; ++colorIndex) {
         auto color = static_cast<BlockColor>(colorIndex);
@@ -252,9 +252,9 @@ void PieceResources::CreatePreviewAslopeWelds(Pht::ISceneManager& sceneManager,
         auto renderable = sceneManager.CreateRenderableObject(Pht::BoxMesh {0.14f,
                                                                             0.6f,
                                                                             cellSize,
-                                                                            std::string{"previewAslopeWeld"}},
+                                                                            std::string{"previewAslopeBond"}},
                                                               material);
-        mPreviewAslopeWelds[colorIndex] = std::move(renderable);
+        mPreviewAslopeBonds[colorIndex] = std::move(renderable);
     }
 }
 

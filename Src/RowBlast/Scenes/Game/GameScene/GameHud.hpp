@@ -264,10 +264,10 @@ namespace RowBlast {
                                 const Piece* pieceType,
                                 const Pht::Vec3& position,
                                 float slotScale);
-        void UpdateBlockWelds(const SubCell& subCell,
+        void UpdateBlockBonds(const SubCell& subCell,
                               const Pht::Vec3& blockPos,
                               SceneObjectPool& pool);
-        void UpdateBlockWeld(const Pht::Vec3& weldPosition,
+        void UpdateBlockBond(const Pht::Vec3& bondPosition,
                              float rotation,
                              const SubCell& subCell,
                              SceneObjectPool& pool);

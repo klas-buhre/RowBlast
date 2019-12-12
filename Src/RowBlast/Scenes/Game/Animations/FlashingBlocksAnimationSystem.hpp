@@ -37,11 +37,11 @@ namespace RowBlast {
         void UpdateBlockRenderable(const Pht::Color& flashColorAdd,
                                    BlockBrightness flashingBlockBrightness,
                                    BlockKind blockKind);
-        void UpdateWeldRenderables(const Pht::Color& flashColorAdd,
-                                   BlockBrightness flashingWeldBrightness);
-        void UpdateWeldRenderable(const Pht::Color& flashColorAdd,
-                                  BlockBrightness flashingWeldBrightness,
-                                  WeldRenderableKind weldKind);
+        void UpdateBondRenderables(const Pht::Color& flashColorAdd,
+                                   BlockBrightness flashingBondBrightness);
+        void UpdateBondRenderable(const Pht::Color& flashColorAdd,
+                                  BlockBrightness flashingBondBrightness,
+                                  BondRenderableKind bondKind);
         
         enum class State {
             Waiting,

@@ -18,7 +18,7 @@ namespace Pht {
 namespace RowBlast {
     class CommonResources;
     
-    enum class WeldRenderableKind {
+    enum class BondRenderableKind {
         Normal,
         Aslope,
         Diagonal
@@ -31,10 +31,10 @@ namespace RowBlast {
         Pht::RenderableObject& GetBlockRenderableObject(BlockKind blockKind,
                                                         BlockColor color,
                                                         BlockBrightness brightness) const;
-        Pht::RenderableObject& GetWeldRenderableObject(WeldRenderableKind weldRenderableKind,
+        Pht::RenderableObject& GetBondRenderableObject(BondRenderableKind bondRenderableKind,
                                                        BlockColor color,
                                                        BlockBrightness brightness) const;
-        Pht::RenderableObject& GetPreviewAslopeWeldRenderableObject(BlockColor color) const;
+        Pht::RenderableObject& GetPreviewAslopeBondRenderableObject(BlockColor color) const;
 
         Pht::RenderableObject& GetBombRenderableObject() const {
             return *mBomb;
@@ -56,18 +56,18 @@ namespace RowBlast {
         int CalcBlockIndex(BlockKind blockKind,
                            BlockColor color,
                            BlockBrightness brightness) const;
-        int CalcWeldIndex(WeldRenderableKind weldRenderableKind,
+        int CalcBondIndex(BondRenderableKind bondRenderableKind,
                           BlockColor color,
                           BlockBrightness brightness) const;
         void CreateBlocks(Pht::ISceneManager& sceneManager, const CommonResources& commonResources);
-        void CreateWelds(Pht::ISceneManager& sceneManager, const CommonResources& commonResources);
-        void CreatePreviewAslopeWelds(Pht::ISceneManager& sceneManager,
+        void CreateBonds(Pht::ISceneManager& sceneManager, const CommonResources& commonResources);
+        void CreatePreviewAslopeBonds(Pht::ISceneManager& sceneManager,
                                       const CommonResources& commonResources);
         void CreateBombs(Pht::ISceneManager& sceneManager);
         
         std::vector<std::unique_ptr<Pht::RenderableObject>> mBlocks;
-        std::vector<std::unique_ptr<Pht::RenderableObject>> mWelds;
-        std::vector<std::unique_ptr<Pht::RenderableObject>> mPreviewAslopeWelds;
+        std::vector<std::unique_ptr<Pht::RenderableObject>> mBonds;
+        std::vector<std::unique_ptr<Pht::RenderableObject>> mPreviewAslopeBonds;
         std::unique_ptr<Pht::RenderableObject> mBomb;
         std::unique_ptr<Pht::RenderableObject> mTransparentBomb;
         std::unique_ptr<Pht::RenderableObject> mRowBomb;

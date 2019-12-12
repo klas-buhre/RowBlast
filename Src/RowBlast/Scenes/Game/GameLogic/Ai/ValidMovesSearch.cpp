@@ -484,7 +484,7 @@ void ValidMovesSearch::SaveMove(ValidMoves& validMoves,
                                 const MovingPiece& piece,
                                 const Movement* previousMovement) {
     if (IsDuplicateMoveFoundAtDifferentLocation(piece) ||
-        CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+        CollisionDetection::IsIllegalTiltedBondPosition(mField,
                                                         piece.mPosition,
                                                         piece.mRotation,
                                                         piece.mPieceType)) {
@@ -661,7 +661,7 @@ void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
                                                 const MovingPiece& piece,
                                                 const Movement* previousMovement) {
     if (GetFoundMove(piece) || IsDuplicateMoveFoundAtDifferentLocation(piece) ||
-        CollisionDetection::IsIllegalTiltedWeldPosition(mField,
+        CollisionDetection::IsIllegalTiltedBondPosition(mField,
                                                         piece.mPosition,
                                                         piece.mRotation,
                                                         piece.mPieceType)) {

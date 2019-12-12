@@ -121,7 +121,7 @@ namespace RowBlast {
                              bool updateCellPosition,
                              bool startBlueprintCellAnimation,
                              bool startBounceAnimation);
-        void ManageWelds();
+        void ManageBonds();
         void MergeTriangleBlocksIntoCube(const Pht::IVec2& position);
         int GetNumRowsInOneScreen() const;
         bool AnyFilledRows() const;
@@ -204,26 +204,26 @@ namespace RowBlast {
         Pht::IVec2 ScanUntilNoCollision(const PieceBlocks& pieceBlocks,
                                         Pht::IVec2 position,
                                         const Pht::IVec2& step) const;
-        void MakeDiagonalWeld(Cell& cell);
-        void MakeWelds(SubCell& subCell, const Pht::IVec2& position);
-        bool ShouldBeUpWeld(const SubCell& subCell, const Pht::IVec2& position) const;
-        bool ShouldBeRightWeld(const SubCell& subCell, const Pht::IVec2& position) const;
-        bool ShouldBeDownWeld(const SubCell& subCell, const Pht::IVec2& position) const;
-        bool ShouldBeLeftWeld(const SubCell& subCell, const Pht::IVec2& position) const;
-        void BreakRedundantWelds(SubCell& subCell, const Pht::IVec2& position);
-        bool UpRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
-        bool DownRightWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
-        bool DownLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
-        bool UpLeftWeldWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
+        void MakeDiagonalBond(Cell& cell);
+        void MakeBonds(SubCell& subCell, const Pht::IVec2& position);
+        bool ShouldBeUpBond(const SubCell& subCell, const Pht::IVec2& position) const;
+        bool ShouldBeRightBond(const SubCell& subCell, const Pht::IVec2& position) const;
+        bool ShouldBeDownBond(const SubCell& subCell, const Pht::IVec2& position) const;
+        bool ShouldBeLeftBond(const SubCell& subCell, const Pht::IVec2& position) const;
+        void BreakRedundantBonds(SubCell& subCell, const Pht::IVec2& position);
+        bool UpRightBondWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
+        bool DownRightBondWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
+        bool DownLeftBondWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
+        bool UpLeftBondWouldBeRedundant(const SubCell& subCell, const Pht::IVec2& position) const;
         void RemoveRowImpl(int rowIndex, Field::RemovedSubCells& removedSubCells);
-        void BreakCellDownWelds(int row, int column);
-        void BreakCellUpWelds(int row, int column);
-        void BreakCellRightWelds(int row, int column);
-        void BreakCellLeftWelds(int row, int column);
-        void BreakLowerLeftWeld(int row, int column);
-        void BreakUpperLeftWeld(int row, int column);
-        void BreakUpperRightWeld(int row, int column);
-        void BreakLowerRightWeld(int row, int column);
+        void BreakCellDownBonds(int row, int column);
+        void BreakCellUpBonds(int row, int column);
+        void BreakCellRightBonds(int row, int column);
+        void BreakCellLeftBonds(int row, int column);
+        void BreakLowerLeftBond(int row, int column);
+        void BreakUpperLeftBond(int row, int column);
+        void BreakUpperRightBond(int row, int column);
+        void BreakLowerRightBond(int row, int column);
         void RemoveWholePiece(int pieceId, Field::RemovedSubCells& removedSubCells);
         void RemoveMatchingSubCell(int pieceId,
                                    Field::RemovedSubCells& removedSubCells,

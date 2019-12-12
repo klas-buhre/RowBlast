@@ -278,41 +278,41 @@ void FieldGravitySystem::FindPieceBlocks(BlockColor color, const Pht::IVec2& pos
     mPieceBlockCoords.PushBack(coord);
     
     subCell->mIsFound = true;
-    auto& welds = subCell->mWelds;
+    auto& bonds = subCell->mBonds;
 
-    if (welds.mDiagonal) {
+    if (bonds.mDiagonal) {
         FindPieceBlocks(color, position);
     }
     
-    if (welds.mUp) {
+    if (bonds.mUp) {
         FindPieceBlocks(color, position + Pht::IVec2 {0, 1});
     }
 
-    if (welds.mUpRight) {
+    if (bonds.mUpRight) {
         FindPieceBlocks(color, position + Pht::IVec2 {1, 1});
     }
     
-    if (welds.mRight) {
+    if (bonds.mRight) {
         FindPieceBlocks(color, position + Pht::IVec2 {1, 0});
     }
     
-    if (welds.mDownRight) {
+    if (bonds.mDownRight) {
         FindPieceBlocks(color, position + Pht::IVec2 {1, -1});
     }
 
-    if (welds.mDown) {
+    if (bonds.mDown) {
         FindPieceBlocks(color, position + Pht::IVec2 {0, -1});
     }
 
-    if (welds.mDownLeft) {
+    if (bonds.mDownLeft) {
         FindPieceBlocks(color, position + Pht::IVec2 {-1, -1});
     }
 
-    if (welds.mLeft) {
+    if (bonds.mLeft) {
         FindPieceBlocks(color, position + Pht::IVec2 {-1, 0});
     }
 
-    if (welds.mUpLeft) {
+    if (bonds.mUpLeft) {
         FindPieceBlocks(color, position + Pht::IVec2 {-1, 1});
     }
 }

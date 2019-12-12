@@ -24,10 +24,10 @@ namespace {
     }
 }
 
-WeldsAnimationSystem::WeldsAnimationSystem(Field& field) :
+BondsAnimationSystem::BondsAnimationSystem(Field& field) :
     mField {field} {}
 
-void WeldsAnimationSystem::Update(float dt) {
+void BondsAnimationSystem::Update(float dt) {
     for (auto row = 0; row < mField.GetNumRows(); ++row) {
         for (auto column = 0; column < mField.GetNumColumns(); ++column) {
             auto& cell = mField.GetCell(row, column);
@@ -37,15 +37,15 @@ void WeldsAnimationSystem::Update(float dt) {
             
             Pht::IVec2 position {column, row};
             
-            AnimateBlockWelds(cell.mFirstSubCell, position, dt);
-            AnimateBlockWelds(cell.mSecondSubCell, position, dt);
+            AnimateBlockBonds(cell.mFirstSubCell, position, dt);
+            AnimateBlockBonds(cell.mSecondSubCell, position, dt);
             
-            auto& diagonalAnimation = cell.mSecondSubCell.mWeldAnimations.mDiagonal;
+            auto& diagonalAnimation = cell.mSecondSubCell.mBondAnimations.mDiagonal;
             if (diagonalAnimation.IsActive() && !IsSubCellBouncing(cell.mFirstSubCell) &&
                 !IsSubCellBouncing(cell.mSecondSubCell)) {
                 
-                if (diagonalAnimation.mState == WeldAnimation::State::WeldAtFullScale) {
-                    diagonalAnimation.mState = WeldAnimation::State::Inactive;
+                if (diagonalAnimation.mState == BondAnimation::State::BondAtFullScale) {
+                    diagonalAnimation.mState = BondAnimation::State::Inactive;
                     mField.MergeTriangleBlocksIntoCube(position);
                     mField.SetChanged();
                 } else {
@@ -53,23 +53,23 @@ void WeldsAnimationSystem::Update(float dt) {
                         cell.mFirstSubCell.mFlashingBlockAnimation.IsActive() ||
                         cell.mSecondSubCell.mFlashingBlockAnimation.IsActive();
                     
-                    AnimateWeld(diagonalAnimation, cellIsFlashing, false, dt);
+                    AnimateBond(diagonalAnimation, cellIsFlashing, false, dt);
                 }
             }
         }
     }
 }
 
-void WeldsAnimationSystem::AnimateBlockWelds(SubCell& subCell,
+void BondsAnimationSystem::AnimateBlockBonds(SubCell& subCell,
                                              const Pht::IVec2& position,
                                              float dt) {
-    auto& animations = subCell.mWeldAnimations;
+    auto& animations = subCell.mBondAnimations;
     if (animations.mUp.IsActive()) {
-        AnimateUpWeld(subCell, position, dt);
+        AnimateUpBond(subCell, position, dt);
     }
     
     if (animations.mRight.IsActive()) {
-        AnimateRightWeld(subCell, position, dt);
+        AnimateRightBond(subCell, position, dt);
     }
     
     auto isThisOrUpRightBouncing = false;
@@ -89,11 +89,11 @@ void WeldsAnimationSystem::AnimateBlockWelds(SubCell& subCell,
         isThisOrUpLeftBouncing = IsSubCellBouncing(subCell);
     }
     
-    AnimateWeld(animations.mUpRight, false, isThisOrUpRightBouncing, dt);
-    AnimateWeld(animations.mUpLeft, false, isThisOrUpLeftBouncing, dt);
+    AnimateBond(animations.mUpRight, false, isThisOrUpRightBouncing, dt);
+    AnimateBond(animations.mUpLeft, false, isThisOrUpLeftBouncing, dt);
 }
 
-void WeldsAnimationSystem::AnimateUpWeld(SubCell& subCell, const Pht::IVec2& position, float dt) {
+void BondsAnimationSystem::AnimateUpBond(SubCell& subCell, const Pht::IVec2& position, float dt) {
     auto subCellIsFlashing = subCell.mFlashingBlockAnimation.IsActive();
     
     if (position.y + 1 < mField.GetNumRows()) {
@@ -103,16 +103,16 @@ void WeldsAnimationSystem::AnimateUpWeld(SubCell& subCell, const Pht::IVec2& pos
             upperCell.mFirstSubCell.mFlashingBlockAnimation.IsActive() ||
             upperCell.mSecondSubCell.mFlashingBlockAnimation.IsActive();
         
-        AnimateWeld(subCell.mWeldAnimations.mUp,
+        AnimateBond(subCell.mBondAnimations.mUp,
                     subCellIsFlashing || upperCellIsFlashing,
                     IsSubCellOrNeighbourBouncing(subCell, upperCell),
                     dt);
     } else {
-        AnimateWeld(subCell.mWeldAnimations.mUp, subCellIsFlashing, IsSubCellBouncing(subCell), dt);
+        AnimateBond(subCell.mBondAnimations.mUp, subCellIsFlashing, IsSubCellBouncing(subCell), dt);
     }
 }
 
-void WeldsAnimationSystem::AnimateRightWeld(SubCell& subCell,
+void BondsAnimationSystem::AnimateRightBond(SubCell& subCell,
                                             const Pht::IVec2& position,
                                             float dt) {
     auto subCellIsFlashing = subCell.mFlashingBlockAnimation.IsActive();
@@ -124,39 +124,39 @@ void WeldsAnimationSystem::AnimateRightWeld(SubCell& subCell,
             cellToTheRight.mFirstSubCell.mFlashingBlockAnimation.IsActive() ||
             cellToTheRight.mSecondSubCell.mFlashingBlockAnimation.IsActive();
         
-        AnimateWeld(subCell.mWeldAnimations.mRight,
+        AnimateBond(subCell.mBondAnimations.mRight,
                     subCellIsFlashing || cellToTheRightIsFlashing,
                     IsSubCellOrNeighbourBouncing(subCell, cellToTheRight),
                     dt);
     } else {
-        AnimateWeld(subCell.mWeldAnimations.mRight,
+        AnimateBond(subCell.mBondAnimations.mRight,
                     subCellIsFlashing,
                     IsSubCellBouncing(subCell),
                     dt);
     }
 }
 
-void WeldsAnimationSystem::AnimateWeldAppearing(WeldAnimation& animation, float dt) {
+void BondsAnimationSystem::AnimateBondAppearing(BondAnimation& animation, float dt) {
     animation.mScale += scaleSpeed * dt;
     if (animation.mScale > 1.0f) {
         animation.mScale = 1.0f;
-        animation.mState = WeldAnimation::State::WeldAtFullScale;
+        animation.mState = BondAnimation::State::BondAtFullScale;
     }
 
     mField.SetChanged();
 }
 
-void WeldsAnimationSystem::AnimateWeldDisappearing(WeldAnimation& animation, float dt) {
+void BondsAnimationSystem::AnimateBondDisappearing(BondAnimation& animation, float dt) {
     animation.mScale -= scaleSpeed * dt;
     if (animation.mScale < 0.0f) {
         animation.mScale = 0.0f;
-        animation.mState = WeldAnimation::State::Inactive;
+        animation.mState = BondAnimation::State::Inactive;
     }
 
     mField.SetChanged();
 }
 
-void WeldsAnimationSystem::AnimateWeld(WeldAnimation& animation,
+void BondsAnimationSystem::AnimateBond(BondAnimation& animation,
                                        bool cellIsFlashing,
                                        bool anyBouncing,
                                        float dt) {
@@ -165,35 +165,35 @@ void WeldsAnimationSystem::AnimateWeld(WeldAnimation& animation,
     }
     
     switch (animation.mState) {
-        case WeldAnimation::State::WeldAppearing:
+        case BondAnimation::State::BondAppearing:
             if (cellIsFlashing) {
-                animation.mState = WeldAnimation::State::WeldAppearingAndSemiFlashing;
+                animation.mState = BondAnimation::State::BondAppearingAndSemiFlashing;
             }
-            AnimateWeldAppearing(animation, dt);
+            AnimateBondAppearing(animation, dt);
             break;
-        case WeldAnimation::State::WeldAppearingAndSemiFlashing:
+        case BondAnimation::State::BondAppearingAndSemiFlashing:
             if (!cellIsFlashing) {
-                animation.mState = WeldAnimation::State::WeldAppearing;
+                animation.mState = BondAnimation::State::BondAppearing;
             }
-            AnimateWeldAppearing(animation, dt);
+            AnimateBondAppearing(animation, dt);
             break;
-        case WeldAnimation::State::WeldAtFullScale:
-            animation.mState = WeldAnimation::State::Inactive;
+        case BondAnimation::State::BondAtFullScale:
+            animation.mState = BondAnimation::State::Inactive;
             break;
-        case WeldAnimation::State::WeldDisappearing:
-            AnimateWeldDisappearing(animation, dt);
+        case BondAnimation::State::BondDisappearing:
+            AnimateBondDisappearing(animation, dt);
             break;
-        case WeldAnimation::State::Inactive:
+        case BondAnimation::State::Inactive:
             break;
     }
 }
 
-void WeldsAnimationSystem::StartWeldAppearingAnimation(WeldAnimation& animation) {
-    animation.mState = WeldAnimation::State::WeldAppearing;
+void BondsAnimationSystem::StartBondAppearingAnimation(BondAnimation& animation) {
+    animation.mState = BondAnimation::State::BondAppearing;
     animation.mScale = 0.0f;
 }
 
-void WeldsAnimationSystem::StartWeldDisappearingAnimation(WeldAnimation& animation) {
-    animation.mState = WeldAnimation::State::WeldDisappearing;
+void BondsAnimationSystem::StartBondDisappearingAnimation(BondAnimation& animation) {
+    animation.mState = BondAnimation::State::BondDisappearing;
     animation.mScale = 1.0f;
 }

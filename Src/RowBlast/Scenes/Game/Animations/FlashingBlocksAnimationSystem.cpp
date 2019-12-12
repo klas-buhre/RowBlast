@@ -149,9 +149,9 @@ void FlashingBlocksAnimationSystem::UpdateRenderables() {
     UpdateBlockRenderables(flashColorAdd, BlockBrightness::Flashing);
     UpdateBlockRenderables(brightFlashColorAdd, BlockBrightness::BlueprintFillFlashing);
 
-    UpdateWeldRenderables(flashColorAdd, BlockBrightness::Flashing);
-    UpdateWeldRenderables(brightFlashColorAdd, BlockBrightness::BlueprintFillFlashing);
-    UpdateWeldRenderables(semiFlashColorAdd, BlockBrightness::SemiFlashing);
+    UpdateBondRenderables(flashColorAdd, BlockBrightness::Flashing);
+    UpdateBondRenderables(brightFlashColorAdd, BlockBrightness::BlueprintFillFlashing);
+    UpdateBondRenderables(semiFlashColorAdd, BlockBrightness::SemiFlashing);
 }
 
 void FlashingBlocksAnimationSystem::UpdateBlockRenderables(const Pht::Color& flashColorAdd,
@@ -194,21 +194,21 @@ void FlashingBlocksAnimationSystem::UpdateBlockRenderable(const Pht::Color& flas
     flashingMaterial.SetSpecular(normalMaterial.GetSpecular() + flashColorAdd);
 }
 
-void FlashingBlocksAnimationSystem::UpdateWeldRenderables(const Pht::Color& flashColorAdd,
-                                                          BlockBrightness flashingWeldBrightness) {
-    UpdateWeldRenderable(flashColorAdd, flashingWeldBrightness, WeldRenderableKind::Normal);
-    UpdateWeldRenderable(flashColorAdd, flashingWeldBrightness, WeldRenderableKind::Aslope);
-    UpdateWeldRenderable(flashColorAdd, flashingWeldBrightness, WeldRenderableKind::Diagonal);
+void FlashingBlocksAnimationSystem::UpdateBondRenderables(const Pht::Color& flashColorAdd,
+                                                          BlockBrightness flashingBondBrightness) {
+    UpdateBondRenderable(flashColorAdd, flashingBondBrightness, BondRenderableKind::Normal);
+    UpdateBondRenderable(flashColorAdd, flashingBondBrightness, BondRenderableKind::Aslope);
+    UpdateBondRenderable(flashColorAdd, flashingBondBrightness, BondRenderableKind::Diagonal);
 }
 
-void FlashingBlocksAnimationSystem::UpdateWeldRenderable(const Pht::Color& flashColorAdd,
-                                                         BlockBrightness flashingWeldBrightness,
-                                                         WeldRenderableKind weldKind) {
+void FlashingBlocksAnimationSystem::UpdateBondRenderable(const Pht::Color& flashColorAdd,
+                                                         BlockBrightness flashingBondBrightness,
+                                                         BondRenderableKind bondKind) {
     auto& normalRenderable =
-        mPieceResources.GetWeldRenderableObject(weldKind, mColor, BlockBrightness::Normal);
+        mPieceResources.GetBondRenderableObject(bondKind, mColor, BlockBrightness::Normal);
     
     auto& flashingRenderable =
-        mPieceResources.GetWeldRenderableObject(weldKind, mColor, flashingWeldBrightness);
+        mPieceResources.GetBondRenderableObject(bondKind, mColor, flashingBondBrightness);
     
     auto& normalMaterial = normalRenderable.GetMaterial();
     auto& flashingMaterial = flashingRenderable.GetMaterial();

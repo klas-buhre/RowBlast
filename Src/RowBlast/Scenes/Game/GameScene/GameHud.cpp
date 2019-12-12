@@ -939,42 +939,42 @@ void GameHud::UpdatePreviewPiece(PreviewPiece& previewPiece,
                                                              BlockBrightness::Normal);
             
                 blockSceneObject.SetRenderable(&blockRenderable);
-                UpdateBlockWelds(subCell, blockPosition, *previewPiece.mSceneObjectPool);
+                UpdateBlockBonds(subCell, blockPosition, *previewPiece.mSceneObjectPool);
             }
         }
     }
 }
 
-void GameHud::UpdateBlockWelds(const SubCell& subCell,
+void GameHud::UpdateBlockBonds(const SubCell& subCell,
                                const Pht::Vec3& blockPos,
                                SceneObjectPool& pool) {
-    auto& welds = subCell.mWelds;
-    if (welds.mUpLeft) {
-        UpdateBlockWeld({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, 0.0f},
+    auto& bonds = subCell.mBonds;
+    if (bonds.mUpLeft) {
+        UpdateBlockBond({blockPos.x - cellSize / 2.0f, blockPos.y + cellSize / 2.0f, 0.0f},
                         45.0f,
                         subCell,
                         pool);
     }
 
-    if (welds.mUpRight) {
-        UpdateBlockWeld({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, 0.0f},
+    if (bonds.mUpRight) {
+        UpdateBlockBond({blockPos.x + cellSize / 2.0f, blockPos.y + cellSize / 2.0f, 0.0f},
                         -45.0f,
                         subCell,
                         pool);
     }
 }
 
-void GameHud::UpdateBlockWeld(const Pht::Vec3& weldPosition,
+void GameHud::UpdateBlockBond(const Pht::Vec3& bondPosition,
                               float rotation,
                               const SubCell& subCell,
                               SceneObjectPool& pool) {
     auto& sceneObject = pool.AccuireSceneObject();
     auto& transform = sceneObject.GetTransform();
     transform.SetRotation({0.0f, 0.0f, rotation});
-    transform.SetPosition(weldPosition);
+    transform.SetPosition(bondPosition);
     
-    auto& weldRenderable = mPieceResources.GetPreviewAslopeWeldRenderableObject(subCell.mColor);
-    sceneObject.SetRenderable(&weldRenderable);
+    auto& bondRenderable = mPieceResources.GetPreviewAslopeBondRenderableObject(subCell.mColor);
+    sceneObject.SetRenderable(&bondRenderable);
 }
 
 void GameHud::OnSwitchPieceAnimationFinished() {
