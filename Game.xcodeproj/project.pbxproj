@@ -38,7 +38,6 @@
 		1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */; };
 		1787AB042378A9E200E3D314 /* terrain1_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1787AB032378A9E100E3D314 /* terrain1_2.jpg */; };
 		1787AB082379D2BD00E3D314 /* terrain1_2888.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1787AB072379D2BD00E3D314 /* terrain1_2888.obj */; };
-		17A75B5923211A2C001BA90D /* ValidAreaAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B4523211A2C001BA90D /* ValidAreaAnimation.cpp */; };
 		17A75B5A23211A2C001BA90D /* GhostPieceBlocks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B4623211A2C001BA90D /* GhostPieceBlocks.cpp */; };
 		17A75B5B23211A2C001BA90D /* PieceResources.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B4823211A2C001BA90D /* PieceResources.cpp */; };
 		17A75B5C23211A2C001BA90D /* BlastArea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B4923211A2C001BA90D /* BlastArea.cpp */; };
@@ -609,7 +608,6 @@
 		1787AB072379D2BD00E3D314 /* terrain1_2888.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = terrain1_2888.obj; sourceTree = "<group>"; };
 		17A75B4323211A2C001BA90D /* SlidingText.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SlidingText.hpp; sourceTree = "<group>"; };
 		17A75B4423211A2C001BA90D /* MediumText.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MediumText.hpp; sourceTree = "<group>"; };
-		17A75B4523211A2C001BA90D /* ValidAreaAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ValidAreaAnimation.cpp; sourceTree = "<group>"; };
 		17A75B4623211A2C001BA90D /* GhostPieceBlocks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GhostPieceBlocks.cpp; sourceTree = "<group>"; };
 		17A75B4723211A2C001BA90D /* FieldGrid.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FieldGrid.hpp; sourceTree = "<group>"; };
 		17A75B4823211A2C001BA90D /* PieceResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PieceResources.cpp; sourceTree = "<group>"; };
@@ -623,7 +621,6 @@
 		17A75B5023211A2C001BA90D /* GameHudResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHudResources.cpp; sourceTree = "<group>"; };
 		17A75B5123211A2C001BA90D /* SlidingText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SlidingText.cpp; sourceTree = "<group>"; };
 		17A75B5223211A2C001BA90D /* MediumText.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MediumText.cpp; sourceTree = "<group>"; };
-		17A75B5323211A2C001BA90D /* ValidAreaAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ValidAreaAnimation.hpp; sourceTree = "<group>"; };
 		17A75B5423211A2C001BA90D /* GhostPieceBlocks.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GhostPieceBlocks.hpp; sourceTree = "<group>"; };
 		17A75B5523211A2C001BA90D /* FieldGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldGrid.cpp; sourceTree = "<group>"; };
 		17A75B5623211A2C001BA90D /* PieceResources.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PieceResources.hpp; sourceTree = "<group>"; };
@@ -1599,8 +1596,6 @@
 				17A75B4C23211A2C001BA90D /* Shield.hpp */,
 				17A75B5123211A2C001BA90D /* SlidingText.cpp */,
 				17A75B4323211A2C001BA90D /* SlidingText.hpp */,
-				17A75B4523211A2C001BA90D /* ValidAreaAnimation.cpp */,
-				17A75B5323211A2C001BA90D /* ValidAreaAnimation.hpp */,
 			);
 			path = GameResources;
 			sourceTree = "<group>";
@@ -3851,7 +3846,6 @@
 				623F5E6022B563A900242C10 /* Camera.cpp in Sources */,
 				62216BEA21EB377E001CB9A1 /* ScenePlayingField.cpp in Sources */,
 				62243E9522B7952500EB922F /* OpenALSource.cpp in Sources */,
-				17A75B5923211A2C001BA90D /* ValidAreaAnimation.cpp in Sources */,
 				62216C1721EB377F001CB9A1 /* ValidMovesSearch.cpp in Sources */,
 				62216BE521EB377E001CB9A1 /* RestartConfirmationDialogController.cpp in Sources */,
 				62216C0B21EB377F001CB9A1 /* PlusPiece.cpp in Sources */,

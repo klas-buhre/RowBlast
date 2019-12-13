@@ -46,7 +46,6 @@ GameController::GameController(Pht::IEngine& engine,
     mFlashingBlocksAnimation {mField, mPieceResources},
     mBondsAnimationSystem {mField},
     mScrollController {engine, mField},
-    mValidAreaAnimation {mField, mScrollController},
     mCameraShake {Pht::CameraShake::ShakeKind::PerlinNoise},
     mScene {
         engine,
@@ -100,7 +99,6 @@ GameController::GameController(Pht::IEngine& engine,
         mBlastArea,
         mFallingPieceScaleAnimation,
         mShield,
-        mValidAreaAnimation,
         mScoreTexts,
         mMediumText,
         mGameViewControllers.GetGameHudController(),
@@ -127,7 +125,6 @@ GameController::GameController(Pht::IEngine& engine,
         mAsteroidAnimation,
         mFallingPieceAnimation,
         mDraggedPieceAnimation,
-        mValidAreaAnimation,
         mPieceResources,
         mGhostPieceBlocks,
         mLevelResources
@@ -156,7 +153,6 @@ void GameController::Init(int levelId) {
     mGameLogic.Init(*mLevel);
     mStoreController.Init(mScene.GetUiViewsContainer());
     mBlueprintSlotsFilledAnimation.Init();
-    mValidAreaAnimation.Init();
     mPieceDropParticleEffect.Init();
     mPieceTrailParticleEffect.Init();
     mBlastArea.Init();

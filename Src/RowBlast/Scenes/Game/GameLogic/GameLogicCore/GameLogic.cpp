@@ -22,7 +22,6 @@
 #include "BlastArea.hpp"
 #include "FallingPieceScaleAnimation.hpp"
 #include "Shield.hpp"
-#include "ValidAreaAnimation.hpp"
 #include "ScoreTexts.hpp"
 #include "MediumText.hpp"
 #include "GameHudController.hpp"
@@ -82,7 +81,6 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      BlastArea& blastRadiusAnimation,
                      FallingPieceScaleAnimation& fallingPieceScaleAnimation,
                      Shield& shieldAnimation,
-                     ValidAreaAnimation& validAreaAnimation,
                      ScoreTexts& scoreTexts,
                      MediumText& mediumTextAnimation,
                      GameHudController& gameHudController,
@@ -100,7 +98,6 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mBlastArea {blastRadiusAnimation},
     mFallingPieceScaleAnimation {fallingPieceScaleAnimation},
     mShield {shieldAnimation},
-    mValidAreaAnimation {validAreaAnimation},
     mScoreTexts {scoreTexts},
     mMediumText {mediumTextAnimation},
     mGameHudController {gameHudController},
@@ -1429,7 +1426,6 @@ bool GameLogic::HandleBeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     auto& validMoves = mAi.FindValidMoves(mFallingPiece, GetMovesUsedIncludingCurrent() - 1);
     mAllValidMoves = &validMoves.mMoves;
     
-    mValidAreaAnimation.Start(validMoves.mMoves, pieceType, mDraggedPiece.GetRotation());
     mDraggedPieceAnimation.StartGoUpAnimation();
     UpdateDraggedGhostPieceRowAndBlastArea();
     return true;
@@ -1459,7 +1455,6 @@ void GameLogic::HandleDragPieceTouchEnd() {
     auto ghostPieceRow = 0;
     if (auto* move = GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
         SelectMove(*move);
-        mValidAreaAnimation.Stop();
         RemoveDraggedPiece();
     } else {
         mDraggedPieceAnimation.StartGoBackAnimation(mDraggedPieceIndex);
@@ -1477,13 +1472,11 @@ void GameLogic::EndPieceDrag() {
 
     mScene.GetHud().ShowPreviewPiece(mDraggedPieceIndex);
     mDraggedPieceIndex = PreviewPieceIndex::None;
-    mValidAreaAnimation.Stop();
     RemoveDraggedPiece();
 }
 
 void GameLogic::CancelDraggingBecausePieceLands() {
     mDraggedPieceIndex = PreviewPieceIndex::None;
-    mValidAreaAnimation.Stop();
     RemoveDraggedPiece();
     mDragInputHandler.EndDrag();
 }

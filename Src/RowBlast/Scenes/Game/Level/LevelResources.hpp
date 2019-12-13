@@ -30,10 +30,6 @@ namespace RowBlast {
             return *mBlueprintSquare;
         }
         
-        Pht::RenderableObject& GetInvalidCellRenderable() const {
-            return *mInvalidCellRenderable;
-        }
-
         Pht::RenderableObject& GetBlueprintSlotNonDepthWritingRenderable() const {
             return *mBlueprintSquareNonDepthWriting;
         }
@@ -68,8 +64,6 @@ namespace RowBlast {
                                         const CommonResources& commonResources);
         void CreateBlueprintRenderables(Pht::IEngine& engine,
                                         const CommonResources& commonResources);
-        void CreateInvalidCellRenderable(Pht::IEngine& engine,
-                                         const CommonResources& commonResources);
         void CreateLevelBombRenderable(Pht::IEngine& engine);
         void CreateBigAsteroidRenderable(Pht::IEngine& engine);
         void CreateSmallAsteroidRenderable(Pht::IEngine& engine);
@@ -81,7 +75,6 @@ namespace RowBlast {
         std::unique_ptr<Pht::RenderableObject> mBlueprintSquare;
         std::unique_ptr<Pht::RenderableObject> mBlueprintSquareNonDepthWriting;
         std::unique_ptr<Pht::RenderableObject> mBlueprintSquareAnimation;
-        std::unique_ptr<Pht::RenderableObject> mInvalidCellRenderable;
         std::unique_ptr<Pht::RenderableObject> mFieldCell;
         std::unique_ptr<Pht::RenderableObject> mLevelBomb;
         std::unique_ptr<Pht::RenderableObject> mBigAsteroid;

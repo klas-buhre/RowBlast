@@ -37,38 +37,10 @@
 
 using namespace RowBlast;
 
-namespace {
-    void DrawStripes(Pht::SoftwareRasterizer& rasterizer, float squareSide) {
-        const Pht::Vec4 fillColor {1.0f, 0.5f, 0.5f, 0.15f};
-        const auto numStripes = 3.0f;
-        const auto stripeStep = squareSide / numStripes;
-        const auto stripeWidth = (stripeStep / 2.0f) / std::sqrt(2.0f);
-        
-        for (auto pos = 0.0f; pos < squareSide; pos += stripeStep) {
-            Pht::Vec2 trapezoidLowerLeft {0.0f, squareSide - pos};
-            Pht::Vec2 trapezoidUpperRight {pos, squareSide};
-            rasterizer.DrawTiltedTrapezoid315(trapezoidUpperRight,
-                                              trapezoidLowerLeft,
-                                              stripeWidth,
-                                              fillColor);
-        }
-        
-        for (auto pos = 0.0f; pos < squareSide; pos += stripeStep) {
-            Pht::Vec2 trapezoidLowerLeft {pos, 0.0f};
-            Pht::Vec2 trapezoidUpperRight {squareSide, squareSide - pos};
-            rasterizer.DrawTiltedTrapezoid45(trapezoidUpperRight,
-                                             trapezoidLowerLeft,
-                                             stripeWidth,
-                                             fillColor);
-        }
-    }
-}
-
 LevelResources::LevelResources(Pht::IEngine& engine, const CommonResources& commonResources) {
     CreatePieceTypes(engine, commonResources);
     CreateGreyBlockRenderables(engine.GetSceneManager(), commonResources);
     CreateBlueprintRenderables(engine, commonResources);
-    CreateInvalidCellRenderable(engine, commonResources);
     CreateLevelBombRenderable(engine);
     CreateBigAsteroidRenderable(engine);
     CreateSmallAsteroidRenderable(engine);
@@ -198,36 +170,6 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
     fieldMaterial.SetOpacity(0.96f);
     mFieldCell = sceneManager.CreateRenderableObject(Pht::QuadMesh {fieldCellVertices},
                                                      fieldMaterial);
-}
-
-void LevelResources::CreateInvalidCellRenderable(Pht::IEngine& engine,
-                                                 const CommonResources& commonResources) {
-    auto cellSize = commonResources.GetCellSize();
-    Pht::Vec2 coordinateSystemSize {cellSize, cellSize};
-    auto& renderer = engine.GetRenderer();
-    
-    auto& renderBufferSize = renderer.GetRenderBufferSize();
-    auto& frustumSize = commonResources.GetOrthographicFrustumSizePotentiallyZoomedScreen();
-    
-    auto xScaleFactor = static_cast<float>(renderBufferSize.x) / static_cast<float>(frustumSize.x);
-    auto yScaleFactor = static_cast<float>(renderBufferSize.y) / static_cast<float>(frustumSize.y);
-    
-    Pht::IVec2 imageSize {
-        static_cast<int>(cellSize * xScaleFactor) * 2,
-        static_cast<int>(cellSize * yScaleFactor) * 2
-    };
-    
-    auto rasterizer = std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize);
-    DrawStripes(*rasterizer, cellSize);
-
-    auto image = rasterizer->ProduceImage();
-    
-    Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
-    imageMaterial.SetBlend(Pht::Blend::Yes);
-    imageMaterial.SetDepthWrite(true);
-    auto& sceneManager = engine.GetSceneManager();
-    mInvalidCellRenderable = sceneManager.CreateRenderableObject(Pht::QuadMesh {cellSize, cellSize},
-                                                                 imageMaterial);
 }
 
 void LevelResources::CreateLevelBombRenderable(Pht::IEngine& engine) {

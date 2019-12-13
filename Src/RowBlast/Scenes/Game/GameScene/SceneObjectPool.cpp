@@ -18,8 +18,6 @@ namespace {
                 auto visibleColumns = numFieldColumns;
                 return 3 * visibleRows * visibleColumns - visibleRows - visibleColumns;
             }
-            case SceneObjectPoolKind::InvalidCells:
-                return (Field::maxNumRows + 2) * numFieldColumns;
             case SceneObjectPoolKind::PieceBlocks:
                 return 3 * Piece::maxRows * Piece::maxColumns - Piece::maxRows - Piece::maxColumns;
             case SceneObjectPoolKind::GhostPieces:

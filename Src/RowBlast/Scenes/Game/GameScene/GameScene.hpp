@@ -41,7 +41,7 @@ namespace RowBlast {
         enum class Layer {
             Background,
             FieldQuad,
-            FieldBlueprintSlotsAndInvalidCells,
+            FieldBlueprintSlots,
             FieldPieceDropEffects,
             FieldBlocksAndFallingPiece,
             Effects,
@@ -166,11 +166,6 @@ namespace RowBlast {
             return *mGhostPieceBlocks;
         }
 
-        SceneObjectPool& GetInvalidCells() {
-            assert(mInvalidCells);
-            return *mInvalidCells;
-        }
-
         Pht::SceneObject& GetFieldQuadContainer() {
             assert(mFieldQuadContainer);
             return *mFieldQuadContainer;
@@ -235,10 +230,6 @@ namespace RowBlast {
             return mBigAsteroidZ;
         }
 
-        float GetInvalidCellZ() const {
-            return mInvalidCellZ;
-        }
-        
         float GetBouncingBlockZ() const {
             return mBouncingBlockZ;
         }
@@ -272,7 +263,7 @@ namespace RowBlast {
         void CreateFieldQuad();
         void CreateFieldContainer();
         Pht::QuadMesh::Vertices CreateFieldVertices();
-        void CreateBlueprintSlotsAndInvalidCells(const Level& level);
+        void CreateBlueprintSlots(const Level& level);
         void CreatePieceDropEffectsContainer();
         void CreateFieldBlocksContainer();
         void CreateSceneObjectPools(const Level& level);
@@ -312,7 +303,6 @@ namespace RowBlast {
         std::unique_ptr<SceneObjectPool> mDraggedPieceBlocks;
         std::unique_ptr<SceneObjectPool> mGhostPieces;
         std::unique_ptr<SceneObjectPool> mGhostPieceBlocks;
-        std::unique_ptr<SceneObjectPool> mInvalidCells;
         Pht::SceneObject* mFieldQuadContainer {nullptr};
         Pht::SceneObject* mFieldContainer {nullptr};
         Pht::SceneObject* mPieceDropEffectsContainer {nullptr};
@@ -336,7 +326,6 @@ namespace RowBlast {
         const float mBlueprintAnimationZ {-0.6f};
         const float mFieldGridZ {-1.8f};
         const float mBigAsteroidZ {-1.0f};
-        const float mInvalidCellZ {-0.6f};
         const float mBouncingBlockZ {-0.2f};
         Pht::Vec2 mGhostPieceShadowOffset {-0.085f, -0.085f};
         float mFieldWidth {0.0f};

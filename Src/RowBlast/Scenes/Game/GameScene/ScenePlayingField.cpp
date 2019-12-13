@@ -11,7 +11,6 @@
 #include "GameScene.hpp"
 #include "BombsAnimation.hpp"
 #include "AsteroidAnimation.hpp"
-#include "ValidAreaAnimation.hpp"
 #include "PieceResources.hpp"
 #include "GhostPieceBlocks.hpp"
 #include "LevelResources.hpp"
@@ -63,7 +62,6 @@ ScenePlayingField::ScenePlayingField(GameScene& scene,
                                      AsteroidAnimation& asteroidAnimation,
                                      const FallingPieceAnimation& fallingPieceAnimation,
                                      const DraggedPieceAnimation& draggedPieceAnimation,
-                                     const ValidAreaAnimation& validAreaAnimation,
                                      const PieceResources& pieceResources,
                                      const GhostPieceBlocks& ghostPieceBlocks,
                                      const LevelResources& levelResources) :
@@ -75,7 +73,6 @@ ScenePlayingField::ScenePlayingField(GameScene& scene,
     mAsteroidAnimation {asteroidAnimation},
     mFallingPieceAnimation {fallingPieceAnimation},
     mDraggedPieceAnimation {draggedPieceAnimation},
-    mValidAreaAnimation {validAreaAnimation},
     mPieceResources {pieceResources},
     mGhostPieceBlocks {ghostPieceBlocks},
     mLevelResources {levelResources} {}
@@ -83,7 +80,6 @@ ScenePlayingField::ScenePlayingField(GameScene& scene,
 void ScenePlayingField::Update() {
     UpdateFieldGrid();
     UpdateBlueprintSlots();
-    UpdateValidArea();
     UpdateFieldBlocks();
     UpdateFallingPiece();
     UpdateDraggedPiece();
@@ -140,37 +136,6 @@ void ScenePlayingField::UpdateBlueprintSlots() {
                 blueprintCell.mSceneObject->SetIsVisible(false);
             } else {
                 blueprintCell.mSceneObject->SetIsVisible(true);
-            }
-        }
-    }
-}
-
-void ScenePlayingField::UpdateValidArea() {
-    auto& invalidCellsPool = mScene.GetInvalidCells();
-    invalidCellsPool.ReclaimAll();
-
-    if (!mValidAreaAnimation.IsActive()) {
-        return;
-    }
-    
-    auto lowestVisibleRow = static_cast<int>(mScrollController.GetLowestVisibleRow());
-    auto pastHighestVisibleRow = lowestVisibleRow + mField.GetNumRowsInOneScreen();
-    const auto cellSize = mScene.GetCellSize();
-    auto invaldCellZ = mScene.GetInvalidCellZ();
-    
-    for (auto row = lowestVisibleRow; row < pastHighestVisibleRow; row++) {
-        for (auto column = 0; column < mField.GetNumColumns(); column++) {
-            if (mValidAreaAnimation.IsCellInvalid(row, column)) {
-                auto& sceneObject = invalidCellsPool.AccuireSceneObject();
-                sceneObject.SetRenderable(&mLevelResources.GetInvalidCellRenderable());
-                
-                Pht::Vec3 position {
-                    column * cellSize + cellSize / 2.0f,
-                    row * cellSize + cellSize / 2.0f,
-                    invaldCellZ
-                };
-                
-                sceneObject.GetTransform().SetPosition(position);
             }
         }
     }

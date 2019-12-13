@@ -36,7 +36,6 @@
 #include "BlastArea.hpp"
 #include "Shield.hpp"
 #include "FieldBottomGlow.hpp"
-#include "ValidAreaAnimation.hpp"
 #include "BombsAnimation.hpp"
 #include "AsteroidAnimation.hpp"
 #include "FallingPieceScaleAnimation.hpp"
@@ -179,7 +178,6 @@ namespace RowBlast {
         FlashingBlocksAnimationSystem mFlashingBlocksAnimation;
         BondsAnimationSystem mBondsAnimationSystem;
         ScrollController mScrollController;
-        ValidAreaAnimation mValidAreaAnimation;
         Pht::CameraShake mCameraShake;
         GameScene mScene;
         StoreController mStoreController;
