@@ -8,7 +8,7 @@
 #include "FieldGravitySystem.hpp"
 #include "ScoreManager.hpp"
 #include "EffectManager.hpp"
-#include "FlyingBlocksAnimation.hpp"
+#include "FlyingBlocksSystem.hpp"
 
 using namespace RowBlast;
 

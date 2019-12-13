@@ -10,7 +10,7 @@
 #include "ScenePlayingField.hpp"
 #include "GameScene.hpp"
 #include "ScrollController.hpp"
-#include "FlyingBlocksAnimation.hpp"
+#include "FlyingBlocksSystem.hpp"
 #include "CollapsingFieldAnimationSystem.hpp"
 #include "FlashingBlocksAnimationSystem.hpp"
 #include "BondsAnimationSystem.hpp"

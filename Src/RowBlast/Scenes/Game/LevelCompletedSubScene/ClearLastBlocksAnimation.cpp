@@ -1,7 +1,7 @@
 #include "ClearLastBlocksAnimation.hpp"
 
 // Game includes.
-#include "FlyingBlocksAnimation.hpp"
+#include "FlyingBlocksSystem.hpp"
 #include "Field.hpp"
 
 using namespace RowBlast;

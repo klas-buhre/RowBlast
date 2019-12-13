@@ -10,7 +10,7 @@
 		1700B4C023943434006566EF /* FinalScoreAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1700B4BE23943434006566EF /* FinalScoreAnimation.cpp */; };
 		1711872E22EB9EB2009CC07F /* TutorialWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872C22EB9EB2009CC07F /* TutorialWindowView.cpp */; };
 		1711873122EB9EC9009CC07F /* TutorialWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872F22EB9EC9009CC07F /* TutorialWindowController.cpp */; };
-		17148A8423A3F92C0093B0B6 /* FlyingBlocksAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17148A8323A3F92C0093B0B6 /* FlyingBlocksAnimation.cpp */; };
+		17148A8423A3F92C0093B0B6 /* FlyingBlocksSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17148A8323A3F92C0093B0B6 /* FlyingBlocksSystem.cpp */; };
 		1730C96F22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730C96D22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp */; };
 		1730C97222EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730C97022EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp */; };
 		1730D47B22F5B92E0092D92B /* DragInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730D47922F5B92E0092D92B /* DragInputHandler.cpp */; };
@@ -566,8 +566,8 @@
 		1711872D22EB9EB2009CC07F /* TutorialWindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialWindowView.hpp; sourceTree = "<group>"; };
 		1711872F22EB9EC9009CC07F /* TutorialWindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialWindowController.cpp; sourceTree = "<group>"; };
 		1711873022EB9EC9009CC07F /* TutorialWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialWindowController.hpp; sourceTree = "<group>"; };
-		17148A8323A3F92C0093B0B6 /* FlyingBlocksAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlyingBlocksAnimation.cpp; sourceTree = "<group>"; };
-		17148A8523A3F9350093B0B6 /* FlyingBlocksAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FlyingBlocksAnimation.hpp; sourceTree = "<group>"; };
+		17148A8323A3F92C0093B0B6 /* FlyingBlocksSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlyingBlocksSystem.cpp; sourceTree = "<group>"; };
+		17148A8523A3F9350093B0B6 /* FlyingBlocksSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FlyingBlocksSystem.hpp; sourceTree = "<group>"; };
 		1730C96D22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayOnYourOwnWindowView.cpp; sourceTree = "<group>"; };
 		1730C96E22EA2AFD003BD981 /* PlayOnYourOwnWindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlayOnYourOwnWindowView.hpp; sourceTree = "<group>"; };
 		1730C97022EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayOnYourOwnWindowController.cpp; sourceTree = "<group>"; };
@@ -1583,8 +1583,8 @@
 				17A75B4A23211A2C001BA90D /* FieldBottomGlow.hpp */,
 				17A75B5523211A2C001BA90D /* FieldGrid.cpp */,
 				17A75B4723211A2C001BA90D /* FieldGrid.hpp */,
-				17148A8323A3F92C0093B0B6 /* FlyingBlocksAnimation.cpp */,
-				17148A8523A3F9350093B0B6 /* FlyingBlocksAnimation.hpp */,
+				17148A8323A3F92C0093B0B6 /* FlyingBlocksSystem.cpp */,
+				17148A8523A3F9350093B0B6 /* FlyingBlocksSystem.hpp */,
 				17A75B5023211A2C001BA90D /* GameHudResources.cpp */,
 				17A75B4D23211A2C001BA90D /* GameHudResources.hpp */,
 				17A75B4623211A2C001BA90D /* GhostPieceBlocks.cpp */,
@@ -3793,7 +3793,7 @@
 				17A75B6023211A2C001BA90D /* SlidingText.cpp in Sources */,
 				62216BF321EB377E001CB9A1 /* Piece.cpp in Sources */,
 				62216C0521EB377F001CB9A1 /* ZPiece.cpp in Sources */,
-				17148A8423A3F92C0093B0B6 /* FlyingBlocksAnimation.cpp in Sources */,
+				17148A8423A3F92C0093B0B6 /* FlyingBlocksSystem.cpp in Sources */,
 				1730C96F22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp in Sources */,
 				62216BE421EB377E001CB9A1 /* RestartConfirmationDialogView.cpp in Sources */,
 				174F9EA522DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp in Sources */,

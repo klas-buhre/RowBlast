@@ -13,7 +13,7 @@
 // Game includes.
 #include "Level.hpp"
 #include "ScrollController.hpp"
-#include "FlyingBlocksAnimation.hpp"
+#include "FlyingBlocksSystem.hpp"
 #include "FlashingBlocksAnimationSystem.hpp"
 #include "CollapsingFieldAnimationSystem.hpp"
 #include "EffectManager.hpp"
