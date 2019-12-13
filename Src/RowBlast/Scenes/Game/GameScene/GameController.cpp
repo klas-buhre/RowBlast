@@ -92,7 +92,7 @@ GameController::GameController(Pht::IEngine& engine,
         mScrollController,
         mScene,
         mEffectManager,
-        mFlyingBlocksAnimation,
+        mFlyingBlocksSystem,
         mFlashingBlocksAnimation,
         mCollapsingFieldAnimation,
         mPieceDropParticleEffect,
@@ -117,7 +117,7 @@ GameController::GameController(Pht::IEngine& engine,
     mBlueprintSlotsFilledAnimation {mField, mScene, mLevelResources},
     mBombsAnimation {mScene, mPieceResources, mLevelResources},
     mAsteroidAnimation {},
-    mFlyingBlocksAnimation {mScene, mLevelResources, mPieceResources, mBombsAnimation},
+    mFlyingBlocksSystem {mScene, mLevelResources, mPieceResources, mBombsAnimation},
     mScenePlayingField {
         mScene,
         mField,
@@ -143,7 +143,7 @@ GameController::GameController(Pht::IEngine& engine,
         commonResources,
         mCameraShake,
         mField,
-        mFlyingBlocksAnimation
+        mFlyingBlocksSystem
     } {}
 
 void GameController::Init(int levelId) {
@@ -169,7 +169,7 @@ void GameController::Init(int levelId) {
     mPreviewPiecesRotationAnimation.Init();
     mFewMovesAlertAnimation.Init();
     mAddingMovesAnimation.Init();
-    mFlyingBlocksAnimation.Init();
+    mFlyingBlocksSystem.Init();
     mFlashingBlocksAnimation.Init();
     mFallingPieceAnimation.Init();
     mDraggedPieceAnimation.Init();
@@ -246,7 +246,7 @@ GameController::Command GameController::UpdateGame() {
     mFieldBottomGlow.Update(dt);
     mEffectManager.Update(dt);
     mCameraShake.Update(dt);
-    mFlyingBlocksAnimation.Update(dt);
+    mFlyingBlocksSystem.Update(dt);
     mDraggedPieceAnimation.Update();
     mFallingPieceScaleAnimation.Update(dt);
     mBlastArea.Update(dt);

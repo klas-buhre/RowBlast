@@ -14,7 +14,7 @@ namespace RowBlast {
     class FieldGravitySystem;
     class ScoreManager;
     class EffectManager;
-    class FlyingBlocksAnimation;
+    class FlyingBlocksSystem;
     
     class FieldExplosionsSystem {
     public:
@@ -28,7 +28,7 @@ namespace RowBlast {
                               FieldGravitySystem& fieldGravity,
                               ScoreManager& scoreManager,
                               EffectManager& effectManager,
-                              FlyingBlocksAnimation& flyingBlocksAnimation);
+                              FlyingBlocksSystem& flyingBlocksSystem);
         
         void Init();
         State Update();
@@ -102,7 +102,7 @@ namespace RowBlast {
         FieldGravitySystem& mFieldGravity;
         ScoreManager& mScoreManager;
         EffectManager& mEffectManager;
-        FlyingBlocksAnimation& mFlyingBlocksAnimation;
+        FlyingBlocksSystem& mFlyingBlocksSystem;
         ExplosionsStates mExplosionsStates;
         Pht::StaticVector<int, 20> mRowsToRemove;
     };

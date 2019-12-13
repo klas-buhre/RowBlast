@@ -74,7 +74,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      ScrollController& scrollController,
                      GameScene& gameScene,
                      EffectManager& effectManager,
-                     FlyingBlocksAnimation& flyingBlocksAnimation,
+                     FlyingBlocksSystem& flyingBlocksSystem,
                      FlashingBlocksAnimationSystem& flashingBlocksAnimation,
                      CollapsingFieldAnimationSystem& collapsingFieldAnimation,
                      PieceDropParticleEffect& pieceDropParticleEffect,
@@ -91,7 +91,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mEngine {engine},
     mField {field},
     mScrollController {scrollController},
-    mFlyingBlocksAnimation {flyingBlocksAnimation},
+    mFlyingBlocksSystem {flyingBlocksSystem},
     mFlashingBlocksAnimation {flashingBlocksAnimation},
     mCollapsingFieldAnimation {collapsingFieldAnimation},
     mEffectManager {effectManager},
@@ -116,7 +116,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
         mFieldGravity,
         mScoreManager,
         effectManager,
-        flyingBlocksAnimation
+        flyingBlocksSystem
     },
     mFallingPieceAnimation {*this, mFallingPiece},
     mDraggedPiece {gameScene},
@@ -596,7 +596,7 @@ void GameLogic::HandleClearedFilledRows(const Field::RemovedSubCells& removedSub
                                         Pht::Optional<int> landedPieceId) {
     PlayClearBlocksSound(mEngine);
     mScoreManager.OnClearedFilledRows(removedSubCells, landedPieceId);
-    mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
+    mFlyingBlocksSystem.AddBlockRows(removedSubCells);
 }
 
 GameLogic::Result GameLogic::HandleSettingsChange() {
@@ -1073,7 +1073,7 @@ void GameLogic::RemoveBlocksInsideTheShield() {
     auto removedSubCells = mField.RemoveAreaOfSubCells(areaPosition, areaSize, removeCorners);
 
     if (removedSubCells.Size() > 0) {
-        mFlyingBlocksAnimation.AddBlocksRemovedByTheShield(removedSubCells, mField.GetNumColumns());
+        mFlyingBlocksSystem.AddBlocksRemovedByTheShield(removedSubCells, mField.GetNumColumns());
         mShield.StartFlash();
         PlayClearBlocksSound(mEngine);
         

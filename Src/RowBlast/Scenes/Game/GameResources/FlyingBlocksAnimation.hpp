@@ -1,5 +1,5 @@
-#ifndef FlyingBlocksAnimation_hpp
-#define FlyingBlocksAnimation_hpp
+#ifndef FlyingBlocksSystem_hpp
+#define FlyingBlocksSystem_hpp
 
 #include <vector>
 #include <memory>
@@ -18,7 +18,7 @@ namespace RowBlast {
     class PieceResources;
     class BombsAnimation;
 
-    class FlyingBlocksAnimation {
+    class FlyingBlocksSystem {
     public:
         struct FlyingBlock {
             enum class AppliedForce {
@@ -33,10 +33,10 @@ namespace RowBlast {
             Pht::SceneObject* mSceneObject {nullptr};
         };
 
-        FlyingBlocksAnimation(GameScene& scene,
-                              const LevelResources& levelResources,
-                              const PieceResources& pieceResources,
-                              const BombsAnimation& bombsAnimation);
+        FlyingBlocksSystem(GameScene& scene,
+                           const LevelResources& levelResources,
+                           const PieceResources& pieceResources,
+                           const BombsAnimation& bombsAnimation);
         
         void Init();
         void Update(float dt);

@@ -21,10 +21,10 @@ namespace {
     constexpr auto eraseLimit = 20.0f;
 }
 
-FlyingBlocksAnimation::FlyingBlocksAnimation(GameScene& scene,
-                                             const LevelResources& levelResources,
-                                             const PieceResources& pieceResources,
-                                             const BombsAnimation& bombsAnimation) :
+FlyingBlocksSystem::FlyingBlocksSystem(GameScene& scene,
+                                       const LevelResources& levelResources,
+                                       const PieceResources& pieceResources,
+                                       const BombsAnimation& bombsAnimation) :
     mScene {scene},
     mLevelResources {levelResources},
     mPieceResources {pieceResources},
@@ -40,7 +40,7 @@ FlyingBlocksAnimation::FlyingBlocksAnimation(GameScene& scene,
     mIntersectionDistanceSquared = blockSize * blockSize;
 }
 
-void FlyingBlocksAnimation::Init() {
+void FlyingBlocksSystem::Init() {
     mFlyingBlocks.Clear();
     mFreeSceneObjects.Clear();
     
@@ -54,7 +54,7 @@ void FlyingBlocksAnimation::Init() {
     }
 }
 
-void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells) {
+void FlyingBlocksSystem::AddBlockRows(const Field::RemovedSubCells& subCells) {
     for (auto& removedSubCell: subCells) {
         Pht::Vec3 explosiveForceDirecton {
             Pht::NormalizedRand() - 0.5f,
@@ -83,7 +83,7 @@ void FlyingBlocksAnimation::AddBlockRows(const Field::RemovedSubCells& subCells)
     }
 }
 
-Pht::SceneObject& FlyingBlocksAnimation::SetUpBlockSceneObject(const RemovedSubCell& removedSubCell) {
+Pht::SceneObject& FlyingBlocksSystem::SetUpBlockSceneObject(const RemovedSubCell& removedSubCell) {
     auto& sceneObject = AccuireSceneObject();
     sceneObject.SetRenderable(&GetBlockRenderableObject(removedSubCell));
     auto& transform = sceneObject.GetTransform();
@@ -104,10 +104,10 @@ Pht::SceneObject& FlyingBlocksAnimation::SetUpBlockSceneObject(const RemovedSubC
     return sceneObject;
 }
 
-void FlyingBlocksAnimation::AddBlocksRemovedByExplosion(const Field::RemovedSubCells& subCells,
-                                                        const Pht::IVec2& detonationPos,
-                                                        float explosiveForceMagnitude,
-                                                        bool applyForceToAlreadyFlyingBlocks) {
+void FlyingBlocksSystem::AddBlocksRemovedByExplosion(const Field::RemovedSubCells& subCells,
+                                                     const Pht::IVec2& detonationPos,
+                                                     float explosiveForceMagnitude,
+                                                     bool applyForceToAlreadyFlyingBlocks) {
     if (applyForceToAlreadyFlyingBlocks) {
         ApplyForceToAlreadyFlyingBlocks(explosiveForceMagnitude, detonationPos);
     }
@@ -159,8 +159,8 @@ void FlyingBlocksAnimation::AddBlocksRemovedByExplosion(const Field::RemovedSubC
     }
 }
 
-void FlyingBlocksAnimation::ApplyForceToAlreadyFlyingBlocks(float explosiveForceMagnitude,
-                                                            const Pht::IVec2& detonationPos) {
+void FlyingBlocksSystem::ApplyForceToAlreadyFlyingBlocks(float explosiveForceMagnitude,
+                                                         const Pht::IVec2& detonationPos) {
     auto cellSize = mScene.GetCellSize();
     auto& fieldLowerLeft = mScene.GetFieldLoweLeft();
 
@@ -191,8 +191,8 @@ void FlyingBlocksAnimation::ApplyForceToAlreadyFlyingBlocks(float explosiveForce
     }
 }
 
-void FlyingBlocksAnimation::AddBlocksRemovedByTheShield(const Field::RemovedSubCells& subCells,
-                                                        int numFieldColumns) {
+void FlyingBlocksSystem::AddBlocksRemovedByTheShield(const Field::RemovedSubCells& subCells,
+                                                     int numFieldColumns) {
     
     for (auto& removedSubCell: subCells) {
         Pht::Vec3 shieldForceDirecton {
@@ -219,12 +219,12 @@ void FlyingBlocksAnimation::AddBlocksRemovedByTheShield(const Field::RemovedSubC
     }
 }
 
-void FlyingBlocksAnimation::Update(float dt) {
+void FlyingBlocksSystem::Update(float dt) {
     UpdateBlocks(dt);
     HandleCollisions(dt);
 }
 
-void FlyingBlocksAnimation::UpdateBlocks(float dt) {
+void FlyingBlocksSystem::UpdateBlocks(float dt) {
     auto i = 0;
 
     while (i < mFlyingBlocks.Size()) {
@@ -260,7 +260,7 @@ void FlyingBlocksAnimation::UpdateBlocks(float dt) {
     }
 }
 
-void FlyingBlocksAnimation::HandleCollisions(float dt) {
+void FlyingBlocksSystem::HandleCollisions(float dt) {
     auto numBlocks = mFlyingBlocks.Size();
     
     for (auto i = 0; i < numBlocks; ++i) {
@@ -301,7 +301,7 @@ void FlyingBlocksAnimation::HandleCollisions(float dt) {
     }
 }
 
-Pht::Vec3 FlyingBlocksAnimation::CalculateBlockInitialPosition(const RemovedSubCell& subCell) {
+Pht::Vec3 FlyingBlocksSystem::CalculateBlockInitialPosition(const RemovedSubCell& subCell) {
     auto cellSize = mScene.GetCellSize();
     auto& fieldLowerLeft = mScene.GetFieldLoweLeft();
 
@@ -314,7 +314,7 @@ Pht::Vec3 FlyingBlocksAnimation::CalculateBlockInitialPosition(const RemovedSubC
     return position;
 }
 
-Pht::RenderableObject& FlyingBlocksAnimation::GetBlockRenderableObject(const RemovedSubCell& subCell) {
+Pht::RenderableObject& FlyingBlocksSystem::GetBlockRenderableObject(const RemovedSubCell& subCell) {
     if (subCell.mFlags.mIsGrayLevelBlock) {
         return mLevelResources.GetLevelBlockRenderable(subCell.mBlockKind);
     } else if (subCell.mFlags.mIsAsteroidFragment) {
@@ -334,7 +334,7 @@ Pht::RenderableObject& FlyingBlocksAnimation::GetBlockRenderableObject(const Rem
     }
 }
 
-Pht::SceneObject& FlyingBlocksAnimation::AccuireSceneObject() {
+Pht::SceneObject& FlyingBlocksSystem::AccuireSceneObject() {
     assert(mFreeSceneObjects.Size() >= 1);
     auto* sceneObject = mFreeSceneObjects.Back();
     mFreeSceneObjects.PopBack();
@@ -343,7 +343,7 @@ Pht::SceneObject& FlyingBlocksAnimation::AccuireSceneObject() {
     return *sceneObject;
 }
 
-void FlyingBlocksAnimation::ReleaseSceneObject(Pht::SceneObject& sceneObject) {
+void FlyingBlocksSystem::ReleaseSceneObject(Pht::SceneObject& sceneObject) {
     sceneObject.SetIsVisible(false);
     sceneObject.SetIsStatic(true);
     mFreeSceneObjects.PushBack(&sceneObject);

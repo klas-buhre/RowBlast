@@ -57,7 +57,7 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
                                                    const CommonResources& commonResources,
                                                    Pht::CameraShake& cameraShake,
                                                    Field& field,
-                                                   FlyingBlocksAnimation& flyingBlocksAnimation) :
+                                                   FlyingBlocksSystem& flyingBlocksSystem) :
     mEngine {engine},
     mGameScene {gameScene},
     mGameViewControllers {gameViewControllers},
@@ -73,7 +73,7 @@ LevelCompletedController::LevelCompletedController(Pht::IEngine& engine,
         -effectsVolumeDepth / 2.0f
     },
     mFinalScoreAnimation {engine, gameLogic, gameScene, commonResources},
-    mClearLastBlocksAnimation {field, flyingBlocksAnimation},
+    mClearLastBlocksAnimation {field, flyingBlocksSystem},
     mSlidingFieldAnimation {engine, gameScene},
     mFireworksParticleEffect {engine},
     mConfettiParticleEffect {engine},

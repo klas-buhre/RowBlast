@@ -2,7 +2,7 @@
 #define ClearLastBlocksAnimation_hpp
 
 namespace RowBlast {
-    class FlyingBlocksAnimation;
+    class FlyingBlocksSystem;
     class Field;
     
     class ClearLastBlocksAnimation {
@@ -13,7 +13,7 @@ namespace RowBlast {
             Inactive
         };
         
-        ClearLastBlocksAnimation(Field& field, FlyingBlocksAnimation& flyingBlocksAnimation);
+        ClearLastBlocksAnimation(Field& field, FlyingBlocksSystem& flyingBlocksSystem);
     
         void Start();
         State Update(float dt);
@@ -23,7 +23,7 @@ namespace RowBlast {
         void UpdateInOngoingState(float dt);
         
         Field& mField;
-        FlyingBlocksAnimation& mFlyingBlocksAnimation;
+        FlyingBlocksSystem& mFlyingBlocksSystem;
         State mState {State::Inactive};
         float mElapsedTime {0.0f};
     };

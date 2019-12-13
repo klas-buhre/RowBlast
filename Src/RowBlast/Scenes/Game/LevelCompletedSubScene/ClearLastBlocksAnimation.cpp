@@ -12,9 +12,9 @@ namespace {
 }
 
 ClearLastBlocksAnimation::ClearLastBlocksAnimation(Field& field,
-                                                   FlyingBlocksAnimation& flyingBlocksAnimation) :
+                                                   FlyingBlocksSystem& flyingBlocksSystem) :
     mField {field},
-    mFlyingBlocksAnimation {flyingBlocksAnimation} {}
+    mFlyingBlocksSystem {flyingBlocksSystem} {}
 
 void ClearLastBlocksAnimation::Start() {
     mElapsedTime = 0.0f;
@@ -40,7 +40,7 @@ void ClearLastBlocksAnimation::UpdateInBeforeClearState(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > beforeClearTime) {
         auto removedCells = mField.RemoveAllNonEmptySubCells();
-        mFlyingBlocksAnimation.AddBlockRows(removedCells);
+        mFlyingBlocksSystem.AddBlockRows(removedCells);
         mState = State::Ongoing;
     }
 }

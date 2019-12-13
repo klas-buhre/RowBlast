@@ -205,7 +205,7 @@ namespace RowBlast {
         SlotsFilledAnimationSystem mBlueprintSlotsFilledAnimation;
         BombsAnimation mBombsAnimation;
         AsteroidAnimation mAsteroidAnimation;
-        FlyingBlocksAnimation mFlyingBlocksAnimation;
+        FlyingBlocksSystem mFlyingBlocksSystem;
         ScenePlayingField mScenePlayingField;
         LevelCompletedController mLevelCompletedController;
         std::unique_ptr<Level> mLevel;

@@ -48,13 +48,13 @@ FieldExplosionsSystem::FieldExplosionsSystem(Pht::IEngine& engine,
                                              FieldGravitySystem& fieldGravity,
                                              ScoreManager& scoreManager,
                                              EffectManager& effectManager,
-                                             FlyingBlocksAnimation& flyingBlocksAnimation) :
+                                             FlyingBlocksSystem& flyingBlocksSystem) :
     mEngine {engine},
     mField {field},
     mFieldGravity {fieldGravity},
     mScoreManager {scoreManager},
     mEffectManager {effectManager},
-    mFlyingBlocksAnimation {flyingBlocksAnimation} {}
+    mFlyingBlocksSystem {flyingBlocksSystem} {}
 
 void FieldExplosionsSystem::Init() {
     mExplosionsStates.Clear();
@@ -157,7 +157,7 @@ void FieldExplosionsSystem::RemoveBlocksHitByLaser(ExplosionState& state,
             }
         }
         
-        mFlyingBlocksAnimation.AddBlockRows(removedSubCells);
+        mFlyingBlocksSystem.AddBlockRows(removedSubCells);
     }
 }
 
@@ -314,10 +314,10 @@ FieldExplosionsSystem::UpdateGenericBombExplosionState(ExplosionState& state,
             auto shouldApplyForceToAlreadyFlyingBlocks =
                 explosionState.mShouldApplyForceToAlreadyFlyingBlocks;
             
-            mFlyingBlocksAnimation.AddBlocksRemovedByExplosion(removedSubCells,
-                                                               state.mPosition,
-                                                               explosiveForceMagnitude,
-                                                               shouldApplyForceToAlreadyFlyingBlocks);
+            mFlyingBlocksSystem.AddBlocksRemovedByExplosion(removedSubCells,
+                                                            state.mPosition,
+                                                            explosiveForceMagnitude,
+                                                            shouldApplyForceToAlreadyFlyingBlocks);
             explosionState.mShouldApplyForceToAlreadyFlyingBlocks = false;
         }
         

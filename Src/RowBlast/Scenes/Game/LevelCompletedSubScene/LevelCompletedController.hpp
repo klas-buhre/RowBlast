@@ -30,7 +30,7 @@ namespace RowBlast {
     class UserServices;
     class Level;
     class CommonResources;
-    class FlyingBlocksAnimation;
+    class FlyingBlocksSystem;
     class Field;
 
     class LevelCompletedController {
@@ -45,7 +45,7 @@ namespace RowBlast {
                                  const CommonResources& commonResources,
                                  Pht::CameraShake& cameraShake,
                                  Field& field,
-                                 FlyingBlocksAnimation& flyingBlocksAnimation);
+                                 FlyingBlocksSystem& flyingBlocksSystem);
 
         void Init(const Level& level);
         void Start();

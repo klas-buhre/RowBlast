@@ -32,7 +32,7 @@ namespace RowBlast {
     class Level;
     class ScrollController;
     class EffectManager;
-    class FlyingBlocksAnimation;
+    class FlyingBlocksSystem;
     class CollapsingFieldAnimationSystem;
     class PieceDropParticleEffect;
     class PieceTrailParticleEffect;
@@ -88,7 +88,7 @@ namespace RowBlast {
                   ScrollController& scrollController,
                   GameScene& gameScene,
                   EffectManager& effectManger,
-                  FlyingBlocksAnimation& flyingBlocksAnimation,
+                  FlyingBlocksSystem& flyingBlocksSystem,
                   FlashingBlocksAnimationSystem& flashingBlocksAnimation,
                   CollapsingFieldAnimationSystem& collapsingFieldAnimation,
                   PieceDropParticleEffect& pieceDropParticleEffect,
@@ -306,7 +306,7 @@ namespace RowBlast {
         Pht::IEngine& mEngine;
         Field& mField;
         ScrollController& mScrollController;
-        FlyingBlocksAnimation& mFlyingBlocksAnimation;
+        FlyingBlocksSystem& mFlyingBlocksSystem;
         FlashingBlocksAnimationSystem& mFlashingBlocksAnimation;
         CollapsingFieldAnimationSystem& mCollapsingFieldAnimation;
         EffectManager& mEffectManager;
