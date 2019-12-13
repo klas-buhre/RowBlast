@@ -14,7 +14,7 @@
 #include "CollapsingFieldAnimationSystem.hpp"
 #include "FlashingBlocksAnimationSystem.hpp"
 #include "BondsAnimationSystem.hpp"
-#include "BlueprintSlotsFilledAnimation.hpp"
+#include "SlotsFilledAnimationSystem.hpp"
 #include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
 #include "PieceTrailParticleEffect.hpp"

@@ -1,4 +1,4 @@
-#include "BlueprintSlotsFilledAnimation.hpp"
+#include "SlotsFilledAnimationSystem.hpp"
 
 // Engine includes.
 #include "SceneObject.hpp"

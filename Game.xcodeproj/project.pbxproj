@@ -234,7 +234,7 @@
 		62216C2821EB377F001CB9A1 /* AsteroidAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B7D21EB377E001CB9A1 /* AsteroidAnimation.cpp */; };
 		62216C2921EB377F001CB9A1 /* PreviewPieceGroupAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B7E21EB377E001CB9A1 /* PreviewPieceGroupAnimation.cpp */; };
 		62216C2A21EB377F001CB9A1 /* BombsAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B7F21EB377E001CB9A1 /* BombsAnimation.cpp */; };
-		62216C2B21EB377F001CB9A1 /* BlueprintSlotsFilledAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B8021EB377E001CB9A1 /* BlueprintSlotsFilledAnimation.cpp */; };
+		62216C2B21EB377F001CB9A1 /* SlotsFilledAnimationSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B8021EB377E001CB9A1 /* SlotsFilledAnimationSystem.cpp */; };
 		62216C2C21EB377F001CB9A1 /* FlyingBlocksAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B8121EB377E001CB9A1 /* FlyingBlocksAnimation.cpp */; };
 		62216C2D21EB377F001CB9A1 /* FewMovesAlertAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B8221EB377E001CB9A1 /* FewMovesAlertAnimation.cpp */; };
 		62216C3121EB377F001CB9A1 /* World3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B9521EB377E001CB9A1 /* World3.cpp */; };
@@ -953,7 +953,7 @@
 		62216B7D21EB377E001CB9A1 /* AsteroidAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AsteroidAnimation.cpp; sourceTree = "<group>"; };
 		62216B7E21EB377E001CB9A1 /* PreviewPieceGroupAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PreviewPieceGroupAnimation.cpp; sourceTree = "<group>"; };
 		62216B7F21EB377E001CB9A1 /* BombsAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BombsAnimation.cpp; sourceTree = "<group>"; };
-		62216B8021EB377E001CB9A1 /* BlueprintSlotsFilledAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BlueprintSlotsFilledAnimation.cpp; sourceTree = "<group>"; };
+		62216B8021EB377E001CB9A1 /* SlotsFilledAnimationSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SlotsFilledAnimationSystem.cpp; sourceTree = "<group>"; };
 		62216B8121EB377E001CB9A1 /* FlyingBlocksAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlyingBlocksAnimation.cpp; sourceTree = "<group>"; };
 		62216B8221EB377E001CB9A1 /* FewMovesAlertAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FewMovesAlertAnimation.cpp; sourceTree = "<group>"; };
 		62216B8321EB377E001CB9A1 /* FallingPieceScaleAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FallingPieceScaleAnimation.hpp; sourceTree = "<group>"; };
@@ -961,7 +961,7 @@
 		62216B8621EB377E001CB9A1 /* AsteroidAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AsteroidAnimation.hpp; sourceTree = "<group>"; };
 		62216B8721EB377E001CB9A1 /* PreviewPieceGroupAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PreviewPieceGroupAnimation.hpp; sourceTree = "<group>"; };
 		62216B8821EB377E001CB9A1 /* BombsAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BombsAnimation.hpp; sourceTree = "<group>"; };
-		62216B8921EB377E001CB9A1 /* BlueprintSlotsFilledAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BlueprintSlotsFilledAnimation.hpp; sourceTree = "<group>"; };
+		62216B8921EB377E001CB9A1 /* SlotsFilledAnimationSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SlotsFilledAnimationSystem.hpp; sourceTree = "<group>"; };
 		62216B8A21EB377E001CB9A1 /* FewMovesAlertAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FewMovesAlertAnimation.hpp; sourceTree = "<group>"; };
 		62216B8B21EB377E001CB9A1 /* FlyingBlocksAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FlyingBlocksAnimation.hpp; sourceTree = "<group>"; };
 		62216B8E21EB377E001CB9A1 /* FlashingBlocksAnimationSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FlashingBlocksAnimationSystem.hpp; sourceTree = "<group>"; };
@@ -2132,8 +2132,6 @@
 				62429F852295A16C002C08AD /* AddingMovesAnimation.hpp */,
 				62216B7D21EB377E001CB9A1 /* AsteroidAnimation.cpp */,
 				62216B8621EB377E001CB9A1 /* AsteroidAnimation.hpp */,
-				62216B8021EB377E001CB9A1 /* BlueprintSlotsFilledAnimation.cpp */,
-				62216B8921EB377E001CB9A1 /* BlueprintSlotsFilledAnimation.hpp */,
 				62216B7F21EB377E001CB9A1 /* BombsAnimation.cpp */,
 				62216B8821EB377E001CB9A1 /* BombsAnimation.hpp */,
 				62216B7921EB377E001CB9A1 /* BondsAnimationSystem.cpp */,
@@ -2158,6 +2156,8 @@
 				62216B9121EB377E001CB9A1 /* PreviewPiecesAnimation.hpp */,
 				62C41EDD22C8E5CE0098982F /* PreviewPiecesRotationAnimation.cpp */,
 				62C41EDE22C8E5CE0098982F /* PreviewPiecesRotationAnimation.hpp */,
+				62216B8021EB377E001CB9A1 /* SlotsFilledAnimationSystem.cpp */,
+				62216B8921EB377E001CB9A1 /* SlotsFilledAnimationSystem.hpp */,
 			);
 			path = Animations;
 			sourceTree = "<group>";
@@ -3842,7 +3842,7 @@
 				62216A8021EB376E001CB9A1 /* LevelGoalDialogView.cpp in Sources */,
 				62216C3721EB377F001CB9A1 /* MapTutorial.cpp in Sources */,
 				623B94CF21F6357400B62D9B /* FileSystemIOS.mm in Sources */,
-				62216C2B21EB377F001CB9A1 /* BlueprintSlotsFilledAnimation.cpp in Sources */,
+				62216C2B21EB377F001CB9A1 /* SlotsFilledAnimationSystem.cpp in Sources */,
 				62216A8421EB376E001CB9A1 /* StoreMenuView.cpp in Sources */,
 				62216A9321EB376E001CB9A1 /* AudioResources.cpp in Sources */,
 				1750CB022328F9810092B2E6 /* SettingsMenuView.cpp in Sources */,
