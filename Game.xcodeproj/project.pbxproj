@@ -10,6 +10,7 @@
 		1700B4C023943434006566EF /* FinalScoreAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1700B4BE23943434006566EF /* FinalScoreAnimation.cpp */; };
 		1711872E22EB9EB2009CC07F /* TutorialWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872C22EB9EB2009CC07F /* TutorialWindowView.cpp */; };
 		1711873122EB9EC9009CC07F /* TutorialWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872F22EB9EC9009CC07F /* TutorialWindowController.cpp */; };
+		17148A8423A3F92C0093B0B6 /* FlyingBlocksAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17148A8323A3F92C0093B0B6 /* FlyingBlocksAnimation.cpp */; };
 		1730C96F22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730C96D22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp */; };
 		1730C97222EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730C97022EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp */; };
 		1730D47B22F5B92E0092D92B /* DragInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730D47922F5B92E0092D92B /* DragInputHandler.cpp */; };
@@ -235,7 +236,6 @@
 		62216C2921EB377F001CB9A1 /* PreviewPieceGroupAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B7E21EB377E001CB9A1 /* PreviewPieceGroupAnimation.cpp */; };
 		62216C2A21EB377F001CB9A1 /* BombsAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B7F21EB377E001CB9A1 /* BombsAnimation.cpp */; };
 		62216C2B21EB377F001CB9A1 /* SlotsFilledAnimationSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B8021EB377E001CB9A1 /* SlotsFilledAnimationSystem.cpp */; };
-		62216C2C21EB377F001CB9A1 /* FlyingBlocksAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B8121EB377E001CB9A1 /* FlyingBlocksAnimation.cpp */; };
 		62216C2D21EB377F001CB9A1 /* FewMovesAlertAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B8221EB377E001CB9A1 /* FewMovesAlertAnimation.cpp */; };
 		62216C3121EB377F001CB9A1 /* World3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B9521EB377E001CB9A1 /* World3.cpp */; };
 		62216C3221EB377F001CB9A1 /* World2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216B9621EB377E001CB9A1 /* World2.cpp */; };
@@ -566,6 +566,8 @@
 		1711872D22EB9EB2009CC07F /* TutorialWindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialWindowView.hpp; sourceTree = "<group>"; };
 		1711872F22EB9EC9009CC07F /* TutorialWindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialWindowController.cpp; sourceTree = "<group>"; };
 		1711873022EB9EC9009CC07F /* TutorialWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialWindowController.hpp; sourceTree = "<group>"; };
+		17148A8323A3F92C0093B0B6 /* FlyingBlocksAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlyingBlocksAnimation.cpp; sourceTree = "<group>"; };
+		17148A8523A3F9350093B0B6 /* FlyingBlocksAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FlyingBlocksAnimation.hpp; sourceTree = "<group>"; };
 		1730C96D22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayOnYourOwnWindowView.cpp; sourceTree = "<group>"; };
 		1730C96E22EA2AFD003BD981 /* PlayOnYourOwnWindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlayOnYourOwnWindowView.hpp; sourceTree = "<group>"; };
 		1730C97022EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayOnYourOwnWindowController.cpp; sourceTree = "<group>"; };
@@ -954,7 +956,6 @@
 		62216B7E21EB377E001CB9A1 /* PreviewPieceGroupAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PreviewPieceGroupAnimation.cpp; sourceTree = "<group>"; };
 		62216B7F21EB377E001CB9A1 /* BombsAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BombsAnimation.cpp; sourceTree = "<group>"; };
 		62216B8021EB377E001CB9A1 /* SlotsFilledAnimationSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SlotsFilledAnimationSystem.cpp; sourceTree = "<group>"; };
-		62216B8121EB377E001CB9A1 /* FlyingBlocksAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlyingBlocksAnimation.cpp; sourceTree = "<group>"; };
 		62216B8221EB377E001CB9A1 /* FewMovesAlertAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FewMovesAlertAnimation.cpp; sourceTree = "<group>"; };
 		62216B8321EB377E001CB9A1 /* FallingPieceScaleAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FallingPieceScaleAnimation.hpp; sourceTree = "<group>"; };
 		62216B8521EB377E001CB9A1 /* CollapsingFieldAnimationSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CollapsingFieldAnimationSystem.hpp; sourceTree = "<group>"; };
@@ -963,7 +964,6 @@
 		62216B8821EB377E001CB9A1 /* BombsAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = BombsAnimation.hpp; sourceTree = "<group>"; };
 		62216B8921EB377E001CB9A1 /* SlotsFilledAnimationSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SlotsFilledAnimationSystem.hpp; sourceTree = "<group>"; };
 		62216B8A21EB377E001CB9A1 /* FewMovesAlertAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FewMovesAlertAnimation.hpp; sourceTree = "<group>"; };
-		62216B8B21EB377E001CB9A1 /* FlyingBlocksAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FlyingBlocksAnimation.hpp; sourceTree = "<group>"; };
 		62216B8E21EB377E001CB9A1 /* FlashingBlocksAnimationSystem.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FlashingBlocksAnimationSystem.hpp; sourceTree = "<group>"; };
 		62216B8F21EB377E001CB9A1 /* FallingPieceAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = FallingPieceAnimation.hpp; sourceTree = "<group>"; };
 		62216B9121EB377E001CB9A1 /* PreviewPiecesAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PreviewPiecesAnimation.hpp; sourceTree = "<group>"; };
@@ -1583,6 +1583,8 @@
 				17A75B4A23211A2C001BA90D /* FieldBottomGlow.hpp */,
 				17A75B5523211A2C001BA90D /* FieldGrid.cpp */,
 				17A75B4723211A2C001BA90D /* FieldGrid.hpp */,
+				17148A8323A3F92C0093B0B6 /* FlyingBlocksAnimation.cpp */,
+				17148A8523A3F9350093B0B6 /* FlyingBlocksAnimation.hpp */,
 				17A75B5023211A2C001BA90D /* GameHudResources.cpp */,
 				17A75B4D23211A2C001BA90D /* GameHudResources.hpp */,
 				17A75B4623211A2C001BA90D /* GhostPieceBlocks.cpp */,
@@ -2148,8 +2150,6 @@
 				62216B8A21EB377E001CB9A1 /* FewMovesAlertAnimation.hpp */,
 				62216B7421EB377E001CB9A1 /* FlashingBlocksAnimationSystem.cpp */,
 				62216B8E21EB377E001CB9A1 /* FlashingBlocksAnimationSystem.hpp */,
-				62216B8121EB377E001CB9A1 /* FlyingBlocksAnimation.cpp */,
-				62216B8B21EB377E001CB9A1 /* FlyingBlocksAnimation.hpp */,
 				62216B7E21EB377E001CB9A1 /* PreviewPieceGroupAnimation.cpp */,
 				62216B8721EB377E001CB9A1 /* PreviewPieceGroupAnimation.hpp */,
 				62216B7821EB377E001CB9A1 /* PreviewPiecesAnimation.cpp */,
@@ -3793,6 +3793,7 @@
 				17A75B6023211A2C001BA90D /* SlidingText.cpp in Sources */,
 				62216BF321EB377E001CB9A1 /* Piece.cpp in Sources */,
 				62216C0521EB377F001CB9A1 /* ZPiece.cpp in Sources */,
+				17148A8423A3F92C0093B0B6 /* FlyingBlocksAnimation.cpp in Sources */,
 				1730C96F22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp in Sources */,
 				62216BE421EB377E001CB9A1 /* RestartConfirmationDialogView.cpp in Sources */,
 				174F9EA522DBCA3D0057BA7C /* ActivePreviewPieceAnimation.cpp in Sources */,
@@ -3856,7 +3857,6 @@
 				62216C0B21EB377F001CB9A1 /* PlusPiece.cpp in Sources */,
 				62243E9822B7952500EB922F /* OpenALContext.cpp in Sources */,
 				62216BDB21EB377E001CB9A1 /* GameMenuView.cpp in Sources */,
-				62216C2C21EB377F001CB9A1 /* FlyingBlocksAnimation.cpp in Sources */,
 				623B94AF21F4862800B62D9B /* GameAnalyticsIOS.mm in Sources */,
 				62216C5F21EDDA7E001CB9A1 /* ScrollPanel.cpp in Sources */,
 				623B94D221F6357400B62D9B /* GLKViewControllerExtension.mm in Sources */,
