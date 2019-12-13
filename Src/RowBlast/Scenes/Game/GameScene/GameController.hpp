@@ -7,7 +7,7 @@
 // Game includes.
 #include "Field.hpp"
 #include "GameLogic.hpp"
-#include "ScenePlayingField.hpp"
+#include "FieldSceneSystem.hpp"
 #include "GameScene.hpp"
 #include "ScrollController.hpp"
 #include "FlyingBlocksSystem.hpp"
