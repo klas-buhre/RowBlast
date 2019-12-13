@@ -204,7 +204,7 @@ namespace RowBlast {
         BombsAnimation mBombsAnimation;
         AsteroidAnimation mAsteroidAnimation;
         FlyingBlocksSystem mFlyingBlocksSystem;
-        ScenePlayingField mScenePlayingField;
+        FieldSceneSystem mFieldSceneSystem;
         LevelCompletedController mLevelCompletedController;
         std::unique_ptr<Level> mLevel;
         bool mIsInBetweenMoves {false};

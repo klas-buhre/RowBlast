@@ -1,5 +1,5 @@
-#ifndef ScenePlayingField_hpp
-#define ScenePlayingField_hpp
+#ifndef FieldSceneSystem_hpp
+#define FieldSceneSystem_hpp
 
 // Engine includes.
 #include "Vector.hpp"
@@ -29,19 +29,19 @@ namespace RowBlast {
     class SceneObjectPool;
     class Piece;
 
-    class ScenePlayingField {
+    class FieldSceneSystem {
     public:
-        ScenePlayingField(GameScene& scene,
-                          const Field& field,
-                          const GameLogic& gameLogic,
-                          const ScrollController& scrollController,
-                          const BombsAnimation& bombsAnimation,
-                          AsteroidAnimation& asteroidAnimation,
-                          const FallingPieceAnimation& fallingPieceAnimation,
-                          const DraggedPieceAnimation& draggedPieceAnimation,
-                          const PieceResources& pieceResources,
-                          const GhostPieceBlocks& ghostPieceBlocks,
-                          const LevelResources& levelResources);
+        FieldSceneSystem(GameScene& scene,
+                         const Field& field,
+                         const GameLogic& gameLogic,
+                         const ScrollController& scrollController,
+                         const BombsAnimation& bombsAnimation,
+                         AsteroidAnimation& asteroidAnimation,
+                         const FallingPieceAnimation& fallingPieceAnimation,
+                         const DraggedPieceAnimation& draggedPieceAnimation,
+                         const PieceResources& pieceResources,
+                         const GhostPieceBlocks& ghostPieceBlocks,
+                         const LevelResources& levelResources);
         
         void Update();
         

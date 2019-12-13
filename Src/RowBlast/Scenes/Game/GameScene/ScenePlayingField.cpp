@@ -54,17 +54,17 @@ namespace {
     }
 }
 
-ScenePlayingField::ScenePlayingField(GameScene& scene,
-                                     const Field& field,
-                                     const GameLogic& gameLogic,
-                                     const ScrollController& scrollController,
-                                     const BombsAnimation& bombsAnimation,
-                                     AsteroidAnimation& asteroidAnimation,
-                                     const FallingPieceAnimation& fallingPieceAnimation,
-                                     const DraggedPieceAnimation& draggedPieceAnimation,
-                                     const PieceResources& pieceResources,
-                                     const GhostPieceBlocks& ghostPieceBlocks,
-                                     const LevelResources& levelResources) :
+FieldSceneSystem::FieldSceneSystem(GameScene& scene,
+                                   const Field& field,
+                                   const GameLogic& gameLogic,
+                                   const ScrollController& scrollController,
+                                   const BombsAnimation& bombsAnimation,
+                                   AsteroidAnimation& asteroidAnimation,
+                                   const FallingPieceAnimation& fallingPieceAnimation,
+                                   const DraggedPieceAnimation& draggedPieceAnimation,
+                                   const PieceResources& pieceResources,
+                                   const GhostPieceBlocks& ghostPieceBlocks,
+                                   const LevelResources& levelResources) :
     mScene {scene},
     mField {field},
     mGameLogic {gameLogic},
@@ -77,7 +77,7 @@ ScenePlayingField::ScenePlayingField(GameScene& scene,
     mGhostPieceBlocks {ghostPieceBlocks},
     mLevelResources {levelResources} {}
 
-void ScenePlayingField::Update() {
+void FieldSceneSystem::Update() {
     UpdateFieldGrid();
     UpdateBlueprintSlots();
     UpdateFieldBlocks();
@@ -86,7 +86,7 @@ void ScenePlayingField::Update() {
     UpdateGhostPieces();
 }
 
-void ScenePlayingField::UpdateFieldGrid() {
+void FieldSceneSystem::UpdateFieldGrid() {
     auto& gridSegments = mScene.GetFieldGrid().GetSegments();
     for (auto& gridSegment: gridSegments) {
         gridSegment.mSceneObject.SetIsVisible(false);
@@ -116,7 +116,7 @@ void ScenePlayingField::UpdateFieldGrid() {
     }
 }
 
-void ScenePlayingField::UpdateBlueprintSlots() {
+void FieldSceneSystem::UpdateBlueprintSlots() {
     auto* blueprintGrid = mField.GetBlueprintGrid();
     if (blueprintGrid == nullptr) {
         return;
@@ -141,7 +141,7 @@ void ScenePlayingField::UpdateBlueprintSlots() {
     }
 }
 
-void ScenePlayingField::UpdateFieldBlocks() {
+void FieldSceneSystem::UpdateFieldBlocks() {
     if (!mField.HasChanged() && !mScrollController.IsScrolling()) {
         return;
     }
@@ -169,7 +169,7 @@ void ScenePlayingField::UpdateFieldBlocks() {
     }
 }
 
-void ScenePlayingField::UpdateFieldBlock(const SubCell& subCell, bool isSecondSubCell) {
+void FieldSceneSystem::UpdateFieldBlock(const SubCell& subCell, bool isSecondSubCell) {
     auto blockKind = subCell.mBlockKind;
     switch (blockKind) {
         case BlockKind::None:
@@ -232,10 +232,10 @@ void ScenePlayingField::UpdateFieldBlock(const SubCell& subCell, bool isSecondSu
     }
 }
 
-void ScenePlayingField::UpdateBlockBonds(const SubCell& subCell,
-                                         const Pht::Vec3& blockPos,
-                                         SceneObjectPool& pool,
-                                         bool isSecondSubCell) {
+void FieldSceneSystem::UpdateBlockBonds(const SubCell& subCell,
+                                        const Pht::Vec3& blockPos,
+                                        SceneObjectPool& pool,
+                                        bool isSecondSubCell) {
     auto& bonds = subCell.mBonds;
     auto& bondAnimations = subCell.mBondAnimations;
     const auto cellSize = mScene.GetCellSize();
@@ -309,9 +309,9 @@ void ScenePlayingField::UpdateBlockBonds(const SubCell& subCell,
     }
 }
 
-Pht::RenderableObject& ScenePlayingField::GetBondRenderable(BondRenderableKind renderableKind,
-                                                            const SubCell& subCell,
-                                                            const BondAnimation& bondAnimation) {
+Pht::RenderableObject& FieldSceneSystem::GetBondRenderable(BondRenderableKind renderableKind,
+                                                           const SubCell& subCell,
+                                                           const BondAnimation& bondAnimation) {
     auto color = subCell.mColor;
     
     auto brightness =
@@ -321,7 +321,7 @@ Pht::RenderableObject& ScenePlayingField::GetBondRenderable(BondRenderableKind r
     return mPieceResources.GetBondRenderableObject(renderableKind, color, brightness);
 }
 
-void ScenePlayingField::UpdateFallingPiece() {
+void FieldSceneSystem::UpdateFallingPiece() {
     mScene.GetPieceBlocks().ReclaimAll();
     
     auto* fallingPiece = mGameLogic.GetFallingPiece();
@@ -342,7 +342,7 @@ void ScenePlayingField::UpdateFallingPiece() {
                       mScene.GetPieceBlocks());
 }
 
-Pht::Vec2 ScenePlayingField::CalculateFallingPieceGridPosition(const FallingPiece& fallingPiece) {
+Pht::Vec2 FieldSceneSystem::CalculateFallingPieceGridPosition(const FallingPiece& fallingPiece) {
     if (mFallingPieceAnimation.GetState() == FallingPieceAnimation::State::Active ||
         mGameLogic.GetControlType() == ControlType::Click) {
         
@@ -352,7 +352,7 @@ Pht::Vec2 ScenePlayingField::CalculateFallingPieceGridPosition(const FallingPiec
     return fallingPiece.GetRenderablePosition();
 }
 
-void ScenePlayingField::UpdateDraggedPiece() {
+void FieldSceneSystem::UpdateDraggedPiece() {
     mScene.GetDraggedPieceBlocks().ReclaimAll();
     auto& sceneObject = mScene.GetDraggedPieceSceneObject();
     sceneObject.SetIsVisible(false);
@@ -402,12 +402,12 @@ void ScenePlayingField::UpdateDraggedPiece() {
     }
 }
 
-void ScenePlayingField::UpdatePieceBlocks(const Piece& pieceType,
-                                          Rotation rotation,
-                                          const Pht::Vec3& pieceFieldPos,
-                                          bool isTransparent,
-                                          bool isGhostPiece,
-                                          SceneObjectPool& pool) {
+void FieldSceneSystem::UpdatePieceBlocks(const Piece& pieceType,
+                                         Rotation rotation,
+                                         const Pht::Vec3& pieceFieldPos,
+                                         bool isTransparent,
+                                         bool isGhostPiece,
+                                         SceneObjectPool& pool) {
     auto& pieceBlocks = pieceType.GetGrid(rotation);
     auto pieceNumRows = pieceType.GetGridNumRows();
     auto pieceNumColumns = pieceType.GetGridNumColumns();
@@ -482,7 +482,7 @@ void ScenePlayingField::UpdatePieceBlocks(const Piece& pieceType,
     }
 }
 
-void ScenePlayingField::UpdateGhostPieces() {
+void FieldSceneSystem::UpdateGhostPieces() {
     mScene.GetGhostPieces().ReclaimAll();
     mScene.GetGhostPieceBlocks().ReclaimAll();
     
@@ -518,10 +518,10 @@ void ScenePlayingField::UpdateGhostPieces() {
     }
 }
 
-void ScenePlayingField::UpdateGhostPieceForGestureControls(const Piece& pieceType,
-                                                           int column,
-                                                           int ghostPieceRow,
-                                                           Rotation rotation) {
+void FieldSceneSystem::UpdateGhostPieceForGestureControls(const Piece& pieceType,
+                                                          int column,
+                                                          int ghostPieceRow,
+                                                          Rotation rotation) {
     const auto cellSize = mScene.GetCellSize();
     
     Pht::Vec3 ghostPieceFieldPos {
@@ -547,9 +547,9 @@ void ScenePlayingField::UpdateGhostPieceForGestureControls(const Piece& pieceTyp
     }
 }
 
-void ScenePlayingField::UpdateGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
-                                         const Pht::Vec3& position,
-                                         Rotation rotation) {
+void FieldSceneSystem::UpdateGhostPiece(Pht::RenderableObject& ghostPieceRenderable,
+                                        const Pht::Vec3& position,
+                                        Rotation rotation) {
     auto& sceneObject = mScene.GetGhostPieces().AccuireSceneObject();
     
     auto& transform = sceneObject.GetTransform();
@@ -559,7 +559,7 @@ void ScenePlayingField::UpdateGhostPiece(Pht::RenderableObject& ghostPieceRender
     sceneObject.SetRenderable(&ghostPieceRenderable);
 }
 
-void ScenePlayingField::UpdateClickableGhostPieces(const FallingPiece& fallingPiece) {
+void FieldSceneSystem::UpdateClickableGhostPieces(const FallingPiece& fallingPiece) {
     auto* moveAlternatives = mGameLogic.GetClickInputHandler().GetVisibleMoves();
     if (moveAlternatives == nullptr) {
         return;
@@ -636,8 +636,8 @@ void ScenePlayingField::UpdateClickableGhostPieces(const FallingPiece& fallingPi
     }
 }
 
-void ScenePlayingField::UpdateGhostPieceBlocks(const CellGrid& pieceBlocks,
-                                               const Pht::Vec3& ghostPieceFieldPos) {
+void FieldSceneSystem::UpdateGhostPieceBlocks(const CellGrid& pieceBlocks,
+                                              const Pht::Vec3& ghostPieceFieldPos) {
     auto* fallingPiece = mGameLogic.GetFallingPiece();
     assert(fallingPiece);
     

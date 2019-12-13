@@ -116,7 +116,7 @@ GameController::GameController(Pht::IEngine& engine,
     mBombsAnimation {mScene, mPieceResources, mLevelResources},
     mAsteroidAnimation {},
     mFlyingBlocksSystem {mScene, mLevelResources, mPieceResources, mBombsAnimation},
-    mScenePlayingField {
+    mFieldSceneSystem {
         mScene,
         mField,
         mGameLogic,
@@ -257,7 +257,7 @@ GameController::Command GameController::UpdateGame() {
     mMediumText.Update(dt);
     mTutorial.Update();
     
-    mScenePlayingField.Update();
+    mFieldSceneSystem.Update();
     mField.OnEndOfFrame();
     
     mAsteroidAnimation.Update(dt);
@@ -372,7 +372,7 @@ void GameController::UpdateGameMenu() {
         case GameMenuController::Result::UndoMove:
             if (!mIsInBetweenMoves) {
                 mGameLogic.UndoMove();
-                mScenePlayingField.Update();
+                mFieldSceneSystem.Update();
                 mField.OnEndOfFrame();
             }
             break;
