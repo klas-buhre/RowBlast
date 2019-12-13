@@ -194,7 +194,7 @@ namespace RowBlast {
     
     using CellGrid = std::vector<std::vector<Cell>>;
     
-    struct BlueprintSlotFillAnimation {
+    struct SlotFillAnimationComponent {
         bool mIsActive {false};
         float mElapsedTime {0.0f};
         float mScale {1.0f};
@@ -207,7 +207,7 @@ namespace RowBlast {
     struct BlueprintCell {
         Fill mFill {Fill::Empty};
         Pht::SceneObject* mSceneObject {nullptr};
-        BlueprintSlotFillAnimation mAnimation;
+        SlotFillAnimationComponent mAnimation;
     };
     
     using BlueprintCellGrid = std::vector<std::vector<BlueprintCell>>;

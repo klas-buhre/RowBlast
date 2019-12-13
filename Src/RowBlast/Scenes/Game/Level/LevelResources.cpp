@@ -178,7 +178,7 @@ void LevelResources::CreateBlueprintRenderables(Pht::IEngine& engine,
                                             imageMaterialNonDepthWriting);
 
     Pht::Material animationMaterial {Pht::Color {1.0f, 1.0f, 1.0f}};
-    animationMaterial.SetOpacity(BlueprintSlotFillAnimation::mInitialOpacity);
+    animationMaterial.SetOpacity(SlotFillAnimationComponent::mInitialOpacity);
 
     mBlueprintSquareAnimation = sceneManager.CreateRenderableObject(
         Pht::QuadMesh {cellSize, cellSize},

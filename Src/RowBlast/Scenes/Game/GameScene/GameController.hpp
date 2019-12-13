@@ -202,7 +202,7 @@ namespace RowBlast {
         PreviewPiecesRotationAnimation mPreviewPiecesRotationAnimation;
         FewMovesAlertAnimation mFewMovesAlertAnimation;
         AddingMovesAnimation mAddingMovesAnimation;
-        BlueprintSlotsFilledAnimation mBlueprintSlotsFilledAnimation;
+        SlotsFilledAnimationSystem mBlueprintSlotsFilledAnimation;
         BombsAnimation mBombsAnimation;
         AsteroidAnimation mAsteroidAnimation;
         FlyingBlocksAnimation mFlyingBlocksAnimation;

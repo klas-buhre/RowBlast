@@ -11,14 +11,14 @@
 using namespace RowBlast;
 
 namespace {
-    const auto duration = 0.35f;
-    const auto scaleUpSpeed = 3.2f;
-    const auto fadeSpeed = BlueprintSlotFillAnimation::mInitialOpacity / duration;
+    constexpr auto duration = 0.35f;
+    constexpr auto scaleUpSpeed = 3.2f;
+    const auto fadeSpeed = SlotFillAnimationComponent::mInitialOpacity / duration;
 }
 
-BlueprintSlotsFilledAnimation::BlueprintSlotsFilledAnimation(Field& field,
-                                                             GameScene& scene,
-                                                             const LevelResources& levelResources) :
+SlotsFilledAnimationSystem::SlotsFilledAnimationSystem(Field& field,
+                                                       GameScene& scene,
+                                                       const LevelResources& levelResources) :
     mField {field},
     mScene {scene} {
     
@@ -41,7 +41,7 @@ BlueprintSlotsFilledAnimation::BlueprintSlotsFilledAnimation(Field& field,
     }
 }
 
-void BlueprintSlotsFilledAnimation::Init() {
+void SlotsFilledAnimationSystem::Init() {
     mNextAvailableSceneObject = 0;
     
     mScene.GetPieceDropEffectsContainer().AddChild(*mContainerSceneObject);
@@ -51,7 +51,7 @@ void BlueprintSlotsFilledAnimation::Init() {
     }
 }
 
-void BlueprintSlotsFilledAnimation::Update(float dt) {
+void SlotsFilledAnimationSystem::Update(float dt) {
     auto* blueprintGrid = mField.GetBlueprintGrid();
     if (blueprintGrid == nullptr) {
         return;
@@ -68,10 +68,10 @@ void BlueprintSlotsFilledAnimation::Update(float dt) {
     }
 }
 
-void BlueprintSlotsFilledAnimation::AnimateSlot(int row,
-                                                int column,
-                                                BlueprintSlotFillAnimation& animation,
-                                                float dt) {
+void SlotsFilledAnimationSystem::AnimateSlot(int row,
+                                             int column,
+                                             SlotFillAnimationComponent& animation,
+                                             float dt) {
     if (animation.mElapsedTime == 0.0f) {
         animation.mSceneObject = mSceneObjects[mNextAvailableSceneObject % numSceneObjects];
         ++mNextAvailableSceneObject;
@@ -101,6 +101,6 @@ void BlueprintSlotsFilledAnimation::AnimateSlot(int row,
     
     if (animation.mOpacity < 0.0f || animation.mElapsedTime > duration) {
         animation.mSceneObject->SetIsVisible(false);
-        animation = BlueprintSlotFillAnimation {};
+        animation = SlotFillAnimationComponent {};
     }
 }

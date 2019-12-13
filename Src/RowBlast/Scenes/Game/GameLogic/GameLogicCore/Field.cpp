@@ -1292,7 +1292,7 @@ void Field::SaveSubCellAndCancelFill(Field::RemovedSubCells& removedSubCells,
             (*mBlueprintGrid)[static_cast<int>(position.y)][static_cast<int>(position.x)].mAnimation;
         
         if (blueprintSlotFillAnimation.mIsActive) {
-            blueprintSlotFillAnimation = BlueprintSlotFillAnimation {};
+            blueprintSlotFillAnimation = SlotFillAnimationComponent {};
         }
     }
 }

@@ -7,7 +7,7 @@ const int Quantities::numBlockColors {4};
 const int Quantities::numBlockBrightness {3};
 const int Quantities::numBondBrightness {4};
 
-const float BlueprintSlotFillAnimation::mInitialOpacity {0.6f};
+const float SlotFillAnimationComponent::mInitialOpacity {0.6f};
 
 BlockKind RowBlast::ToBlockKind(Fill fill) {
     switch (fill) {

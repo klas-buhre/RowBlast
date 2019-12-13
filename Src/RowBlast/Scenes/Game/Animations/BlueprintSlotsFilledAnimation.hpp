@@ -1,5 +1,5 @@
-#ifndef BlueprintSlotsFilledAnimation_hpp
-#define BlueprintSlotsFilledAnimation_hpp
+#ifndef SlotsFilledAnimationSystem_hpp
+#define SlotsFilledAnimationSystem_hpp
 
 #include <array>
 
@@ -14,19 +14,22 @@ namespace RowBlast {
     class Field;
     class GameScene;
     class LevelResources;
-    class BlueprintSlotFillAnimation;
+    class SlotFillAnimationComponent;
     
-    class BlueprintSlotsFilledAnimation {
+    class SlotsFilledAnimationSystem {
     public:
-        BlueprintSlotsFilledAnimation(Field& field,
-                                      GameScene& scene,
-                                      const LevelResources& levelResources);
+        SlotsFilledAnimationSystem(Field& field,
+                                   GameScene& scene,
+                                   const LevelResources& levelResources);
     
         void Init();
         void Update(float dt);
         
     private:
-        void AnimateSlot(int row, int column, BlueprintSlotFillAnimation& animation, float dt);
+        void AnimateSlot(int row,
+                         int column,
+                         SlotFillAnimationComponent& animation,
+                         float dt);
         
         static constexpr int numSceneObjects {10};
         
