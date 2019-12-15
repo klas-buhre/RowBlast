@@ -13,6 +13,7 @@ namespace RowBlast {
         PieceBlocks,
         GhostPieces,
         GhostPieceBlocks,
+        PiecePath,
         PreviewPieceBlocks
     };
     

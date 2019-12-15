@@ -48,7 +48,7 @@ void FallingPieceAnimation::RemoveFirstMovementIfDetour() {
             auto* firstMovement = mMovements.Front();
             auto firstMovementDiff = fallingPiecePos - firstMovement->GetPosition();
             auto secondMovementDiff = fallingPiecePos - secondMovement->GetPosition();
-            if (std::abs(secondMovementDiff.x) < std::abs(firstMovementDiff.x)) {
+            if (std::abs(secondMovementDiff.x) <= std::abs(firstMovementDiff.x)) {
                 mMovements.Erase(0);
             }
         }

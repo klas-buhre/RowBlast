@@ -11,11 +11,11 @@
 using namespace RowBlast;
 
 namespace {
-    int CalcPoolSize(SceneObjectPoolKind poolKind, int numFieldColumns) {
+    int CalcPoolSize(SceneObjectPoolKind poolKind, int visibleColumns) {
         switch (poolKind) {
             case SceneObjectPoolKind::FieldBlocks: {
+                assert(visibleColumns > 0);
                 auto visibleRows = Field::maxNumRows;
-                auto visibleColumns = numFieldColumns;
                 return 3 * visibleRows * visibleColumns - visibleRows - visibleColumns;
             }
             case SceneObjectPoolKind::PieceBlocks:
@@ -25,6 +25,10 @@ namespace {
             case SceneObjectPoolKind::GhostPieceBlocks:
             case SceneObjectPoolKind::PreviewPieceBlocks:
                 return Piece::maxRows * Piece::maxColumns;
+            case SceneObjectPoolKind::PiecePath: {
+               auto visibleRows = Field::maxNumRows;
+               return visibleRows * Piece::maxColumns;
+           }
         }
     }
 }
@@ -57,7 +61,7 @@ void SceneObjectPool::ReclaimAll() {
 Pht::SceneObject& SceneObjectPool::AccuireSceneObject() {
     assert(mNextAvailableIndex < mSceneObjects.size());
     
-    auto& sceneObject = *mSceneObjects[mNextAvailableIndex];
+    auto& sceneObject = *mSceneObjects[mNextAvailableIndex % mSceneObjects.size()];
     sceneObject.SetIsVisible(true);
     sceneObject.SetIsStatic(false);
     sceneObject.GetTransform().Reset();

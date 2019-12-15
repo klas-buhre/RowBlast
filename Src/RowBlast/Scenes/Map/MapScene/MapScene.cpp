@@ -93,7 +93,6 @@ void MapScene::Init() {
     mScene = scene.get();
     
     mEngine.GetRenderer().EnableShader(Pht::ShaderId::TexturedEnvMapLighting);
-    sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
     
     Pht::RenderPass spaceRenderPass {static_cast<int>(Layer::Space)};
     spaceRenderPass.SetRenderOrder(Pht::RenderOrder::PiexelOptimized);

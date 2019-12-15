@@ -18,6 +18,7 @@
 #include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
 #include "PieceTrailParticleEffect.hpp"
+#include "PiecePathSystem.hpp"
 #include "LevelResources.hpp"
 #include "Level.hpp"
 #include "PieceResources.hpp"
@@ -184,6 +185,7 @@ namespace RowBlast {
         EffectManager mEffectManager;
         PieceDropParticleEffect mPieceDropParticleEffect;
         PieceTrailParticleEffect mPieceTrailParticleEffect;
+        PiecePathSystem mPiecePathSystem;
         BlastArea mBlastArea;
         Shield mShield;
         FieldBottomGlow mFieldBottomGlow;

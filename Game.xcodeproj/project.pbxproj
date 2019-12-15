@@ -49,6 +49,7 @@
 		17A75B6223211A2C001BA90D /* FieldGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B5523211A2C001BA90D /* FieldGrid.cpp */; };
 		17A75B6323211A2C001BA90D /* FieldBottomGlow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B5823211A2C001BA90D /* FieldBottomGlow.cpp */; };
 		17B29562231812C700F16DD9 /* DraggedPieceAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17B29560231812C700F16DD9 /* DraggedPieceAnimation.cpp */; };
+		17D7AADF23A4F9A200C07ECE /* PiecePathSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17D7AADD23A4F9A200C07ECE /* PiecePathSystem.cpp */; };
 		17DD46F6234D03ED00786C63 /* rotate.png in Resources */ = {isa = PBXBuildFile; fileRef = 17DD46F5234D03EC00786C63 /* rotate.png */; };
 		17DE663422DB4703009B3E78 /* libGameAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17DE663322DB4703009B3E78 /* libGameAnalytics.a */; };
 		17E53FC9235E169E005B91E0 /* cube_428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 17E53FC8235E169E005B91E0 /* cube_428.obj */; };
@@ -628,6 +629,8 @@
 		17A75B5823211A2C001BA90D /* FieldBottomGlow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FieldBottomGlow.cpp; sourceTree = "<group>"; };
 		17B29560231812C700F16DD9 /* DraggedPieceAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = DraggedPieceAnimation.cpp; sourceTree = "<group>"; };
 		17B29561231812C700F16DD9 /* DraggedPieceAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = DraggedPieceAnimation.hpp; sourceTree = "<group>"; };
+		17D7AADD23A4F9A200C07ECE /* PiecePathSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PiecePathSystem.cpp; sourceTree = "<group>"; };
+		17D7AADE23A4F9A200C07ECE /* PiecePathSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PiecePathSystem.hpp; sourceTree = "<group>"; };
 		17DD46F5234D03EC00786C63 /* rotate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate.png; sourceTree = "<group>"; };
 		17DE663222DB4703009B3E78 /* GameAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameAnalytics.h; sourceTree = "<group>"; };
 		17DE663322DB4703009B3E78 /* libGameAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGameAnalytics.a; sourceTree = "<group>"; };
@@ -1588,6 +1591,8 @@
 				17A75B5423211A2C001BA90D /* GhostPieceBlocks.hpp */,
 				17A75B5223211A2C001BA90D /* MediumText.cpp */,
 				17A75B4423211A2C001BA90D /* MediumText.hpp */,
+				17D7AADD23A4F9A200C07ECE /* PiecePathSystem.cpp */,
+				17D7AADE23A4F9A200C07ECE /* PiecePathSystem.hpp */,
 				17A75B4823211A2C001BA90D /* PieceResources.cpp */,
 				17A75B5623211A2C001BA90D /* PieceResources.hpp */,
 				173F538523858C8A0092483E /* ScoreTexts.cpp */,
@@ -3727,6 +3732,7 @@
 				6234C164226E34F000711420 /* TutorialFieldBottomGlow.cpp in Sources */,
 				625696CF2182382C003A3A9D /* RowBlastApplication.cpp in Sources */,
 				62216A9521EB376E001CB9A1 /* Planets.cpp in Sources */,
+				17D7AADF23A4F9A200C07ECE /* PiecePathSystem.cpp in Sources */,
 				62216C4721EB41AF001CB9A1 /* AcceptTermsScene.cpp in Sources */,
 				623B949821F0E60D00B62D9B /* AboutMenuView.cpp in Sources */,
 				62216C0321EB377F001CB9A1 /* DPiece.cpp in Sources */,

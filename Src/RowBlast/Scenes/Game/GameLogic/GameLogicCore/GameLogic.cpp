@@ -19,6 +19,7 @@
 #include "EffectManager.hpp"
 #include "PieceDropParticleEffect.hpp"
 #include "PieceTrailParticleEffect.hpp"
+#include "PiecePathSystem.hpp"
 #include "BlastArea.hpp"
 #include "FallingPieceScaleAnimation.hpp"
 #include "Shield.hpp"
@@ -78,6 +79,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
                      CollapsingFieldAnimationSystem& collapsingFieldAnimation,
                      PieceDropParticleEffect& pieceDropParticleEffect,
                      PieceTrailParticleEffect& pieceTrailParticleEffect,
+                     PiecePathSystem& piecePathSystem,
                      BlastArea& blastRadiusAnimation,
                      FallingPieceScaleAnimation& fallingPieceScaleAnimation,
                      Shield& shieldAnimation,
@@ -95,6 +97,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
     mEffectManager {effectManager},
     mPieceDropParticleEffect {pieceDropParticleEffect},
     mPieceTrailParticleEffect {pieceTrailParticleEffect},
+    mPiecePathSystem {piecePathSystem},
     mBlastArea {blastRadiusAnimation},
     mFallingPieceScaleAnimation {fallingPieceScaleAnimation},
     mShield {shieldAnimation},
@@ -1460,6 +1463,8 @@ void GameLogic::HandleDragPieceTouchEnd() {
         mDraggedPieceAnimation.StartGoBackAnimation(mDraggedPieceIndex);
         mFallingPieceScaleAnimation.StartScaleDown();
     }
+    
+    mPiecePathSystem.HidePath();
 }
 
 void GameLogic::EndPieceDrag() {
@@ -1471,12 +1476,14 @@ void GameLogic::EndPieceDrag() {
     }
 
     mScene.GetHud().ShowPreviewPiece(mDraggedPieceIndex);
+    mPiecePathSystem.HidePath();
     mDraggedPieceIndex = PreviewPieceIndex::None;
     RemoveDraggedPiece();
 }
 
 void GameLogic::CancelDraggingBecausePieceLands() {
     mDraggedPieceIndex = PreviewPieceIndex::None;
+    mPiecePathSystem.HidePath();
     RemoveDraggedPiece();
     mDragInputHandler.EndDrag();
 }
@@ -1487,8 +1494,10 @@ void GameLogic::OnDraggedPieceGoingBackAnimationFinished() {
 
 void GameLogic::UpdateDraggedGhostPieceRowAndBlastArea() {
     auto ghostPieceRow = 0;
-    if (GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
+    if (auto* move = GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
         mDraggedGhostPieceRow = ghostPieceRow;
+        mPiecePathSystem.ShowPath(mFallingPiece, *(move->mLastMovement));
+        
         if (mDraggedPiece.GetPieceType().IsBomb()) {
             Pht::IVec2 ghostPiecePosition {
                 mDraggedPiece.GetFieldGridPosition().x,
@@ -1513,6 +1522,8 @@ void GameLogic::UpdateDraggedGhostPieceRowAndBlastArea() {
         }
     } else {
         mDraggedGhostPieceRow = Pht::Optional<int> {};
+        mPiecePathSystem.HidePath();
+
         if (mBlastArea.IsActive()) {
             mBlastArea.Stop();
         }

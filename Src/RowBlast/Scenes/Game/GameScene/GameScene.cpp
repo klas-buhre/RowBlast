@@ -21,7 +21,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto fieldQuadZ = -2.0f;
-    constexpr auto blueprintZ = -0.7f;
+    constexpr auto blueprintZ = -0.8f;
     constexpr auto fieldBorderZ = -0.5f;
     constexpr auto lowerClipAreaHeightInCells = 2.55f;
     constexpr auto fieldPadding = 0.1f;
@@ -129,11 +129,11 @@ void GameScene::Init(const Level& level, const GameLogic& gameLogic) {
     LoadMusic(level);
     
     auto& sceneManager = mEngine.GetSceneManager();
-    auto scene = sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"));
+    auto scene = sceneManager.CreateScene(Pht::Hash::Fnv1a("gameScene"),
+                                          CommonResources::narrowFrustumHeightFactor);
     mScene = scene.get();
     
     mEngine.GetRenderer().DisableShader(Pht::ShaderId::TexturedEnvMapLighting);
-    sceneManager.InitSceneSystems(CommonResources::narrowFrustumHeightFactor);
     
     CreateRenderPasses();
     CreateLightAndCamera();

@@ -68,6 +68,7 @@ GameController::GameController(Pht::IEngine& engine,
     mEffectManager {engine, mScene, mCameraShake},
     mPieceDropParticleEffect {engine, mScene},
     mPieceTrailParticleEffect {engine, mScene},
+    mPiecePathSystem {engine, mScene},
     mBlastArea {engine, mScene, commonResources},
     mShield {engine, mScene, mScrollController},
     mFieldBottomGlow {engine, mScene, mScrollController},
@@ -96,6 +97,7 @@ GameController::GameController(Pht::IEngine& engine,
         mCollapsingFieldAnimation,
         mPieceDropParticleEffect,
         mPieceTrailParticleEffect,
+        mPiecePathSystem,
         mBlastArea,
         mFallingPieceScaleAnimation,
         mShield,
@@ -155,6 +157,7 @@ void GameController::Init(int levelId) {
     mBlueprintSlotsFilledAnimation.Init();
     mPieceDropParticleEffect.Init();
     mPieceTrailParticleEffect.Init();
+    mPiecePathSystem.Init(*mLevel);
     mBlastArea.Init();
     mShield.Init(*mLevel);
     mFieldBottomGlow.Init();
@@ -184,8 +187,6 @@ void GameController::Init(int levelId) {
     mUndoMovePending = false;
     
     mUserServices.StartLevel(levelId);
-    
-    mEngine.GetSceneManager().InitRenderer();
 }
 
 GameController::Command GameController::Update() {

@@ -221,7 +221,11 @@ namespace RowBlast {
         float GetBlueprintAnimationZ() const {
             return mBlueprintAnimationZ;
         }
-        
+
+        float GetPiecePathZ() const {
+            return mPiecePathZ;
+        }
+
         float GetFieldGridZ() const {
             return mFieldGridZ;
         }
@@ -324,6 +328,7 @@ namespace RowBlast {
         const float mGhostPieceShadowZ {-0.4f};
         const float mPressedGhostPieceZ {mCellSize / 2.0f + 0.2f};
         const float mBlueprintAnimationZ {-0.6f};
+        const float mPiecePathZ {-0.7f};
         const float mFieldGridZ {-1.8f};
         const float mBigAsteroidZ {-1.0f};
         const float mBouncingBlockZ {-0.2f};

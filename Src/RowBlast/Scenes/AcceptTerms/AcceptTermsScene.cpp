@@ -27,8 +27,6 @@ void AcceptTermsScene::Init() {
     auto& sceneManager = mEngine.GetSceneManager();
     auto scene = sceneManager.CreateScene(Pht::Hash::Fnv1a("acceptTermsScene"));
     
-    sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
-    
     Pht::RenderPass uiRenderPass {static_cast<int>(Layer::Ui)};
     uiRenderPass.SetHudMode(true);
     uiRenderPass.SetIsDepthTestAllowed(false);

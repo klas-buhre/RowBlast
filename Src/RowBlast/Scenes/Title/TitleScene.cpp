@@ -259,8 +259,6 @@ void TitleScene::Init() {
     auto scene = sceneManager.CreateScene(Pht::Hash::Fnv1a("titleScene"));
     mScene = scene.get();
     
-    sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
-    
     Pht::RenderPass planetsRenderPass {static_cast<int>(Layer::Planets)};
     planetsRenderPass.SetRenderOrder(Pht::RenderOrder::PiexelOptimized);
     scene->AddRenderPass(planetsRenderPass);

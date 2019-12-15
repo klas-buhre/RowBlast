@@ -90,8 +90,6 @@ void MapController::Init() {
     } else {
         mUfo.Hide();
     }
-    
-    mEngine.GetSceneManager().InitRenderer();
 }
 
 void MapController::InitFireworks() {

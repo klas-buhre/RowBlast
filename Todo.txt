@@ -61,7 +61,13 @@ Ongoing tasks:
 
 
     -Do:
-        -1. The area covered by the piece path could be a bit brighter or darker.   ~3 days
+        -1. -Try path with the color of the piece.
+            -The path could fade in quickly.
+            -Support triangles.
+            -Remove all glitches in the path.
+            -Path for bombs should probably end at the blast area.
+            -Path for lasers should probably all the way down to the laser.
+            The area covered by the piece path could be a bit brighter or darker.   ~3 days
             It would be visible when the dragged piece is over a valid move and
             the area would move when the dragged piece moves. The ghost piece
             could be of the same style as the path area but a bit brighter.
@@ -79,7 +85,8 @@ Ongoing tasks:
             have ShortIPiece with same colors and a new piece which would be like
             a SevenPiece but with only two blocks. Or, we might have pieces with
             different colors but without welds, which may fall appart when
-            landing over an edge.
+            landing over an edge, which would be like in Puyo Puyo. Maybe the
+            matching logic can be like in Puyo Puyo as well?
         -3. Number of preview pieces:                                               ~5 days
             -Should it really always be 3 selectables? Maybe 2 is a better
              number. Sometimes you could have 3 though. Maybe you always have

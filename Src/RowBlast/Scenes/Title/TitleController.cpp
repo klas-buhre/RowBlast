@@ -37,8 +37,6 @@ void TitleController::Init() {
     mUfoAnimation.StartWarpSpeed(ufoPosition);
     mTitleAnimation.Init(mScene.GetScene(), mScene.GetUiContainer());
     mBeginTextAnimation.Init(mScene.GetScene(), mScene.GetUiContainer());
-    
-    mEngine.GetSceneManager().InitRenderer();
 }
 
 TitleController::Command TitleController::Update() {

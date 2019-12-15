@@ -29,8 +29,6 @@ void DocumentViewerScene::Init() {
     auto scene = sceneManager.CreateScene(Pht::Hash::Fnv1a("documentViewerScene"));
     mScene = scene.get();
     
-    sceneManager.InitSceneSystems(Pht::ISceneManager::defaultNarrowFrustumHeightFactor);
-    
     Pht::RenderPass uiRenderPass {static_cast<int>(Layer::Ui)};
     uiRenderPass.SetHudMode(true);
     uiRenderPass.SetIsDepthTestAllowed(false);

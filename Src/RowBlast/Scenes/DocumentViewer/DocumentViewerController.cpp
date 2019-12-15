@@ -66,8 +66,6 @@ void DocumentViewerController::Init(DocumentId documentId) {
     mScrollPanel->Init();
     mScene.GetScrollPanelContainer().AddChild(mScrollPanel->GetRoot());
     SetDialogCaption(documentId);
-    
-    mEngine.GetSceneManager().InitRenderer();
 }
 
 void DocumentViewerController::SetDialogCaption(DocumentId documentId) {

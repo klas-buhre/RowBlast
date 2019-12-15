@@ -36,6 +36,7 @@ namespace RowBlast {
     class CollapsingFieldAnimationSystem;
     class PieceDropParticleEffect;
     class PieceTrailParticleEffect;
+    class PiecePathSystem;
     class GameHudController;
     class GameScene;
     class Tutorial;
@@ -92,6 +93,7 @@ namespace RowBlast {
                   CollapsingFieldAnimationSystem& collapsingFieldAnimation,
                   PieceDropParticleEffect& pieceDropParticleEffect,
                   PieceTrailParticleEffect& pieceTrailParticleEffect,
+                  PiecePathSystem& piecePathSystem,
                   BlastArea& blastRadiusAnimation,
                   FallingPieceScaleAnimation& fallingPieceScaleAnimation,
                   Shield& shieldAnimation,
@@ -310,6 +312,7 @@ namespace RowBlast {
         EffectManager& mEffectManager;
         PieceDropParticleEffect& mPieceDropParticleEffect;
         PieceTrailParticleEffect& mPieceTrailParticleEffect;
+        PiecePathSystem& mPiecePathSystem;
         BlastArea& mBlastArea;
         FallingPieceScaleAnimation& mFallingPieceScaleAnimation;
         Shield& mShield;

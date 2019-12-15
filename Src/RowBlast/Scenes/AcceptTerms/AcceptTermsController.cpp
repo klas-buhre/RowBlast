@@ -32,8 +32,6 @@ bool AcceptTermsController::IsTermsAccepted() const {
 void AcceptTermsController::Init() {
     mScene.Init();
     mScene.GetUiViewsContainer().AddChild(mDialogView.GetRoot());
-    
-    mEngine.GetSceneManager().InitRenderer();
 }
 
 AcceptTermsController::Command AcceptTermsController::Update() {
