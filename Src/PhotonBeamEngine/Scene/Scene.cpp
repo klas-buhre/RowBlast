@@ -22,6 +22,14 @@ Scene::Scene(ISceneManager& sceneManager, Name name) :
 
 Scene::~Scene() {}
 
+void Scene::Update() {
+    GetRoot().Update(false);
+}
+
+void Scene::InitialUpdate() {
+    GetRoot().InitialUpdate(false);
+}
+
 SceneObject& Scene::GetRoot() {
     assert(mRoot);
     return *mRoot;

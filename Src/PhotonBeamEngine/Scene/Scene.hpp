@@ -33,6 +33,8 @@ namespace Pht {
         Scene(ISceneManager& sceneManager, Name name);
         ~Scene();
         
+        void Update();
+        void InitialUpdate();
         SceneObject& GetRoot();
         const SceneObject& GetRoot() const;
         LightComponent& CreateGlobalLight();

@@ -13,8 +13,8 @@ namespace Pht {
         ~SceneManager();
         
         std::unique_ptr<Scene> CreateScene(Scene::Name name) override;
+        std::unique_ptr<Scene> CreateScene(Scene::Name name, float narrowFrustumHeightFactor) override;
         void InitSceneSystems(float narrowFrustumHeightFactor) override;
-        void InitRenderer() override;
         void SetLoadedScene(std::unique_ptr<Scene> scene) override;
         Scene* GetActiveScene() override;
         std::unique_ptr<RenderableObject> CreateRenderableObject(const IMesh& mesh,

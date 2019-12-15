@@ -17,6 +17,13 @@ SceneManager::SceneManager(IRendererInternal& renderer, InputHandler& inputHandl
 SceneManager::~SceneManager() {}
 
 std::unique_ptr<Scene> SceneManager::CreateScene(Scene::Name name) {
+    InitSceneSystems(ISceneManager::defaultNarrowFrustumHeightFactor);
+    return std::make_unique<Scene>(*this, name);
+}
+
+std::unique_ptr<Scene> SceneManager::CreateScene(Scene::Name name,
+                                                 float narrowFrustumHeightFactor) {
+    InitSceneSystems(narrowFrustumHeightFactor);
     return std::make_unique<Scene>(*this, name);
 }
 
@@ -25,15 +32,8 @@ void SceneManager::InitSceneSystems(float narrowFrustumHeightFactor) {
     mInputHandler.Init(mRenderer);
 }
 
-void SceneManager::InitRenderer() {
-    if (mScene) {
-        mRenderer.InitRenderQueue(*mScene);
-    }
-}
-
 void SceneManager::SetLoadedScene(std::unique_ptr<Scene> scene) {
     mScene = std::move(scene);
-    InitRenderer();
 }
 
 Scene* SceneManager::GetActiveScene() {

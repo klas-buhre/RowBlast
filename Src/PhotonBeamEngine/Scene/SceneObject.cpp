@@ -38,6 +38,24 @@ void SceneObject::Update(bool parentMatrixChanged) {
     }
 }
 
+void SceneObject::InitialUpdate(bool parentMatrixChanged) {
+    auto matrixWasChanged = false;
+    
+    if (mTransform.HasChanged() || parentMatrixChanged) {
+        mMatrix = mTransform.ToMatrix();
+        mTransform.SetHasChanged(false);
+        matrixWasChanged = true;
+        
+        if (mParent) {
+            mMatrix *= mParent->GetMatrix();
+        }
+    }
+    
+    for (auto* child: mChildren) {
+        child->InitialUpdate(matrixWasChanged);
+    }
+}
+
 void SceneObject::AddChild(SceneObject& child) {
     child.mParent = this;
     mChildren.push_back(&child);

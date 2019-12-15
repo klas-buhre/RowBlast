@@ -40,6 +40,8 @@ namespace Pht {
         }
         
     private:
+        void HandleSceneTransition(Scene& newScene);
+        
         std::unique_ptr<IRendererInternal> mRenderer;
         InputHandler mInputHandler;
         Audio mAudio;
@@ -49,6 +51,7 @@ namespace Pht {
         std::unique_ptr<IAnalytics> mAnalytics;
         std::unique_ptr<IApplication> mApplication;
         float mLastFrameSeconds {0.0f};
+        Scene* mScene {nullptr};
     };
 }
 

@@ -40,19 +40,29 @@ void Engine::Update(float frameSeconds) {
 
     mApplication->OnUpdate();
     
-    mAnimationSystem.Update(mLastFrameSeconds);
     auto* scene = mSceneManager.GetActiveScene();
-    if (scene) {
-        scene->GetRoot().Update(false);
+    if (scene != mScene) {
+        HandleSceneTransition(*scene);
+    }
+    
+    mAnimationSystem.Update(mLastFrameSeconds);
+    if (mScene) {
+        mScene->Update();
     }
     
     mParticleSystem.Update(mLastFrameSeconds);
     mAudio.Update(mLastFrameSeconds);
     
-    if (scene) {
+    if (mScene) {
         mRenderer->ClearFrameBuffer();
         mRenderer->RenderScene(*scene, frameSeconds);
     }
+}
+
+void Engine::HandleSceneTransition(Scene& newScene) {
+    mRenderer->InitRenderQueue(newScene);
+    newScene.InitialUpdate();
+    mScene = &newScene;
 }
 
 IRenderer& Engine::GetRenderer() {
