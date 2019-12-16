@@ -33,11 +33,18 @@ namespace RowBlast {
             const Piece& mPieceType;
         };
 
+        std::unique_ptr<Pht::RenderableObject> CreateRenderable(Fill fill,
+                                                                BlockColor blockColor,
+                                                                Pht::IEngine& engine,
+                                                                const Pht::Material& material);
+        void SetColor(const FallingPiece& fallingPiece);
         void RemoveFirstMovementIfDetour(const FallingPiece& fallingPiece);
         void FillWholePath(MovingPieceSnapshot movingPiece);
         void PaintPieceSnapshot(const MovingPieceSnapshot& movingPiece, bool clearSnapshot = false);
         void ClearGrid();
         void UpdateSceneObjects();
+        Pht::RenderableObject& GetRenderableObject(Fill fill, BlockColor color) const;
+        int CalcRenderableIndex(Fill fill, BlockColor color) const;
 
         using MovementPtrs =
             Pht::StaticVector<const Movement*, Field::maxNumColumns * Field::maxNumRows * 4>;
@@ -47,8 +54,9 @@ namespace RowBlast {
         int mNumRows {0};
         int mNumColumns {0};
         MovementPtrs mMovements;
+        BlockColor mColor {BlockColor::Red};
         std::unique_ptr<SceneObjectPool> mSceneObjectPool;
-        std::unique_ptr<Pht::RenderableObject> mRenderable;
+        std::vector<std::unique_ptr<Pht::RenderableObject>> mRenderables;
     };
 }
 

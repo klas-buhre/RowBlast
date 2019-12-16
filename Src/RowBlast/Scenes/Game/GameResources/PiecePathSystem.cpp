@@ -13,23 +13,66 @@
 
 using namespace RowBlast;
 
+namespace {
+    constexpr auto colorAlpha = 0.1f;
+
+    const Pht::Vec4 redColor {1.0f, 0.5f, 0.5f, colorAlpha};
+    const Pht::Vec4 greenColor {0.5f, 0.79f, 0.5f, colorAlpha};
+    const Pht::Vec4 blueColor {0.3f, 0.72f, 1.0f, colorAlpha};
+    const Pht::Vec4 yellowColor {0.875f, 0.75f, 0.0f, colorAlpha};
+    
+    Pht::Vec4 ToColor(BlockColor blockColor) {
+        switch (blockColor) {
+            case BlockColor::Red:
+                return redColor;
+            case BlockColor::Green:
+                return greenColor;
+            case BlockColor::Blue:
+                return blueColor;
+            case BlockColor::Yellow:
+                return yellowColor;
+            default:
+                assert(false);
+                break;
+        }
+    }
+}
+
 PiecePathSystem::PiecePathSystem(Pht::IEngine& engine, GameScene& scene) :
     mScene {scene} {
     
+    auto numRenderables = Quantities::numBlockRenderables * Quantities::numBlockColors;
+    mRenderables.resize(numRenderables);
+    
     Pht::Material material;
-    material.SetOpacity(0.075f);
-
-    auto f = 0.0f;
+    material.SetBlend(Pht::Blend::Yes);
+        
+    for (auto colorIndex = 0; colorIndex < Quantities::numBlockColors; ++colorIndex) {
+        auto blockColor = static_cast<BlockColor>(colorIndex);
+        for (auto fillIndex = 0; fillIndex < Quantities::numBlockRenderables; ++fillIndex) {
+            auto fill = static_cast<Fill>(fillIndex);
+            auto renderableIndex = CalcRenderableIndex(fill, blockColor);
+            mRenderables[renderableIndex] = CreateRenderable(fill, blockColor, engine, material);
+        }
+    }
+}
+                     
+std::unique_ptr<Pht::RenderableObject> PiecePathSystem::CreateRenderable(Fill fill,
+                                                                         BlockColor blockColor,
+                                                                         Pht::IEngine& engine,
+                                                                         const Pht::Material& material) {
     auto halfSize = mScene.GetCellSize() / 2.0f;
+    auto color = ToColor(blockColor);
+
     Pht::QuadMesh::Vertices vertices {
-        {{-halfSize, -halfSize, 0.0f}, {f, f, f, 1.0f}},
-        {{halfSize, -halfSize, 0.0f}, {f, f, f, 1.0f}},
-        {{halfSize, halfSize, 0.0f}, {f, f, f, 1.0f}},
-        {{-halfSize, halfSize, 0.0f}, {f, f, f, 1.0f}}
+        {{-halfSize, -halfSize, 0.0f}, color},
+        {{halfSize, -halfSize, 0.0f}, color},
+        {{halfSize, halfSize, 0.0f}, color},
+        {{-halfSize, halfSize, 0.0f}, color}
     };
 
     auto& sceneManager = engine.GetSceneManager();
-    mRenderable = sceneManager.CreateRenderableObject(Pht::QuadMesh {vertices}, material);
+    return sceneManager.CreateRenderableObject(Pht::QuadMesh {vertices}, material);
 }
 
 void PiecePathSystem::Init(const Level& level) {
@@ -51,6 +94,7 @@ void PiecePathSystem::Init(const Level& level) {
 }
 
 void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece, const Movement& lastMovement) {
+    SetColor(fallingPiece);
     ClearGrid();
     mMovements.Clear();
     
@@ -61,25 +105,34 @@ void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece, const Movement&
     mMovements.Reverse();
     RemoveFirstMovementIfDetour(fallingPiece);
     
+    auto& pieceType = fallingPiece.GetPieceType();
+    
     MovingPieceSnapshot movingPiece {
         fallingPiece.GetIntPosition(),
         fallingPiece.GetRotation(),
-        fallingPiece.GetPieceType()
+        pieceType
     };
     FillWholePath(movingPiece);
     
-    Pht::IVec2 finalPosition {
-        static_cast<int>(lastMovement.GetPosition().x),
-        static_cast<int>(lastMovement.GetPosition().y)
-    };
-    MovingPieceSnapshot finalSnapshot {
-        finalPosition,
-        lastMovement.GetRotation(),
-        fallingPiece.GetPieceType()
-    };
-    PaintPieceSnapshot(finalSnapshot, true);
-    
+    if (!pieceType.IsRowBomb()) {
+        Pht::IVec2 finalPosition {
+            static_cast<int>(lastMovement.GetPosition().x),
+            static_cast<int>(lastMovement.GetPosition().y)
+        };
+        MovingPieceSnapshot finalSnapshot {finalPosition, lastMovement.GetRotation(), pieceType};
+        PaintPieceSnapshot(finalSnapshot, true);
+    }
+
     UpdateSceneObjects();
+}
+
+void PiecePathSystem::SetColor(const FallingPiece& fallingPiece) {
+    auto& pieceType = fallingPiece.GetPieceType();
+    if (pieceType.IsBomb() || pieceType.IsRowBomb()) {
+        mColor = BlockColor::Red;
+    } else {
+        mColor = pieceType.GetColor();
+    }
 }
 
 void PiecePathSystem::RemoveFirstMovementIfDetour(const FallingPiece& fallingPiece) {
@@ -163,7 +216,8 @@ void PiecePathSystem::UpdateSceneObjects() {
     
     for (auto row = 0; row < mNumRows; ++row) {
         for (auto column = 0; column < mNumColumns; ++column) {
-            if (mPathGrid[row][column] == Fill::Full) {
+            auto fill = mPathGrid[row][column];
+            if (fill != Fill::Empty) {
                 auto& sceneObject = mSceneObjectPool->AccuireSceneObject();
                 auto cellSize = mScene.GetCellSize();
                 
@@ -174,7 +228,7 @@ void PiecePathSystem::UpdateSceneObjects() {
                 };
                 
                 sceneObject.GetTransform().SetPosition(position);
-                sceneObject.SetRenderable(mRenderable.get());
+                sceneObject.SetRenderable(&GetRenderableObject(fill, mColor));
             }
         }
     }
@@ -190,4 +244,21 @@ void PiecePathSystem::ClearGrid() {
             mPathGrid[row][column] = Fill::Empty;
         }
     }
+}
+
+Pht::RenderableObject& PiecePathSystem::GetRenderableObject(Fill fill, BlockColor color) const {
+    return *(mRenderables[CalcRenderableIndex(fill, color)]);
+}
+
+int PiecePathSystem::CalcRenderableIndex(Fill fill, BlockColor color) const {
+    auto fillIndex = static_cast<int>(fill);
+    auto colorIndex = static_cast<int>(color);
+    
+    assert(fillIndex >= 0 && fillIndex < Quantities::numBlockRenderables &&
+           colorIndex >= 0 && colorIndex < Quantities::numBlockColors);
+    
+    auto index = colorIndex * Quantities::numBlockRenderables + fillIndex;
+    
+    assert(index < mRenderables.size());
+    return index;
 }

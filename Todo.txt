@@ -61,7 +61,8 @@ Ongoing tasks:
 
 
     -Do:
-        -1. -Tune checked field. And try less bland color for path.
+        -1. -Review last commit.
+            -Tune checked field. And try less bland color for path.
             -The path cell brightness could vary with y position.
             -The path could fade in quickly.
             -Support triangles.
