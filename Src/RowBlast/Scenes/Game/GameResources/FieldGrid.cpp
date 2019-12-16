@@ -20,9 +20,10 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto lineWidth = 0.07f;
-    const Pht::Vec4 lineColor {1.0f, 1.0f, 1.0f, 0.045f};
-
+    const Pht::Vec4 transparentColor {0.0f, 0.0f, 0.0f, 0.0f};
+    const Pht::Vec4 darkerColor {0.0f, 0.0f, 0.2f, 0.05f};
+    constexpr auto gridSegmentHeightNumCells = 8;
+    
     std::unique_ptr<Pht::SoftwareRasterizer>
     CreateRasterizer(Pht::IEngine& engine,
                      const Pht::Vec2& coordinateSystemSize,
@@ -44,29 +45,29 @@ namespace {
 
         return std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize);
     }
-    
+
     std::unique_ptr<Pht::RenderableObject>
     CreateSegmentRenderable(Pht::IEngine& engine,
                             GameScene& scene,
                             const CommonResources& commonResources,
-                            int gridSegmentSideNumCells) {
+                            int gridSegmentWidthNumCells) {
         auto cellSize = scene.GetCellSize();
-        auto gridSegmentSide = static_cast<float>(gridSegmentSideNumCells) * cellSize + lineWidth;
-        Pht::Vec2 gridSegmentSize {gridSegmentSide, gridSegmentSide};
+        auto gridSegmentWidth = static_cast<float>(gridSegmentWidthNumCells) * cellSize;
+        auto gridSegmentHeight = static_cast<float>(gridSegmentHeightNumCells) * cellSize;
+        Pht::Vec2 gridSegmentSize {gridSegmentWidth, gridSegmentHeight};
         auto rasterizer = CreateRasterizer(engine, gridSegmentSize, commonResources);
-        
-        for (auto column = 0; column < gridSegmentSideNumCells + 1; ++column) {
-            auto x = column * cellSize;
-            Pht::Vec2 lowerLeft {x, 0.0f};
-            Pht::Vec2 upperRight {x + lineWidth, gridSegmentSide - lineWidth};
-            rasterizer->DrawRectangle(upperRight, lowerLeft, lineColor, Pht::DrawOver::Yes);
-        }
 
-        for (auto row = 0; row < gridSegmentSideNumCells; ++row) {
+        for (auto row = 0; row < gridSegmentHeightNumCells; ++row) {
             auto y = row * cellSize;
-            Pht::Vec2 lowerLeft {0.0, y};
-            Pht::Vec2 upperRight {gridSegmentSide, y + lineWidth};
-            rasterizer->DrawRectangle(upperRight, lowerLeft, lineColor, Pht::DrawOver::Yes);
+            auto counter = row % 2;
+            for (auto column = 0; column < gridSegmentWidthNumCells; ++column) {
+                auto x = column * cellSize;
+                Pht::Vec2 lowerLeft {x, y};
+                Pht::Vec2 upperRight {x + cellSize, y + cellSize};
+                auto color = counter % 2 ? darkerColor : transparentColor;
+                rasterizer->DrawRectangle(upperRight, lowerLeft, color, Pht::DrawOver::Yes);
+                ++counter;
+            }
         }
         
         auto image = rasterizer->ProduceImage();
@@ -74,7 +75,7 @@ namespace {
         Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
         imageMaterial.SetBlend(Pht::Blend::Yes);
         auto& sceneManager = engine.GetSceneManager();
-        return sceneManager.CreateRenderableObject(Pht::QuadMesh {gridSegmentSide, gridSegmentSide},
+        return sceneManager.CreateRenderableObject(Pht::QuadMesh {gridSegmentWidth, gridSegmentHeight},
                                                    imageMaterial);
     }
 }
@@ -90,31 +91,32 @@ FieldGrid::FieldGrid(Pht::IEngine& engine,
 void FieldGrid::Init(const Level& level) {
     auto& container = mScene.GetFieldQuadContainer();
     auto& fieldLowerLeft = mScene.GetFieldLoweLeft();
-    auto gridSegmentSideNumCells = level.GetNumColumns();
-    auto segmentSide = mScene.GetCellSize() * static_cast<float>(gridSegmentSideNumCells);
-    auto numSegments = level.GetNumRows() / gridSegmentSideNumCells + 1;
+    auto gridSegmentWidthNumCells = level.GetNumColumns();
+    auto segmentWidth = mScene.GetCellSize() * static_cast<float>(gridSegmentWidthNumCells);
+    auto segmentHeight = mScene.GetCellSize() * static_cast<float>(gridSegmentHeightNumCells);
+    auto numSegments = level.GetNumRows() / gridSegmentHeightNumCells + 1;
     
     mSegments.clear();
     
     for (auto i = 0; i < numSegments; ++i) {
         Pht::Vec3 gridSegmentPosition {
-            fieldLowerLeft.x + segmentSide / 2.0f,
-            fieldLowerLeft.y + segmentSide / 2.0f + static_cast<float>(i) * segmentSide,
+            fieldLowerLeft.x + segmentWidth / 2.0f,
+            fieldLowerLeft.y + segmentHeight / 2.0f + static_cast<float>(i) * segmentHeight,
             mScene.GetFieldGridZ()
         };
         
         auto& gridSegmentSceneObject = mScene.GetScene().CreateSceneObject();
         gridSegmentSceneObject.GetTransform().SetPosition(gridSegmentPosition);
-        gridSegmentSceneObject.SetRenderable(&GetGridSegmentRenderable(gridSegmentSideNumCells));
+        gridSegmentSceneObject.SetRenderable(&GetGridSegmentRenderable(gridSegmentWidthNumCells));
         container.AddChild(gridSegmentSceneObject);
 
-        Segment gridSegment {i * gridSegmentSideNumCells, gridSegmentSceneObject};
+        Segment gridSegment {i * gridSegmentHeightNumCells, gridSegmentSceneObject};
         mSegments.push_back(gridSegment);
     }
 }
 
-Pht::RenderableObject& FieldGrid::GetGridSegmentRenderable(int gridSegmentSideNumCells) {
-    switch (gridSegmentSideNumCells) {
+Pht::RenderableObject& FieldGrid::GetGridSegmentRenderable(int gridSegmentWidthNumCells) {
+    switch (gridSegmentWidthNumCells) {
         case 7:
             return *mGridSegmentSize7Renderable;
         case 8:

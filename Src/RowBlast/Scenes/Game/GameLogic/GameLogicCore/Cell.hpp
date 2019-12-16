@@ -12,12 +12,12 @@ namespace Pht {
 
 namespace RowBlast {
     enum class Fill {
-        Empty,
         LowerRightHalf,
         UpperRightHalf,
         UpperLeftHalf,
         LowerLeftHalf,
-        Full
+        Full,
+        Empty
     };
 
     enum class Rotation {

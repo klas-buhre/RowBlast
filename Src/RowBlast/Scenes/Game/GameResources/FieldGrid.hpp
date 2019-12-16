@@ -33,7 +33,7 @@ namespace RowBlast {
         }
         
     private:
-        Pht::RenderableObject& GetGridSegmentRenderable(int gridSegmentSideNumCells);
+        Pht::RenderableObject& GetGridSegmentRenderable(int gridSegmentWidthNumCells);
         
         GameScene& mScene;
         std::unique_ptr<Pht::RenderableObject> mGridSegmentSize7Renderable;
