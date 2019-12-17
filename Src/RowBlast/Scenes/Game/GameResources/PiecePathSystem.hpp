@@ -3,6 +3,7 @@
 
 // Engine includes.
 #include "StaticVector.hpp"
+#include "QuadMesh.hpp"
 
 // Game includes.
 #include "Field.hpp"
@@ -25,6 +26,7 @@ namespace RowBlast {
         void Init(const Level& level);
         void ShowPath(const FallingPiece& fallingPiece, const Movement& lastMovement);
         void HidePath();
+        bool IsPathVisible();
         
     private:
         struct MovingPieceSnapshot {
@@ -37,10 +39,16 @@ namespace RowBlast {
                                                                 BlockColor blockColor,
                                                                 Pht::IEngine& engine,
                                                                 const Pht::Material& material);
+        Pht::QuadMesh::Vertices CreateVertices(Fill fill, BlockColor blockColor);
         void SetColor(const FallingPiece& fallingPiece);
         void RemoveFirstMovementIfDetour(const FallingPiece& fallingPiece);
         void FillWholePath(MovingPieceSnapshot movingPiece);
-        void PaintPieceSnapshot(const MovingPieceSnapshot& movingPiece, bool clearSnapshot = false);
+        void PaintPieceSnapshot(const MovingPieceSnapshot& movingPiece,
+                                bool lastSnapshot,
+                                bool clearSnapshot = false);
+        void ClearSnapshotCell(int row, int column, Fill pieceSubCellFill);
+        void SetLastSnapshotCell(int row, int column, Fill pieceSubCellFill);
+        void SetSnapshotCell(int row, int column, Fill pieceSubCellFill);
         void ClearGrid();
         void UpdateSceneObjects();
         Pht::RenderableObject& GetRenderableObject(Fill fill, BlockColor color) const;
@@ -49,7 +57,13 @@ namespace RowBlast {
         using MovementPtrs =
             Pht::StaticVector<const Movement*, Field::maxNumColumns * Field::maxNumRows * 4>;
 
+        enum class State {
+            Active,
+            Inactive
+        };
+        
         GameScene& mScene;
+        State mState {State::Inactive};
         std::vector<std::vector<Fill>> mPathGrid;
         int mNumRows {0};
         int mNumColumns {0};

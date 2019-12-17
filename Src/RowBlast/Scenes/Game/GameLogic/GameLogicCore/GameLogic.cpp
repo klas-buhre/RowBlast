@@ -157,6 +157,7 @@ void GameLogic::Init(const Level& level) {
     EndCurrentMove();
     mNewMoveReason = NewMoveReason::NewMove;
     mDraggedPieceIndex = PreviewPieceIndex::None;
+    mValidMoveBelowDraggedPiece = Pht::Optional<Move> {};
     
     mAllValidMoves = nullptr;
     
@@ -811,6 +812,11 @@ void GameLogic::UpdateFallingPieceYpos() {
                         auto& validMoves = mAi.FindValidMoves(mFallingPiece,
                                                               GetMovesUsedIncludingCurrent() - 1);
                         mAllValidMoves = &validMoves.mMoves;
+                        if (mPiecePathSystem.IsPathVisible() && mValidMoveBelowDraggedPiece.HasValue()) {
+                            if (auto* move = mAllValidMoves->Find(mValidMoveBelowDraggedPiece.GetValue())) {
+                                mPiecePathSystem.ShowPath(mFallingPiece, *(move->mLastMovement));
+                            }
+                        }
                     }
                 }
             }
@@ -1464,7 +1470,7 @@ void GameLogic::HandleDragPieceTouchEnd() {
         mFallingPieceScaleAnimation.StartScaleDown();
     }
     
-    mPiecePathSystem.HidePath();
+    HidePiecePath();
 }
 
 void GameLogic::EndPieceDrag() {
@@ -1476,14 +1482,14 @@ void GameLogic::EndPieceDrag() {
     }
 
     mScene.GetHud().ShowPreviewPiece(mDraggedPieceIndex);
-    mPiecePathSystem.HidePath();
+    HidePiecePath();
     mDraggedPieceIndex = PreviewPieceIndex::None;
     RemoveDraggedPiece();
 }
 
 void GameLogic::CancelDraggingBecausePieceLands() {
-    mDraggedPieceIndex = PreviewPieceIndex::None;
-    mPiecePathSystem.HidePath();
+    // mDraggedPieceIndex = PreviewPieceIndex::None;
+    HidePiecePath();
     RemoveDraggedPiece();
     mDragInputHandler.EndDrag();
 }
@@ -1497,6 +1503,7 @@ void GameLogic::UpdateDraggedGhostPieceRowAndBlastArea() {
     if (auto* move = GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
         mDraggedGhostPieceRow = ghostPieceRow;
         mPiecePathSystem.ShowPath(mFallingPiece, *(move->mLastMovement));
+        mValidMoveBelowDraggedPiece = *move;
         
         if (mDraggedPiece.GetPieceType().IsBomb()) {
             Pht::IVec2 ghostPiecePosition {
@@ -1522,7 +1529,7 @@ void GameLogic::UpdateDraggedGhostPieceRowAndBlastArea() {
         }
     } else {
         mDraggedGhostPieceRow = Pht::Optional<int> {};
-        mPiecePathSystem.HidePath();
+        HidePiecePath();
 
         if (mBlastArea.IsActive()) {
             mBlastArea.Stop();
@@ -1562,6 +1569,11 @@ const Move* GameLogic::GetValidMoveBelowDraggedPiece(int& ghostPieceRow) {
     }
     
     return nullptr;
+}
+
+void GameLogic::HidePiecePath() {
+    mPiecePathSystem.HidePath();
+    mValidMoveBelowDraggedPiece = Pht::Optional<Move> {};
 }
 
 GameLogic::Result GameLogic::HandleInput() {

@@ -3,7 +3,6 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "ISceneManager.hpp"
-#include "QuadMesh.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -14,6 +13,7 @@
 using namespace RowBlast;
 
 namespace {
+    constexpr auto numFillRenderables = 2;
     constexpr auto colorAlpha = 0.1f;
 
     const Pht::Vec4 redColor {1.0f, 0.5f, 0.5f, colorAlpha};
@@ -41,7 +41,7 @@ namespace {
 PiecePathSystem::PiecePathSystem(Pht::IEngine& engine, GameScene& scene) :
     mScene {scene} {
     
-    auto numRenderables = Quantities::numBlockRenderables * Quantities::numBlockColors;
+    auto numRenderables = numFillRenderables * Quantities::numBlockColors;
     mRenderables.resize(numRenderables);
     
     Pht::Material material;
@@ -49,11 +49,12 @@ PiecePathSystem::PiecePathSystem(Pht::IEngine& engine, GameScene& scene) :
         
     for (auto colorIndex = 0; colorIndex < Quantities::numBlockColors; ++colorIndex) {
         auto blockColor = static_cast<BlockColor>(colorIndex);
-        for (auto fillIndex = 0; fillIndex < Quantities::numBlockRenderables; ++fillIndex) {
-            auto fill = static_cast<Fill>(fillIndex);
-            auto renderableIndex = CalcRenderableIndex(fill, blockColor);
-            mRenderables[renderableIndex] = CreateRenderable(fill, blockColor, engine, material);
-        }
+
+        mRenderables[CalcRenderableIndex(Fill::Full, blockColor)] =
+            CreateRenderable(Fill::Full, blockColor, engine, material);
+            
+        mRenderables[CalcRenderableIndex(Fill::LowerRightHalf, blockColor)] =
+            CreateRenderable(Fill::LowerRightHalf, blockColor, engine, material);
     }
 }
                      
@@ -61,18 +62,33 @@ std::unique_ptr<Pht::RenderableObject> PiecePathSystem::CreateRenderable(Fill fi
                                                                          BlockColor blockColor,
                                                                          Pht::IEngine& engine,
                                                                          const Pht::Material& material) {
+    auto& sceneManager = engine.GetSceneManager();
+    return sceneManager.CreateRenderableObject(Pht::QuadMesh {CreateVertices(fill, blockColor)},
+                                               material);
+}
+
+Pht::QuadMesh::Vertices PiecePathSystem::CreateVertices(Fill fill, BlockColor blockColor) {
     auto halfSize = mScene.GetCellSize() / 2.0f;
     auto color = ToColor(blockColor);
 
-    Pht::QuadMesh::Vertices vertices {
-        {{-halfSize, -halfSize, 0.0f}, color},
-        {{halfSize, -halfSize, 0.0f}, color},
-        {{halfSize, halfSize, 0.0f}, color},
-        {{-halfSize, halfSize, 0.0f}, color}
-    };
-
-    auto& sceneManager = engine.GetSceneManager();
-    return sceneManager.CreateRenderableObject(Pht::QuadMesh {vertices}, material);
+    switch (fill) {
+        case Fill::Full:
+            return Pht::QuadMesh::Vertices {
+                {{-halfSize, -halfSize, 0.0f}, color},
+                {{halfSize, -halfSize, 0.0f}, color},
+                {{halfSize, halfSize, 0.0f}, color},
+                {{-halfSize, halfSize, 0.0f}, color}
+            };
+        default: {
+            auto nudge = 0.0001f;
+            return Pht::QuadMesh::Vertices {
+                {{-halfSize, -halfSize, 0.0f}, color},
+                {{halfSize, -halfSize, 0.0f}, color},
+                {{halfSize, halfSize, 0.0f}, color},
+                {{-halfSize + nudge, -halfSize + nudge, 0.0f}, color}
+            };
+        }
+    }
 }
 
 void PiecePathSystem::Init(const Level& level) {
@@ -90,10 +106,11 @@ void PiecePathSystem::Init(const Level& level) {
     mSceneObjectPool = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PiecePath,
                                                          mScene.GetPieceDropEffectsContainer(),
                                                          level.GetNumColumns());
-    mSceneObjectPool->SetIsActive(false);
+    HidePath();
 }
 
 void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece, const Movement& lastMovement) {
+    mState = State::Active;
     SetColor(fallingPiece);
     ClearGrid();
     mMovements.Clear();
@@ -120,7 +137,7 @@ void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece, const Movement&
             static_cast<int>(lastMovement.GetPosition().y)
         };
         MovingPieceSnapshot finalSnapshot {finalPosition, lastMovement.GetRotation(), pieceType};
-        PaintPieceSnapshot(finalSnapshot, true);
+        PaintPieceSnapshot(finalSnapshot, true, true);
     }
 
     UpdateSceneObjects();
@@ -164,27 +181,28 @@ void PiecePathSystem::FillWholePath(MovingPieceSnapshot movingPiece) {
         if (position.y > targetPosition.y) {
             for (auto y = position.y; y >= targetPosition.y; --y) {
                 movingPiece.mPosition.y = y;
-                PaintPieceSnapshot(movingPiece);
+                PaintPieceSnapshot(movingPiece, false);
             }
         } else if (position.x > targetPosition.x) {
             for (auto x = position.x; x >= targetPosition.x; --x) {
                 movingPiece.mPosition.x = x;
-                PaintPieceSnapshot(movingPiece);
+                PaintPieceSnapshot(movingPiece, false);
             }
         } else if (position.x < targetPosition.x) {
             for (auto x = position.x; x <= targetPosition.x; ++x) {
                 movingPiece.mPosition.x = x;
-                PaintPieceSnapshot(movingPiece);
+                PaintPieceSnapshot(movingPiece, false);
             }
         }
         
         movingPiece.mPosition = targetPosition;
         movingPiece.mRotation = movement.GetRotation();
-        PaintPieceSnapshot(movingPiece);
+        PaintPieceSnapshot(movingPiece, movementIndex == mMovements.Size() - 1);
     }
 }
 
 void PiecePathSystem::PaintPieceSnapshot(const MovingPieceSnapshot& movingPiece,
+                                         bool lastSnapshot,
                                          bool clearSnapshot) {
     auto& pieceType = movingPiece.mPieceType;
     auto& pieceGrid = pieceType.GetGrid(movingPiece.mRotation);
@@ -199,15 +217,94 @@ void PiecePathSystem::PaintPieceSnapshot(const MovingPieceSnapshot& movingPiece,
                 continue;
             }
 
+            auto pieceSubCellFill = pieceSubCell.mFill;
             auto row = piecePosition.y + pieceRow;
             auto column = piecePosition.x + pieceColumn;
             if (clearSnapshot) {
-                mPathGrid[row][column] = Fill::Empty;
+                ClearSnapshotCell(row, column, pieceSubCellFill);
             } else {
-                mPathGrid[row][column] = pieceSubCell.mFill;
+                if (lastSnapshot) {
+                    SetLastSnapshotCell(row, column, pieceSubCellFill);
+                } else {
+                    SetSnapshotCell(row, column, pieceSubCellFill);
+                }
             }
         }
     }
+}
+
+void PiecePathSystem::ClearSnapshotCell(int row, int column, Fill pieceSubCellFill) {
+    if (mPathGrid[row][column] == Fill::Full) {
+        switch (pieceSubCellFill) {
+            case Fill::LowerLeftHalf:
+                mPathGrid[row][column] = Fill::UpperRightHalf;
+                break;
+            case Fill::LowerRightHalf:
+                mPathGrid[row][column] = Fill::UpperLeftHalf;
+                break;
+            case Fill::UpperLeftHalf:
+                mPathGrid[row][column] = Fill::LowerRightHalf;
+                break;
+            case Fill::UpperRightHalf:
+                mPathGrid[row][column] = Fill::LowerLeftHalf;
+                break;
+            case Fill::Full:
+                mPathGrid[row][column] = Fill::Empty;
+                break;
+            case Fill::Empty:
+                break;
+        }
+    } else if (mPathGrid[row][column] == pieceSubCellFill) {
+        mPathGrid[row][column] = Fill::Empty;
+    }
+}
+
+void PiecePathSystem::SetLastSnapshotCell(int row, int column, Fill pieceSubCellFill) {
+    if (row + 1 < mNumRows) {
+        switch (pieceSubCellFill) {
+            case Fill::UpperLeftHalf:
+            case Fill::UpperRightHalf:
+                if (mPathGrid[row + 1][column] != Fill::Empty) {
+                    mPathGrid[row + 1][column] = Fill::Full;
+                }
+                mPathGrid[row][column] = pieceSubCellFill;
+                break;
+            case Fill::LowerLeftHalf:
+            case Fill::LowerRightHalf:
+                if (mPathGrid[row + 1][column] != Fill::Empty) {
+                    mPathGrid[row][column] = Fill::Full;
+                } else {
+                    mPathGrid[row][column] = pieceSubCellFill;
+                }
+                break;
+            default:
+                mPathGrid[row][column] = pieceSubCellFill;
+                break;
+        }
+    } else {
+        mPathGrid[row][column] = pieceSubCellFill;
+    }
+}
+
+void PiecePathSystem::SetSnapshotCell(int row, int column, Fill pieceSubCellFill) {
+    if (row + 2 < mNumRows) {
+        switch (mPathGrid[row + 1][column]) {
+            case Fill::UpperLeftHalf:
+            case Fill::UpperRightHalf:
+                mPathGrid[row + 1][column] = Fill::Full;
+                break;
+            case Fill::LowerLeftHalf:
+            case Fill::LowerRightHalf:
+                if (mPathGrid[row + 2][column] != Fill::Empty) {
+                    mPathGrid[row + 1][column] = Fill::Full;
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    mPathGrid[row][column] = pieceSubCellFill;
 }
 
 void PiecePathSystem::UpdateSceneObjects() {
@@ -227,15 +324,39 @@ void PiecePathSystem::UpdateSceneObjects() {
                     mScene.GetPiecePathZ()
                 };
                 
-                sceneObject.GetTransform().SetPosition(position);
+                auto& transform = sceneObject.GetTransform();
+                transform.SetPosition(position);
                 sceneObject.SetRenderable(&GetRenderableObject(fill, mColor));
+                
+                switch (fill) {
+                    case Fill::UpperRightHalf:
+                        transform.SetRotation({0.0f, 0.0f, -270.0f});
+                        break;
+                    case Fill::UpperLeftHalf:
+                        transform.SetRotation({0.0f, 0.0f, -180.0f});
+                        break;
+                    case Fill::LowerLeftHalf:
+                        transform.SetRotation({0.0f, 0.0f, -90.0f});
+                        break;
+                    case Fill::LowerRightHalf:
+                    case Fill::Full:
+                        transform.SetRotation({0.0f, 0.0f, 0.0f});
+                        break;
+                    default:
+                        break;
+                }
             }
         }
     }
 }
 
 void PiecePathSystem::HidePath() {
+    mState = State::Inactive;
     mSceneObjectPool->SetIsActive(false);
+}
+
+bool PiecePathSystem::IsPathVisible() {
+    return mState == State::Active;
 }
 
 void PiecePathSystem::ClearGrid() {
@@ -251,13 +372,13 @@ Pht::RenderableObject& PiecePathSystem::GetRenderableObject(Fill fill, BlockColo
 }
 
 int PiecePathSystem::CalcRenderableIndex(Fill fill, BlockColor color) const {
-    auto fillIndex = static_cast<int>(fill);
+    auto fillIndex = (fill == Fill::Full ? 0 : 1);
     auto colorIndex = static_cast<int>(color);
     
-    assert(fillIndex >= 0 && fillIndex < Quantities::numBlockRenderables &&
+    assert(fillIndex >= 0 && fillIndex < numFillRenderables &&
            colorIndex >= 0 && colorIndex < Quantities::numBlockColors);
     
-    auto index = colorIndex * Quantities::numBlockRenderables + fillIndex;
+    auto index = colorIndex * numFillRenderables + fillIndex;
     
     assert(index < mRenderables.size());
     return index;

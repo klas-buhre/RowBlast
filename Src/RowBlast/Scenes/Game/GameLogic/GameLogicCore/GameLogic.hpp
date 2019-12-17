@@ -284,6 +284,7 @@ namespace RowBlast {
         bool IsThereRoomToSwitchPiece(const Piece& pieceType, Rotation rotation);
         void UpdateDraggedGhostPieceRowAndBlastArea();
         const Move* GetValidMoveBelowDraggedPiece(int& ghostPieceRow);
+        void HidePiecePath();
         void CancelDraggingBecausePieceLands();
         Result HandleInput();
         void ForwardTouchToInputHandler(const Pht::TouchEvent& touchEvent);
@@ -353,6 +354,7 @@ namespace RowBlast {
         float mLandingMovementDuration {0.0f};
         int mGhostPieceRow {0};
         Pht::Optional<int> mDraggedGhostPieceRow;
+        Pht::Optional<Move> mValidMoveBelowDraggedPiece;
         int mMovesUsed {0};
         int mMovesLeft {0};
         int mNumObjectsLeftToClear {0};

@@ -62,12 +62,12 @@ Ongoing tasks:
 
     -Do:
         -1. -Review last commit.
-            -Tune checked field. And try less bland color for path.
+            -Tune checked field. And tune color for path.
+            -Decide on the design of the ghost piece. Cleanup GhostPieceBlocks.cpp after that.
             -The path cell brightness could vary with y position.
             -The path could fade in quickly.
-            -Support triangles.
-            -Remove all glitches in the path.
             -Path for bombs should probably end at the blast area.
+            -Remove all glitches in the path.
             The area covered by the piece path could be a bit brighter or darker.   ~3 days
             It would be visible when the dragged piece is over a valid move and
             the area would move when the dragged piece moves. The ghost piece
