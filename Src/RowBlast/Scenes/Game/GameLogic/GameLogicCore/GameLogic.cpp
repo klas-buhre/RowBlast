@@ -1488,7 +1488,6 @@ void GameLogic::EndPieceDrag() {
 }
 
 void GameLogic::CancelDraggingBecausePieceLands() {
-    // mDraggedPieceIndex = PreviewPieceIndex::None;
     HidePiecePath();
     RemoveDraggedPiece();
     mDragInputHandler.EndDrag();

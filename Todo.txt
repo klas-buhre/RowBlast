@@ -62,6 +62,7 @@ Ongoing tasks:
 
     -Do:
         -1. -Review last commit.
+            -Test make the dragged piece brighter when over a valid move.
             -Tune checked field. And tune color for path.
             -Decide on the design of the ghost piece. Cleanup GhostPieceBlocks.cpp after that.
             -The path cell brightness could vary with y position.

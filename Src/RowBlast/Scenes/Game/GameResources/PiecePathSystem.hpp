@@ -35,6 +35,13 @@ namespace RowBlast {
             const Piece& mPieceType;
         };
 
+        enum class SnapshotKind {
+            Standard,
+            MoveSideways,
+            Last,
+            Clear
+        };
+        
         std::unique_ptr<Pht::RenderableObject> CreateRenderable(Fill fill,
                                                                 BlockColor blockColor,
                                                                 Pht::IEngine& engine,
@@ -42,13 +49,12 @@ namespace RowBlast {
         Pht::QuadMesh::Vertices CreateVertices(Fill fill, BlockColor blockColor);
         void SetColor(const FallingPiece& fallingPiece);
         void RemoveFirstMovementIfDetour(const FallingPiece& fallingPiece);
-        void FillWholePath(MovingPieceSnapshot movingPiece);
-        void PaintPieceSnapshot(const MovingPieceSnapshot& movingPiece,
-                                bool lastSnapshot,
-                                bool clearSnapshot = false);
+        void FillWholePath(const FallingPiece& fallingPiece);
+        void PaintPieceSnapshot(const MovingPieceSnapshot& movingPiece, SnapshotKind snapshotKind);
         void ClearSnapshotCell(int row, int column, Fill pieceSubCellFill);
         void SetLastSnapshotCell(int row, int column, Fill pieceSubCellFill);
         void SetSnapshotCell(int row, int column, Fill pieceSubCellFill);
+        void SetSnapshotCellMovingSideways(int row, int column, Fill pieceSubCellFill);
         void ClearGrid();
         void UpdateSceneObjects();
         Pht::RenderableObject& GetRenderableObject(Fill fill, BlockColor color) const;

@@ -121,23 +121,16 @@ void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece, const Movement&
     
     mMovements.Reverse();
     RemoveFirstMovementIfDetour(fallingPiece);
+    FillWholePath(fallingPiece);
     
     auto& pieceType = fallingPiece.GetPieceType();
-    
-    MovingPieceSnapshot movingPiece {
-        fallingPiece.GetIntPosition(),
-        fallingPiece.GetRotation(),
-        pieceType
-    };
-    FillWholePath(movingPiece);
-    
     if (!pieceType.IsRowBomb()) {
         Pht::IVec2 finalPosition {
             static_cast<int>(lastMovement.GetPosition().x),
             static_cast<int>(lastMovement.GetPosition().y)
         };
         MovingPieceSnapshot finalSnapshot {finalPosition, lastMovement.GetRotation(), pieceType};
-        PaintPieceSnapshot(finalSnapshot, true, true);
+        PaintPieceSnapshot(finalSnapshot, SnapshotKind::Clear);
     }
 
     UpdateSceneObjects();
@@ -167,43 +160,63 @@ void PiecePathSystem::RemoveFirstMovementIfDetour(const FallingPiece& fallingPie
     }
 }
 
-void PiecePathSystem::FillWholePath(MovingPieceSnapshot movingPiece) {
+void PiecePathSystem::FillWholePath(const FallingPiece& fallingPiece) {
+    MovingPieceSnapshot movingPiece {
+        fallingPiece.GetIntPosition(),
+        fallingPiece.GetRotation(),
+        fallingPiece.GetPieceType()
+    };
+
+    auto snapshotKind = SnapshotKind::Standard;
+
     for (auto movementIndex = 0; movementIndex < mMovements.Size(); ++movementIndex) {
         const auto& movement = *mMovements.At(movementIndex);
-        const auto& position = movingPiece.mPosition;
-        auto& movementPosition = movement.GetPosition();
+        auto segmentStartposition = movingPiece.mPosition;
+        auto movementPosition = movement.GetPosition();
         
         Pht::IVec2 targetPosition {
             static_cast<int>(movementPosition.x),
             static_cast<int>(movementPosition.y)
         };
         
-        if (position.y > targetPosition.y) {
-            for (auto y = position.y; y >= targetPosition.y; --y) {
+        if (segmentStartposition.y > targetPosition.y) {
+            for (auto y = segmentStartposition.y; y >= targetPosition.y; --y) {
                 movingPiece.mPosition.y = y;
-                PaintPieceSnapshot(movingPiece, false);
+                snapshotKind =
+                    (y == segmentStartposition.y && snapshotKind == SnapshotKind::MoveSideways ?
+                     SnapshotKind::MoveSideways : SnapshotKind::Standard);
+                PaintPieceSnapshot(movingPiece, snapshotKind);
             }
-        } else if (position.x > targetPosition.x) {
-            for (auto x = position.x; x >= targetPosition.x; --x) {
-                movingPiece.mPosition.x = x;
-                PaintPieceSnapshot(movingPiece, false);
+            if (movementIndex < mMovements.Size() - 1) {
+                snapshotKind = SnapshotKind::MoveSideways;
+                PaintPieceSnapshot(movingPiece, snapshotKind);
             }
-        } else if (position.x < targetPosition.x) {
-            for (auto x = position.x; x <= targetPosition.x; ++x) {
+        } else if (segmentStartposition.x > targetPosition.x) {
+            for (auto x = segmentStartposition.x; x >= targetPosition.x; --x) {
                 movingPiece.mPosition.x = x;
-                PaintPieceSnapshot(movingPiece, false);
+                snapshotKind = SnapshotKind::MoveSideways;
+                PaintPieceSnapshot(movingPiece, snapshotKind);
+            }
+        } else if (segmentStartposition.x < targetPosition.x) {
+            for (auto x = segmentStartposition.x; x <= targetPosition.x; ++x) {
+                movingPiece.mPosition.x = x;
+                snapshotKind = (movingPiece.mPosition == fallingPiece.GetIntPosition() ?
+                                SnapshotKind::Standard : SnapshotKind::MoveSideways);
+                PaintPieceSnapshot(movingPiece, snapshotKind);
             }
         }
         
         movingPiece.mPosition = targetPosition;
         movingPiece.mRotation = movement.GetRotation();
-        PaintPieceSnapshot(movingPiece, movementIndex == mMovements.Size() - 1);
+        if (movementIndex == mMovements.Size() - 1) {
+            snapshotKind = SnapshotKind::Last;
+        }
+        PaintPieceSnapshot(movingPiece, snapshotKind);
     }
 }
 
 void PiecePathSystem::PaintPieceSnapshot(const MovingPieceSnapshot& movingPiece,
-                                         bool lastSnapshot,
-                                         bool clearSnapshot) {
+                                         SnapshotKind snapshotKind) {
     auto& pieceType = movingPiece.mPieceType;
     auto& pieceGrid = pieceType.GetGrid(movingPiece.mRotation);
     auto numRows = pieceType.GetGridNumRows();
@@ -220,14 +233,20 @@ void PiecePathSystem::PaintPieceSnapshot(const MovingPieceSnapshot& movingPiece,
             auto pieceSubCellFill = pieceSubCell.mFill;
             auto row = piecePosition.y + pieceRow;
             auto column = piecePosition.x + pieceColumn;
-            if (clearSnapshot) {
-                ClearSnapshotCell(row, column, pieceSubCellFill);
-            } else {
-                if (lastSnapshot) {
-                    SetLastSnapshotCell(row, column, pieceSubCellFill);
-                } else {
+            
+            switch (snapshotKind) {
+                case SnapshotKind::Standard:
                     SetSnapshotCell(row, column, pieceSubCellFill);
-                }
+                    break;
+                case SnapshotKind::MoveSideways:
+                    SetSnapshotCellMovingSideways(row, column, pieceSubCellFill);
+                    break;
+                case SnapshotKind::Last:
+                    SetLastSnapshotCell(row, column, pieceSubCellFill);
+                    break;
+                case SnapshotKind::Clear:
+                    ClearSnapshotCell(row, column, pieceSubCellFill);
+                    break;
             }
         }
     }
@@ -305,6 +324,12 @@ void PiecePathSystem::SetSnapshotCell(int row, int column, Fill pieceSubCellFill
     }
 
     mPathGrid[row][column] = pieceSubCellFill;
+}
+
+void PiecePathSystem::SetSnapshotCellMovingSideways(int row, int column, Fill pieceSubCellFill) {
+    if (pieceSubCellFill != Fill::Empty) {
+        mPathGrid[row][column] = Fill::Full;
+    }
 }
 
 void PiecePathSystem::UpdateSceneObjects() {
