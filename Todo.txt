@@ -61,14 +61,14 @@ Ongoing tasks:
 
 
     -Do:
-        -1. -Review last commit.
-            -Test make the dragged piece brighter when over a valid move.
+        -1. -Test make the dragged piece brighter when over a valid move.
             -Tune checked field. And tune color for path.
             -Decide on the design of the ghost piece. Cleanup GhostPieceBlocks.cpp after that.
             -The path cell brightness could vary with y position.
             -The path could fade in quickly.
             -Path for bombs should probably end at the blast area.
-            -Remove all glitches in the path.
+            -Remove all glitches in the path. For fixing the triangle glitches, just use the
+             downwards snapshot fill algorithm but adopted for left and right movement as well.
             The area covered by the piece path could be a bit brighter or darker.   ~3 days
             It would be visible when the dragged piece is over a valid move and
             the area would move when the dragged piece moves. The ghost piece
@@ -177,6 +177,11 @@ Ongoing tasks:
         -A z-axis (backwards compared to the portal camera movement) camera movement could happen
          after going back to the map after clearing a level before the ufo animation. Can have a
          white fade effect when going to the map scene after clearing a level.
+        -Maybe introduce real fog (https://www.youtube.com/watch?v=qslBNLeSPUc )instead of lower
+         haze layers. Could add a terrain shader with fog support and a cloud shader. Could also
+         have culling of distant objects in the renderer so that the map scene can have terrain
+         segments far away without any extra cost, which would look better during the z camera
+         movement.
         -Maybe cut the game_track1 a bit earlier.
         -Could have a slower falling piece animation speed for the first tutorial level so that
          players understand that the falling piece has to go to the move.
