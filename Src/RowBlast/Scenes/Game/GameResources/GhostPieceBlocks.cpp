@@ -14,16 +14,18 @@
 using namespace RowBlast;
 
 namespace {
+/*
+    constexpr auto borderWidth = 0.04f;
+    constexpr auto padding = 0.02f;
+    constexpr auto borderColorAlpha = 0.83f;
+    constexpr auto innerBorderColorAlpha = 0.55f;
+    constexpr auto innerColorAlpha = 0.3525f;
+*/
     constexpr auto borderWidth = 0.0f;
-    // constexpr auto padding = 0.04f;
-    // constexpr auto padding = 0.03f;
     constexpr auto padding = 0.03f;
-    
-    // constexpr auto innerColorAlpha = 0.3525f;
     constexpr auto innerColorAlpha = 0.5f;
-    constexpr auto borderColorAlpha = innerColorAlpha; // 0.83f;
-    constexpr auto innerBorderColorAlpha = innerColorAlpha; // 0.55f;
-    // constexpr auto innerColorAlpha = 0.3525f;
+    constexpr auto borderColorAlpha = innerColorAlpha;
+    constexpr auto innerBorderColorAlpha = innerColorAlpha;
 
     const Pht::Vec4 redBorderColor {1.0f, 0.5f, 0.5f, borderColorAlpha};
     const Pht::Vec4 greenBorderColor {0.5f, 0.79f, 0.5f, borderColorAlpha};
