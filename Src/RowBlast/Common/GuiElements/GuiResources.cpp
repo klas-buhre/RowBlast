@@ -142,6 +142,20 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
     mCloseButtonPotentiallyZoomedScreen {
         CreateCloseButton(engine, commonResources, PotentiallyZoomedScreen::Yes)
     },
+    mBluePauseButtonPotentiallyZoomedScreen {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::PauseButton,
+                           ButtonColor::Blue,
+                           PotentiallyZoomedScreen::Yes)
+    },
+    mDarkBluePauseButtonPotentiallyZoomedScreen {
+        CreateGlossyButton(engine,
+                           commonResources,
+                           ButtonSize::PauseButton,
+                           ButtonColor::DarkBlue,
+                           PotentiallyZoomedScreen::Yes)
+    },
     mLargerBlueGlossyButton {
         CreateGlossyButton(engine,
                            commonResources,

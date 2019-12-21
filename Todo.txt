@@ -61,10 +61,12 @@ Ongoing tasks:
 
 
     -Do:
-        -1. -Test make the dragged piece brighter when over a valid move.
+        -1. -The dragged piece shadow is dark in filled area now. Fix that.
+            -Test make the dragged piece brighter when over a valid move. Could have almost white
+             border. And the border can be a bit darker than before when not over a valid move,
+             make that color more colorful than just multiplying border color factor.
             -Tune checked field. And tune color for path.
             -Decide on the design of the ghost piece. Cleanup GhostPieceBlocks.cpp after that.
-            -The path cell brightness could vary with y position.
             -The path could fade in quickly.
             -Path for bombs should probably end at the blast area.
             -Remove all glitches in the path. For fixing the triangle glitches, just use the

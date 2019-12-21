@@ -78,6 +78,8 @@ namespace {
                 return {1.2f, 1.2f};
             case ButtonSize::Thin:
                 return {4.5f, 1.4f};
+            case ButtonSize::PauseButton:
+                return {1.21f, 1.21f};
         }
     }
     
@@ -97,6 +99,8 @@ namespace {
             case ButtonSize::EvenSmaller:
             case ButtonSize::Smallest:
                 return 0.23f;
+            case ButtonSize::PauseButton:
+                return 0.215f;
         }
     }
     
@@ -112,6 +116,7 @@ namespace {
             case ButtonSize::EvenSmaller:
             case ButtonSize::Smallest:
             case ButtonSize::Thin:
+            case ButtonSize::PauseButton:
                 return 0.08f;
         }
     }
@@ -135,6 +140,8 @@ namespace {
                 return 0.49f;
             case ButtonSize::Smallest:
                 return 0.4f;
+            case ButtonSize::PauseButton:
+                return 0.35f;
         }
     }
     
@@ -249,6 +256,41 @@ namespace {
         Pht::Vec2 upperRight {size.x, size.y - glossyAreaHeight};
         rasterizer.DrawGradientRectangle(upperRight, lowerLeft, gradientColors, Pht::DrawOver::Yes);
     }
+    
+    void DrawPauseButtonBars(Pht::SoftwareRasterizer& rasterizer, ButtonSize buttonSize) {
+        auto size = GetSize(buttonSize);
+        auto center = size / 2.0f;
+        auto barHeight = 0.5f;
+        auto barWidth = 0.1f;
+        auto barDistance = 0.275f;
+        const Pht::Vec4 barColor {0.95f, 0.95f, 0.95f, 1.0f};
+
+        Pht::Vec2 leftBarLowerLeft {
+            center.x - barDistance / 2.0f - barWidth / 2.0f,
+            center.y - barHeight / 2.0f
+        };
+        Pht::Vec2 leftBarUpperRight {
+            center.x - barDistance / 2.0f + barWidth / 2.0f,
+            center.y + barHeight / 2.0f
+        };
+        rasterizer.DrawRectangle(leftBarUpperRight,
+                                 leftBarLowerLeft,
+                                 barColor,
+                                 Pht::DrawOver::Yes);
+
+        Pht::Vec2 rightBarLowerLeft {
+            center.x + barDistance / 2.0f - barWidth / 2.0f,
+            center.y - barHeight / 2.0f
+        };
+        Pht::Vec2 rightBarUpperRight {
+            center.x + barDistance / 2.0f + barWidth / 2.0f,
+            center.y + barHeight / 2.0f
+        };
+        rasterizer.DrawRectangle(rightBarUpperRight,
+                                 rightBarLowerLeft,
+                                 barColor,
+                                 Pht::DrawOver::Yes);
+    }
 
     void DrawButton(Pht::SoftwareRasterizer& rasterizer,
                     ButtonSize buttonSize,
@@ -258,6 +300,10 @@ namespace {
         DrawShadedArea(rasterizer, buttonSize, buttonColors);
         DrawGlossyArea(rasterizer, buttonSize, buttonColors);
         DrawGradientArea(rasterizer, buttonSize, buttonColors);
+        
+        if (buttonSize == ButtonSize::PauseButton) {
+            DrawPauseButtonBars(rasterizer, buttonSize);
+        }
     }
 }
 

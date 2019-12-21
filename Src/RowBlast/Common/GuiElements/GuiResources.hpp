@@ -74,6 +74,14 @@ namespace RowBlast {
             return *mSmallGrayGlossyButtonPotentiallyZoomedScreen;
         }
         
+        Pht::RenderableObject& GetBluePauseButtonPotentiallyZoomedScreen() const {
+            return *mBluePauseButtonPotentiallyZoomedScreen;
+        }
+        
+        Pht::RenderableObject& GetDarkBluePauseButtonPotentiallyZoomedScreen() const {
+            return *mDarkBluePauseButtonPotentiallyZoomedScreen;
+        }
+
         Pht::RenderableObject& GetLargeGreenGlossyButton() const {
             return *mLargeGreenGlossyButton;
         }
@@ -137,6 +145,8 @@ namespace RowBlast {
         Pht::TextProperties mLargeWhiteTextPropertiesPotentiallyZoomedScreen;
         std::unique_ptr<Pht::RenderableObject> mCloseButton;
         std::unique_ptr<Pht::RenderableObject> mCloseButtonPotentiallyZoomedScreen;
+        std::unique_ptr<Pht::RenderableObject> mBluePauseButtonPotentiallyZoomedScreen;
+        std::unique_ptr<Pht::RenderableObject> mDarkBluePauseButtonPotentiallyZoomedScreen;
         std::unique_ptr<Pht::RenderableObject> mLargerBlueGlossyButton;
         std::unique_ptr<Pht::RenderableObject> mLargerBlueGlossyButtonPotentiallyZoomedScreen;
         std::unique_ptr<Pht::RenderableObject> mLargerDarkBlueGlossyButton;
