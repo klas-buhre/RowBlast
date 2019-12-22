@@ -412,6 +412,7 @@ void GameScene::CreateDraggedPiece() {
     mDraggedPieceBlocks = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PieceBlocks,
                                                             draggedPieceContainer);
     mDraggedPiece = &mScene->CreateSceneObject(draggedPieceContainer);
+    mDraggedPieceShadow = &mScene->CreateSceneObject(draggedPieceContainer);
 }
 
 void GameScene::CreateEffectsContainer() {

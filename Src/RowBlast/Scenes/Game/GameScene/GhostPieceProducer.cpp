@@ -26,12 +26,12 @@ namespace {
     const Pht::Vec4 blueFillColor {0.3f, 0.72f, 1.0f, fillAlpha};
     const Pht::Vec4 yellowFillColor {0.9f, 0.85f, 0.0f, 0.205f};
 
-    const Pht::Vec4 redBorderColor {1.0f, 0.73f, 0.77f, borderAlpha};
+    const Pht::Vec4 redBorderColor {1.0f, 0.705f, 0.745f, borderAlpha};
     const Pht::Vec4 greenBorderColor {0.6f, 0.905f, 0.6f, 0.94f};
     const Pht::Vec4 blueBorderColor {0.65f, 0.85f, 1.0f, borderAlpha};
     const Pht::Vec4 yellowBorderColor {0.95f, 0.85f, 0.0f, 0.875f};
     
-    const Pht::Vec4 shadowColor {0.14f, 0.14f, 0.14f, 0.55f};
+    const Pht::Vec4 shadowColor {0.0f, 0.0f, 0.0f, 0.425f};
 }
 
 GhostPieceProducer::GhostPieceProducer(Pht::IEngine& engine,
@@ -66,14 +66,52 @@ void GhostPieceProducer::Clear() {
     mRasterizer->ClearBuffer();
 }
 
-void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border,
-                                    BlockColor color,
-                                    PressedGhostPiece pressedGhostPiece) {
-    SetUpColors(color);
+GhostPieceProducer::GhostPieceRenderables
+GhostPieceProducer::DrawRenderables(const GhostPieceBorder& border, BlockColor color) {
+    return GhostPieceRenderables {
+        .mDraggedPiece = DrawPiece(border, color, GhostPieceKind::DraggedPiece),
+        .mHighlightedDraggedPiece = DrawPiece(border, color, GhostPieceKind::HighlightedDraggedPiece),
+        .mShadow = DrawPiece(border, color, GhostPieceKind::Shadow),
+        .mGhostPiece = DrawPiece(border, color, GhostPieceKind::GhostPiece),
+        .mHighlightedGhostPiece = DrawPiece(border, color, GhostPieceKind::HighlightedGhostPiece)
+    };
+}
+
+std::unique_ptr<Pht::RenderableObject>
+GhostPieceProducer::DrawPiece(const GhostPieceBorder& border,
+                              BlockColor color,
+                              GhostPieceKind ghostPieceKind) {
+    Clear();
+    SetUpColors(color, ghostPieceKind);
     
     auto outerBorderAlpha = mBorderColor.w;
-    auto alphaFactor = pressedGhostPiece == PressedGhostPiece::No ? 1.0f : 2.5f;
-
+    auto alphaFactor = 2.5f;
+    
+    switch (ghostPieceKind) {
+        case GhostPieceKind::DraggedPiece:
+            mBorderColor = mBorderColor * 0.98f;
+            break;
+        case GhostPieceKind::HighlightedDraggedPiece:
+            mBorderColor = mBorderColor * 1.1f;
+            break;
+        case GhostPieceKind::Shadow:
+        case GhostPieceKind::GhostPiece:
+            alphaFactor = 1.0f;
+            break;
+        case GhostPieceKind::HighlightedGhostPiece:
+            break;
+    }
+/*
+    auto outerBorderAlpha = mBorderColor.w;
+    // auto alphaFactor = pressedGhostPiece == PressedGhostPiece::No ? 1.0f : 2.5f;
+    auto alphaFactor = 2.5f;
+    
+    if (pressedGhostPiece == PressedGhostPiece::Yes) {
+        mBorderColor = mBorderColor * 1.1f;
+    } else {
+        mBorderColor = mBorderColor * 0.98f;
+    }
+*/
     mBorderOffset = borderOffset;
     mBorderWidth = outerBorderWidth;
     mConnectionBorderWidth = mBorderWidth * 2.0f + innerBorderWidth;
@@ -86,8 +124,25 @@ void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border,
     mBorderColor.w = std::min(0.5f * outerBorderAlpha * alphaFactor, 1.0f);
     DrawBorder(border);
 
-    mFillColor.w = std::min(mFillColor.w * alphaFactor, 1.0f);
-    mRasterizer->FillEnclosedArea(mFillColor);
+    if (ghostPieceKind != GhostPieceKind::Shadow) {
+        mFillColor.w = std::min(mFillColor.w * alphaFactor, 1.0f);
+        mRasterizer->FillEnclosedArea(mFillColor);
+    }
+    
+    return ProduceRenderable();
+}
+
+std::unique_ptr<Pht::RenderableObject>
+GhostPieceProducer::ProduceRenderable() const {
+    auto image = mRasterizer->ProduceImage();
+    
+    Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
+    imageMaterial.SetBlend(Pht::Blend::Yes);
+    
+    auto& sceneManager = mEngine.GetSceneManager();
+    return sceneManager.CreateRenderableObject(Pht::QuadMesh {mCoordinateSystemSize.x,
+                                                              mCoordinateSystemSize.y},
+                                               imageMaterial);
 }
 
 void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border) {
@@ -158,27 +213,31 @@ void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border) {
     }
 }
 
-void GhostPieceProducer::SetUpColors(BlockColor color) {
-    switch (color) {
-        case BlockColor::Red:
-            mBorderColor = redBorderColor;
-            mFillColor = redFillColor;
-            break;
-        case BlockColor::Green:
-            mBorderColor = greenBorderColor;
-            mFillColor = greenFillColor;
-            break;
-        case BlockColor::Blue:
-            mBorderColor = blueBorderColor;
-            mFillColor = blueFillColor;
-            break;
-        case BlockColor::Yellow:
-            mBorderColor = yellowBorderColor;
-            mFillColor = yellowFillColor;
-            break;
-        default:
-            assert(false);
-            break;
+void GhostPieceProducer::SetUpColors(BlockColor color, GhostPieceKind ghostPieceKind) {
+    if (ghostPieceKind == GhostPieceKind::Shadow) {
+        mBorderColor = shadowColor;
+    } else {
+        switch (color) {
+            case BlockColor::Red:
+                mBorderColor = redBorderColor;
+                mFillColor = redFillColor;
+                break;
+            case BlockColor::Green:
+                mBorderColor = greenBorderColor;
+                mFillColor = greenFillColor;
+                break;
+            case BlockColor::Blue:
+                mBorderColor = blueBorderColor;
+                mFillColor = blueFillColor;
+                break;
+            case BlockColor::Yellow:
+                mBorderColor = yellowBorderColor;
+                mFillColor = yellowFillColor;
+                break;
+            default:
+                assert(false);
+                break;
+        }
     }
 }
 
@@ -506,43 +565,4 @@ void GhostPieceProducer::DrawLowerLeftTiltedBorderForDiamond(const Pht::IVec2& s
     };
     
     mRasterizer->DrawTiltedTrapezoid225(upperLeft, lowerRight, mBorderWidth, mBorderColor, Pht::DrawOver::Yes);
-}
-
-std::unique_ptr<Pht::RenderableObject> GhostPieceProducer::ProducePressedRenderable() const {
-    auto image = mRasterizer->ProduceImage();
-    
-    Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes};
-    imageMaterial.SetBlend(Pht::Blend::Yes);
-    
-    auto& sceneManager = mEngine.GetSceneManager();
-    return sceneManager.CreateRenderableObject(Pht::QuadMesh {mCoordinateSystemSize.x,
-                                                              mCoordinateSystemSize.y},
-                                               imageMaterial);
-}
-
-GhostPieceProducer::GhostPieceRenderables
-GhostPieceProducer::ProduceRenderables(const std::string& pieceName) const {
-    GhostPieceRenderables renderables;
-    auto& sceneManager = mEngine.GetSceneManager();
-    auto image = mRasterizer->ProduceImage();
-
-    Pht::Material imageMaterial {*image, Pht::GenerateMipmap::Yes, pieceName};
-    imageMaterial.SetBlend(Pht::Blend::Yes);
-    renderables.mRenderable =
-        sceneManager.CreateRenderableObject(Pht::QuadMesh {mCoordinateSystemSize.x,
-                                                           mCoordinateSystemSize.y},
-                                            imageMaterial);
-
-    Pht::Material shadowImageMaterial {*image, Pht::GenerateMipmap::Yes, pieceName};
-    shadowImageMaterial.SetShaderId(Pht::ShaderId::TexturedLighting);
-    shadowImageMaterial.SetBlend(Pht::Blend::Yes);
-    shadowImageMaterial.SetOpacity(shadowColor.w);
-    shadowImageMaterial.SetAmbient(Pht::Color{shadowColor.x, shadowColor.y, shadowColor.z});
-
-    renderables.mShadowRenderable =
-        sceneManager.CreateRenderableObject(Pht::QuadMesh {mCoordinateSystemSize.x,
-                                                           mCoordinateSystemSize.y},
-                                            shadowImageMaterial);
-
-    return renderables;
 }

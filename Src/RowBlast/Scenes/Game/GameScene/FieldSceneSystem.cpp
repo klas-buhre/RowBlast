@@ -354,26 +354,35 @@ Pht::Vec2 FieldSceneSystem::CalculateFallingPieceGridPosition(const FallingPiece
 
 void FieldSceneSystem::UpdateDraggedPiece() {
     mScene.GetDraggedPieceBlocks().ReclaimAll();
+    
     auto& sceneObject = mScene.GetDraggedPieceSceneObject();
     sceneObject.SetIsVisible(false);
+    
+    auto& shadowSceneObject =  mScene.GetDraggedPieceShadowSceneObject();
+    shadowSceneObject.SetIsVisible(false);
 
     auto* draggedPiece = mGameLogic.GetDraggedPiece();
     if (draggedPiece == nullptr) {
         return;
     }
     
+    const auto cellSize = mScene.GetCellSize();
     auto& piecePosition = draggedPiece->GetRenderablePosition();
     Pht::Vec3 pieceFieldPos {piecePosition.x, piecePosition.y, mScene.GetDraggedPieceZ()};
     
     auto yOffsetAdjustmentInCells =
         DraggedPieceAnimation::targetYOffsetInCells - mDraggedPieceAnimation.GetYOffsetInCells();
 
-    const auto cellSize = mScene.GetCellSize();
     pieceFieldPos.y -= yOffsetAdjustmentInCells * cellSize;
     
     auto& pieceType = draggedPiece->GetPieceType();
-    auto* ghostPieceRenderable = pieceType.GetPressedGhostPieceRenderable();
-    if (ghostPieceRenderable) {
+    auto* draggedPieceRenderable = mGameLogic.GetDraggedGhostPieceRow().HasValue() ?
+                                   pieceType.GetHighlightedDraggedPieceRenderable() :
+                                   pieceType.GetDraggedPieceRenderable();
+    auto* draggedPieceShadowRenderable = mGameLogic.GetDraggedGhostPieceRow().HasValue() ?
+                                         nullptr : pieceType.GetShadowRenderable();
+
+    if (draggedPieceRenderable) {
         sceneObject.SetIsVisible(true);
         
         Pht::Vec3 pieceCenterLocalCoords {
@@ -386,9 +395,28 @@ void FieldSceneSystem::UpdateDraggedPiece() {
         auto& transform = sceneObject.GetTransform();
         auto position = pieceFieldPos + pieceCenterLocalCoords * scale;
         transform.SetPosition(position);
-        transform.SetRotation({0.0f, 0.0f, RotationToDeg(draggedPiece->GetRotation())});
+        Pht::Vec3 rotation {0.0f, 0.0f, RotationToDeg(draggedPiece->GetRotation())};
+        transform.SetRotation(rotation);
         transform.SetScale(scale);
-        sceneObject.SetRenderable(ghostPieceRenderable);
+        sceneObject.SetRenderable(draggedPieceRenderable);
+
+        if (draggedPieceShadowRenderable) {
+            shadowSceneObject.SetIsVisible(true);
+            
+            auto draggedPieceShadowZ = mScene.GetGhostPieceShadowZ();
+            auto draggedPieceShadowOffset = mScene.GetGhostPieceShadowOffset();
+
+            position.x += draggedPieceShadowOffset.x;
+            position.y += draggedPieceShadowOffset.y;
+            position.z = draggedPieceShadowZ;
+            
+            auto& shadowSceneObject =  mScene.GetDraggedPieceShadowSceneObject();
+            auto& shadowTransform = shadowSceneObject.GetTransform();
+            shadowTransform.SetPosition(position);
+            shadowTransform.SetRotation(rotation);
+            shadowTransform.SetScale(scale);
+            shadowSceneObject.SetRenderable(draggedPieceShadowRenderable);
+        }
     } else {
         auto isTransparent = false;
         auto isGhostPiece = false;
@@ -567,11 +595,8 @@ void FieldSceneSystem::UpdateClickableGhostPieces(const FallingPiece& fallingPie
     
     const auto cellSize = mScene.GetCellSize();
     auto ghostPieceZ = mScene.GetGhostPieceZ();
-    auto ghostPieceShadowZ = mScene.GetGhostPieceShadowZ();
-    auto ghostPieceShadowOffset = mScene.GetGhostPieceShadowOffset();
     auto& pieceType = fallingPiece.GetPieceType();
     auto* ghostPieceRenderable = pieceType.GetGhostPieceRenderable();
-    auto* ghostPieceShadowRenderable = pieceType.GetGhostPieceShadowRenderable();
     
     Pht::Vec3 ghostPieceCenterLocalCoords {
         cellSize * static_cast<float>(pieceType.GetGridNumColumns()) / 2.0f,
@@ -598,16 +623,9 @@ void FieldSceneSystem::UpdateClickableGhostPieces(const FallingPiece& fallingPie
             auto rotation = move.mRotation;
             
             if (isMoveButtonDown) {
-                UpdateGhostPiece(*pieceType.GetPressedGhostPieceRenderable(), position, rotation);
+                UpdateGhostPiece(*pieceType.GetHighlightedGhostPieceRenderable(), position, rotation);
             } else {
                 UpdateGhostPiece(*ghostPieceRenderable, position, rotation);
-            }
-
-            if (ghostPieceShadowRenderable) {
-                position.x += ghostPieceShadowOffset.x;
-                position.y += ghostPieceShadowOffset.y;
-                position.z = ghostPieceShadowZ;
-                // UpdateGhostPiece(*ghostPieceShadowRenderable, position, rotation);
             }
         } else {
             auto& pool = mScene.GetGhostPieces();

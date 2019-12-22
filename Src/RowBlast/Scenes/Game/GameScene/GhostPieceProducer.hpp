@@ -43,11 +43,6 @@ namespace RowBlast {
         LowerLeftTiltForDiamond
     };
     
-    enum class PressedGhostPiece {
-        Yes,
-        No
-    };
-    
     struct GhostPieceBorderSegment {
         Pht::IVec2 mPosition;
         BorderSegmentKind mKind;
@@ -58,23 +53,34 @@ namespace RowBlast {
     class GhostPieceProducer {
     public:
         struct GhostPieceRenderables {
-            std::unique_ptr<Pht::RenderableObject> mRenderable;
-            std::unique_ptr<Pht::RenderableObject> mShadowRenderable;
+            std::unique_ptr<Pht::RenderableObject> mDraggedPiece;
+            std::unique_ptr<Pht::RenderableObject> mHighlightedDraggedPiece;
+            std::unique_ptr<Pht::RenderableObject> mShadow;
+            std::unique_ptr<Pht::RenderableObject> mGhostPiece;
+            std::unique_ptr<Pht::RenderableObject> mHighlightedGhostPiece;
         };
         
         GhostPieceProducer(Pht::IEngine& engine,
                            const Pht::IVec2& pieceGridSize,
                            const CommonResources& commonResources);
         
-        void Clear();
-        void DrawBorder(const GhostPieceBorder& border,
-                        BlockColor color,
-                        PressedGhostPiece pressedGhostPiece);
-        std::unique_ptr<Pht::RenderableObject> ProducePressedRenderable() const;
-        GhostPieceRenderables ProduceRenderables(const std::string& pieceName) const;
+        GhostPieceRenderables DrawRenderables(const GhostPieceBorder& border, BlockColor color);
         
     private:
-        void SetUpColors(BlockColor color);
+        enum class GhostPieceKind {
+            DraggedPiece,
+            HighlightedDraggedPiece,
+            Shadow,
+            GhostPiece,
+            HighlightedGhostPiece
+        };
+        
+        std::unique_ptr<Pht::RenderableObject> DrawPiece(const GhostPieceBorder& border,
+                                                         BlockColor color,
+                                                         GhostPieceKind ghostPieceKind);
+        std::unique_ptr<Pht::RenderableObject> ProduceRenderable() const;
+        void Clear();
+        void SetUpColors(BlockColor color, GhostPieceKind ghostPieceKind);
         void DrawBorder(const GhostPieceBorder& border);
         void DrawUpperBorder(const Pht::IVec2& segmentEndPosition);
         void DrawRightBorder(const Pht::IVec2& segmentEndPosition, BorderSegmentKind segmentKind);

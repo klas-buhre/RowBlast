@@ -61,7 +61,7 @@ Ongoing tasks:
 
 
     -Do:
-        -1. -The dragged piece shadow is dark in filled area now. Fix that.
+        -1. -Tune the shadow.
             -Test make the dragged piece brighter when over a valid move. Could have almost white
              border. And the border can be a bit darker than before when not over a valid move,
              make that color more colorful than just multiplying border color factor.

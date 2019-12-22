@@ -186,6 +186,11 @@ namespace RowBlast {
             return *mDraggedPiece;
         }
 
+        Pht::SceneObject& GetDraggedPieceShadowSceneObject() {
+            assert(mDraggedPieceShadow);
+            return *mDraggedPieceShadow;
+        }
+
         const Pht::Vec3& GetFieldPosition() const {
             return mFieldPosition;
         }
@@ -319,20 +324,22 @@ namespace RowBlast {
         Pht::SceneObject* mLevelCompletedEffectsContainer {nullptr};
         Pht::SceneObject* mStarsContainer {nullptr};
         Pht::SceneObject* mDraggedPiece {nullptr};
+        Pht::SceneObject* mDraggedPieceShadow {nullptr};
         const Pht::Vec3 mFieldPosition;
         const float mDraggedPieceZ {mCellSize / 2.0f + 0.3f};
+        const float mGhostPieceShadowZ {mCellSize / 2.0f + 0.2f};
         const float mBlastAreaZ {mCellSize / 2.0f + 0.15f};
         const float mShieldZ {mCellSize / 2.0f + 0.1f};
         const float mFieldBottomGlowZ {mCellSize / 2.0f + 0.1f};
         const float mGhostPieceZ {mCellSize / 2.0f + 0.02f};
-        const float mGhostPieceShadowZ {-0.4f};
         const float mPressedGhostPieceZ {mCellSize / 2.0f + 0.2f};
         const float mBlueprintAnimationZ {-0.6f};
         const float mPiecePathZ {-0.7f};
         const float mFieldGridZ {-1.8f};
         const float mBigAsteroidZ {-1.0f};
         const float mBouncingBlockZ {-0.2f};
-        Pht::Vec2 mGhostPieceShadowOffset {-0.085f, -0.085f};
+        // Pht::Vec2 mGhostPieceShadowOffset {-0.085f, -0.085f};
+        Pht::Vec2 mGhostPieceShadowOffset {-0.075f, -0.075f};
         float mFieldWidth {0.0f};
         float mFieldHeight {0.0f};
         Pht::Vec2 mFieldLoweLeft;

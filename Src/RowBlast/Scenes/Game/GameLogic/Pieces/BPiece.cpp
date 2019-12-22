@@ -40,15 +40,12 @@ BPiece::BPiece(Pht::IEngine& engine, const CommonResources& commonResources) {
     };
     
     GhostPieceProducer ghostPieceProducer {engine, Pht::IVec2{3, 3}, commonResources};
-    ghostPieceProducer.DrawBorder(border, GetColor(), PressedGhostPiece::No);
-    
-    auto renderables = ghostPieceProducer.ProduceRenderables("BPiece");
-    SetGhostPieceRenderable(std::move(renderables.mRenderable));
-    SetGhostPieceShadowRenderable(std::move(renderables.mShadowRenderable));
-
-    ghostPieceProducer.Clear();
-    ghostPieceProducer.DrawBorder(border, GetColor(), PressedGhostPiece::Yes);
-    SetPressedGhostPieceRenderable(ghostPieceProducer.ProducePressedRenderable());
+    auto renderables = ghostPieceProducer.DrawRenderables(border, GetColor());
+    SetDraggedPieceRenderable(std::move(renderables.mDraggedPiece));
+    SetHighlightedDraggedPieceRenderable(std::move(renderables.mHighlightedDraggedPiece));
+    SetShadowRenderable(std::move(renderables.mShadow));
+    SetGhostPieceRenderable(std::move(renderables.mGhostPiece));
+    SetHighlightedGhostPieceRenderable(std::move(renderables.mHighlightedGhostPiece));
 }
 
 bool BPiece::NeedsDownAdjustmentInHud() const {

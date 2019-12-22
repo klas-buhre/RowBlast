@@ -43,15 +43,12 @@ SevenPiece::SevenPiece(Pht::IEngine& engine, const CommonResources& commonResour
     };
     
     GhostPieceProducer ghostPieceProducer {engine, Pht::IVec2{3, 3}, commonResources};
-    ghostPieceProducer.DrawBorder(border, GetColor(), PressedGhostPiece::No);
-
-    auto renderables = ghostPieceProducer.ProduceRenderables("SevenPiece");
-    SetGhostPieceRenderable(std::move(renderables.mRenderable));
-    SetGhostPieceShadowRenderable(std::move(renderables.mShadowRenderable));
-
-    ghostPieceProducer.Clear();
-    ghostPieceProducer.DrawBorder(border, GetColor(), PressedGhostPiece::Yes);
-    SetPressedGhostPieceRenderable(ghostPieceProducer.ProducePressedRenderable());
+    auto renderables = ghostPieceProducer.DrawRenderables(border, GetColor());
+    SetDraggedPieceRenderable(std::move(renderables.mDraggedPiece));
+    SetHighlightedDraggedPieceRenderable(std::move(renderables.mHighlightedDraggedPiece));
+    SetShadowRenderable(std::move(renderables.mShadow));
+    SetGhostPieceRenderable(std::move(renderables.mGhostPiece));
+    SetHighlightedGhostPieceRenderable(std::move(renderables.mHighlightedGhostPiece));
 }
 
 int SevenPiece::GetSpawnYPositionAdjustment() const {

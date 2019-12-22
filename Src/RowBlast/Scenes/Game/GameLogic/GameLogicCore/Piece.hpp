@@ -12,8 +12,6 @@
 // Game includes.
 #include "Cell.hpp"
 
-#define HIGH_DETAIL
-
 namespace RowBlast {
     using ClickGrid = std::vector<std::vector<int>>;
     
@@ -56,9 +54,11 @@ namespace RowBlast {
         Pht::Vec2 GetCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonCenterPosition(Rotation rotation) const;
         const Pht::Vec2& GetButtonSize(Rotation rotation) const;
+        Pht::RenderableObject* GetDraggedPieceRenderable() const;
+        Pht::RenderableObject* GetHighlightedDraggedPieceRenderable() const;
+        Pht::RenderableObject* GetShadowRenderable() const;
         Pht::RenderableObject* GetGhostPieceRenderable() const;
-        Pht::RenderableObject* GetGhostPieceShadowRenderable() const;
-        Pht::RenderableObject* GetPressedGhostPieceRenderable() const;
+        Pht::RenderableObject* GetHighlightedGhostPieceRenderable() const;
         
         virtual bool IsBomb() const;
         virtual bool IsRowBomb() const;
@@ -115,9 +115,11 @@ namespace RowBlast {
         void SetPreviewCellSize(float previewCellSize);
         void SetNumRotations(int numRotations);
         void SetDuplicateMoveCheck(Rotation rotation, const DuplicateMoveCheck& duplicateMoveCheck);
+        void SetDraggedPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
+        void SetHighlightedDraggedPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
+        void SetShadowRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
         void SetGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
-        void SetGhostPieceShadowRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
-        void SetPressedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
+        void SetHighlightedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable);
         
     private:
         void InitCellGrids(const Piece::FillGrid& fillGrid,
@@ -146,9 +148,11 @@ namespace RowBlast {
         BlockColor mColor {BlockColor::None};
         std::vector<ClickGrid> mClickGrids;
         int mNumRotations {4};
+        std::unique_ptr<Pht::RenderableObject> mDraggedPieceRenderable;
+        std::unique_ptr<Pht::RenderableObject> mHighlightedDraggedPieceRenderable;
+        std::unique_ptr<Pht::RenderableObject> mShadowRenderable;
         std::unique_ptr<Pht::RenderableObject> mGhostPieceRenderable;
-        std::unique_ptr<Pht::RenderableObject> mGhostPieceShadowRenderable;
-        std::unique_ptr<Pht::RenderableObject> mPressedGhostPieceRenderable;
+        std::unique_ptr<Pht::RenderableObject> mHighlightedGhostPieceRenderable;
         float mPreviewCellSize {1.0f};
         std::vector<Pht::IVec2> mRightOverhangCheckPositions;
         std::vector<Pht::IVec2> mLeftOverhangCheckPositions;

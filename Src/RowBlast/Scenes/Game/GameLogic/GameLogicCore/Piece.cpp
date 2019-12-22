@@ -145,16 +145,24 @@ bool Piece::NeedsDownAdjustmentInHud() const {
     return false;
 }
 
+Pht::RenderableObject* Piece::GetDraggedPieceRenderable() const  {
+    return mDraggedPieceRenderable.get();
+}
+
+Pht::RenderableObject* Piece::GetHighlightedDraggedPieceRenderable() const  {
+    return mHighlightedDraggedPieceRenderable.get();
+}
+
+Pht::RenderableObject* Piece::GetShadowRenderable() const  {
+    return mShadowRenderable.get();
+}
+
 Pht::RenderableObject* Piece::GetGhostPieceRenderable() const {
     return mGhostPieceRenderable.get();
 }
 
-Pht::RenderableObject* Piece::GetGhostPieceShadowRenderable() const {
-    return mGhostPieceShadowRenderable.get();
-}
-
-Pht::RenderableObject* Piece::GetPressedGhostPieceRenderable() const {
-    return mPressedGhostPieceRenderable.get();
+Pht::RenderableObject* Piece::GetHighlightedGhostPieceRenderable() const {
+    return mHighlightedGhostPieceRenderable.get();
 }
 
 void Piece::InitGrids(const FillGrid& fillGrid,
@@ -307,16 +315,24 @@ void Piece::SetDuplicateMoveCheck(Rotation rotation, const DuplicateMoveCheck& d
     mDuplicateMoveChecks[static_cast<int>(rotation)] = duplicateMoveCheck;
 }
 
+void Piece::SetDraggedPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
+    mDraggedPieceRenderable = std::move(renderable);
+}
+
+void Piece::SetHighlightedDraggedPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
+    mHighlightedDraggedPieceRenderable = std::move(renderable);
+}
+
+void Piece::SetShadowRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
+    mShadowRenderable = std::move(renderable);
+}
+
 void Piece::SetGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
     mGhostPieceRenderable = std::move(renderable);
 }
 
-void Piece::SetGhostPieceShadowRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
-    mGhostPieceShadowRenderable = std::move(renderable);
-}
-
-void Piece::SetPressedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
-    mPressedGhostPieceRenderable = std::move(renderable);
+void Piece::SetHighlightedGhostPieceRenderable(std::unique_ptr<Pht::RenderableObject> renderable) {
+    mHighlightedGhostPieceRenderable = std::move(renderable);
 }
 
 Bonds Piece::MakeBonds(int row, int column, const Piece::FillGrid& fillGrid) {
