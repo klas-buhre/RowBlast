@@ -358,7 +358,7 @@ void FieldSceneSystem::UpdateDraggedPiece() {
     auto& sceneObject = mScene.GetDraggedPieceSceneObject();
     sceneObject.SetIsVisible(false);
     
-    auto& shadowSceneObject =  mScene.GetDraggedPieceShadowSceneObject();
+    auto& shadowSceneObject = mScene.GetDraggedPieceShadowSceneObject();
     shadowSceneObject.SetIsVisible(false);
 
     auto* draggedPiece = mGameLogic.GetDraggedPiece();
@@ -403,8 +403,8 @@ void FieldSceneSystem::UpdateDraggedPiece() {
         if (draggedPieceShadowRenderable) {
             shadowSceneObject.SetIsVisible(true);
             
-            auto draggedPieceShadowZ = mScene.GetGhostPieceShadowZ();
-            auto draggedPieceShadowOffset = mScene.GetGhostPieceShadowOffset();
+            auto draggedPieceShadowZ = mScene.GetDraggedPieceShadowZ();
+            auto draggedPieceShadowOffset = mScene.GetDraggedPieceShadowOffset();
 
             position.x += draggedPieceShadowOffset.x;
             position.y += draggedPieceShadowOffset.y;

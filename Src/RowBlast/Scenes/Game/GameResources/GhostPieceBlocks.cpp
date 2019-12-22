@@ -21,6 +21,7 @@ namespace {
     constexpr auto innerBorderColorAlpha = 0.55f;
     constexpr auto innerColorAlpha = 0.3525f;
 */
+
     constexpr auto borderWidth = 0.0f;
     constexpr auto padding = 0.03f;
     constexpr auto innerColorAlpha = 0.5f;

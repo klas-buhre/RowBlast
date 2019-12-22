@@ -101,17 +101,7 @@ GhostPieceProducer::DrawPiece(const GhostPieceBorder& border,
         case GhostPieceKind::HighlightedGhostPiece:
             break;
     }
-/*
-    auto outerBorderAlpha = mBorderColor.w;
-    // auto alphaFactor = pressedGhostPiece == PressedGhostPiece::No ? 1.0f : 2.5f;
-    auto alphaFactor = 2.5f;
-    
-    if (pressedGhostPiece == PressedGhostPiece::Yes) {
-        mBorderColor = mBorderColor * 1.1f;
-    } else {
-        mBorderColor = mBorderColor * 0.98f;
-    }
-*/
+
     mBorderOffset = borderOffset;
     mBorderWidth = outerBorderWidth;
     mConnectionBorderWidth = mBorderWidth * 2.0f + innerBorderWidth;
