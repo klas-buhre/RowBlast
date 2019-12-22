@@ -49,33 +49,29 @@ Ongoing tasks:
     -Then release with microtransactions enabled. Market that version.
 
     -Major user stories before release:
-        -Items in the next release (terrain, hud, piece path, bombs dragged piece)  ~2.5 weeks
+        -Items in the next release (match-3, hud, bombs dragged piece)              ~1-2 weeks
         -Interacting with publishers                                                ~1 week
+        -Task after publisher (preview pieces, level end, clear blocks)             ~1-2 weeks
         -Reduce the risk mixing up the rotate tap with a drag start.                ~1 week
         -Find more moves.                                                           ~1 week
         -Replace bad levels in world 1 with levels of width 9 and asteroid levels.  ~1 week
         -Remove moves from world 1 to 3 after finding more moves.                   ~0.5 weeks
         -Update the tutorial with drag controls                                     ~1.5 weeks
         -Purchasing                                                                 ~1 week
-         Total cost:                                                                 9 weeks
+         Total cost:                                                                 9-11 weeks
 
 
     -Do:
-        -1. -Tune the shadow.
+        -1. Piece path:                                                             ~1 day
+            -Tune the shadow.
             -Test make the dragged piece brighter when over a valid move. Could have almost white
              border. And the border can be a bit darker than before when not over a valid move,
              make that color more colorful than just multiplying border color factor.
             -Tune checked field. And tune color for path.
             -Decide on the design of the ghost piece. Cleanup GhostPieceBlocks.cpp after that.
-            -The path could fade in quickly.
             -Path for bombs should probably end at the blast area.
-            -Remove all glitches in the path. For fixing the triangle glitches, just use the
-             downwards snapshot fill algorithm but adopted for left and right movement as well.
-            The area covered by the piece path could be a bit brighter or darker.   ~3 days
-            It would be visible when the dragged piece is over a valid move and
-            the area would move when the dragged piece moves. The ghost piece
-            could be of the same style as the path area but a bit brighter.
-        -2. Can have levels that have lots of octagons (or circles) instead of      ~7 days
+        -2. This item might be moved to after publisher contact:
+            Can have levels that have lots of octagons (or circles) instead of      ~7 days
             normal full blocks. The octagons/circles have different colors and
             you clear them by placing blocks of the same color next to them.
             If there is at least 3 neighbor cells in a straight line, with at
@@ -91,21 +87,12 @@ Ongoing tasks:
             different colors but without welds, which may fall appart when
             landing over an edge, which would be like in Puyo Puyo. Maybe the
             matching logic can be like in Puyo Puyo as well?
-        -3. Number of preview pieces:                                               ~5 days
-            -Should it really always be 3 selectables? Maybe 2 is a better
-             number. Sometimes you could have 3 though. Maybe you always have
-             2 block pieces and when you get a special piece (bomb or laser)
-             then you have 3, which is like it is in Bubble Witch 3.
-            -Is it good to have 2 next preview pieces with regard to maximizing
-             revenue at out of moves?
-        -4. Redesign the game HUD:                                                  ~3 days
+        -3. Redesign the game HUD:                                                  ~1.5 days
             -Keep the active slot when using controls other than drag controls.
             -Maybe try to invert the gradient and add a shadow from the field.
             -Maybe try a blue upper bar in the selectables container.
             -Try a blue (?) upper bar in the next container.
             -Try a vertical gradient in the grid in the selectables container.
-            -Try a smaller pause button with possibly a thin white upper
-             specular to give it better contrast.
             -Move the preview piece positions to centered positions now that
              there is no rectangle tilt.
 
@@ -118,16 +105,10 @@ Ongoing tasks:
                 -Grid in the whole selectables container?
                 -Keep the old selectables container for the space world.
                 -Trim the tilt and piece positions.
-        -3. Make it more clear that the player is at the end of the level,          ~1 day
-            brighter bottom glow or something else. And ther should be a score
-            text above the asteroid when at the bottom.
         -3. Reduce the gain in most sounds (clear blocks, button clicks, start      ~1 day
             game, clear level, etc..). Maybe clean up blocks sound in audacity.
             The music track should be switched for the next attempt to clear a
             level after a failed attempt. Reduce music gain as well.
-        -3. Maybe a short delay before clearing filled rows after piece lands?      ~2 days
-            And a short particle effect with twinkles in the filled row before
-            the blocks gets thrown away?
         -3. Bombs and laser dragged piece with white or red transparent material    ~1 days
             instead of textures.
         -4. Maybe try a "PropellerPiece": XX                                        ~1 days
@@ -135,7 +116,25 @@ Ongoing tasks:
         -4. Tune all star levels.                                                   ~1 days
         -5. Release.                                                                ~1 days
         -6. Send mail to publishers.
-        -2. Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
+    -After contacted publisher:
+        -Remove most glitches in the piece path. For fixing the triangle            ~1 day
+         glitches, just use the downwards snapshot fill algorithm but
+         adopted for left and right movement as well.
+        -Number of preview pieces:                                                  ~5 days
+            -Should it really always be 3 selectables? Maybe 2 is a better
+             number. Sometimes you could have 3 though. Maybe you always have
+             2 block pieces and when you get a special piece (bomb or laser)
+             then you have 3, which is like it is in Bubble Witch 3.
+            -Is it good to have 2 next preview pieces with regard to maximizing
+             revenue at out of moves?
+        -Make it more clear that the player is at the end of the level,             ~1 day
+         brighter bottom glow or something else. And ther should be a score
+         text above the asteroid when at the bottom.
+        -Maybe a short delay before clearing filled rows after piece lands?         ~2 days
+         And a short particle effect with twinkles in the filled row before
+         the blocks gets thrown away?
+
+        -Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
          by tuning dragBeginDistanceThreshold. Also, could have a threshold distance that the piece
          must travel in order to be placed, or a minimum drag time. Maybe the touch should be
          treated as a rotate if it not considered a valid drag? Right now the drag is just cancelled
