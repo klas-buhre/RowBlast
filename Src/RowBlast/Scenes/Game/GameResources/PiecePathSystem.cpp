@@ -122,13 +122,16 @@ void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece, const Movement&
     mMovements.Reverse();
     RemoveFirstMovementIfDetour(fallingPiece);
     FillWholePath(fallingPiece);
-    
+
+    Pht::IVec2 finalPosition {
+        static_cast<int>(lastMovement.GetPosition().x),
+        static_cast<int>(lastMovement.GetPosition().y)
+    };
+
     auto& pieceType = fallingPiece.GetPieceType();
-    if (!pieceType.IsRowBomb()) {
-        Pht::IVec2 finalPosition {
-            static_cast<int>(lastMovement.GetPosition().x),
-            static_cast<int>(lastMovement.GetPosition().y)
-        };
+    if (pieceType.IsBomb()) {
+        ClearBlastArea(finalPosition - Pht::IVec2{1, 1});
+    } else if (!pieceType.IsRowBomb()) {
         MovingPieceSnapshot finalSnapshot {finalPosition, lastMovement.GetRotation(), pieceType};
         PaintPieceSnapshot(finalSnapshot, SnapshotKind::Clear);
     }
@@ -329,6 +332,26 @@ void PiecePathSystem::SetSnapshotCell(int row, int column, Fill pieceSubCellFill
 void PiecePathSystem::SetSnapshotCellMovingSideways(int row, int column, Fill pieceSubCellFill) {
     if (pieceSubCellFill != Fill::Empty) {
         mPathGrid[row][column] = Fill::Full;
+    }
+}
+
+void PiecePathSystem::ClearBlastArea(const Pht::IVec2& position) {
+    const auto numRows = 5;
+    const auto numColumns = 5;
+    
+    for (auto areaRow = 0; areaRow < numRows; ++areaRow) {
+        auto isFirstOrLastRow = (areaRow == 0 || areaRow == numRows - 1);
+        auto columnBegin = isFirstOrLastRow ? 1 : 0;
+        auto columnEnd = isFirstOrLastRow ? numColumns - 1 : numColumns;
+        for (auto areaColumn = columnBegin; areaColumn < columnEnd; ++areaColumn) {
+            auto row = position.y + areaRow;
+            auto column = position.x + areaColumn;
+            if (row < 0 || row >= mNumRows || column < 0 || column >= mNumColumns) {
+                continue;
+            }
+            
+            mPathGrid[row][column] = Fill::Empty;
+        }
     }
 }
 

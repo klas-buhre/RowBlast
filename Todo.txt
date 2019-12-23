@@ -1,9 +1,10 @@
 Backlog:
   -Engine:
-    -Purchasing.
-    -Metal.
-    -Net/HTTP.
-    -Android.
+    -Purchasing
+    -Metal
+    -Entity Component System
+    -Net/HTTP
+    -Android
 
   -Gameplay:
     -Could have ice blocks that are level blocks that can be used to fill and clear rows but they
@@ -68,8 +69,8 @@ Ongoing tasks:
              border. And the border can be a bit darker than before when not over a valid move,
              make that color more colorful than just multiplying border color factor.
             -Tune checked field. And tune color for path.
-            -Decide on the design of the ghost piece. Cleanup GhostPieceBlocks.cpp after that.
-            -Path for bombs should probably end at the blast area.
+            -Decide on the design of the ghost piece and tune the ghost piece color. Cleanup
+             GhostPieceBlocks.cpp after that.
         -2. This item might be moved to after publisher contact:
             Can have levels that have lots of octagons (or circles) instead of      ~7 days
             normal full blocks. The octagons/circles have different colors and
