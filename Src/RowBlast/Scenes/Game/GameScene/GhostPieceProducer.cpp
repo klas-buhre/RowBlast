@@ -30,7 +30,12 @@ namespace {
     const Pht::Vec4 greenBorderColor {0.6f, 0.905f, 0.6f, 0.94f};
     const Pht::Vec4 blueBorderColor {0.65f, 0.85f, 1.0f, borderAlpha};
     const Pht::Vec4 yellowBorderColor {0.95f, 0.85f, 0.0f, 0.875f};
-    
+
+    const Pht::Vec4 redDraggedPieceBorderColor {1.0f, 0.66f, 0.7f, borderAlpha};
+    const Pht::Vec4 greenDraggedPieceBorderColor {0.56f, 0.905f, 0.56f, 0.94f};
+    const Pht::Vec4 blueDraggedPieceBorderColor {0.65f, 0.85f, 1.0f, borderAlpha};
+    const Pht::Vec4 yellowDraggedPieceBorderColor {0.94f, 0.84f, 0.0f, 0.875f};
+
     const Pht::Vec4 shadowColor {0.0f, 0.0f, 0.0f, 0.425f};
 }
 
@@ -88,9 +93,6 @@ GhostPieceProducer::DrawPiece(const GhostPieceBorder& border,
     auto alphaFactor = 2.5f;
     
     switch (ghostPieceKind) {
-        case GhostPieceKind::DraggedPiece:
-            mBorderColor = mBorderColor * 0.98f;
-            break;
         case GhostPieceKind::HighlightedDraggedPiece:
             mBorderColor = mBorderColor * 1.1f;
             break;
@@ -99,6 +101,7 @@ GhostPieceProducer::DrawPiece(const GhostPieceBorder& border,
             alphaFactor = 1.0f;
             break;
         case GhostPieceKind::HighlightedGhostPiece:
+        case GhostPieceKind::DraggedPiece:
             break;
     }
 
@@ -206,6 +209,28 @@ void GhostPieceProducer::DrawBorder(const GhostPieceBorder& border) {
 void GhostPieceProducer::SetUpColors(BlockColor color, GhostPieceKind ghostPieceKind) {
     if (ghostPieceKind == GhostPieceKind::Shadow) {
         mBorderColor = shadowColor;
+    } else if (ghostPieceKind == GhostPieceKind::DraggedPiece) {
+        switch (color) {
+            case BlockColor::Red:
+                mBorderColor = redDraggedPieceBorderColor;
+                mFillColor = redFillColor;
+                break;
+            case BlockColor::Green:
+                mBorderColor = greenDraggedPieceBorderColor;
+                mFillColor = greenFillColor;
+                break;
+            case BlockColor::Blue:
+                mBorderColor = blueDraggedPieceBorderColor;
+                mFillColor = blueFillColor;
+                break;
+            case BlockColor::Yellow:
+                mBorderColor = yellowDraggedPieceBorderColor;
+                mFillColor = yellowFillColor;
+                break;
+            default:
+                assert(false);
+                break;
+        }
     } else {
         switch (color) {
             case BlockColor::Red:
