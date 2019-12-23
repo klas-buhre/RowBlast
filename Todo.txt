@@ -64,8 +64,6 @@ Ongoing tasks:
 
     -Do:
         -1. Piece path:                                                             ~1 day
-            -Tune the shadow.
-            -Tune checked field.
             -And tune color for path.
             -Decide on the design of the ghost piece and tune the ghost piece color. Cleanup
              GhostPieceBlocks.cpp after that.
