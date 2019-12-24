@@ -63,10 +63,6 @@ Ongoing tasks:
 
 
     -Do:
-        -1. Piece path:                                                             ~1 day
-            -And tune color for path.
-            -Decide on the design of the ghost piece and tune the ghost piece color. Cleanup
-             GhostPieceBlocks.cpp after that.
         -2. This item might be moved to after publisher contact:
             Can have levels that have lots of octagons (or circles) instead of      ~7 days
             normal full blocks. The octagons/circles have different colors and

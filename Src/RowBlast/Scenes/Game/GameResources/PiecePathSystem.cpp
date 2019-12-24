@@ -14,7 +14,7 @@ using namespace RowBlast;
 
 namespace {
     constexpr auto numFillRenderables = 2;
-    constexpr auto colorAlpha = 0.1f;
+    constexpr auto colorAlpha = 0.095f;
 
     const Pht::Vec4 redColor {1.0f, 0.5f, 0.5f, colorAlpha};
     const Pht::Vec4 greenColor {0.5f, 0.79f, 0.5f, colorAlpha};

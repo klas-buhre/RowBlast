@@ -14,19 +14,20 @@
 using namespace RowBlast;
 
 namespace {
-/*
     constexpr auto borderWidth = 0.04f;
     constexpr auto padding = 0.02f;
     constexpr auto borderColorAlpha = 0.83f;
     constexpr auto innerBorderColorAlpha = 0.55f;
     constexpr auto innerColorAlpha = 0.3525f;
-*/
-
+    
+#if 0
+    // Solid ghost piece blocks without borders:
     constexpr auto borderWidth = 0.0f;
     constexpr auto padding = 0.03f;
-    constexpr auto innerColorAlpha = 0.5f;
+    constexpr auto innerColorAlpha = 0.45f;
     constexpr auto borderColorAlpha = innerColorAlpha;
     constexpr auto innerBorderColorAlpha = innerColorAlpha;
+#endif
 
     const Pht::Vec4 redBorderColor {1.0f, 0.5f, 0.5f, borderColorAlpha};
     const Pht::Vec4 greenBorderColor {0.5f, 0.79f, 0.5f, borderColorAlpha};
