@@ -13,7 +13,8 @@ using namespace RowBlast;
 namespace {
     constexpr auto slideTime = 0.4f;
     constexpr auto padding = 1.0f;
-    constexpr auto hudYSize = 3.0f;
+    constexpr auto upperHudYSize = 3.0f;
+    constexpr auto lowerHudYSize = 4.0f;
 }
 
 SlidingFieldAnimation::SlidingFieldAnimation(Pht::IEngine& engine, GameScene& scene) :
@@ -43,13 +44,10 @@ void SlidingFieldAnimation::Start() {
         scissorBoxPosition.y - mFieldInitialPosition.y
     };
     
-    auto& hud = mScene.GetHud();
-    auto& hudFrustumSize = mEngine.GetRenderer().GetHudFrustumSize();
-    
     mUpperHudInitialYPosition = 0.0f;
-    mUpperHudFinalYPosition = hudYSize + padding;
-    mLowerHudInitialYPosition = hud.GetNextPiecesContainer().GetTransform().GetPosition().y;
-    mLowerHudFinalYPosition = -hudFrustumSize.y / 2.0f - hudYSize - padding;
+    mUpperHudFinalYPosition = upperHudYSize + padding;
+    mLowerHudInitialYPosition = 0.0f;
+    mLowerHudFinalYPosition = -lowerHudYSize - padding;
 }
 
 SlidingFieldAnimation::State SlidingFieldAnimation::Update() {
@@ -104,14 +102,9 @@ void SlidingFieldAnimation::UpdateHud() {
 
     auto lowerHudYPosition =
         mLowerHudInitialYPosition - lowerDistance * normalizedTime * normalizedTime * normalizedTime;
-    
-    auto& nextTransform = hud.GetNextPiecesContainer().GetTransform();
-    auto nextPosition = nextTransform.GetPosition();
-    nextPosition.y = lowerHudYPosition;
-    nextTransform.SetPosition(nextPosition);
 
-    auto& selectablesTransform = hud.GetSelectablePiecesContainer().GetTransform();
-    auto selectablesPosition = selectablesTransform.GetPosition();
-    selectablesPosition.y = lowerHudYPosition;
-    selectablesTransform.SetPosition(selectablesPosition);
+    auto& lowerHudTransform = hud.GetLowerContainer().GetTransform();
+    auto lowerHudPosition = lowerHudTransform.GetPosition();
+    lowerHudPosition.y = lowerHudYPosition;
+    lowerHudTransform.SetPosition(lowerHudPosition);
 }

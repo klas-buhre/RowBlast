@@ -81,23 +81,10 @@ Ongoing tasks:
             landing over an edge, which would be like in Puyo Puyo. Maybe the
             matching logic can be like in Puyo Puyo as well?
         -3. Redesign the game HUD:                                                  ~1.5 days
-            -Keep the active slot when using controls other than drag controls.
             -Maybe try to invert the gradient and add a shadow from the field.
-            -Maybe try a blue upper bar in the selectables container.
-            -Try a blue (?) upper bar in the next container.
-            -Try a vertical gradient in the grid in the selectables container.
+            -Tune all colors in lower hud.
             -Move the preview piece positions to centered positions now that
              there is no rectangle tilt.
-
-             Dark transparent bars behind containers or
-             pods of the same style as the upper hud. Try pods of the same style
-             as the upper hud with thin borders and grid.
-                -Add a recess on each side of in the outer transparent part of
-                 lower hud.
-                -Trim the colors in the lower hud.
-                -Grid in the whole selectables container?
-                -Keep the old selectables container for the space world.
-                -Trim the tilt and piece positions.
         -3. Reduce the gain in most sounds (clear blocks, button clicks, start      ~1 day
             game, clear level, etc..). Maybe clean up blocks sound in audacity.
             The music track should be switched for the next attempt to clear a

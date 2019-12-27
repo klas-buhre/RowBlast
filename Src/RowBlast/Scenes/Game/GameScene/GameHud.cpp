@@ -118,14 +118,17 @@ GameHud::GameHud(Pht::IEngine& engine,
 
     mUpperContainer = &scene.CreateSceneObject();
     parentObject.AddChild(*mUpperContainer);
-    
+
+    mLowerContainer = &scene.CreateSceneObject();
+    parentObject.AddChild(*mLowerContainer);
+
     CreateUpperBarObject(scene, *mUpperContainer, commonResources);
     CreateProgressObject(scene, *mUpperContainer, commonResources, levelResources, gameHudResources);
     CreateStarMeterObject(scene, *mUpperContainer, commonResources);
     CreateMovesObject(scene, *mUpperContainer, commonResources, gameHudResources);
-    CreateLowerFadeBarObject(scene, parentObject, commonResources);
-    CreateSelectablePiecesObject(scene, parentObject, commonResources.GetGameHudRectangles());
-    CreateNextPiecesObject(scene, parentObject, commonResources);
+    CreateLowerFadeBarObject(scene, *mLowerContainer, commonResources);
+    CreateSelectablePiecesObject(scene, *mLowerContainer, commonResources.GetGameHudRectangles());
+    CreateNextPiecesObject(scene, *mLowerContainer, commonResources);
 }
 
 void GameHud::CreateLightAndCamera(Pht::Scene& scene,
@@ -480,8 +483,7 @@ void GameHud::CreateArrow(const Pht::Vec3& position,
 void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
                                      Pht::SceneObject& parentObject,
                                      const CommonResources& commonResources) {
-    mNextPiecesContainer = &scene.CreateSceneObject(parentObject);
-    
+    auto& nextPiecesContainer = scene.CreateSceneObject(parentObject);
     auto& hudFrustumWidth = mEngine.GetRenderer().GetHudFrustumSize().x;
 
     Pht::Vec3 position {
@@ -490,14 +492,14 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
         UiLayer::root
     };
 
-    mNextPiecesContainer->GetTransform().SetPosition(position);
+    nextPiecesContainer.GetTransform().SetPosition(position);
     
-    mNextPiecesSceneObject = &scene.CreateSceneObject(*mNextPiecesContainer);
+    mNextPiecesSceneObject = &scene.CreateSceneObject(nextPiecesContainer);
     auto& nextPiecesSceneObjectTransform = mNextPiecesSceneObject->GetTransform();
     nextPiecesSceneObjectTransform.SetScale(nextPiecesContainerScale);
     nextPiecesSceneObjectTransform.SetPosition({0.0f, -1.15f, 0.0f});
 
-    auto& nextPiecesRectangle = scene.CreateSceneObject(*mNextPiecesContainer);
+    auto& nextPiecesRectangle = scene.CreateSceneObject(nextPiecesContainer);
     auto& hudRectangles = commonResources.GetGameHudRectangles();
     nextPiecesRectangle.SetRenderable(&hudRectangles.GetNextPiecesRectangle());
     nextPiecesRectangle.GetTransform().SetPosition({0.4f, -0.75f, UiLayer::piecesRectangle});
@@ -505,13 +507,13 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize20(PotentiallyZoomedScreen::Yes),
         0.9f,
-        Pht::Vec4{0.9f, 0.9f, 0.9f, 1.0f}
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
     };
     
     auto& nextText = scene.CreateText("NEXT", textProperties);
     auto& nextTextSceneobject = nextText.GetSceneObject();
-    nextTextSceneobject.GetTransform().SetPosition({-0.5f, 0.44f, UiLayer::text});
-    mNextPiecesContainer->AddChild(nextTextSceneobject);
+    nextTextSceneobject.GetTransform().SetPosition({-0.5f, 0.52f, UiLayer::text});
+    nextPiecesContainer.AddChild(nextTextSceneobject);
 
     CreatePreviewPieces(mNextPreviewPieces,
                         mNextPreviewPiecesRelativePositions,
@@ -522,6 +524,10 @@ void GameHud::CreateNextPiecesObject(Pht::Scene& scene,
 void GameHud::CreateLowerFadeBarObject(Pht::Scene& scene,
                                        Pht::SceneObject& parentObject,
                                        const CommonResources& commonResources) {
+    if (mLevel.GetLightIntensity() == Level::LightIntensity::Dark) {
+        return;
+    }
+
     auto frustumSize = mEngine.GetRenderer().GetHudFrustumSize();
     auto width = frustumSize.x;
     auto height = 5.3f;
@@ -554,7 +560,6 @@ void GameHud::CreateLowerFadeBarObject(Pht::Scene& scene,
     auto lowerBarMainY = lowerBarY - borderHeight / 2.0f;
     Pht::Vec3 lowerBarMainPosition {0.0f, lowerBarMainY, UiLayer::tutorialWindow};
     lowerBarMain.GetTransform().SetPosition(lowerBarMainPosition);
-
 }
 
 void GameHud::CreateSelectablePiecesObject(Pht::Scene& scene,

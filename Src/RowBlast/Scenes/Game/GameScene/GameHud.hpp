@@ -131,6 +131,11 @@ namespace RowBlast {
             return *mUpperContainer;
         }
 
+        Pht::SceneObject& GetLowerContainer() {
+            assert(mLowerContainer);
+            return *mLowerContainer;
+        }
+
         Pht::SceneObject& GetProgressContainer() {
             assert(mProgressContainer);
             return *mProgressContainer;
@@ -139,11 +144,6 @@ namespace RowBlast {
         Pht::SceneObject& GetMovesContainer() {
             assert(mMovesContainer);
             return *mMovesContainer;
-        }
-
-        Pht::SceneObject& GetNextPiecesContainer() {
-            assert(mNextPiecesContainer);
-            return *mNextPiecesContainer;
         }
 
         Pht::SceneObject& GetNextPiecesSceneObject() {
@@ -297,9 +297,9 @@ namespace RowBlast {
         Pht::SceneObject* mSelectablePiecesRectangle {nullptr};
         Pht::SceneObject* mPressedSelectablePiecesRectangle {nullptr};
         Pht::SceneObject* mUpperContainer {nullptr};
+        Pht::SceneObject* mLowerContainer {nullptr};
         Pht::SceneObject* mProgressContainer {nullptr};
         Pht::SceneObject* mMovesContainer {nullptr};
-        Pht::SceneObject* mNextPiecesContainer {nullptr};
         Pht::SceneObject* mNextPiecesSceneObject {nullptr};
         Pht::SceneObject* mSelectablePiecesContainer {nullptr};
         Pht::SceneObject* mSelectablePiecesSceneObject {nullptr};
