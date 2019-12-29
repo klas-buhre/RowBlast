@@ -814,7 +814,11 @@ void GameLogic::UpdateFallingPieceYpos() {
                         mAllValidMoves = &validMoves.mMoves;
                         if (mPiecePathSystem.IsPathVisible() && mValidMoveBelowDraggedPiece.HasValue()) {
                             if (auto* move = mAllValidMoves->Find(mValidMoveBelowDraggedPiece.GetValue())) {
-                                mPiecePathSystem.ShowPath(mFallingPiece, *(move->mLastMovement));
+                                auto lowestVisibleRow =
+                                    static_cast<int>(mScrollController.GetLowestVisibleRow());
+                                mPiecePathSystem.ShowPath(mFallingPiece,
+                                                          *(move->mLastMovement),
+                                                          lowestVisibleRow);
                             }
                         }
                     }
@@ -1501,7 +1505,9 @@ void GameLogic::UpdateDraggedGhostPieceRowAndBlastArea() {
     auto ghostPieceRow = 0;
     if (auto* move = GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
         mDraggedGhostPieceRow = ghostPieceRow;
-        mPiecePathSystem.ShowPath(mFallingPiece, *(move->mLastMovement));
+        
+        auto lowestVisibleRow = static_cast<int>(mScrollController.GetLowestVisibleRow());
+        mPiecePathSystem.ShowPath(mFallingPiece, *(move->mLastMovement), lowestVisibleRow);
         mValidMoveBelowDraggedPiece = *move;
         
         if (mDraggedPiece.GetPieceType().IsBomb()) {

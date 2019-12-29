@@ -15,11 +15,18 @@ using namespace RowBlast;
 namespace {
     constexpr auto numFillRenderables = 2;
     constexpr auto colorAlpha = 0.1f;
+    constexpr auto fadeInWaveSpeed = 40.0f;
+    constexpr auto cellFadeInDuration = 0.2f;
+    constexpr auto numAlreadyLitRows = 2.0f;
+    constexpr auto sineWaveWaitDuration = 0.5f;
+    constexpr auto sineWaveSpeed = 30.0f;
+    constexpr auto sineWaveAmplitude = 0.1f;
+    constexpr auto sineWaveLength = 16.0f;
 
-    const Pht::Vec4 redColor {1.0f, 0.5f, 0.5f, colorAlpha};
-    const Pht::Vec4 greenColor {0.5f, 0.8f, 0.5f, colorAlpha};
-    const Pht::Vec4 blueColor {0.3f, 0.72f, 1.0f, colorAlpha};
-    const Pht::Vec4 yellowColor {0.875f, 0.75f, 0.0f, colorAlpha};
+    const Pht::Vec4 redColor {1.0f, 0.5f, 0.5f, 1.0f};
+    const Pht::Vec4 greenColor {0.5f, 0.8f, 0.5f, 1.0f};
+    const Pht::Vec4 blueColor {0.3f, 0.72f, 1.0f, 1.0f};
+    const Pht::Vec4 yellowColor {0.875f, 0.75f, 0.0f, 1.0f};
     
     Pht::Vec4 ToColor(BlockColor blockColor) {
         switch (blockColor) {
@@ -41,7 +48,7 @@ namespace {
 PiecePathSystem::PiecePathSystem(Pht::IEngine& engine, GameScene& scene) :
     mScene {scene} {
     
-    auto numRenderables = numFillRenderables * Quantities::numBlockColors;
+    auto numRenderables = numFillRenderables * Quantities::numBlockColors * Field::maxNumRows;
     mRenderables.resize(numRenderables);
     
     Pht::Material material;
@@ -49,12 +56,14 @@ PiecePathSystem::PiecePathSystem(Pht::IEngine& engine, GameScene& scene) :
         
     for (auto colorIndex = 0; colorIndex < Quantities::numBlockColors; ++colorIndex) {
         auto blockColor = static_cast<BlockColor>(colorIndex);
+        
+        for (auto row = 0; row < Field::maxNumRows; ++row) {
+            mRenderables[CalcRenderableIndex(Fill::Full, blockColor, row)] =
+                CreateRenderable(Fill::Full, blockColor, engine, material);
 
-        mRenderables[CalcRenderableIndex(Fill::Full, blockColor)] =
-            CreateRenderable(Fill::Full, blockColor, engine, material);
-            
-        mRenderables[CalcRenderableIndex(Fill::LowerRightHalf, blockColor)] =
-            CreateRenderable(Fill::LowerRightHalf, blockColor, engine, material);
+            mRenderables[CalcRenderableIndex(Fill::LowerRightHalf, blockColor, row)] =
+                CreateRenderable(Fill::LowerRightHalf, blockColor, engine, material);
+        }
     }
 }
                      
@@ -62,9 +71,10 @@ std::unique_ptr<Pht::RenderableObject> PiecePathSystem::CreateRenderable(Fill fi
                                                                          BlockColor blockColor,
                                                                          Pht::IEngine& engine,
                                                                          const Pht::Material& material) {
+    auto name = ToString(fill) + ToString(blockColor);
+    auto vertices = CreateVertices(fill, blockColor);
     auto& sceneManager = engine.GetSceneManager();
-    return sceneManager.CreateRenderableObject(Pht::QuadMesh {CreateVertices(fill, blockColor)},
-                                               material);
+    return sceneManager.CreateRenderableObject(Pht::QuadMesh {vertices, name}, material);
 }
 
 Pht::QuadMesh::Vertices PiecePathSystem::CreateVertices(Fill fill, BlockColor blockColor) {
@@ -106,12 +116,30 @@ void PiecePathSystem::Init(const Level& level) {
     mSceneObjectPool = std::make_unique<SceneObjectPool>(SceneObjectPoolKind::PiecePath,
                                                          mScene.GetPieceDropEffectsContainer(),
                                                          level.GetNumColumns());
+    mState = State::Inactive;
     HidePath();
 }
 
-void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece, const Movement& lastMovement) {
-    mState = State::Active;
+void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece,
+                               const Movement& lastMovement,
+                               int lowestVisibleRow) {
     SetColor(fallingPiece);
+    auto& pieceType = fallingPiece.GetPieceType();
+
+    if (mState == State::Inactive) {
+        mState = State::FadingIn;
+        auto draggedPieceLocalYMax = pieceType.GetDimensions(lastMovement.GetRotation()).mYmax;
+        auto draggedPieceY = lastMovement.GetPosition().y;
+        mElapsedTime =
+            (draggedPieceY + draggedPieceLocalYMax - static_cast<float>(lowestVisibleRow) +
+             numAlreadyLitRows) / fadeInWaveSpeed;
+        mLowestVisibleRow = lowestVisibleRow;
+        
+        for (auto visibleRow = 0; visibleRow < Field::maxNumRows; ++visibleRow) {
+            SetOpacity(0.0f, visibleRow);
+        }
+    }
+    
     ClearGrid();
     mMovements.Clear();
     
@@ -128,7 +156,6 @@ void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece, const Movement&
         static_cast<int>(lastMovement.GetPosition().y)
     };
 
-    auto& pieceType = fallingPiece.GetPieceType();
     if (pieceType.IsBomb()) {
         ClearBlastArea(finalPosition - Pht::IVec2{1, 1});
     } else if (!pieceType.IsRowBomb()) {
@@ -374,7 +401,9 @@ void PiecePathSystem::UpdateSceneObjects() {
                 
                 auto& transform = sceneObject.GetTransform();
                 transform.SetPosition(position);
-                sceneObject.SetRenderable(&GetRenderableObject(fill, mColor));
+                
+                auto& renderable = GetRenderableObject(fill, mColor, row - mLowestVisibleRow);
+                sceneObject.SetRenderable(&renderable);
                 
                 switch (fill) {
                     case Fill::UpperRightHalf:
@@ -403,8 +432,98 @@ void PiecePathSystem::HidePath() {
     mSceneObjectPool->SetIsActive(false);
 }
 
+void PiecePathSystem::Update(float dt) {
+    switch (mState) {
+        case State::FadingIn:
+            UpdateInFadingInState(dt);
+            break;
+        case State::Active:
+            UpdateInActiveState(dt);
+            break;
+        case State::SineWave:
+            UpdateInSineWaveState(dt);
+            break;
+        case State::Inactive:
+            break;
+    }
+}
+
+void PiecePathSystem::UpdateInFadingInState(float dt) {
+    auto fadeStateDuration =
+        static_cast<float>(Field::maxNumRows) / fadeInWaveSpeed + cellFadeInDuration;
+
+    mElapsedTime += dt;
+    if (mElapsedTime > fadeStateDuration) {
+        GoToActiveState();
+        return;
+    }
+
+    auto wavefront = mElapsedTime * fadeInWaveSpeed;
+    
+    for (auto visibleRow = 0; visibleRow < Field::maxNumRows; ++visibleRow) {
+        auto wavefrontRow = static_cast<int>(wavefront);
+        if (visibleRow <= wavefrontRow) {
+            auto distanceToWavefront = wavefront - static_cast<float>(visibleRow);
+            auto elapsedTime = distanceToWavefront / fadeInWaveSpeed;
+            auto opacity = elapsedTime < cellFadeInDuration ?
+                           colorAlpha * elapsedTime / cellFadeInDuration : colorAlpha;
+            SetOpacity(opacity, visibleRow);
+        }
+    }
+}
+
+void PiecePathSystem::UpdateInActiveState(float dt) {
+    mElapsedTime += dt;
+    if (mElapsedTime > sineWaveWaitDuration) {
+        mElapsedTime = 0.0f;
+        mState = State::SineWave;
+    }
+}
+
+void PiecePathSystem::UpdateInSineWaveState(float dt) {
+    auto waveYPos = -sineWaveLength / 2.0f + mElapsedTime * sineWaveSpeed;
+    mElapsedTime += dt;
+    
+    if (waveYPos - sineWaveLength / 2.0f > static_cast<float>(Field::maxNumRows)) {
+        GoToActiveState();
+        return;
+    }
+    
+    for (auto visibleRow = 0; visibleRow < Field::maxNumRows; ++visibleRow) {
+        if (visibleRow + 1.0f > waveYPos - sineWaveLength / 2.0f &&
+            visibleRow + 1.0f < waveYPos + sineWaveLength / 2.0f) {
+            
+            auto x = 2.0f * 3.1415f * static_cast<float>(visibleRow) / sineWaveLength + waveYPos;
+            auto waveOpacity = 0.5f * (sineWaveAmplitude * std::cos(x) + sineWaveAmplitude);
+            SetOpacity(waveOpacity + colorAlpha, visibleRow);
+        } else {
+            SetOpacity(colorAlpha, visibleRow);
+        }
+    }
+}
+
+void PiecePathSystem::SetOpacity(float opacity, int visibleRow) {
+    GetRenderableObject(Fill::Full, mColor, visibleRow).GetMaterial().SetOpacity(opacity);
+    GetRenderableObject(Fill::LowerRightHalf, mColor, visibleRow).GetMaterial().SetOpacity(opacity);
+}
+
+void PiecePathSystem::GoToActiveState() {
+    mState = State::Active;
+    mElapsedTime = 0.0f;
+    
+    for (auto visibleRow = 0; visibleRow < Field::maxNumRows; ++visibleRow) {
+        SetOpacity(colorAlpha, visibleRow);
+    }
+}
+
 bool PiecePathSystem::IsPathVisible() {
-    return mState == State::Active;
+    switch (mState) {
+        case State::FadingIn:
+        case State::Active:
+            return true;
+        default:
+            return false;
+    }
 }
 
 void PiecePathSystem::ClearGrid() {
@@ -415,19 +534,27 @@ void PiecePathSystem::ClearGrid() {
     }
 }
 
-Pht::RenderableObject& PiecePathSystem::GetRenderableObject(Fill fill, BlockColor color) const {
-    return *(mRenderables[CalcRenderableIndex(fill, color)]);
+Pht::RenderableObject& PiecePathSystem::GetRenderableObject(Fill fill,
+                                                            BlockColor color,
+                                                            int visibleRow) {
+    return *(mRenderables[CalcRenderableIndex(fill, color, visibleRow)]);
 }
 
-int PiecePathSystem::CalcRenderableIndex(Fill fill, BlockColor color) const {
+int PiecePathSystem::CalcRenderableIndex(Fill fill, BlockColor color, int visibleRow) const {
     auto fillIndex = (fill == Fill::Full ? 0 : 1);
     auto colorIndex = static_cast<int>(color);
     
+    if (visibleRow > Field::maxNumRows) {
+        visibleRow = Field::maxNumRows;
+    }
+    
     assert(fillIndex >= 0 && fillIndex < numFillRenderables &&
-           colorIndex >= 0 && colorIndex < Quantities::numBlockColors);
+           colorIndex >= 0 && colorIndex < Quantities::numBlockColors &&
+           visibleRow >= 0 && visibleRow < Field::maxNumRows);
     
-    auto index = colorIndex * numFillRenderables + fillIndex;
-    
+    auto index = visibleRow * numFillRenderables * Quantities::numBlockColors +
+                 colorIndex * numFillRenderables + fillIndex;
+
     assert(index < mRenderables.size());
     return index;
 }

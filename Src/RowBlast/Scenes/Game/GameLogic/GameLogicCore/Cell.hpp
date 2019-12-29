@@ -211,6 +211,9 @@ namespace RowBlast {
     };
     
     using BlueprintCellGrid = std::vector<std::vector<BlueprintCell>>;
+    
+    std::string ToString(Fill fill);
+    std::string ToString(BlockColor color);
 }
 
 #endif

@@ -140,3 +140,35 @@ bool Cell::IsFull() const {
             return true;
     }
 }
+
+std::string RowBlast::ToString(Fill fill) {
+    switch (fill) {
+        case Fill::Empty:
+            return "Fill::Empty";
+        case Fill::LowerRightHalf:
+            return "Fill::LowerRightHalf";
+        case Fill::UpperRightHalf:
+            return "Fill::UpperRightHalf";
+        case Fill::UpperLeftHalf:
+            return "Fill::UpperLeftHalf";
+        case Fill::LowerLeftHalf:
+            return "Fill::LowerLeftHalf";
+        case Fill::Full:
+            return "Fill::Full";
+    }
+}
+
+std::string RowBlast::ToString(BlockColor color) {
+    switch (color) {
+        case BlockColor::Red:
+            return "BlockColor::Red";
+        case BlockColor::Green:
+            return "BlockColor::Green";
+        case BlockColor::Blue:
+            return "BlockColor::Blue";
+        case BlockColor::Yellow:
+            return "BlockColor::Yellow";
+        case BlockColor::None:
+            return "BlockColor::None";
+    }
+}

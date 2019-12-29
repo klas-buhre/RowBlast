@@ -24,8 +24,11 @@ namespace RowBlast {
         PiecePathSystem(Pht::IEngine& engine, GameScene& scene);
         
         void Init(const Level& level);
-        void ShowPath(const FallingPiece& fallingPiece, const Movement& lastMovement);
+        void ShowPath(const FallingPiece& fallingPiece,
+                      const Movement& lastMovement,
+                      int lowestVisibleRow);
         void HidePath();
+        void Update(float dt);
         bool IsPathVisible();
         
     private:
@@ -58,19 +61,28 @@ namespace RowBlast {
         void ClearGrid();
         void ClearBlastArea(const Pht::IVec2& position);
         void UpdateSceneObjects();
-        Pht::RenderableObject& GetRenderableObject(Fill fill, BlockColor color) const;
-        int CalcRenderableIndex(Fill fill, BlockColor color) const;
+        Pht::RenderableObject& GetRenderableObject(Fill fill, BlockColor color, int visibleRow);
+        int CalcRenderableIndex(Fill fill, BlockColor color, int visibleRow) const;
+        void UpdateInFadingInState(float dt);
+        void UpdateInActiveState(float dt);
+        void UpdateInSineWaveState(float dt);
+        void SetOpacity(float opacity, int visibleRow);
+        void GoToActiveState();
 
         using MovementPtrs =
             Pht::StaticVector<const Movement*, Field::maxNumColumns * Field::maxNumRows * 4>;
 
         enum class State {
+            FadingIn,
             Active,
+            SineWave,
             Inactive
         };
         
         GameScene& mScene;
         State mState {State::Inactive};
+        float mElapsedTime {0.0f};
+        int mLowestVisibleRow {0};
         std::vector<std::vector<Fill>> mPathGrid;
         int mNumRows {0};
         int mNumColumns {0};

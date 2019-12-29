@@ -239,6 +239,7 @@ GameController::Command GameController::UpdateGame() {
     mBondsAnimationSystem.Update(dt);
     mPieceDropParticleEffect.Update(dt);
     mPieceTrailParticleEffect.Update(dt);
+    mPiecePathSystem.Update(dt);
     mShield.Update(dt);
     mFieldBottomGlow.Update(dt);
     mEffectManager.Update(dt);
