@@ -19,14 +19,6 @@ namespace RowBlast {
     public:
         GameHudRectangles(Pht::IEngine& engine, const CommonResources& commonResources);
 
-        Pht::RenderableObject& GetPauseButtonRectangle() const {
-            return *mPauseButtonRectangle;
-        }
-
-        Pht::RenderableObject& GetPressedPauseButtonRectangle() const {
-            return *mPressedPauseButtonRectangle;
-        }
-
         Pht::RenderableObject& GetNextPiecesRectangle() const {
             return *mNextPiecesRectangle;
         }
@@ -41,30 +33,26 @@ namespace RowBlast {
 
     private:
         std::unique_ptr<Pht::RenderableObject>
-        CreateRectangle(Pht::IEngine& engine,
-                        const CommonResources& commonResources,
-                        const Pht::Vec2& size,
-                        float tilt,
-                        const Pht::Vec4& colorSubtract);
+        CreateNextRectangle(Pht::IEngine& engine,
+                            const CommonResources& commonResources,
+                            const Pht::Vec2& size);
         std::unique_ptr<Pht::RenderableObject>
         CreateSelectablesRectangle(Pht::IEngine& engine,
                                    const CommonResources& commonResources,
                                    const Pht::Vec2& size,
                                    float tilt,
                                    const Pht::Vec4& colorSubtract);
-        void FillStencilBuffer(Pht::SoftwareRasterizer& rasterizer,
-                               const Pht::Vec2& size,
-                               float cornerRadius,
-                               float padding);
-        void DrawRectangleBorder(Pht::SoftwareRasterizer& rasterizer,
-                                 const Pht::Vec2& size,
-                                 const Pht::Vec4& colorSubtract);
+        void DrawNextRectangleUpperBarGradientArea(Pht::SoftwareRasterizer& rasterizer,
+                                                   const Pht::Vec2& size);
+        void DrawNextRectangleUpperBarGlossyArea(Pht::SoftwareRasterizer& rasterizer,
+                                                 const Pht::Vec2& size);
         void DrawSelectablesRectangleBorder(Pht::SoftwareRasterizer& rasterizer,
                                             const Pht::Vec2& size,
                                             const Pht::Vec4& colorSubtract);
-        void DrawRectangleMainArea(Pht::SoftwareRasterizer& rasterizer,
-                                   const Pht::Vec2& size,
-                                   const Pht::Vec4& colorSubtract);
+        void DrawSelectablesRectangleCheckedArea(Pht::SoftwareRasterizer& rasterizer,
+                                                 const Pht::Vec2& size,
+                                                 const Pht::Vec4& colorSubtract);
+        void DrawNextRectangleMainArea(Pht::SoftwareRasterizer& rasterizer, const Pht::Vec2& size);
         void DrawSelectablesRectangleMainArea(Pht::SoftwareRasterizer& rasterizer,
                                               const Pht::Vec2& size,
                                               const Pht::Vec4& colorSubtract);
@@ -78,8 +66,6 @@ namespace RowBlast {
                       const Pht::Vec4& colorSubtract);
         void DrawLine(Pht::SoftwareRasterizer& rasterizer, const Pht::Vec4& colorSubtract);
         
-        std::unique_ptr<Pht::RenderableObject> mPauseButtonRectangle;
-        std::unique_ptr<Pht::RenderableObject> mPressedPauseButtonRectangle;
         std::unique_ptr<Pht::RenderableObject> mNextPiecesRectangle;
         std::unique_ptr<Pht::RenderableObject> mSelectablePiecesRectangle;
         std::unique_ptr<Pht::RenderableObject> mPressedSelectablePiecesRectangle;
