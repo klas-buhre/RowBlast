@@ -63,8 +63,8 @@ Ongoing tasks:
 
 
     -Do:
-        -Review piece path fade in commit.
-        -Trim piece path fade in, and sine wave.
+        -Trim piece path fade in.
+        -Should piece path be more transparant if bomb?
         -Review game hud recrangles commit.
         
         -3. Redesign the game HUD:                                                  ~1.5 days

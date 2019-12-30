@@ -18,8 +18,8 @@ namespace {
     constexpr auto fadeInWaveSpeed = 40.0f;
     constexpr auto cellFadeInDuration = 0.2f;
     constexpr auto numAlreadyLitRows = 2.0f;
-    constexpr auto sineWaveWaitDuration = 0.5f;
-    constexpr auto sineWaveSpeed = 30.0f;
+    constexpr auto sineWaveWaitDuration = 1.0f;
+    constexpr auto sineWaveSpeed = 24.0f;
     constexpr auto sineWaveAmplitude = 0.1f;
     constexpr auto sineWaveLength = 16.0f;
 
@@ -123,21 +123,19 @@ void PiecePathSystem::Init(const Level& level) {
 void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece,
                                const Movement& lastMovement,
                                int lowestVisibleRow) {
+    mLowestVisibleRow = lowestVisibleRow;
     SetColor(fallingPiece);
-    auto& pieceType = fallingPiece.GetPieceType();
-
-    if (mState == State::Inactive) {
-        mState = State::FadingIn;
-        auto draggedPieceLocalYMax = pieceType.GetDimensions(lastMovement.GetRotation()).mYmax;
-        auto draggedPieceY = lastMovement.GetPosition().y;
-        mElapsedTime =
-            (draggedPieceY + draggedPieceLocalYMax - static_cast<float>(lowestVisibleRow) +
-             numAlreadyLitRows) / fadeInWaveSpeed;
-        mLowestVisibleRow = lowestVisibleRow;
-        
-        for (auto visibleRow = 0; visibleRow < Field::maxNumRows; ++visibleRow) {
-            SetOpacity(0.0f, visibleRow);
-        }
+    
+    switch (mState) {
+        case State::FadingIn:
+            break;
+        case State::SineWaveWait:
+        case State::SineWave:
+            GoToSineWaveWaitState();
+            break;
+        case State::Inactive:
+            GoToFadingInState(fallingPiece, lastMovement);
+            break;
     }
     
     ClearGrid();
@@ -156,6 +154,7 @@ void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece,
         static_cast<int>(lastMovement.GetPosition().y)
     };
 
+    auto& pieceType = fallingPiece.GetPieceType();
     if (pieceType.IsBomb()) {
         ClearBlastArea(finalPosition - Pht::IVec2{1, 1});
     } else if (!pieceType.IsRowBomb()) {
@@ -437,8 +436,8 @@ void PiecePathSystem::Update(float dt) {
         case State::FadingIn:
             UpdateInFadingInState(dt);
             break;
-        case State::Active:
-            UpdateInActiveState(dt);
+        case State::SineWaveWait:
+            UpdateInSineWaveWaitState(dt);
             break;
         case State::SineWave:
             UpdateInSineWaveState(dt);
@@ -454,7 +453,7 @@ void PiecePathSystem::UpdateInFadingInState(float dt) {
 
     mElapsedTime += dt;
     if (mElapsedTime > fadeStateDuration) {
-        GoToActiveState();
+        GoToSineWaveWaitState();
         return;
     }
 
@@ -472,28 +471,28 @@ void PiecePathSystem::UpdateInFadingInState(float dt) {
     }
 }
 
-void PiecePathSystem::UpdateInActiveState(float dt) {
+void PiecePathSystem::UpdateInSineWaveWaitState(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > sineWaveWaitDuration) {
-        mElapsedTime = 0.0f;
-        mState = State::SineWave;
+        GoToSineWaveState();
     }
 }
 
 void PiecePathSystem::UpdateInSineWaveState(float dt) {
-    auto waveYPos = -sineWaveLength / 2.0f + mElapsedTime * sineWaveSpeed;
     mElapsedTime += dt;
     
-    if (waveYPos - sineWaveLength / 2.0f > static_cast<float>(Field::maxNumRows)) {
-        GoToActiveState();
+    auto waveYPos = static_cast<float>(Field::maxNumRows) + sineWaveLength / 2.0f -
+                    mElapsedTime * sineWaveSpeed;
+    if (waveYPos + sineWaveLength / 2.0f < 0.0f) {
+        mElapsedTime = 0.0f;
         return;
     }
-    
+
     for (auto visibleRow = 0; visibleRow < Field::maxNumRows; ++visibleRow) {
         if (visibleRow + 1.0f > waveYPos - sineWaveLength / 2.0f &&
             visibleRow + 1.0f < waveYPos + sineWaveLength / 2.0f) {
             
-            auto x = 2.0f * 3.1415f * static_cast<float>(visibleRow) / sineWaveLength + waveYPos;
+            auto x = 2.0f * 3.1415f * (static_cast<float>(visibleRow) - waveYPos) / sineWaveLength;
             auto waveOpacity = 0.5f * (sineWaveAmplitude * std::cos(x) + sineWaveAmplitude);
             SetOpacity(waveOpacity + colorAlpha, visibleRow);
         } else {
@@ -507,8 +506,32 @@ void PiecePathSystem::SetOpacity(float opacity, int visibleRow) {
     GetRenderableObject(Fill::LowerRightHalf, mColor, visibleRow).GetMaterial().SetOpacity(opacity);
 }
 
-void PiecePathSystem::GoToActiveState() {
-    mState = State::Active;
+void PiecePathSystem::GoToFadingInState(const FallingPiece& fallingPiece,
+                                        const Movement& lastMovement) {
+    mState = State::FadingIn;
+    auto& pieceType = fallingPiece.GetPieceType();
+    auto draggedPieceLocalYMax = pieceType.GetDimensions(lastMovement.GetRotation()).mYmax;
+    auto draggedPieceY = lastMovement.GetPosition().y;
+    mElapsedTime =
+        (draggedPieceY + draggedPieceLocalYMax - static_cast<float>(mLowestVisibleRow) +
+         numAlreadyLitRows) / fadeInWaveSpeed;
+
+    for (auto visibleRow = 0; visibleRow < Field::maxNumRows; ++visibleRow) {
+        SetOpacity(0.0f, visibleRow);
+    }
+}
+
+void PiecePathSystem::GoToSineWaveWaitState() {
+    mState = State::SineWaveWait;
+    mElapsedTime = 0.0f;
+    
+    for (auto visibleRow = 0; visibleRow < Field::maxNumRows; ++visibleRow) {
+        SetOpacity(colorAlpha, visibleRow);
+    }
+}
+
+void PiecePathSystem::GoToSineWaveState() {
+    mState = State::SineWave;
     mElapsedTime = 0.0f;
     
     for (auto visibleRow = 0; visibleRow < Field::maxNumRows; ++visibleRow) {
@@ -519,7 +542,7 @@ void PiecePathSystem::GoToActiveState() {
 bool PiecePathSystem::IsPathVisible() {
     switch (mState) {
         case State::FadingIn:
-        case State::Active:
+        case State::SineWaveWait:
         case State::SineWave:
             return true;
         case State::Inactive:

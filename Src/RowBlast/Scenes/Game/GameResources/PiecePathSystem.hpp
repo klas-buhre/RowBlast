@@ -64,17 +64,19 @@ namespace RowBlast {
         Pht::RenderableObject& GetRenderableObject(Fill fill, BlockColor color, int visibleRow);
         int CalcRenderableIndex(Fill fill, BlockColor color, int visibleRow) const;
         void UpdateInFadingInState(float dt);
-        void UpdateInActiveState(float dt);
+        void UpdateInSineWaveWaitState(float dt);
         void UpdateInSineWaveState(float dt);
         void SetOpacity(float opacity, int visibleRow);
-        void GoToActiveState();
+        void GoToFadingInState(const FallingPiece& fallingPiece, const Movement& lastMovement);
+        void GoToSineWaveWaitState();
+        void GoToSineWaveState();
 
         using MovementPtrs =
             Pht::StaticVector<const Movement*, Field::maxNumColumns * Field::maxNumRows * 4>;
 
         enum class State {
             FadingIn,
-            Active,
+            SineWaveWait,
             SineWave,
             Inactive
         };
