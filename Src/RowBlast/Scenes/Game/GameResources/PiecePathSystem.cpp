@@ -520,8 +520,9 @@ bool PiecePathSystem::IsPathVisible() {
     switch (mState) {
         case State::FadingIn:
         case State::Active:
+        case State::SineWave:
             return true;
-        default:
+        case State::Inactive:
             return false;
     }
 }
@@ -545,7 +546,7 @@ int PiecePathSystem::CalcRenderableIndex(Fill fill, BlockColor color, int visibl
     auto colorIndex = static_cast<int>(color);
     
     if (visibleRow > Field::maxNumRows) {
-        visibleRow = Field::maxNumRows;
+        visibleRow = Field::maxNumRows - 1;
     }
     
     assert(fillIndex >= 0 && fillIndex < numFillRenderables &&
