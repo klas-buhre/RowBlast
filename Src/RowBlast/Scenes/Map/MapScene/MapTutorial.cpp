@@ -17,7 +17,7 @@ MapTutorial::MapTutorial(Pht::IEngine& engine, MapScene& scene, const UserServic
     mEngine {engine},
     mScene {scene},
     mUserServices {userServices},
-    mHandAnimation {engine, 0.7f, false} {}
+    mHandAnimation {engine, 0.7f, true} {}
 
 void MapTutorial::Init(int worldId) {
     auto progress = mUserServices.GetProgressService().GetProgress();
