@@ -68,15 +68,9 @@ SwipeControlsHintDialogView::SwipeControlsHintDialogView(Pht::IEngine& engine,
                                                     Pht::Vec3 {0.0f, -8.1f, UiLayer::textRectangle},
                                                     buttonInputSize,
                                                     buttonStyle);
-    mHowToPlayButton->CreateIcon("help.png",
-                                 {-2.55f, 0.05f, UiLayer::buttonText},
-                                 {0.82f, 0.82f},
-                                 iconColor,
-                                 iconShadowColor,
-                                 iconShadowOffset);
     auto& buttonTextProperties = guiResources.GetWhiteButtonTextProperties(zoom);
-    mHowToPlayButton->CreateText({-1.85f, -0.23f, UiLayer::buttonText},
-                                 "How To Play",
+    mHowToPlayButton->CreateText({-0.5f, -0.23f, UiLayer::buttonText},
+                                 "OK",
                                  buttonTextProperties);
 }
 

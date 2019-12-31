@@ -42,7 +42,7 @@ namespace RowBlast {
         void SaveState();
         bool LoadState();
 
-        ControlType mControlType {ControlType::Drag};
+        ControlType mControlType {ControlType::Click};
         bool mIsGhostPieceEnabled {true};
         bool mIsRotateAllPiecesEnabled {false};
         bool mIsSoundEnabled {true};

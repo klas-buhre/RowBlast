@@ -57,7 +57,7 @@ SwipeControlsHintDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     }
 
     if (mView.GetHowToPlayButton().IsClicked(touchEvent)) {
-        mDeferredResult = Result::HowToPlay;
+        mDeferredResult = Result::Close;
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                             SlidingMenuAnimation::SlideDirection::Left);
     }
