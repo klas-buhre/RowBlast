@@ -63,6 +63,7 @@ Ongoing tasks:
 
 
     -Do:
+        -Release.
         -Trim piece path fade in.
         -Should piece path be more transparant if bomb?
         -Review game hud recrangles commit.
@@ -72,7 +73,6 @@ Ongoing tasks:
             -Tune all colors in lower hud.
             -Move the preview piece positions to centered positions now that
              there is no rectangle tilt.
-        -3. Release.
         -2. This item might be moved to after publisher contact:
             Can have levels that have lots of octagons (or circles) instead of      ~7 days
             normal full blocks. The octagons/circles have different colors and
