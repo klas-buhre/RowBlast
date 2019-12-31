@@ -7,7 +7,7 @@
 
 #include "AnalyticsEvent.hpp"
 
-#define DEBUG
+// #define DEBUG
 
 using namespace Pht;
 
