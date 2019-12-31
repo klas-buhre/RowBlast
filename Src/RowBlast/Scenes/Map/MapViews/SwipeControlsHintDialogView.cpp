@@ -38,17 +38,17 @@ SwipeControlsHintDialogView::SwipeControlsHintDialogView(Pht::IEngine& engine,
     
     CreateSingleTapIcon({0.0f, 3.5, UiLayer::text}, GetRoot(), engine);
 
-    CreateText({0.0f, 1.0f, UiLayer::text}, "You can also use Swipe controls", textProperties);
-    CreateText({0.0f, -0.075f, UiLayer::text}, "to control your piece using gestures:", textProperties);
+    CreateText({0.0f, 1.0f, UiLayer::text}, "You can also use DragNDrop controls", textProperties);
+    CreateText({0.0f, -0.075f, UiLayer::text}, "to drag pieces into the playing field:", textProperties);
 
     CreateSwipeIcon({0.0f, -1.8f, UiLayer::text}, GetRoot(), engine);
     
-    CreateText({0.0f, -4.2f, UiLayer::text}, "You can select SingleTap or Swipe", textProperties);
-    CreateText({0.0f, -5.275f, UiLayer::text}, "controls in the settings menu:", textProperties);
+    CreateText({0.0f, -4.2f, UiLayer::text}, "You can select DragNDrop or", textProperties);
+    CreateText({0.0f, -5.275f, UiLayer::text}, "SingleTap in the settings menu:", textProperties);
     GuiUtils::CreateIcon(engine,
                          *this,
                          "settings.png",
-                         {5.5f, -5.1f, UiLayer::text},
+                         {5.7f, -5.1f, UiLayer::text},
                          {0.9f, 0.9f},
                          GetRoot());
     
