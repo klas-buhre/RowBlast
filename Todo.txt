@@ -46,9 +46,13 @@ Backlog:
      mostly be the target audince and in the playtest they are not.
 
 Ongoing tasks:
-    -Add drag controls and release. Include the new tutorial.
-    -Then release with microtransactions enabled. Market that version.
 
+  Temporary plan:
+    -Update the tutorial with drag controls.
+    -Release.
+    
+    
+  Original plan:
     -Major user stories before release:
         -Items in the next release (match-3, hud, bombs dragged piece)              ~1-2 weeks
         -Interacting with publishers                                                ~1 week
@@ -63,11 +67,6 @@ Ongoing tasks:
 
 
     -Do:
-        -Release.
-        -Trim piece path fade in.
-        -Should piece path be more transparant if bomb?
-        -Review game hud recrangles commit.
-        
         -3. Redesign the game HUD:                                                  ~1.5 days
             -Maybe try to invert the gradient and add a shadow from the field.
             -Tune all colors in lower hud.
