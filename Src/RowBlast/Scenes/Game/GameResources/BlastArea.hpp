@@ -41,8 +41,13 @@ namespace RowBlast {
         
     private:
         std::unique_ptr<Pht::SceneObject> CreateSceneObject(const Pht::IImage& image,
+                                                            const std::string& imageName,
                                                             float squareSide,
                                                             Pht::IEngine& engine);
+        std::unique_ptr<Pht::SceneObject> CreateShadowSceneObject(const Pht::IImage& image,
+                                                                  const std::string& imageName,
+                                                                  float squareSide,
+                                                                  Pht::IEngine& engine);
         void UpdateInFadingInState(float dt);
         void UpdateInActiveState(float dt);
         void SetOpacity(float opacity);
@@ -57,8 +62,12 @@ namespace RowBlast {
         GameScene& mScene;
         State mState {State::Inactive};
         Kind mActiveKind {Kind::Bomb};
-        std::unique_ptr<Pht::SceneObject> mBombRadiusSceneObject;
-        std::unique_ptr<Pht::SceneObject> mBigBombRadiusSceneObject;
+        std::unique_ptr<Pht::SceneObject> mBombBlastAreaContainer;
+        std::unique_ptr<Pht::SceneObject> mBombBlastAreaSceneObject;
+        std::unique_ptr<Pht::SceneObject> mBombBlastAreaShadowSceneObject;
+        std::unique_ptr<Pht::SceneObject> mBigBombBlastAreaContainer;
+        std::unique_ptr<Pht::SceneObject> mBigBombBlastAreaSceneObject;
+        std::unique_ptr<Pht::SceneObject> mBigBombBlastAreaShadowSceneObject;
         float mTime {0.0f};
         Pht::SceneResources mSceneResources;
     };

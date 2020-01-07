@@ -17,11 +17,15 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto opacityCurveAmplitude = 0.2f;
+    constexpr auto opacityCurveAmplitude = 0.0f;
+    constexpr auto shadowOpacity = 0.42f;
     constexpr auto frequency = 0.7f;
     constexpr auto opacityTarget = 1.0f - opacityCurveAmplitude;
     constexpr auto fadeInTime = 0.23f;
+    constexpr auto edgeWidth = 0.12f;
     
+    const Pht::Vec4 edgeColor {0.9f, 0.9f, 0.9f, 1.0f};
+
     Pht::StaticVector<Pht::Vec2, 20> scalePoints {
         {0.0f, 0.0f},
         {0.1f, 0.005f},
@@ -44,9 +48,7 @@ namespace {
     };
 
     void DrawEdgeBigBlast(Pht::SoftwareRasterizer& rasterizer, float squareSide, float cellSize) {
-        const auto edgeLength = cellSize * 1.1f;
-        const auto edgeWidth = 0.09f;
-        const Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 1.0f};
+        const auto edgeLength = cellSize * 1.3f;
         
         Pht::Vec2 lowerLeft1 {squareSide - edgeLength, 0.0f};
         Pht::Vec2 upperRight1 {squareSide, edgeWidth};
@@ -82,9 +84,7 @@ namespace {
     }
 
     void DrawEdge(Pht::SoftwareRasterizer& rasterizer, float squareSide, float cellSize) {
-        const auto edgeLength = cellSize * 0.5f;
-        const auto edgeWidth = 0.09f;
-        const Pht::Vec4 edgeColor {1.0f, 1.0f, 1.0f, 1.0f};
+        const auto edgeLength = cellSize * 0.65f;
         
         Pht::Vec2 lowerLeft1 {squareSide - edgeLength - cellSize, 0.0f};
         Pht::Vec2 upperRight1 {squareSide - cellSize, edgeWidth};
@@ -150,53 +150,6 @@ namespace {
         Pht::Vec2 upperRight16 {cellSize + edgeLength, edgeWidth};
         rasterizer.DrawRectangle(upperRight16, lowerLeft16, edgeColor, Pht::DrawOver::Yes);
     }
-    
-    void DrawStripes(Pht::SoftwareRasterizer& rasterizer, float squareSide) {
-        const Pht::Vec4 fillColor {1.0f, 1.0f, 1.0f, 0.15f};
-        const auto numStripes = 3.5f;
-        const auto stripeStep = squareSide / numStripes;
-        const auto stripeWidth = (stripeStep / 2.0f) / std::sqrt(2.0f);
-        
-        for (auto pos = 0.0f; pos < squareSide; pos += stripeStep) {
-            Pht::Vec2 trapezoidLowerLeft {0.0f, squareSide - pos};
-            Pht::Vec2 trapezoidUpperRight {pos, squareSide};
-            rasterizer.DrawTiltedTrapezoid315(trapezoidUpperRight,
-                                              trapezoidLowerLeft,
-                                              stripeWidth,
-                                              fillColor);
-        }
-
-        for (auto pos = 0.0f; pos < squareSide; pos += stripeStep) {
-            Pht::Vec2 trapezoidLowerLeft {pos, 0.0f};
-            Pht::Vec2 trapezoidUpperRight {squareSide, squareSide - pos};
-            rasterizer.DrawTiltedTrapezoid45(trapezoidUpperRight,
-                                             trapezoidLowerLeft,
-                                             stripeWidth,
-                                             fillColor);
-        }
-    }
-    
-    void EraseCornersFromStripes(Pht::SoftwareRasterizer& rasterizer,
-                                 float squareSide,
-                                 float cellSize) {
-        const Pht::Vec4 fillColor {0.0f, 0.0f, 0.0f, 0.0f};
-        
-        Pht::Vec2 lowerLeft1 {squareSide - cellSize, 0.0f};
-        Pht::Vec2 upperRight1 {squareSide, cellSize};
-        rasterizer.DrawRectangle(upperRight1, lowerLeft1, fillColor, Pht::DrawOver::Yes);
-
-        Pht::Vec2 lowerLeft2 {squareSide - cellSize, squareSide - cellSize};
-        Pht::Vec2 upperRight2 {squareSide, squareSide};
-        rasterizer.DrawRectangle(upperRight2, lowerLeft2, fillColor, Pht::DrawOver::Yes);
-
-        Pht::Vec2 lowerLeft3 {0.0f, squareSide - cellSize};
-        Pht::Vec2 upperRight3 {cellSize, squareSide};
-        rasterizer.DrawRectangle(upperRight3, lowerLeft3, fillColor, Pht::DrawOver::Yes);
-
-        Pht::Vec2 lowerLeft4 {0.0f, 0.0f};
-        Pht::Vec2 upperRight4 {cellSize, cellSize};
-        rasterizer.DrawRectangle(upperRight4, lowerLeft4, fillColor, Pht::DrawOver::Yes);
-    }
 }
 
 BlastArea::BlastArea(Pht::IEngine& engine,
@@ -222,22 +175,40 @@ BlastArea::BlastArea(Pht::IEngine& engine,
     
     auto rasterizer = std::make_unique<Pht::SoftwareRasterizer>(coordinateSystemSize, imageSize);
     
-    DrawStripes(*rasterizer, squareSide);
     DrawEdgeBigBlast(*rasterizer, squareSide, cellSize);
-    mBigBombRadiusSceneObject = CreateSceneObject(*rasterizer->ProduceImage(), squareSide, engine);
+    mBigBombBlastAreaContainer = std::make_unique<Pht::SceneObject>();
+    mBigBombBlastAreaSceneObject = CreateSceneObject(*rasterizer->ProduceImage(),
+                                                     "BigBombBlastArea",
+                                                     squareSide,
+                                                     engine);
+    mBigBombBlastAreaContainer->AddChild(*mBigBombBlastAreaSceneObject);
+    mBigBombBlastAreaShadowSceneObject = CreateShadowSceneObject(*rasterizer->ProduceImage(),
+                                                                 "BigBombBlastArea",
+                                                                 squareSide,
+                                                                 engine);
+    mBigBombBlastAreaContainer->AddChild(*mBigBombBlastAreaShadowSceneObject);
     
     rasterizer->ClearBuffer();
     
-    DrawStripes(*rasterizer, squareSide);
-    EraseCornersFromStripes(*rasterizer, squareSide, cellSize);
     DrawEdge(*rasterizer, squareSide, cellSize);
-    mBombRadiusSceneObject = CreateSceneObject(*rasterizer->ProduceImage(), squareSide, engine);
+    mBombBlastAreaContainer = std::make_unique<Pht::SceneObject>();
+    mBombBlastAreaSceneObject = CreateSceneObject(*rasterizer->ProduceImage(),
+                                                  "BombBlastArea",
+                                                  squareSide,
+                                                  engine);
+    mBombBlastAreaContainer->AddChild(*mBombBlastAreaSceneObject);
+    mBombBlastAreaShadowSceneObject = CreateShadowSceneObject(*rasterizer->ProduceImage(),
+                                                              "BombBlastArea",
+                                                              squareSide,
+                                                              engine);
+    mBombBlastAreaContainer->AddChild(*mBombBlastAreaShadowSceneObject);
 }
 
 std::unique_ptr<Pht::SceneObject> BlastArea::CreateSceneObject(const Pht::IImage& image,
+                                                               const std::string& imageName,
                                                                float squareSide,
                                                                Pht::IEngine& engine) {
-    Pht::Material imageMaterial {image, Pht::GenerateMipmap::No};
+    Pht::Material imageMaterial {image, Pht::GenerateMipmap::No, imageName};
     imageMaterial.SetBlend(Pht::Blend::Yes);
     imageMaterial.SetDepthTest(false);
     
@@ -247,9 +218,27 @@ std::unique_ptr<Pht::SceneObject> BlastArea::CreateSceneObject(const Pht::IImage
                                           mSceneResources);
 }
 
+std::unique_ptr<Pht::SceneObject> BlastArea::CreateShadowSceneObject(const Pht::IImage& image,
+                                                                     const std::string& imageName,
+                                                                     float squareSide,
+                                                                     Pht::IEngine& engine) {
+    Pht::Material imageMaterial {image, Pht::GenerateMipmap::No, imageName};
+    imageMaterial.SetBlend(Pht::Blend::Yes);
+    imageMaterial.SetDepthTest(false);
+    imageMaterial.SetShaderId(Pht::ShaderId::TexturedLighting);
+    imageMaterial.SetOpacity(shadowOpacity);
+    
+    auto& sceneManager = engine.GetSceneManager();
+    auto sceneObject = sceneManager.CreateSceneObject(Pht::QuadMesh {squareSide, squareSide},
+                                                      imageMaterial,
+                                                      mSceneResources);
+    sceneObject->GetTransform().SetPosition({-0.075f, -0.075f, -0.1f});
+    return sceneObject;
+}
+
 void BlastArea::Init() {
-    mScene.GetFieldBlocksContainer().AddChild(*mBombRadiusSceneObject);
-    mScene.GetFieldBlocksContainer().AddChild(*mBigBombRadiusSceneObject);
+    mScene.GetFieldBlocksContainer().AddChild(*mBombBlastAreaContainer);
+    mScene.GetFieldBlocksContainer().AddChild(*mBigBombBlastAreaContainer);
     
     Stop();
 }
@@ -261,12 +250,12 @@ void BlastArea::Start(Kind kind) {
     
     switch (kind) {
         case Kind::Bomb:
-            mBombRadiusSceneObject->SetIsVisible(true);
-            mBigBombRadiusSceneObject->SetIsVisible(false);
+            mBombBlastAreaContainer->SetIsVisible(true);
+            mBigBombBlastAreaContainer->SetIsVisible(false);
             break;
         case Kind::BigBomb:
-            mBigBombRadiusSceneObject->SetIsVisible(true);
-            mBombRadiusSceneObject->SetIsVisible(false);
+            mBigBombBlastAreaContainer->SetIsVisible(true);
+            mBombBlastAreaContainer->SetIsVisible(false);
             break;
     }
 }
@@ -274,8 +263,8 @@ void BlastArea::Start(Kind kind) {
 void BlastArea::Stop() {
     mState = State::Inactive;
     mTime = 0.0f;
-    mBombRadiusSceneObject->SetIsVisible(false);
-    mBigBombRadiusSceneObject->SetIsVisible(false);
+    mBombBlastAreaContainer->SetIsVisible(false);
+    mBigBombBlastAreaContainer->SetIsVisible(false);
 }
 
 void BlastArea::SetPosition(const Pht::Vec2& position) {
@@ -287,8 +276,8 @@ void BlastArea::SetPosition(const Pht::Vec2& position) {
         mScene.GetBlastAreaZ()
     };
     
-    mBombRadiusSceneObject->GetTransform().SetPosition(positionInField);
-    mBigBombRadiusSceneObject->GetTransform().SetPosition(positionInField);
+    mBombBlastAreaContainer->GetTransform().SetPosition(positionInField);
+    mBigBombBlastAreaContainer->GetTransform().SetPosition(positionInField);
 }
 
 void BlastArea::Update(float dt) {
@@ -333,10 +322,12 @@ void BlastArea::UpdateInActiveState(float dt) {
 void BlastArea::SetOpacity(float opacity) {
     switch (mActiveKind) {
         case Kind::Bomb:
-            mBombRadiusSceneObject->GetRenderable()->GetMaterial().SetOpacity(opacity);
+            mBombBlastAreaSceneObject->GetRenderable()->GetMaterial().SetOpacity(opacity);
+            mBombBlastAreaShadowSceneObject->GetRenderable()->GetMaterial().SetOpacity(shadowOpacity * opacity);
             break;
         case Kind::BigBomb:
-            mBigBombRadiusSceneObject->GetRenderable()->GetMaterial().SetOpacity(opacity);
+            mBigBombBlastAreaSceneObject->GetRenderable()->GetMaterial().SetOpacity(opacity);
+            mBigBombBlastAreaShadowSceneObject->GetRenderable()->GetMaterial().SetOpacity(shadowOpacity * opacity);
             break;
     }
 }
@@ -344,10 +335,10 @@ void BlastArea::SetOpacity(float opacity) {
 void BlastArea::SetScale(float scale) {
     switch (mActiveKind) {
         case Kind::Bomb:
-            mBombRadiusSceneObject->GetTransform().SetScale(scale);
+            mBombBlastAreaContainer->GetTransform().SetScale(scale);
             break;
         case Kind::BigBomb:
-            mBigBombRadiusSceneObject->GetTransform().SetScale(scale);
+            mBigBombBlastAreaContainer->GetTransform().SetScale(scale);
             break;
     }
 }
@@ -363,5 +354,5 @@ bool BlastArea::IsActive() const {
 }
 
 Pht::RenderableObject& BlastArea::GetBombRadiusRenderable() const {
-    return *mBombRadiusSceneObject->GetRenderable();
+    return *mBombBlastAreaSceneObject->GetRenderable();
 }

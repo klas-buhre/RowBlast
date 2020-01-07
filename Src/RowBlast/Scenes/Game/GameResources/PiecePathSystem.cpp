@@ -155,13 +155,19 @@ void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece,
     };
 
     auto& pieceType = fallingPiece.GetPieceType();
+    if (!pieceType.IsRowBomb() && !pieceType.IsBomb()) {
+        MovingPieceSnapshot finalSnapshot {finalPosition, lastMovement.GetRotation(), pieceType};
+        PaintPieceSnapshot(finalSnapshot, SnapshotKind::Clear);
+    }
+/*
+    auto& pieceType = fallingPiece.GetPieceType();
     if (pieceType.IsBomb()) {
         ClearBlastArea(finalPosition - Pht::IVec2{1, 1});
     } else if (!pieceType.IsRowBomb()) {
         MovingPieceSnapshot finalSnapshot {finalPosition, lastMovement.GetRotation(), pieceType};
         PaintPieceSnapshot(finalSnapshot, SnapshotKind::Clear);
     }
-
+*/
     UpdateSceneObjects();
 }
 
