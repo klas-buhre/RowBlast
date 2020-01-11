@@ -131,7 +131,7 @@ GameLogic::GameLogic(Pht::IEngine& engine,
 
 void GameLogic::Init(const Level& level) {
     mLevel = &level;
-    mControlType = mTutorial.IsGestureControlsAllowed() ? mSettingsService.GetControlType() : ControlType::Click;
+    mControlType = mSettingsService.GetControlType();
     mIsSwipeGhostPieceEnabled = mSettingsService.IsGhostPieceEnabled();
 
     mFieldGravity.Init();
@@ -603,7 +603,7 @@ void GameLogic::HandleClearedFilledRows(const Field::RemovedSubCells& removedSub
 GameLogic::Result GameLogic::HandleSettingsChange() {
     auto settingsChanged = false;
     
-    if (mSettingsService.GetControlType() != mControlType && mTutorial.IsGestureControlsAllowed()) {
+    if (mSettingsService.GetControlType() != mControlType && mTutorial.IsControlTypeChangeAllowed()) {
         mCurrentMove.mPreviewPieceRotations = PieceRotations {};
         mCurrentMoveTmp.mPreviewPieceRotations = PieceRotations {};
         mPreviousMove.mPreviewPieceRotations = PieceRotations {};

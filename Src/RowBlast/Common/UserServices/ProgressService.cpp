@@ -35,6 +35,10 @@ void ProgressService::StartLevel(int levelId) {
 }
 
 void ProgressService::CompleteLevel(int levelId, int numStars) {
+    if (levelId == 0) {
+        levelId = 1;
+    }
+
     assert(levelId > 0);
     assert(numStars > 0 && numStars <= 3);
     

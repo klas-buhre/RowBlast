@@ -27,7 +27,7 @@
     ],
     "predeterminedMoves": [
         {
-            "position": [2, 9],
+            "position": [2, 10],
             "rotation": 0,
             "piece": "I"
         },
@@ -51,17 +51,18 @@
         "       ",
         "       ",
         "       ",
-        "GGG Ggg",
-        "GGG Gll",
-        "  G Gyy",
-        "  GGGrr",
+        "GGG GGG",
+        "GGG GGG",
+        "GGG GGG",
+        "  GGGGG",
+        "  GGGGG",
         "G GGGGG",
         "GG     ",
         "GG     ",
         "GG     ",
-        "GGG    ",
-        "GGGG GG",
-        "GGGG GG",
-        "GGGG GG"
+        "ggG    ",
+        "llGG GG",
+        "yyGG GG",
+        "rrGG GG"
     ]
 }

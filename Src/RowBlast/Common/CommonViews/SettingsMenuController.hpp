@@ -27,7 +27,7 @@ namespace RowBlast {
                                UserServices& userServices,
                                SettingsMenuView::SceneId sceneId);
         
-        void SetUp(bool isGestureControlsAllowed);
+        void SetUp(bool isControlTypeChangeAllowed);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
@@ -38,7 +38,7 @@ namespace RowBlast {
     private:
         Result HandleInput();
         Result OnTouch(const Pht::TouchEvent& touchEvent);
-        void UpdateViewToReflectSettings(bool isGestureControlsAllowed);
+        void UpdateViewToReflectSettings();
         
         Pht::IEngine& mEngine;
         UserServices& mUserServices;

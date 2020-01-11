@@ -61,7 +61,7 @@ namespace RowBlast {
         bool IsMoveAllowed(int numMovesUsedIncludingCurrent,
                            const Piece& pieceType,
                            const Move& move);
-        bool IsGestureControlsAllowed() const;
+        bool IsControlTypeChangeAllowed() const;
         bool IsUndoMoveAllowed(int numMovesUsedIncludingCurrent) const;
 
     private:
@@ -94,9 +94,11 @@ namespace RowBlast {
         void OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent);
         void SetActiveViewController(Controller controller);
         void SendAnayticsEvent(const std::string& id);
+        bool IsLevelPartOfTutorial() const;
         
         Pht::IEngine& mEngine;
         GameScene& mScene;
+        const UserServices& mUserServices;
         const Level* mLevel {nullptr};
         Controller mActiveViewController {Controller::None};
         Pht::FadeEffect mFadeEffect;

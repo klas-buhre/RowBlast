@@ -29,6 +29,7 @@ namespace RowBlast {
         
     private:
         enum class MapInitialState {
+            FirstMapLevel,
             Map,
             UfoAnimation,
             LevelGoalDialog,

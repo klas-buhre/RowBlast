@@ -1,0 +1,55 @@
+{
+    "speed": 0.0,
+    "moves": 30,
+    "starLimits": {
+        "one": 100,
+        "two": 800,
+        "three": 1600
+    },
+    "floatingBlocksSet": "Standard",
+    "musicTrack": 1,
+    "background": "sky3.jpg",
+    "lightIntensity": "Daylight",
+    "partOfTutorial": true,
+    "pieces": [
+        "B",
+        "MirroredSeven",
+        "L",
+        "LongI",
+        "D",
+        "Seven"
+    ],
+    "pieceSequence": [
+        "B",
+        "D",
+        "MirroredSeven",
+        "LongI",
+        "L",
+        "Seven"
+    ],
+    "clearGrid": [
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "       ",
+        "G    ll",
+        "G    yy",
+        "GG  Grr",
+        "G GGGGG",
+        "G GGGGG",
+        "Gl l GG",
+        "Gyyg GG",
+        "Grrg GG",
+        "GGGG GG",
+        "GGGG GG"
+    ]
+}

@@ -183,7 +183,11 @@ void RowBlastApplication::UpdateTitleScene() {
                 break;
             case TitleController::Command::GoToMap:
                 mFadeEffect.SetDuration(fadeDuration);
-                BeginFadingToMap(MapInitialState::Map);
+                if (mUserServices.GetProgressService().GetCurrentLevel() == 1) {
+                    BeginFadingToGame(0);
+                } else {
+                    BeginFadingToMap(MapInitialState::Map);
+                }
                 break;
         }
     }
@@ -226,27 +230,35 @@ void RowBlastApplication::UpdateGameScene() {
         switch (command) {
             case GameController::Command::None:
                 break;
-            case GameController::Command::GoToMap:
-                mLevelToStart = mUserServices.GetProgressService().GetCurrentLevel() + 1;
-                if (mUserServices.GetProgressService().ProgressedAtPreviousGameRound()) {
+            case GameController::Command::GoToMap: {
+                auto& progressService = mUserServices.GetProgressService();
+                mLevelToStart = progressService.GetCurrentLevel() + 1;
+                if (progressService.GetProgress() == 1 && progressService.GetCurrentLevel() == 0) {
+                    BeginFadingToMap(MapInitialState::FirstMapLevel);
+                } else if (progressService.ProgressedAtPreviousGameRound()) {
                     BeginFadingToMap(MapInitialState::UfoAnimation);
                     mMapController.SetStartLevelDialogOnAnimationFinished(false);
                 } else {
                     BeginFadingToMap(MapInitialState::Map);
                 }
                 break;
+            }
             case GameController::Command::RestartLevel:
                 BeginFadingToMap(MapInitialState::LevelGoalDialog);
                 break;
-            case GameController::Command::GoToNextLevel:
-                mLevelToStart = mUserServices.GetProgressService().GetCurrentLevel() + 1;
-                if (mUserServices.GetProgressService().ProgressedAtPreviousGameRound()) {
+            case GameController::Command::GoToNextLevel: {
+                auto& progressService = mUserServices.GetProgressService();
+                mLevelToStart = progressService.GetCurrentLevel() + 1;
+                if (progressService.GetProgress() == 1 && progressService.GetCurrentLevel() == 0) {
+                    BeginFadingToMap(MapInitialState::FirstMapLevel);
+                } else if (progressService.ProgressedAtPreviousGameRound()) {
                     BeginFadingToMap(MapInitialState::UfoAnimation);
                     mMapController.SetStartLevelDialogOnAnimationFinished(true);
                 } else {
                     BeginFadingToMap(MapInitialState::LevelGoalDialog);
                 }
                 break;
+            }
         }
     }
 }
@@ -353,6 +365,9 @@ void RowBlastApplication::StartMapScene() {
     scene->GetRoot().AddChild(mPortalFadeEffect.GetSceneObject());
     
     switch (mMapInitialState) {
+        case MapInitialState::FirstMapLevel:
+            mMapController.GetScene().SetCameraAtLevel(1);
+            break;
         case MapInitialState::Map:
             break;
         case MapInitialState::LevelGoalDialog:

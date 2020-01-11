@@ -11,6 +11,7 @@
 #include "GameScene.hpp"
 #include "Level.hpp"
 #include "MoveDefinitions.hpp"
+#include "UserServices.hpp"
 
 using namespace RowBlast;
 
@@ -52,6 +53,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
                    const UserServices& userServices) :
     mEngine {engine},
     mScene {scene},
+    mUserServices {userServices},
     mFadeEffect {
         engine.GetSceneManager(),
         engine.GetRenderer(),
@@ -253,7 +255,7 @@ Tutorial::Tutorial(Pht::IEngine& engine,
 
 void Tutorial::Init(const Level& level) {
     mLevel = &level;
-    if (!level.IsPartOfTutorial()) {
+    if (!IsLevelPartOfTutorial()) {
         return;
     }
 
@@ -279,7 +281,7 @@ void Tutorial::SetActiveViewController(Controller controller) {
 }
 
 void Tutorial::Update() {
-    if (!mLevel->IsPartOfTutorial()) {
+    if (!IsLevelPartOfTutorial()) {
         return;
     }
     
@@ -438,7 +440,7 @@ Tutorial::Result Tutorial::UpdateDialogs() {
 }
 
 Tutorial::Result Tutorial::OnLevelStart() {
-    if (!mLevel->IsPartOfTutorial()) {
+    if (!IsLevelPartOfTutorial()) {
         return Result::Play;
     }
 
@@ -477,7 +479,7 @@ Tutorial::Result Tutorial::OnLevelStart() {
 }
 
 void Tutorial::OnPause() {
-    if (!mLevel->IsPartOfTutorial()) {
+    if (!IsLevelPartOfTutorial()) {
         return;
     }
 
@@ -486,7 +488,7 @@ void Tutorial::OnPause() {
 }
 
 void Tutorial::OnResumePlaying() {
-    if (!mLevel->IsPartOfTutorial()) {
+    if (!IsLevelPartOfTutorial()) {
         return;
     }
 
@@ -495,7 +497,7 @@ void Tutorial::OnResumePlaying() {
 }
 
 void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
-    if (!mLevel->IsPartOfTutorial()) {
+    if (!IsLevelPartOfTutorial()) {
         return;
     }
     
@@ -566,7 +568,7 @@ void Tutorial::OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent) {
 }
 
 void Tutorial::OnSelectMove(int numMovesUsedIncludingCurrent) {
-    if (!mLevel->IsPartOfTutorial()) {
+    if (!IsLevelPartOfTutorial()) {
         return;
     }
     
@@ -587,7 +589,7 @@ void Tutorial::OnSelectMove(int numMovesUsedIncludingCurrent) {
 }
 
 void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType) {
-    if (!mLevel->IsPartOfTutorial()) {
+    if (!IsLevelPartOfTutorial()) {
         return;
     }
     
@@ -664,7 +666,7 @@ void Tutorial::OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& piec
 
 void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
                                     const ClickInputHandler::VisibleMoves& visibleMoves) {
-    if (!mLevel->IsPartOfTutorial()) {
+    if (!IsLevelPartOfTutorial()) {
         return;
     }
 
@@ -715,7 +717,7 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
 }
 
 bool Tutorial::IsSwitchPieceAllowed() const {
-    if (!mLevel->IsPartOfTutorial()) {
+    if (!IsLevelPartOfTutorial()) {
         return true;
     }
     
@@ -727,7 +729,7 @@ bool Tutorial::IsSwitchPieceAllowed() const {
 }
 
 bool Tutorial::IsSeeMoreMovesAllowed(int numMovesUsedIncludingCurrent) const {
-    if (!mLevel->IsPartOfTutorial()) {
+    if (!IsLevelPartOfTutorial()) {
         return true;
     }
     
@@ -743,7 +745,7 @@ bool Tutorial::IsSeeMoreMovesAllowed(int numMovesUsedIncludingCurrent) const {
 bool Tutorial::IsMoveAllowed(int numMovesUsedIncludingCurrent,
                              const Piece& pieceType,
                              const Move& move) {
-    if (!mLevel->IsPartOfTutorial()) {
+    if (!IsLevelPartOfTutorial()) {
         return true;
     }
 
@@ -819,8 +821,9 @@ bool Tutorial::IsMoveAllowed(int numMovesUsedIncludingCurrent,
     return true;
 }
 
-bool Tutorial::IsGestureControlsAllowed() const {
+bool Tutorial::IsControlTypeChangeAllowed() const {
     switch (mLevel->GetId()) {
+        case 0:
         case 1:
         case 2:
             return false;
@@ -849,4 +852,16 @@ void Tutorial::SendAnayticsEvent(const std::string& id) {
     };
     
     mEngine.GetAnalytics().AddEvent(analyticsEvent);
+}
+
+bool Tutorial::IsLevelPartOfTutorial() const {
+    switch (mLevel->GetId()) {
+        case 0:
+        case 1:
+            return true;
+        case 2:
+            return mUserServices.GetSettingsService().GetControlType() == ControlType::Click;
+        default:
+            return mLevel->IsPartOfTutorial();
+    }
 }

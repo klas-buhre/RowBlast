@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1700B4C023943434006566EF /* FinalScoreAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1700B4BE23943434006566EF /* FinalScoreAnimation.cpp */; };
+		1704AF0523C4E4550054BD61 /* level1.json in Resources */ = {isa = PBXBuildFile; fileRef = 1704AF0423C4E4550054BD61 /* level1.json */; };
+		1704AF0723C4E4760054BD61 /* level0.json in Resources */ = {isa = PBXBuildFile; fileRef = 1704AF0623C4E4760054BD61 /* level0.json */; };
 		1711872E22EB9EB2009CC07F /* TutorialWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872C22EB9EB2009CC07F /* TutorialWindowView.cpp */; };
 		1711873122EB9EC9009CC07F /* TutorialWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872F22EB9EC9009CC07F /* TutorialWindowController.cpp */; };
 		17148A8423A3F92C0093B0B6 /* FlyingBlocksSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17148A8323A3F92C0093B0B6 /* FlyingBlocksSystem.cpp */; };
@@ -353,7 +355,6 @@
 		62276E9D2274A96000679BC6 /* level7.json in Resources */ = {isa = PBXBuildFile; fileRef = 62276E542274A96000679BC6 /* level7.json */; };
 		62276E9E2274A96000679BC6 /* level15.json in Resources */ = {isa = PBXBuildFile; fileRef = 62276E552274A96000679BC6 /* level15.json */; };
 		62276E9F2274A96000679BC6 /* level12.json in Resources */ = {isa = PBXBuildFile; fileRef = 62276E562274A96000679BC6 /* level12.json */; };
-		62276EA02274A96000679BC6 /* level1.json in Resources */ = {isa = PBXBuildFile; fileRef = 62276E572274A96000679BC6 /* level1.json */; };
 		62276EA12274A96000679BC6 /* level13.json in Resources */ = {isa = PBXBuildFile; fileRef = 62276E582274A96000679BC6 /* level13.json */; };
 		62277D862288688B00F42C6A /* down_arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 62277D852288688A00F42C6A /* down_arrow.png */; };
 		6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */ = {isa = PBXBuildFile; fileRef = 6227D4F4206CFD25008EA77D /* bomb_798.obj */; };
@@ -562,6 +563,8 @@
 /* Begin PBXFileReference section */
 		1700B4BE23943434006566EF /* FinalScoreAnimation.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = FinalScoreAnimation.cpp; sourceTree = "<group>"; };
 		1700B4BF23943434006566EF /* FinalScoreAnimation.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FinalScoreAnimation.hpp; sourceTree = "<group>"; };
+		1704AF0423C4E4550054BD61 /* level1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level1.json; sourceTree = "<group>"; };
+		1704AF0623C4E4760054BD61 /* level0.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level0.json; sourceTree = "<group>"; };
 		1711872C22EB9EB2009CC07F /* TutorialWindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialWindowView.cpp; sourceTree = "<group>"; };
 		1711872D22EB9EB2009CC07F /* TutorialWindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialWindowView.hpp; sourceTree = "<group>"; };
 		1711872F22EB9EC9009CC07F /* TutorialWindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = TutorialWindowController.cpp; sourceTree = "<group>"; };
@@ -1119,7 +1122,6 @@
 		62276E542274A96000679BC6 /* level7.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level7.json; sourceTree = "<group>"; };
 		62276E552274A96000679BC6 /* level15.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level15.json; sourceTree = "<group>"; };
 		62276E562274A96000679BC6 /* level12.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level12.json; sourceTree = "<group>"; };
-		62276E572274A96000679BC6 /* level1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level1.json; sourceTree = "<group>"; };
 		62276E582274A96000679BC6 /* level13.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level13.json; sourceTree = "<group>"; };
 		62277D852288688A00F42C6A /* down_arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down_arrow.png; sourceTree = "<group>"; };
 		6227D4F4206CFD25008EA77D /* bomb_798.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = bomb_798.obj; sourceTree = "<group>"; };
@@ -2382,7 +2384,8 @@
 		62276E462274A96000679BC6 /* World1 */ = {
 			isa = PBXGroup;
 			children = (
-				62276E572274A96000679BC6 /* level1.json */,
+				1704AF0623C4E4760054BD61 /* level0.json */,
+				1704AF0423C4E4550054BD61 /* level1.json */,
 				62276E472274A96000679BC6 /* level2.json */,
 				62276E4A2274A96000679BC6 /* level3.json */,
 				62276E4C2274A96000679BC6 /* level4.json */,
@@ -3358,6 +3361,7 @@
 				623F5E2222B55D5200242C10 /* Textured.frag in Resources */,
 				62B1CB84210F8F8600D0F195 /* cloud_C_envmap.jpg in Resources */,
 				626940992157F31500D9857A /* ogma_rings.png in Resources */,
+				1704AF0523C4E4550054BD61 /* level1.json in Resources */,
 				6238F620219A097A0008A0CF /* coin_852.obj in Resources */,
 				623F5E2322B55D5200242C10 /* TextMidGradient.frag in Resources */,
 				62276E762274A96000679BC6 /* level25.json in Resources */,
@@ -3366,7 +3370,6 @@
 				6269408F2154F94300D9857A /* planet_ring.obj in Resources */,
 				6234618C21691DAF00ECD0DF /* asteroid_998.obj in Resources */,
 				62276E682274A96000679BC6 /* level48.json in Resources */,
-				62276EA02274A96000679BC6 /* level1.json in Resources */,
 				6240E2E022BD326300CCA37A /* TexturedLightingVertexColor.vert in Resources */,
 				62B1CB89210F8F8600D0F195 /* laser_bomb_diffuse.jpg in Resources */,
 				62216A0F21E756E4001CB9A1 /* explosion.wav in Resources */,
@@ -3564,6 +3567,7 @@
 				623F5E3522B55D5200242C10 /* PixelLighting.frag in Resources */,
 				623F5E2522B55D5200242C10 /* VertexLighting.vert in Resources */,
 				623F5E2C22B55D5200242C10 /* TexturedEnvMapLighting.vert in Resources */,
+				1704AF0723C4E4760054BD61 /* level0.json in Resources */,
 				62276E752274A96000679BC6 /* level24.json in Resources */,
 				626940C1216115E300D9857A /* sky1.jpg in Resources */,
 				62B1CB61210F8EE500D0F195 /* cloud_F_512.png in Resources */,

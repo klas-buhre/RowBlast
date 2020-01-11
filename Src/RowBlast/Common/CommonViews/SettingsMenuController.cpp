@@ -20,8 +20,8 @@ SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
     mSlidingMenuAnimation {engine, mView},
     mSceneId {sceneId} {}
 
-void SettingsMenuController::SetUp(bool isGestureControlsAllowed) {
-    if (isGestureControlsAllowed) {
+void SettingsMenuController::SetUp(bool isControlTypeChangeAllowed) {
+    if (isControlTypeChangeAllowed) {
         mView.EnableControlsButton();
     } else {
         mView.DisableControlsButton();
@@ -29,7 +29,7 @@ void SettingsMenuController::SetUp(bool isGestureControlsAllowed) {
 
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::SlideDirection::Left);
-    UpdateViewToReflectSettings(isGestureControlsAllowed);
+    UpdateViewToReflectSettings();
 }
 
 void SettingsMenuController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
@@ -81,7 +81,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
                     break;
             }
             
-            UpdateViewToReflectSettings(true);
+            UpdateViewToReflectSettings();
         }
     }
 
@@ -92,7 +92,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
             settingsService.SetIsGhostPieceEnabled(true);
         }
         
-        UpdateViewToReflectSettings(true);
+        UpdateViewToReflectSettings();
     }
 
     if (mView.GetRotateAllButton().IsClicked(touchEvent)) {
@@ -102,7 +102,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
             settingsService.SetIsRotateAllPiecesEnabled(true);
         }
         
-        UpdateViewToReflectSettings(true);
+        UpdateViewToReflectSettings();
     }
 
     if (mView.GetSoundButton().IsClicked(touchEvent)) {
@@ -115,7 +115,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
             settingsService.SetIsSoundEnabled(true);
         }
         
-        UpdateViewToReflectSettings(true);
+        UpdateViewToReflectSettings();
     }
 
     if (mView.GetMusicButton().IsClicked(touchEvent)) {
@@ -128,7 +128,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
             settingsService.SetIsMusicEnabled(true);
         }
         
-        UpdateViewToReflectSettings(true);
+        UpdateViewToReflectSettings();
     }
 
     if (mView.GetBackButton().IsClicked(touchEvent) ||
@@ -145,7 +145,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
     return Result::None;
 }
 
-void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsAllowed) {
+void SettingsMenuController::UpdateViewToReflectSettings() {
     auto& settingsService = mUserServices.GetSettingsService();
     switch (settingsService.GetControlType()) {
         case ControlType::Drag:
@@ -160,10 +160,6 @@ void SettingsMenuController::UpdateViewToReflectSettings(bool isGestureControlsA
         default:
             mView.EnableDragControls();
             break;
-    }
-
-    if (!isGestureControlsAllowed) {
-        mView.EnableClickControls();
     }
 
     mView.SetGhostPieceIsEnabled(settingsService.IsGhostPieceEnabled());
