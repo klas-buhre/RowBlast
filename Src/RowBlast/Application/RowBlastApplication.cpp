@@ -183,8 +183,8 @@ void RowBlastApplication::UpdateTitleScene() {
                 break;
             case TitleController::Command::GoToMap:
                 mFadeEffect.SetDuration(fadeDuration);
-                if (mUserServices.GetProgressService().GetCurrentLevel() == 1) {
-                    BeginFadingToGame(0);
+                if (mUserServices.GetProgressService().HasNotCompletedFirstTutorialLevel()) {
+                    BeginFadingToGame(1);
                 } else {
                     BeginFadingToMap(MapInitialState::Map);
                 }
@@ -233,7 +233,8 @@ void RowBlastApplication::UpdateGameScene() {
             case GameController::Command::GoToMap: {
                 auto& progressService = mUserServices.GetProgressService();
                 mLevelToStart = progressService.GetCurrentLevel() + 1;
-                if (progressService.GetProgress() == 1 && progressService.GetCurrentLevel() == 0) {
+                if (progressService.GetCurrentLevel() == 0 &&
+                    !progressService.ProgressedAtPreviousGameRound()) {
                     BeginFadingToMap(MapInitialState::FirstMapLevel);
                 } else if (progressService.ProgressedAtPreviousGameRound()) {
                     BeginFadingToMap(MapInitialState::UfoAnimation);
@@ -249,8 +250,10 @@ void RowBlastApplication::UpdateGameScene() {
             case GameController::Command::GoToNextLevel: {
                 auto& progressService = mUserServices.GetProgressService();
                 mLevelToStart = progressService.GetCurrentLevel() + 1;
-                if (progressService.GetProgress() == 1 && progressService.GetCurrentLevel() == 0) {
-                    BeginFadingToMap(MapInitialState::FirstMapLevel);
+                if (progressService.GetProgress() == 2 && progressService.GetCurrentLevel() == 0) {
+                    mLevelToStart = 2;
+                    BeginFadingToMap(MapInitialState::UfoAnimation);
+                    mMapController.SetStartLevelDialogOnAnimationFinished(true);
                 } else if (progressService.ProgressedAtPreviousGameRound()) {
                     BeginFadingToMap(MapInitialState::UfoAnimation);
                     mMapController.SetStartLevelDialogOnAnimationFinished(true);
@@ -328,7 +331,12 @@ void RowBlastApplication::BeginFadingToMap(MapInitialState mapInitialState) {
 }
 
 void RowBlastApplication::BeginFadingToGame(int level) {
-    mLevelToStart = level;
+    if (level == 1 && mUserServices.GetSettingsService().GetControlType() != ControlType::Click) {
+        mLevelToStart = 0;
+    } else {
+        mLevelToStart = level;
+    }
+
     mFadeEffect.Start();
     mNextState = State::GameScene;
     mEngine.GetAudio().FadeOutActiveTrack(musicFadeOutDuration);

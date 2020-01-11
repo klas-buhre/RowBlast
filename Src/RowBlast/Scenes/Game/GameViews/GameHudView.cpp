@@ -33,7 +33,7 @@ GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonReso
     Pht::Vec2 position {0.0f, CalculateLowerHudObjectYPosition(commonResources)};
     SetPosition(position);
 
-    auto& pauseButtonSceneObject = CreateSceneObject();
+    mPauseButtonSceneObject = &CreateSceneObject();
     auto bottomPadding = commonResources.GetBottomPaddingPotentiallyZoomedScreen();
     auto& frustumSize = commonResources.GetHudFrustumSizePotentiallyZoomedScreen();
     
@@ -41,25 +41,25 @@ GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonReso
         bottomPadding == 0.0f ? -frustumSize.x / 2.0f + 0.8f : -6.6f, -0.2f, UiLayer::root
     };
 
-    pauseButtonSceneObject.GetTransform().SetPosition(pauseButtonPosition);
-    GetRoot().AddChild(pauseButtonSceneObject);
+    mPauseButtonSceneObject->GetTransform().SetPosition(pauseButtonPosition);
+    GetRoot().AddChild(*mPauseButtonSceneObject);
 
     auto& guiResources = commonResources.GetGuiResources();
     
     auto& normalPauseButtonSceneObject = CreateSceneObject();
     normalPauseButtonSceneObject.SetRenderable(&guiResources.GetBluePauseButtonPotentiallyZoomedScreen());
     normalPauseButtonSceneObject.GetTransform().SetPosition({0.1f, 0.0f, 0.0f});
-    pauseButtonSceneObject.AddChild(normalPauseButtonSceneObject);
+    mPauseButtonSceneObject->AddChild(normalPauseButtonSceneObject);
 
     auto& pressedPauseButtonSceneObject = CreateSceneObject();
     pressedPauseButtonSceneObject.SetIsVisible(false);
     pressedPauseButtonSceneObject.SetRenderable(&guiResources.GetDarkBluePauseButtonPotentiallyZoomedScreen());
     pressedPauseButtonSceneObject.GetTransform().SetPosition({0.1f, 0.0f, 0.0f});
     pressedPauseButtonSceneObject.GetTransform().SetScale(1.1f);
-    pauseButtonSceneObject.AddChild(pressedPauseButtonSceneObject);
+    mPauseButtonSceneObject->AddChild(pressedPauseButtonSceneObject);
 
     Pht::Vec2 pauseButtonSize {55.0f, 55.0f};
-    mPauseButton = std::make_unique<Pht::Button>(pauseButtonSceneObject, pauseButtonSize, engine);
+    mPauseButton = std::make_unique<Pht::Button>(*mPauseButtonSceneObject, pauseButtonSize, engine);
     
     auto pausePressedFunction = [&] () {
         normalPauseButtonSceneObject.SetIsVisible(false);
@@ -85,4 +85,8 @@ GameHudView::GameHudView(Pht::IEngine& engine, const CommonResources& commonReso
                                                   engine);
     switchButtonSceneObject.SetIsVisible(false);
     switchButtonSceneObject.GetTransform().SetPosition({0.0, 0.0f, UiLayer::root});
+}
+
+void GameHudView::SetIsPauseButtonVisible(bool isVisible) {
+    mPauseButtonSceneObject->SetIsVisible(isVisible);
 }

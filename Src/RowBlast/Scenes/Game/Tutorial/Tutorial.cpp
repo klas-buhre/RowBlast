@@ -846,6 +846,15 @@ bool Tutorial::IsUndoMoveAllowed(int numMovesUsedIncludingCurrent) const {
     }
 }
 
+bool Tutorial::IsPauseAllowed() const {
+    switch (mLevel->GetId()) {
+        case 0:
+            return false;
+        default:
+            return true;
+    }
+}
+
 void Tutorial::SendAnayticsEvent(const std::string& id) {
     Pht::CustomAnalyticsEvent analyticsEvent {
         "Tutorial:Level" + std::to_string(mLevel->GetId()) + ":" + id

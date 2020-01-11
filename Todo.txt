@@ -49,10 +49,10 @@ Ongoing tasks:
 
   Temporary plan:
     -Update the tutorial with drag controls.
-        -Run level 0 instead of level 1 when click controls is not active. If the user is
-         whithout progress then level 0 should start right after title scene.
-         Level 0 is the tutorial for drag controls and has simple pieces (L, I, ShortI, LongI).
+        -Level 0 is the tutorial for drag controls and has simple pieces (L, I, ShortI, LongI).
          First introduce drag and drop, then rotate, then fill rows. Next level is level 2.
+        -Disable tutorial windows with animations when using drag and drop.
+        -Can remove the swipe controls hint dialog.
     -Release.
     -Apply to Apple for marketing.
     

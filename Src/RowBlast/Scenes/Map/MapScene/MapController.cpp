@@ -734,10 +734,8 @@ void MapController::GoToOptionsMenuState() {
 }
 
 void MapController::GoToSettingsMenuState() {
-    auto isGestureControlsAllowed = mUserServices.GetProgressService().GetProgress() > 2;
-    
     mMapViewControllers.SetActiveController(MapViewControllers::SettingsMenu);
-    mMapViewControllers.GetSettingsMenuController().SetUp(isGestureControlsAllowed);
+    mMapViewControllers.GetSettingsMenuController().SetUp(true);
     mState = State::SettingsMenu;
 }
 

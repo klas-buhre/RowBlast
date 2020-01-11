@@ -18,6 +18,8 @@ namespace RowBlast {
     public:
         GameHudView(Pht::IEngine& engine, const CommonResources& commonResources);
         
+        void SetIsPauseButtonVisible(bool isVisible);
+        
         Pht::Button& GetPauseButton() const {
             return *mPauseButton;
         }
@@ -29,6 +31,7 @@ namespace RowBlast {
     private:
         std::unique_ptr<Pht::Button> mPauseButton;
         std::unique_ptr<Pht::Button> mSwitchButton;
+        Pht::SceneObject* mPauseButtonSceneObject {nullptr};
     };
 }
 

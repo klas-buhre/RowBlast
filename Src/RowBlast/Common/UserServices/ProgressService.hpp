@@ -13,6 +13,7 @@ namespace RowBlast {
         void CompleteLevel(int levelId, int numStars);
         int GetNumStars(int levelId) const;
         int GetProgress() const;
+        bool HasNotCompletedFirstTutorialLevel() const;
         
         int GetCurrentLevel() const {
             return mCurrentLevel;
@@ -26,7 +27,7 @@ namespace RowBlast {
         void SaveState();
         bool LoadState();
 
-        int mCurrentLevel {1};
+        int mCurrentLevel {0};
         std::vector<int> mNumStars;
         bool mProgressedAtPreviousGameRound {false};
     };

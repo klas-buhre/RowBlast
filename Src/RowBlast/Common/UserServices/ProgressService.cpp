@@ -71,6 +71,9 @@ int ProgressService::GetNumStars(int levelId) const {
 int ProgressService::GetProgress() const {
     return static_cast<int>(mNumStars.size());
 }
+bool ProgressService::HasNotCompletedFirstTutorialLevel() const {
+    return mCurrentLevel == 0 && GetProgress() == 1;
+}
 
 void ProgressService::SaveState() {
     rapidjson::Document document;

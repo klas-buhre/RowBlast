@@ -17,10 +17,15 @@ GameHudController::GameHudController(Pht::IEngine& engine, const CommonResources
     mView {engine, commonResources},
     mEngine {engine} {}
 
+void GameHudController::Init(bool isPauseAllowed) {
+    mIsPauseAllowed = isPauseAllowed;
+    mView.SetIsPauseButtonVisible(isPauseAllowed);
+}
+
 GameHudController::Result GameHudController::OnTouch(const Pht::TouchEvent& event,
                                                      bool isSwitchButtonEnabled) {
     auto& pauseButton = mView.GetPauseButton();
-    if (pauseButton.IsClicked(event)) {
+    if (mIsPauseAllowed && pauseButton.IsClicked(event)) {
         mEngine.GetAudio().PlaySound(static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
         return Result::ClickedPause;
     }

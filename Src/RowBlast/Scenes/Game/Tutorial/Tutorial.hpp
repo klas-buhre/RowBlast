@@ -63,6 +63,7 @@ namespace RowBlast {
                            const Move& move);
         bool IsControlTypeChangeAllowed() const;
         bool IsUndoMoveAllowed(int numMovesUsedIncludingCurrent) const;
+        bool IsPauseAllowed() const;
 
     private:
         enum class Controller {

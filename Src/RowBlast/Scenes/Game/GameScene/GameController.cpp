@@ -179,6 +179,7 @@ void GameController::Init(int levelId) {
     mAsteroidAnimation.Init();
     mFallingPieceScaleAnimation.Init();
     mGameViewControllers.Init(mScene, mStoreController.GetFadeEffect());
+    mGameViewControllers.GetGameHudController().Init(mTutorial.IsPauseAllowed());
     mLevelCompletedController.Init(*mLevel);
     
     mState = GameState::LevelIntro;

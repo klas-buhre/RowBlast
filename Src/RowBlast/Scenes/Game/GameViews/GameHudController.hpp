@@ -24,6 +24,7 @@ namespace RowBlast {
         
         GameHudController(Pht::IEngine& engine, const CommonResources& commonResources);
         
+        void Init(bool isPauseAllowed);
         Result OnTouch(const Pht::TouchEvent& event, bool isSwitchButtonEnabled);
         
         void SetHudEventListener(IGameHudEventListener& gameHudEventListener) {
@@ -40,6 +41,7 @@ namespace RowBlast {
         GameHudView mView;
         Pht::IEngine& mEngine;
         IGameHudEventListener* mGameHudEventListener {nullptr};
+        bool mIsPauseAllowed {true};
     };
 }
 
