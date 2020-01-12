@@ -250,10 +250,14 @@ void RowBlastApplication::UpdateGameScene() {
             case GameController::Command::GoToNextLevel: {
                 auto& progressService = mUserServices.GetProgressService();
                 mLevelToStart = progressService.GetCurrentLevel() + 1;
-                if (progressService.GetProgress() == 2 && progressService.GetCurrentLevel() == 0) {
+                if (progressService.GetCurrentLevel() == 0) {
                     mLevelToStart = 2;
-                    BeginFadingToMap(MapInitialState::UfoAnimation);
-                    mMapController.SetStartLevelDialogOnAnimationFinished(true);
+                    if (progressService.ProgressedAtPreviousGameRound()) {
+                        BeginFadingToMap(MapInitialState::UfoAnimation);
+                        mMapController.SetStartLevelDialogOnAnimationFinished(true);
+                    } else {
+                        BeginFadingToMap(MapInitialState::LevelGoalDialog);
+                    }
                 } else if (progressService.ProgressedAtPreviousGameRound()) {
                     BeginFadingToMap(MapInitialState::UfoAnimation);
                     mMapController.SetStartLevelDialogOnAnimationFinished(true);
