@@ -51,11 +51,14 @@ namespace RowBlast {
         Result OnLevelStart();
         void OnPause();
         void OnResumePlaying();
+        void OnBeginDragPiece();
+        void OnDragPieceEnd(int numMovesUsedIncludingCurrent);
         void OnNewMove(int numMovesUsedIncludingCurrent);
         void OnSelectMove(int numMovesUsedIncludingCurrent);
         void OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType);
         void OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
                                   const ClickInputHandler::VisibleMoves& visibleMoves);
+        bool IsRotatePreviewPieceAllowed(int numMovesUsedIncludingCurrent) const;
         bool IsSwitchPieceAllowed() const;
         bool IsSeeMoreMovesAllowed(int numMovesUsedIncludingCurrent) const;
         bool IsMoveAllowed(int numMovesUsedIncludingCurrent,
@@ -91,11 +94,23 @@ namespace RowBlast {
             None
         };
 
+        void OnNewMoveDragAndDropTutorial(int numMovesUsedIncludingCurrent);
         void OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent);
         void OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent);
         void SetActiveViewController(Controller controller);
         void SendAnayticsEvent(const std::string& id);
         bool IsLevelPartOfTutorial() const;
+        void InitDragAndDropTutorial();
+        void StartDragAndDropAnimation(int numMovesUsedIncludingCurrent);
+        
+        struct DragAndDropAnimation {
+            DragAndDropAnimation(Pht::IEngine& engine, float scale, bool useShadow) :
+                mHandAnimation {engine, scale, useShadow} {}
+            
+            HandAnimation mHandAnimation;
+            Pht::Animation* mAnimation {nullptr};
+            Pht::SceneObject* mContainer {nullptr};
+        };
         
         Pht::IEngine& mEngine;
         GameScene& mScene;
@@ -126,6 +141,7 @@ namespace RowBlast {
         BombDialogController mBombDialogController;
         LevelBombDialogController mLevelBombDialogController;
         AsteroidDialogController mAsteroidDialogController;
+        std::vector<std::unique_ptr<DragAndDropAnimation>> mDragAndDropAnimations;
     };
 }
 

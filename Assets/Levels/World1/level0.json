@@ -13,15 +13,31 @@
     "partOfTutorial": true,
     "pieces": [
         "ShortI",
-        "I",
-        "L",
-        "LongI"
+        "LongI",
+        "I"
     ],
     "pieceSequence": [
         "ShortI",
         "I",
-        "L",
-        "LongI"
+        "LongI",
+        "I"
+    ],
+    "predeterminedMoves": [
+        {
+            "position": [0, 6],
+            "rotation": 0,
+            "piece": "ShortI"
+        },
+        {
+            "position": [3, 6],
+            "rotation": 0,
+            "piece": "I"
+        },
+        {
+            "position": [0, 4],
+            "rotation": 90,
+            "piece": "I"
+        }
     ],
     "clearGrid": [
         "       ",
@@ -37,12 +53,12 @@
         "       ",
         "       ",
         "       ",
-        "G  GGyy",
-        "G  GGrr",
-        "GG GGGG",
-        "  GGGGG",
-        "Gl   GG",
-        "Gy g GG",
+        "GG G yy",
+        "GG G rr",
+        "GGGG GG",
+        "   GGGG",
+        "GllG GG",
+        "Gyyg GG",
         "Grrg GG",
         "GGGG GG",
         "GGGG GG"

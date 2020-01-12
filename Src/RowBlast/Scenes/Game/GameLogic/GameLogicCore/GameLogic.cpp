@@ -1104,6 +1104,10 @@ void GameLogic::RemoveBlocksInsideTheShield() {
 }
 
 void GameLogic::RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) {
+    if (!mTutorial.IsRotatePreviewPieceAllowed(GetMovesUsedIncludingCurrent())) {
+        return;
+    }
+
     switch (previewPieceIndex) {
         case PreviewPieceIndex::Active:
             RotatePreviewPiece(mCurrentMove.mPreviewPieceRotations.mRotations.mActive,
@@ -1441,6 +1445,7 @@ bool GameLogic::HandleBeginDraggingPiece(PreviewPieceIndex draggedPieceIndex) {
     
     mDraggedPieceAnimation.StartGoUpAnimation();
     UpdateDraggedGhostPieceRowAndBlastArea();
+    mTutorial.OnBeginDragPiece();
     return true;
 }
 
@@ -1466,8 +1471,11 @@ void GameLogic::HandleDraggedPieceMoved() {
 
 void GameLogic::HandleDragPieceTouchEnd() {
     auto ghostPieceRow = 0;
-    if (auto* move = GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
-        SelectMove(*move);
+    auto* validMove = GetValidMoveBelowDraggedPiece(ghostPieceRow);
+    if (validMove && mTutorial.IsMoveAllowed(GetMovesUsedIncludingCurrent(),
+                                             mDraggedPiece.GetPieceType(),
+                                             *validMove)) {
+        SelectMove(*validMove);
         RemoveDraggedPiece();
     } else {
         mDraggedPieceAnimation.StartGoBackAnimation(mDraggedPieceIndex);
@@ -1489,6 +1497,7 @@ void GameLogic::EndPieceDrag() {
     HidePiecePath();
     mDraggedPieceIndex = PreviewPieceIndex::None;
     RemoveDraggedPiece();
+    mTutorial.OnDragPieceEnd(GetMovesUsedIncludingCurrent());
 }
 
 void GameLogic::CancelDraggingBecausePieceLands() {
@@ -1503,7 +1512,10 @@ void GameLogic::OnDraggedPieceGoingBackAnimationFinished() {
 
 void GameLogic::UpdateDraggedGhostPieceRowAndBlastArea() {
     auto ghostPieceRow = 0;
-    if (auto* move = GetValidMoveBelowDraggedPiece(ghostPieceRow)) {
+    auto* move = GetValidMoveBelowDraggedPiece(ghostPieceRow);
+    if (move && mTutorial.IsMoveAllowed(GetMovesUsedIncludingCurrent(),
+                                        mDraggedPiece.GetPieceType(),
+                                        *move)) {
         mDraggedGhostPieceRow = ghostPieceRow;
         
         auto lowestVisibleRow = static_cast<int>(mScrollController.GetLowestVisibleRow());

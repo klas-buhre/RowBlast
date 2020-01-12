@@ -5,7 +5,9 @@
 // Engine includes.
 #include "IEngine.hpp"
 #include "IAnalytics.hpp"
+#include "IAnimationSystem.hpp"
 #include "AnalyticsEvent.hpp"
+#include "Scene.hpp"
 
 // Game includes.
 #include "GameScene.hpp"
@@ -255,6 +257,8 @@ Tutorial::Tutorial(Pht::IEngine& engine,
 
 void Tutorial::Init(const Level& level) {
     mLevel = &level;
+    mDragAndDropAnimations.clear();
+    
     if (!IsLevelPartOfTutorial()) {
         return;
     }
@@ -269,6 +273,10 @@ void Tutorial::Init(const Level& level) {
 
     mViewManager.Init(uiViewContainer);
     SetActiveViewController(Controller::None);
+    
+    if (level.GetId() == 0) {
+        InitDragAndDropTutorial();
+    }
 }
 
 void Tutorial::SetActiveViewController(Controller controller) {
@@ -286,6 +294,13 @@ void Tutorial::Update() {
     }
     
     mHandAnimation.Update();
+    
+    if (mLevel->GetId() == 0) {
+        for (auto& dragAndDropAnimation: mDragAndDropAnimations) {
+            dragAndDropAnimation->mAnimation->Update(mEngine.GetLastFrameSeconds());
+            dragAndDropAnimation->mHandAnimation.Update();
+        }
+    }
 
     switch (mActiveViewController) {
         case Controller::PlacePieceWindow:
@@ -496,12 +511,26 @@ void Tutorial::OnResumePlaying() {
     mPlayOnYourOwnWindowController.OnResumePlaying();
 }
 
+void Tutorial::OnBeginDragPiece() {
+    for (auto& dragAndDropAnimation: mDragAndDropAnimations) {
+        dragAndDropAnimation->mAnimation->Stop();
+        dragAndDropAnimation->mContainer->SetIsVisible(false);
+    }
+}
+
+void Tutorial::OnDragPieceEnd(int numMovesUsedIncludingCurrent) {
+    OnNewMoveDragAndDropTutorial(numMovesUsedIncludingCurrent);
+}
+
 void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
     if (!IsLevelPartOfTutorial()) {
         return;
     }
     
     switch (mLevel->GetId()) {
+        case 0:
+            OnNewMoveDragAndDropTutorial(numMovesUsedIncludingCurrent);
+            break;
         case 1:
             OnNewMoveFirstLevel(numMovesUsedIncludingCurrent);
             break;
@@ -509,6 +538,23 @@ void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
             OnNewMoveSecondLevel(numMovesUsedIncludingCurrent);
             break;
         default:
+            break;
+    }
+}
+
+void Tutorial::OnNewMoveDragAndDropTutorial(int numMovesUsedIncludingCurrent) {
+    switch (numMovesUsedIncludingCurrent) {
+        case 1:
+            StartDragAndDropAnimation(numMovesUsedIncludingCurrent);
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        default:
+            assert(!"Unsupported number of used moves");
             break;
     }
 }
@@ -716,6 +762,18 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
     }
 }
 
+bool Tutorial::IsRotatePreviewPieceAllowed(int numMovesUsedIncludingCurrent) const {
+    if (!IsLevelPartOfTutorial()) {
+        return true;
+    }
+
+    if (mLevel->GetId() == 0 && numMovesUsedIncludingCurrent <= 2) {
+        return false;
+    }
+    
+    return true;
+}
+
 bool Tutorial::IsSwitchPieceAllowed() const {
     if (!IsLevelPartOfTutorial()) {
         return true;
@@ -873,4 +931,74 @@ bool Tutorial::IsLevelPartOfTutorial() const {
         default:
             return mLevel->IsPartOfTutorial();
     }
+}
+
+void Tutorial::InitDragAndDropTutorial() {
+    auto& scene = mScene.GetScene();
+    auto& uiViewsContainer = mScene.GetUiViewsContainer();
+    
+    auto dragAndDropAnimation = std::make_unique<DragAndDropAnimation>(mEngine, 1.4f, true);
+    dragAndDropAnimation->mContainer = &scene.CreateSceneObject(uiViewsContainer);
+    dragAndDropAnimation->mHandAnimation.Init(*dragAndDropAnimation->mContainer);
+    
+    auto animationDuration = 4.0f;
+    auto& animationSystem = mEngine.GetAnimationSystem();
+    dragAndDropAnimation->mAnimation =
+        &animationSystem.CreateAnimation(*dragAndDropAnimation->mContainer,
+                                         {{.mTime = 0.0f}, {.mTime = animationDuration}});
+    
+    Pht::Vec3 handInitialPosition {-2.2f, -11.0f, UiLayer::root};
+    Pht::Vec3 handDropPosition {-0.5f, -1.6f, UiLayer::root};
+    auto& handAnimation = dragAndDropAnimation->mHandAnimation;
+    
+    auto waitDuration = 0.5f;
+    auto dragDuration = 2.5f;
+    
+    std::vector<Pht::Keyframe> handAnimationKeyframes {
+        {
+            .mTime = 0.0f,
+            .mPosition = handInitialPosition,
+            .mCallback = [&handAnimation, &handInitialPosition] () {
+                handAnimation.StartInNotTouchingScreenState(handInitialPosition, 115.0f, 10.0f);
+            }
+        },
+        {
+            .mTime = waitDuration,
+            .mPosition = handInitialPosition,
+            .mCallback = [&handAnimation, dragDuration] () {
+                handAnimation.BeginTouch(dragDuration);
+            }
+        },
+        {
+            .mTime = waitDuration + 0.2f,
+            .mPosition = handInitialPosition
+        },
+        {
+            .mTime = waitDuration + 0.2f + dragDuration,
+            .mPosition = handDropPosition
+        },
+        {
+            .mTime = waitDuration + 0.4f + dragDuration,
+            .mPosition = handDropPosition
+        },
+        {
+            .mTime = animationDuration - 0.1f,
+            .mPosition = handInitialPosition
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    
+    auto& handPhtAnimation =
+        animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes);
+    handPhtAnimation.SetInterpolation(Pht::Interpolation::Cosine);
+
+    mDragAndDropAnimations.push_back(std::move(dragAndDropAnimation));
+}
+
+void Tutorial::StartDragAndDropAnimation(int numMovesUsedIncludingCurrent) {
+    auto& dragAndDropAnimation = *mDragAndDropAnimations[numMovesUsedIncludingCurrent - 1];
+    dragAndDropAnimation.mAnimation->Play();
+    dragAndDropAnimation.mContainer->SetIsVisible(true);
 }
