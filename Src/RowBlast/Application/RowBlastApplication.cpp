@@ -185,6 +185,8 @@ void RowBlastApplication::UpdateTitleScene() {
                 mFadeEffect.SetDuration(fadeDuration);
                 if (mUserServices.GetProgressService().HasNotCompletedFirstTutorialLevel()) {
                     BeginFadingToGame(1);
+                } else if (mUserServices.GetProgressService().GetCurrentLevel() == 0) {
+                    BeginFadingToMap(MapInitialState::FirstMapLevel);
                 } else {
                     BeginFadingToMap(MapInitialState::Map);
                 }

@@ -369,7 +369,7 @@ void LevelGoalDialogView::SetUp(const LevelInfo& levelInfo) {
         mGuiLightProvider->SetGuiLightDirections(uiLightDirection, uiLightDirection);
     }
 
-    mCaption->GetText() = "LEVEL " + std::to_string(levelInfo.mId);
+    mCaption->GetText() = "LEVEL " + (levelInfo.mId == 0 ? "1" : std::to_string(levelInfo.mId));
     
     auto adjustedCaptionPosition = captionPosition;
     if (levelInfo.mId > 19) {

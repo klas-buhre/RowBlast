@@ -12,20 +12,16 @@
     "lightIntensity": "Daylight",
     "partOfTutorial": true,
     "pieces": [
-        "B",
-        "MirroredSeven",
+        "ShortI",
+        "I",
         "L",
-        "LongI",
-        "D",
-        "Seven"
+        "LongI"
     ],
     "pieceSequence": [
-        "B",
-        "D",
-        "MirroredSeven",
-        "LongI",
+        "ShortI",
+        "I",
         "L",
-        "Seven"
+        "LongI"
     ],
     "clearGrid": [
         "       ",
@@ -41,13 +37,12 @@
         "       ",
         "       ",
         "       ",
-        "G    ll",
-        "G    yy",
-        "GG  Grr",
-        "G GGGGG",
-        "G GGGGG",
-        "Gl l GG",
-        "Gyyg GG",
+        "G  GGyy",
+        "G  GGrr",
+        "GG GGGG",
+        "  GGGGG",
+        "Gl   GG",
+        "Gy g GG",
         "Grrg GG",
         "GGGG GG",
         "GGGG GG"

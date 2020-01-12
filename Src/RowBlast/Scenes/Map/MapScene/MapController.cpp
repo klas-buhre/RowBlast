@@ -647,6 +647,10 @@ void MapController::GoToStartLevelStateLevelGoalDialog(int levelToStart) {
     if (mScene.GetWorldId() != mUniverse.CalcWorldId(levelToStart)) {
         return;
     }
+    
+    if (levelToStart == 1 && mUserServices.GetSettingsService().GetControlType() != ControlType::Click) {
+        levelToStart = 0;
+    }
 
     mState = State::StartLevel;
     mStartLevelState = StartLevelState::LevelGoalDialog;
