@@ -20,13 +20,14 @@ namespace RowBlast {
         void Update();
         void OnLevelClick();
         void OnPortalClick();
+        void OnUfoAnimationFinished(int worldId);
 
     private:
         void SendAnalyticsEvent(const std::string& step, const std::string& status);
 
         enum class State {
-            StartLevel1StepStart,
-            StartLevel1StepComplete,
+            StartLevel2StepStart,
+            StartLevel2StepComplete,
             GoToWorld2StepStart,
             GoToWorld2StepComplete,
             Inactive

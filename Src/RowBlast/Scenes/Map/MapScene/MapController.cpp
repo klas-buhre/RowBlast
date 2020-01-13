@@ -176,6 +176,8 @@ void MapController::UpdateUfoAnimation() {
                 } else {
                     if (mStartLevelDialogOnAnimationFinished) {
                         GoToStartLevelStateLevelGoalDialog(mLevelToStart);
+                    } else {
+                        mTutorial.OnUfoAnimationFinished(mScene.GetWorldId());
                     }
                 }
                 if (mHideUfoOnAnimationFinished) {

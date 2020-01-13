@@ -17,41 +17,37 @@ MapTutorial::MapTutorial(Pht::IEngine& engine, MapScene& scene, const UserServic
     mEngine {engine},
     mScene {scene},
     mUserServices {userServices},
-    mHandAnimation {engine, 0.7f, false} {}
+    mHandAnimation {engine, 0.7f, true} {}
 
 void MapTutorial::Init(int worldId) {
-    auto progress = mUserServices.GetProgressService().GetProgress();
-
-    if (worldId == 1 && progress == 1) {
-        if (mState != State::StartLevel1StepStart && mState != State::StartLevel1StepComplete) {
-            mState = State::StartLevel1StepStart;
-            SendAnalyticsEvent("StartLevel1Step", "Start");
-        }
+    auto& progressService = mUserServices.GetProgressService();
+    auto progress = progressService.GetProgress();
+    if (worldId == 1 && progress == 2 && progressService.ProgressedAtPreviousGameRound()) {
+        mHandAnimation.Init(mScene.GetTutorialContainer());
     } else if (worldId == 1 && progress == 19) {
+        mHandAnimation.Init(mScene.GetTutorialContainer());
+        
+        auto* pin = mScene.GetPin(progress);
+        assert(pin);
+        
+        auto handPosition = pin->GetPosition() + Pht::Vec3{0.76f, 0.25f, 1.0f};
+        mHandAnimation.Start(handPosition, 90.0f);
+
         if (mState != State::GoToWorld2StepStart && mState != State::GoToWorld2StepComplete) {
             mState = State::GoToWorld2StepStart;
             SendAnalyticsEvent("GoToWorld2Step", "Start");
         }
     } else {
         mState = State::Inactive;
-        return;
     }
-    
-    mHandAnimation.Init(mScene.GetTutorialContainer());
-    
-    auto* pin = mScene.GetPin(progress);
-    assert(pin);
-    
-    auto handPosition = pin->GetPosition() + Pht::Vec3{0.76f, 0.25f, 1.0f};
-    mHandAnimation.Start(handPosition, 90.0f);
 }
 
 void MapTutorial::Update() {
     switch (mState) {
         case State::Inactive:
             break;
-        case State::StartLevel1StepStart:
-        case State::StartLevel1StepComplete:
+        case State::StartLevel2StepStart:
+        case State::StartLevel2StepComplete:
         case State::GoToWorld2StepStart:
         case State::GoToWorld2StepComplete:
             mHandAnimation.Update();
@@ -61,8 +57,8 @@ void MapTutorial::Update() {
 
 void MapTutorial::OnLevelClick() {
     switch (mState) {
-        case State::StartLevel1StepStart:
-            mState = State::StartLevel1StepComplete;
+        case State::StartLevel2StepStart:
+            mState = State::StartLevel2StepComplete;
             SendAnalyticsEvent("StartLevel1Step", "Complete");
             break;
         default:
@@ -78,6 +74,23 @@ void MapTutorial::OnPortalClick() {
             break;
         default:
             break;
+    }
+}
+
+void MapTutorial::OnUfoAnimationFinished(int worldId) {
+    auto& progressService = mUserServices.GetProgressService();
+    auto progress = progressService.GetProgress();
+    if (worldId == 1 && progress == 2 && progressService.ProgressedAtPreviousGameRound()) {
+        if (mState != State::StartLevel2StepStart && mState != State::StartLevel2StepComplete) {
+            mState = State::StartLevel2StepStart;
+            SendAnalyticsEvent("StartLevel2Step", "Start");
+        }
+
+        auto* pin = mScene.GetPin(progress);
+        assert(pin);
+        
+        auto handPosition = pin->GetPosition() + Pht::Vec3{0.76f, 0.25f, 1.0f};
+        mHandAnimation.Start(handPosition, 90.0f);
     }
 }
 
