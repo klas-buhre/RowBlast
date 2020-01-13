@@ -512,6 +512,10 @@ void Tutorial::OnResumePlaying() {
 }
 
 void Tutorial::OnBeginDragPiece() {
+    if (!IsLevelPartOfTutorial()) {
+        return;
+    }
+
     for (auto& dragAndDropAnimation: mDragAndDropAnimations) {
         dragAndDropAnimation->mAnimation->Stop();
         dragAndDropAnimation->mContainer->SetIsVisible(false);
@@ -519,7 +523,13 @@ void Tutorial::OnBeginDragPiece() {
 }
 
 void Tutorial::OnDragPieceEnd(int numMovesUsedIncludingCurrent) {
-    OnNewMoveDragAndDropTutorial(numMovesUsedIncludingCurrent);
+    if (!IsLevelPartOfTutorial()) {
+        return;
+    }
+
+    if (mLevel->GetId() == 0) {
+        OnNewMoveDragAndDropTutorial(numMovesUsedIncludingCurrent);
+    }
 }
 
 void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
