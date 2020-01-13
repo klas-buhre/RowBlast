@@ -134,15 +134,18 @@ void HowToPlayDialogView::CreateControlsPage(const GuiResources& guiResources,
     CreateText({-2.45f, 8.25f, UiLayer::text}, "CONTROLS", largeTextProperties, container);
     
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
-    CreateText({-5.3f, 6.0f, UiLayer::text}, "The game can be played using", textProperties, container);
-    CreateText({-3.3f, 4.3f, UiLayer::text}, "SingleTap controls, or", textProperties, container);
-    CreateText({-3.3f, 2.6f, UiLayer::text}, "Swipe controls", textProperties, container);
+    CreateText({-5.3f, 6.0f, UiLayer::text}, "The game is usually played", textProperties, container);
+    CreateText({-5.3f, 4.925f, UiLayer::text}, "using DragAndDrop controls, but", textProperties, container);
+    CreateText({-5.3f, 3.85f, UiLayer::text}, "you can also use:", textProperties, container);
     
-    CreateSingleTapIcon({-4.3f, 4.55f, UiLayer::text}, container);
-    CreateSwipeIcon({-4.2f, 2.75f, UiLayer::text}, container);
+    CreateText({-3.3f, 2.15f, UiLayer::text}, "SingleTap controls, or", textProperties, container);
+    CreateText({-3.3f, 0.45f, UiLayer::text}, "Swipe controls", textProperties, container);
     
-    CreateText({-5.3f, 0.9f, UiLayer::text}, "The control type can be changed", textProperties, container);
-    CreateText({-5.3f, -0.175f, UiLayer::text}, "in the settings menu.", textProperties, container);
+    CreateSingleTapIcon({-4.3f, 2.4f, UiLayer::text}, container);
+    CreateSwipeIcon({-4.2f, 0.6f, UiLayer::text}, container);
+    
+    CreateText({-5.3f, -1.25f, UiLayer::text}, "The control type can be changed", textProperties, container);
+    CreateText({-5.3f, -2.325f, UiLayer::text}, "in the settings menu.", textProperties, container);
     
     container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
     

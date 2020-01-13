@@ -48,9 +48,9 @@ Backlog:
 Ongoing tasks:
 
   Temporary plan:
-    -Update the tutorial with drag controls.
-        -Should introduce rotate first?
-        -Mention drag and drop in how to play dialog.
+    -Release.
+    -Should introduce rotate first?
+    -Just try to reduce the risk mixing up the rotate tap with at drag start.
     -Release.
     -Apply to Apple for marketing.
     
