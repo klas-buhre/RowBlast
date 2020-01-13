@@ -1124,6 +1124,8 @@ void GameLogic::RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) {
             RotatePreviewPiece(mCurrentMove.mPreviewPieceRotations.mHudRotations.mSelectable0,
                                mCurrentMove.mSelectablePieces[0],
                                4);
+            mTutorial.OnRotateSelectable0PreviewPiece(GetMovesUsedIncludingCurrent(),
+                                                      mCurrentMove.mPreviewPieceRotations.mRotations.mSelectable0);
             break;
         case PreviewPieceIndex::Selectable1:
             RotatePreviewPiece(mCurrentMove.mPreviewPieceRotations.mRotations.mSelectable1,

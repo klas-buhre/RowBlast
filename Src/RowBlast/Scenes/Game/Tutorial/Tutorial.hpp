@@ -16,6 +16,7 @@
 #include "LevelBombDialogController.hpp"
 #include "AsteroidDialogController.hpp"
 #include "ClickInputHandler.hpp"
+#include "IGameLogic.hpp"
 
 namespace Pht {
     class IEngine;
@@ -53,6 +54,7 @@ namespace RowBlast {
         void OnResumePlaying();
         void OnBeginDragPiece();
         void OnDragPieceEnd(int numMovesUsedIncludingCurrent);
+        void OnRotateSelectable0PreviewPiece(int numMovesUsedIncludingCurrent, Rotation rotation);
         void OnNewMove(int numMovesUsedIncludingCurrent);
         void OnSelectMove(int numMovesUsedIncludingCurrent);
         void OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType);
@@ -101,7 +103,10 @@ namespace RowBlast {
         void SendAnayticsEvent(const std::string& id);
         bool IsLevelPartOfTutorial() const;
         void InitDragAndDropTutorial();
-        void StartDragAndDropAnimation(int numMovesUsedIncludingCurrent);
+        void CreateDragAndDropAnimation(const Pht::Vec3& handInitialPosition,
+                                        const Pht::Vec3& handDropPosition);
+        void StartDragAndDropAnimation(int index);
+        void StopDragAndDropAnimations();
         
         struct DragAndDropAnimation {
             DragAndDropAnimation(Pht::IEngine& engine, float scale, bool useShadow) :

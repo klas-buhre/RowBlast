@@ -516,10 +516,7 @@ void Tutorial::OnBeginDragPiece() {
         return;
     }
 
-    for (auto& dragAndDropAnimation: mDragAndDropAnimations) {
-        dragAndDropAnimation->mAnimation->Stop();
-        dragAndDropAnimation->mContainer->SetIsVisible(false);
-    }
+    StopDragAndDropAnimations();
 }
 
 void Tutorial::OnDragPieceEnd(int numMovesUsedIncludingCurrent) {
@@ -529,6 +526,28 @@ void Tutorial::OnDragPieceEnd(int numMovesUsedIncludingCurrent) {
 
     if (mLevel->GetId() == 0) {
         OnNewMoveDragAndDropTutorial(numMovesUsedIncludingCurrent);
+    }
+}
+
+void Tutorial::OnRotateSelectable0PreviewPiece(int numMovesUsedIncludingCurrent,
+                                               Rotation rotation) {
+    if (!IsLevelPartOfTutorial()) {
+        return;
+    }
+
+    if (mLevel->GetId() == 0 && numMovesUsedIncludingCurrent == 3) {
+        switch (rotation) {
+            case Rotation::Deg0:
+                StopDragAndDropAnimations();
+                mHandAnimation.Start({0.9f, -11.0f, UiLayer::root}, 115.0f);
+                break;
+            case Rotation::Deg90:
+                mHandAnimation.Stop();
+                StartDragAndDropAnimation(numMovesUsedIncludingCurrent - 1);
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -555,16 +574,13 @@ void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
 void Tutorial::OnNewMoveDragAndDropTutorial(int numMovesUsedIncludingCurrent) {
     switch (numMovesUsedIncludingCurrent) {
         case 1:
-            StartDragAndDropAnimation(numMovesUsedIncludingCurrent);
-            break;
         case 2:
+            StartDragAndDropAnimation(numMovesUsedIncludingCurrent - 1);
             break;
         case 3:
-            break;
-        case 4:
+            mHandAnimation.Start({0.9f, -11.0f, UiLayer::root}, 115.0f);
             break;
         default:
-            assert(!"Unsupported number of used moves");
             break;
     }
 }
@@ -944,6 +960,13 @@ bool Tutorial::IsLevelPartOfTutorial() const {
 }
 
 void Tutorial::InitDragAndDropTutorial() {
+    CreateDragAndDropAnimation({-2.2f, -11.0f, UiLayer::root}, {-0.5f, -1.6f, UiLayer::root});
+    CreateDragAndDropAnimation({0.9f, -11.0f, UiLayer::root}, {2.3f, -2.4f, UiLayer::root});
+    CreateDragAndDropAnimation({0.9f, -11.0f, UiLayer::root}, {-2.0f, -1.1f, UiLayer::root});
+}
+
+void Tutorial::CreateDragAndDropAnimation(const Pht::Vec3& handInitialPosition,
+                                          const Pht::Vec3& handDropPosition) {
     auto& scene = mScene.GetScene();
     auto& uiViewsContainer = mScene.GetUiViewsContainer();
     
@@ -951,18 +974,16 @@ void Tutorial::InitDragAndDropTutorial() {
     dragAndDropAnimation->mContainer = &scene.CreateSceneObject(uiViewsContainer);
     dragAndDropAnimation->mHandAnimation.Init(*dragAndDropAnimation->mContainer);
     
-    auto animationDuration = 4.0f;
+    auto animationDuration = 3.8f;
     auto& animationSystem = mEngine.GetAnimationSystem();
     dragAndDropAnimation->mAnimation =
         &animationSystem.CreateAnimation(*dragAndDropAnimation->mContainer,
                                          {{.mTime = 0.0f}, {.mTime = animationDuration}});
-    
-    Pht::Vec3 handInitialPosition {-2.2f, -11.0f, UiLayer::root};
-    Pht::Vec3 handDropPosition {-0.5f, -1.6f, UiLayer::root};
+
     auto& handAnimation = dragAndDropAnimation->mHandAnimation;
     
     auto waitDuration = 0.5f;
-    auto dragDuration = 2.5f;
+    auto dragDuration = 2.3f;
     
     std::vector<Pht::Keyframe> handAnimationKeyframes {
         {
@@ -1007,8 +1028,15 @@ void Tutorial::InitDragAndDropTutorial() {
     mDragAndDropAnimations.push_back(std::move(dragAndDropAnimation));
 }
 
-void Tutorial::StartDragAndDropAnimation(int numMovesUsedIncludingCurrent) {
-    auto& dragAndDropAnimation = *mDragAndDropAnimations[numMovesUsedIncludingCurrent - 1];
+void Tutorial::StartDragAndDropAnimation(int index) {
+    auto& dragAndDropAnimation = *mDragAndDropAnimations[index];
     dragAndDropAnimation.mAnimation->Play();
     dragAndDropAnimation.mContainer->SetIsVisible(true);
+}
+
+void Tutorial::StopDragAndDropAnimations() {
+    for (auto& dragAndDropAnimation: mDragAndDropAnimations) {
+        dragAndDropAnimation->mAnimation->Stop();
+        dragAndDropAnimation->mContainer->SetIsVisible(false);
+    }
 }
