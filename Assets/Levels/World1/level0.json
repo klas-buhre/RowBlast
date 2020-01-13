@@ -25,7 +25,7 @@
     ],
     "predeterminedMoves": [
         {
-            "position": [0, 6],
+            "position": [-1, 6],
             "rotation": 0,
             "piece": "ShortI"
         },
@@ -54,13 +54,13 @@
         "       ",
         "       ",
         "       ",
-        "GG G yy",
-        "GG G rr",
+        "G GG yy",
+        "G GG rr",
         "GGGG GG",
         "   GGGG",
-        "GllG GG",
-        "Gyyg GG",
-        "Grrg GG",
+        "GGll GG",
+        "GGyy GG",
+        "GGrr GG",
         "GGGG GG",
         "GGGG GG"
     ]

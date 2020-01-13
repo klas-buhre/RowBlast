@@ -102,6 +102,7 @@ namespace RowBlast {
         void SetActiveViewController(Controller controller);
         void SendAnayticsEvent(const std::string& id);
         bool IsLevelPartOfTutorial() const;
+        bool ShouldDisplayAnimationWindow() const;
         void InitDragAndDropTutorial();
         void CreateDragAndDropAnimation(const Pht::Vec3& handInitialPosition,
                                         const Pht::Vec3& handDropPosition);

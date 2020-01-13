@@ -50,7 +50,6 @@ Ongoing tasks:
   Temporary plan:
     -Update the tutorial with drag controls.
         -Should introduce rotate first?
-        -Disable tutorial windows with animations when using drag and drop.
         -Can remove the swipe controls hint dialog.
     -Release.
     -Apply to Apple for marketing.
