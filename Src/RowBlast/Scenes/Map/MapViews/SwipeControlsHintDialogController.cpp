@@ -50,7 +50,7 @@ SwipeControlsHintDialogController::Result SwipeControlsHintDialogController::Han
 
 SwipeControlsHintDialogController::Result
 SwipeControlsHintDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
-    if (mView.GetCloseButton().IsClicked(touchEvent)) {
+    if (mView.GetCloseButton().IsClicked(touchEvent) || mView.GetPlayButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Close;
         mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
                                             SlidingMenuAnimation::SlideDirection::Left);

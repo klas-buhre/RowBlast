@@ -50,7 +50,7 @@ Ongoing tasks:
   Temporary plan:
     -Update the tutorial with drag controls.
         -Should introduce rotate first?
-        -Can remove the swipe controls hint dialog.
+        -Mention drag and drop in how to play dialog.
     -Release.
     -Apply to Apple for marketing.
     

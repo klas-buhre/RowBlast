@@ -61,7 +61,7 @@ namespace {
     Pht::Vec2 GetSize(ButtonSize size) {
         switch (size) {
             case ButtonSize::Larger:
-                return {9.4f, 2.6f};
+                return {9.0f, 2.6f};
             case ButtonSize::Large:
                 return {9.0f, 2.3f};
             case ButtonSize::Medium:

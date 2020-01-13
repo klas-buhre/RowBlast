@@ -27,17 +27,19 @@ namespace RowBlast {
         const MenuButton& GetHowToPlayButton() const {
             return *mHowToPlayButton;
         }
-        
+
+        const MenuButton& GetPlayButton() const {
+            return *mPlayButton;
+        }
+
     private:
         void CreateSingleTapIcon(const Pht::Vec3& position,
                                  Pht::SceneObject& parent,
                                  Pht::IEngine& engine);
-        void CreateSwipeIcon(const Pht::Vec3& position,
-                             Pht::SceneObject& parent,
-                             Pht::IEngine& engine);
 
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mHowToPlayButton;
+        std::unique_ptr<MenuButton> mPlayButton;
     };
 }
 

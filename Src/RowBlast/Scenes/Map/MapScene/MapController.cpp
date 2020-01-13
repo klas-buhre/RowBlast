@@ -168,7 +168,7 @@ void MapController::UpdateUfoAnimation() {
             }
             if (mState == State::UfoAnimation) {
                 if (mLevelToStart == swipeControlsHintDialogLevelId &&
-                    mUserServices.GetSettingsService().GetControlType() == ControlType::Click) {
+                    mUserServices.GetSettingsService().GetControlType() == ControlType::Drag) {
                 
                     if (mStartLevelDialogOnAnimationFinished) {
                         GoToStartLevelStateSwipeControlsHintDialog(mLevelToStart);
@@ -530,7 +530,7 @@ void MapController::HandlePinClick(const MapPin& pin) {
             auto levelId = pin.GetLevel();
             auto& progressService = mUserServices.GetProgressService();
             if (progressService.GetProgress() == swipeControlsHintDialogLevelId &&
-                mUserServices.GetSettingsService().GetControlType() == ControlType::Click &&
+                mUserServices.GetSettingsService().GetControlType() == ControlType::Drag &&
                 levelId == swipeControlsHintDialogLevelId) {
                 
                 GoToStartLevelStateSwipeControlsHintDialog(levelId);
@@ -694,7 +694,7 @@ void MapController::GoToStartLevelStateHowToPlayDialogState() {
     mState = State::StartLevel;
     mStartLevelState = StartLevelState::HowToPlayDialog;
     mMapViewControllers.SetActiveController(MapViewControllers::HowToPlayDialog);
-    mMapViewControllers.GetHowToPlayDialogController().SetUp(HowToPlayDialogController::swipePageIndex);
+    mMapViewControllers.GetHowToPlayDialogController().SetUp(HowToPlayDialogController::singleTapPageIndex);
 }
 
 void MapController::HandleLivesButtonClick() {

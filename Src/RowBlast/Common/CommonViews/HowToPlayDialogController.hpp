@@ -16,7 +16,7 @@ namespace RowBlast {
     
     class HowToPlayDialogController {
     public:
-        static constexpr auto swipePageIndex = 5;
+        static constexpr auto singleTapPageIndex = 2;
 
         enum class Result {
             None,
