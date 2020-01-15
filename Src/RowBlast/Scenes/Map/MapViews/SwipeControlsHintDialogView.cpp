@@ -36,7 +36,7 @@ SwipeControlsHintDialogView::SwipeControlsHintDialogView(Pht::IEngine& engine,
     CreateText({0.0f, 6.1f, UiLayer::text}, "So far you have been playing", textProperties);
     CreateText({0.0f, 5.025f, UiLayer::text}, "using DragNDrop controls.", textProperties);
     
-    CreateText({0.0f, 3.6f, UiLayer::text}, "You can also use SingelTap", textProperties);
+    CreateText({0.0f, 3.6f, UiLayer::text}, "You can also use SingleTap", textProperties);
     CreateText({0.0f, 2.525f, UiLayer::text}, "to place pieces by clicking:", textProperties);
 
     CreateSingleTapIcon({0.0f, 0.6f, UiLayer::text}, GetRoot(), engine);
