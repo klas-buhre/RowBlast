@@ -551,7 +551,7 @@ void Tutorial::OnRotateSelectable0PreviewPiece(int numMovesUsedIncludingCurrent,
         switch (rotation) {
             case Rotation::Deg0:
                 StopDragAndDropAnimations();
-                mHandAnimation.Start({0.9f, -11.0f, UiLayer::root}, 115.0f);
+                StartTapToRotateAnimation();
                 break;
             case Rotation::Deg90:
                 mHandAnimation.Stop();
@@ -590,7 +590,7 @@ void Tutorial::OnNewMoveDragAndDropTutorial(int numMovesUsedIncludingCurrent) {
             StartDragAndDropAnimation(numMovesUsedIncludingCurrent - 1);
             break;
         case 3:
-            mHandAnimation.Start({0.9f, -11.0f, UiLayer::root}, 115.0f);
+            StartTapToRotateAnimation();
             break;
         default:
             break;
@@ -981,8 +981,8 @@ void Tutorial::InitDragAndDropTutorial() {
     CreateDragAndDropAnimation({0.9f, -11.0f, UiLayer::root}, {-2.0f, -1.1f, UiLayer::root});
 }
 
-void Tutorial::CreateDragAndDropAnimation(const Pht::Vec3& handInitialPosition,
-                                          const Pht::Vec3& handDropPosition) {
+void Tutorial::CreateDragAndDropAnimation(Pht::Vec3 handInitialPosition,
+                                          Pht::Vec3 handDropPosition) {
     auto& scene = mScene.GetScene();
     auto& uiViewsContainer = mScene.GetUiViewsContainer();
     
@@ -1000,6 +1000,12 @@ void Tutorial::CreateDragAndDropAnimation(const Pht::Vec3& handInitialPosition,
     
     auto waitDuration = 0.5f;
     auto dragDuration = 2.3f;
+    
+    Pht::Vec3 handAdjustment {0.0f, 0.9f, 0.0f};
+    if (mEngine.GetRenderer().GetBottomPaddingHeight() == 0.0f) {
+        handInitialPosition += handAdjustment;
+        handDropPosition += handAdjustment;
+    }
     
     std::vector<Pht::Keyframe> handAnimationKeyframes {
         {
@@ -1055,4 +1061,14 @@ void Tutorial::StopDragAndDropAnimations() {
         dragAndDropAnimation->mAnimation->Stop();
         dragAndDropAnimation->mContainer->SetIsVisible(false);
     }
+}
+
+void Tutorial::StartTapToRotateAnimation() {
+    Pht::Vec3 position {0.9f, -11.0f, UiLayer::root};
+    Pht::Vec3 handAdjustment {0.0f, 0.9f, 0.0f};
+    if (mEngine.GetRenderer().GetBottomPaddingHeight() == 0.0f) {
+        position += handAdjustment;
+    }
+    
+    mHandAnimation.Start(position, 115.0f);
 }

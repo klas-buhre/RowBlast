@@ -104,10 +104,10 @@ namespace RowBlast {
         bool IsLevelPartOfTutorial() const;
         bool ShouldDisplayAnimationWindow() const;
         void InitDragAndDropTutorial();
-        void CreateDragAndDropAnimation(const Pht::Vec3& handInitialPosition,
-                                        const Pht::Vec3& handDropPosition);
+        void CreateDragAndDropAnimation(Pht::Vec3 handInitialPosition, Pht::Vec3 handDropPosition);
         void StartDragAndDropAnimation(int index);
         void StopDragAndDropAnimations();
+        void StartTapToRotateAnimation();
         
         struct DragAndDropAnimation {
             DragAndDropAnimation(Pht::IEngine& engine, float scale, bool useShadow) :
