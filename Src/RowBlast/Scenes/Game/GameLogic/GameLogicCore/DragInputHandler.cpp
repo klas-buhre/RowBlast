@@ -106,7 +106,7 @@ void
 DragInputHandler::HandleOngoingTouchInTouchingPreviewPieceButtonState(const Pht::TouchEvent& touchEvent) {
     auto dragDistanceSquared =
         touchEvent.mTranslation.x * touchEvent.mTranslation.x + touchEvent.mTranslation.y * touchEvent.mTranslation.y;
-    if (dragDistanceSquared > dragBeginDistanceThresholdSquared) {
+    if (dragDistanceSquared > dragBeginDistanceThresholdSquared && touchEvent.mTranslation.y < 0.0f) {
         mState = State::Dragging;
         
         auto* pieceType = GetPieceType(mDraggedPieceIndex);

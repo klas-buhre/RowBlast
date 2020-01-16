@@ -48,13 +48,10 @@ Backlog:
 Ongoing tasks:
 
   Temporary plan:
-    -Release.
     -Should introduce rotate first?
-    -Just try to reduce the risk mixing up the rotate tap with at drag start.
-    -Alternate the music.
     -Make new screenshots and trailer.
     -Release.
-    -Apply to Apple for marketing.
+    -Apply to Apple for marketing: AppStore.com/Promote
     
     
   Original plan:
