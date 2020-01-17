@@ -1104,7 +1104,7 @@ void GameLogic::RemoveBlocksInsideTheShield() {
 }
 
 void GameLogic::RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) {
-    if (!mTutorial.IsRotatePreviewPieceAllowed(GetMovesUsedIncludingCurrent())) {
+    if (!mTutorial.IsRotatePreviewPieceAllowed(GetMovesUsedIncludingCurrent(), previewPieceIndex)) {
         return;
     }
 
@@ -1116,6 +1116,8 @@ void GameLogic::RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) {
             RotatePreviewPiece(mCurrentMove.mPreviewPieceRotations.mHudRotations.mActive,
                                mCurrentMove.mPieceType,
                                4);
+            mTutorial.OnRotateActivePreviewPiece(GetMovesUsedIncludingCurrent(),
+                                                 mCurrentMove.mPreviewPieceRotations.mRotations.mActive);
             break;
         case PreviewPieceIndex::Selectable0:
             RotatePreviewPiece(mCurrentMove.mPreviewPieceRotations.mRotations.mSelectable0,
@@ -1593,6 +1595,12 @@ const Move* GameLogic::GetValidMoveBelowDraggedPiece(int& ghostPieceRow) {
 void GameLogic::HidePiecePath() {
     mPiecePathSystem.HidePath();
     mValidMoveBelowDraggedPiece = Pht::Optional<Move> {};
+}
+
+bool GameLogic::IsDragPieceAllowed(PreviewPieceIndex draggedPieceIndex, Rotation rotation) const {
+    return mTutorial.IsDragPieceAllowed(GetMovesUsedIncludingCurrent(),
+                                        draggedPieceIndex,
+                                        rotation);
 }
 
 GameLogic::Result GameLogic::HandleInput() {

@@ -541,6 +541,19 @@ void Tutorial::OnDragPieceEnd(int numMovesUsedIncludingCurrent) {
     }
 }
 
+void Tutorial::OnRotateActivePreviewPiece(int numMovesUsedIncludingCurrent, Rotation rotation) {
+    if (!IsLevelPartOfTutorial()) {
+        return;
+    }
+
+    if (mLevel->GetId() == 0 && numMovesUsedIncludingCurrent == 1) {
+        OnRotatePreviewPiece(numMovesUsedIncludingCurrent,
+                             rotation,
+                             {-2.1f, -11.0f, UiLayer::root});
+    }
+}
+
+
 void Tutorial::OnRotateSelectable0PreviewPiece(int numMovesUsedIncludingCurrent,
                                                Rotation rotation) {
     if (!IsLevelPartOfTutorial()) {
@@ -548,18 +561,28 @@ void Tutorial::OnRotateSelectable0PreviewPiece(int numMovesUsedIncludingCurrent,
     }
 
     if (mLevel->GetId() == 0 && numMovesUsedIncludingCurrent == 3) {
-        switch (rotation) {
-            case Rotation::Deg0:
-                StopDragAndDropAnimations();
-                StartTapToRotateAnimation();
-                break;
-            case Rotation::Deg90:
-                mHandAnimation.Stop();
-                StartDragAndDropAnimation(numMovesUsedIncludingCurrent - 1);
-                break;
-            default:
-                break;
-        }
+        OnRotatePreviewPiece(numMovesUsedIncludingCurrent,
+                             rotation,
+                             {0.9f, -11.0f, UiLayer::root});
+    }
+}
+
+void Tutorial::OnRotatePreviewPiece(int numMovesUsedIncludingCurrent,
+                                    Rotation rotation,
+                                    const Pht::Vec3& handPosition) {
+    switch (rotation) {
+        case Rotation::Deg0:
+        case Rotation::Deg180:
+            StopDragAndDropAnimations();
+            StartTapToRotateAnimation(handPosition);
+            break;
+        case Rotation::Deg90:
+        case Rotation::Deg270:
+            mHandAnimation.Stop();
+            StartDragAndDropAnimation(numMovesUsedIncludingCurrent - 1);
+            break;
+        default:
+            break;
     }
 }
 
@@ -586,11 +609,13 @@ void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
 void Tutorial::OnNewMoveDragAndDropTutorial(int numMovesUsedIncludingCurrent) {
     switch (numMovesUsedIncludingCurrent) {
         case 1:
+            StartTapToRotateAnimation({-2.1f, -11.0f, UiLayer::root});
+            break;
         case 2:
             StartDragAndDropAnimation(numMovesUsedIncludingCurrent - 1);
             break;
         case 3:
-            StartTapToRotateAnimation();
+            StartTapToRotateAnimation({0.9f, -11.0f, UiLayer::root});
             break;
         default:
             break;
@@ -800,15 +825,87 @@ void Tutorial::OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
     }
 }
 
-bool Tutorial::IsRotatePreviewPieceAllowed(int numMovesUsedIncludingCurrent) const {
+bool Tutorial::IsRotatePreviewPieceAllowed(int numMovesUsedIncludingCurrent,
+                                           PreviewPieceIndex previewPieceIndex) const {
     if (!IsLevelPartOfTutorial()) {
         return true;
     }
 
-    if (mLevel->GetId() == 0 && numMovesUsedIncludingCurrent <= 2) {
-        return false;
+    if (mLevel->GetId() == 0) {
+        switch (numMovesUsedIncludingCurrent) {
+            case 1:
+                if (previewPieceIndex == PreviewPieceIndex::Active) {
+                    return true;
+                } else {
+                    return false;
+                }
+                break;
+            case 2:
+                return false;
+            case 3:
+                if (previewPieceIndex == PreviewPieceIndex::Selectable0) {
+                    return true;
+                } else {
+                    return false;
+                }
+                break;
+            default:
+                return true;
+        }
     }
     
+    return true;
+}
+
+bool Tutorial::IsDragPieceAllowed(int numMovesUsedIncludingCurrent,
+                                  PreviewPieceIndex draggedPieceIndex,
+                                  Rotation rotation) const {
+    if (!IsLevelPartOfTutorial()) {
+        return true;
+    }
+
+    if (mLevel->GetId() == 0) {
+        switch (numMovesUsedIncludingCurrent) {
+            case 1:
+                if (draggedPieceIndex == PreviewPieceIndex::Active) {
+                    switch (rotation) {
+                        case Rotation::Deg0:
+                        case Rotation::Deg180:
+                            return false;
+                        case Rotation::Deg90:
+                        case Rotation::Deg270:
+                            return true;
+                    }
+                } else {
+                    return false;
+                }
+                break;
+            case 2:
+                if (draggedPieceIndex == PreviewPieceIndex::Selectable0) {
+                    return true;
+                } else {
+                    return false;
+                }
+                break;
+            case 3:
+                if (draggedPieceIndex == PreviewPieceIndex::Selectable0) {
+                    switch (rotation) {
+                        case Rotation::Deg0:
+                        case Rotation::Deg180:
+                            return false;
+                        case Rotation::Deg90:
+                        case Rotation::Deg270:
+                            return true;
+                    }
+                } else {
+                    return false;
+                }
+                break;
+            default:
+                return true;
+        }
+    }
+
     return true;
 }
 
@@ -976,7 +1073,7 @@ bool Tutorial::ShouldDisplayAnimationWindow() const {
 }
 
 void Tutorial::InitDragAndDropTutorial() {
-    CreateDragAndDropAnimation({-2.1f, -11.0f, UiLayer::root}, {-1.9f, -1.6f, UiLayer::root});
+    CreateDragAndDropAnimation({-2.1f, -11.0f, UiLayer::root}, {-1.3f, -1.1f, UiLayer::root});
     CreateDragAndDropAnimation({0.9f, -11.0f, UiLayer::root}, {2.3f, -2.4f, UiLayer::root});
     CreateDragAndDropAnimation({0.9f, -11.0f, UiLayer::root}, {-2.0f, -1.1f, UiLayer::root});
 }
@@ -1063,8 +1160,7 @@ void Tutorial::StopDragAndDropAnimations() {
     }
 }
 
-void Tutorial::StartTapToRotateAnimation() {
-    Pht::Vec3 position {0.9f, -11.0f, UiLayer::root};
+void Tutorial::StartTapToRotateAnimation(Pht::Vec3 position) {
     Pht::Vec3 handAdjustment {0.0f, 0.9f, 0.0f};
     if (mEngine.GetRenderer().GetBottomPaddingHeight() == 0.0f) {
         position += handAdjustment;

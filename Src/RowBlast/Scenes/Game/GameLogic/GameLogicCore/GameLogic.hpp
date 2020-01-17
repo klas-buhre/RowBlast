@@ -120,6 +120,8 @@ namespace RowBlast {
         void HandleDragPieceTouchEnd() override;
         void OnDraggedPieceGoingBackAnimationFinished() override;
         void EndPieceDrag() override;
+        bool IsDragPieceAllowed(PreviewPieceIndex draggedPieceIndex,
+                                Rotation rotation) const override;
         void IncreaseScore(int points, const Pht::Vec2& scoreTextPosition) override;
         void IncreaseScore(int points,
                            const Pht::Vec2& scoreTextPosition,

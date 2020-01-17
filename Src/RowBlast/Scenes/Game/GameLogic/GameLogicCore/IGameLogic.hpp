@@ -45,6 +45,8 @@ namespace RowBlast {
         virtual void HandleDragPieceTouchEnd() = 0;
         virtual void EndPieceDrag() = 0;
         virtual void OnDraggedPieceGoingBackAnimationFinished() = 0;
+        virtual bool IsDragPieceAllowed(PreviewPieceIndex draggedPieceIndex,
+                                        Rotation rotation) const = 0;
         virtual void IncreaseScore(int points, const Pht::Vec2& scoreTextPosition) = 0;
         virtual void IncreaseScore(int points,
                                    const Pht::Vec2& scoreTextPosition,

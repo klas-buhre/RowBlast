@@ -54,13 +54,18 @@ namespace RowBlast {
         void OnResumePlaying();
         void OnBeginDragPiece();
         void OnDragPieceEnd(int numMovesUsedIncludingCurrent);
+        void OnRotateActivePreviewPiece(int numMovesUsedIncludingCurrent, Rotation rotation);
         void OnRotateSelectable0PreviewPiece(int numMovesUsedIncludingCurrent, Rotation rotation);
         void OnNewMove(int numMovesUsedIncludingCurrent);
         void OnSelectMove(int numMovesUsedIncludingCurrent);
         void OnSwitchPiece(int numMovesUsedIncludingCurrent, const Piece& pieceType);
         void OnChangeVisibleMoves(int numMovesUsedIncludingCurrent,
                                   const ClickInputHandler::VisibleMoves& visibleMoves);
-        bool IsRotatePreviewPieceAllowed(int numMovesUsedIncludingCurrent) const;
+        bool IsRotatePreviewPieceAllowed(int numMovesUsedIncludingCurrent,
+                                         PreviewPieceIndex previewPieceIndex) const;
+        bool IsDragPieceAllowed(int numMovesUsedIncludingCurrent,
+                                PreviewPieceIndex draggedPieceIndex,
+                                Rotation rotation) const;
         bool IsSwitchPieceAllowed() const;
         bool IsSeeMoreMovesAllowed(int numMovesUsedIncludingCurrent) const;
         bool IsMoveAllowed(int numMovesUsedIncludingCurrent,
@@ -99,6 +104,9 @@ namespace RowBlast {
         void OnNewMoveDragAndDropTutorial(int numMovesUsedIncludingCurrent);
         void OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent);
         void OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent);
+        void OnRotatePreviewPiece(int numMovesUsedIncludingCurrent,
+                                  Rotation rotation,
+                                  const Pht::Vec3& handPosition);
         void SetActiveViewController(Controller controller);
         void SendAnayticsEvent(const std::string& id);
         bool IsLevelPartOfTutorial() const;
@@ -107,7 +115,7 @@ namespace RowBlast {
         void CreateDragAndDropAnimation(Pht::Vec3 handInitialPosition, Pht::Vec3 handDropPosition);
         void StartDragAndDropAnimation(int index);
         void StopDragAndDropAnimations();
-        void StartTapToRotateAnimation();
+        void StartTapToRotateAnimation(Pht::Vec3 position);
         
         struct DragAndDropAnimation {
             DragAndDropAnimation(Pht::IEngine& engine, float scale, bool useShadow) :
