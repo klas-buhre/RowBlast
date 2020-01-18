@@ -54,7 +54,6 @@ Ongoing tasks:
         -Fix bug where the tap to rotate hand appears after drag is stopped but the rotation is
          correct.
         -Windows with text like in SingleTap tutorial? They must disappear during draggin.
-    -Add timer in title scene.
     -Release.
     -Make new screenshots and trailer.
     -Apply to Apple for marketing: AppStore.com/Promote

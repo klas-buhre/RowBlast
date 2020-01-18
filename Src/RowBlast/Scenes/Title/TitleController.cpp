@@ -16,6 +16,8 @@ using namespace RowBlast;
 namespace {
     const Pht::Vec3 distantUfoPosition {40.0f, 140.0f, -600.0f};
     const Pht::Vec3 ufoPosition {0.25f, 1.0f, 11.0f};
+    
+    constexpr auto waitDuration = 7.0f;
 }
 
 TitleController::TitleController(Pht::IEngine& engine,
@@ -37,6 +39,7 @@ void TitleController::Init() {
     mUfoAnimation.StartWarpSpeed(ufoPosition);
     mTitleAnimation.Init(mScene.GetScene(), mScene.GetUiContainer());
     mBeginTextAnimation.Init(mScene.GetScene(), mScene.GetUiContainer());
+    mElapsedTime = 0.0f;
 }
 
 TitleController::Command TitleController::Update() {
@@ -45,6 +48,12 @@ TitleController::Command TitleController::Update() {
     if (mTitleAnimation.IsDone()) {
         if (!mBeginTextAnimation.IsActive()) {
             mBeginTextAnimation.Start();
+        }
+        
+        mElapsedTime += mEngine.GetLastFrameSeconds();
+        if (mElapsedTime > waitDuration) {
+            mElapsedTime = 0.0f;
+            command = Command::GoToMap;
         }
     
         if (mEngine.GetInput().ConsumeWholeTouch()) {

@@ -39,6 +39,7 @@ namespace RowBlast {
         UfoAnimation mUfoAnimation;
         TitleAnimation mTitleAnimation;
         BeginTextAnimation mBeginTextAnimation;
+        float mElapsedTime {0.0f};
     };
 }
 
