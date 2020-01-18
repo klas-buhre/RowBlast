@@ -30,11 +30,12 @@ ShortIPiece::ShortIPiece(Pht::IEngine& engine, const CommonResources& commonReso
     
     InitGrids(fillGrid, clickGrid, BlockColor::Blue);
     SetPreviewCellSize(0.6f);
-
-    SetDuplicateMoveCheck(Rotation::Deg270, {{0, -1}, Rotation::Deg90});
+    
+    SetDuplicateMoveCheck(Rotation::Deg270, {{0, 1}, Rotation::Deg90});
     SetDuplicateMoveCheck(Rotation::Deg0, {{1, 0}, Rotation::Deg180});
+
     SetDuplicateMoveCheck(Rotation::Deg90, {{0, -1}, Rotation::Deg270});
-    SetDuplicateMoveCheck(Rotation::Deg180, {{1, 0}, Rotation::Deg0});
+    SetDuplicateMoveCheck(Rotation::Deg180, {{-1, 0}, Rotation::Deg0});
 
     GhostPieceBorder border {
         {{1, 0}, BorderSegmentKind::Start},

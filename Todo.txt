@@ -50,9 +50,6 @@ Ongoing tasks:
   Temporary plan:
     -dragBeginDistanceThreshold could be a bit longer, more like in Dr Mario.
     -Should introduce rotate first
-        -ShortI does not place if rotated 270 degrees.
-        -Fix bug where the tap to rotate hand appears after drag is stopped but the rotation is
-         correct.
         -Windows with text like in SingleTap tutorial? They must disappear during draggin.
     -Release.
     -Make new screenshots and trailer.

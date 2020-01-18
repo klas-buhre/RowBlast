@@ -43,6 +43,32 @@ namespace {
         
         return false;
     }
+    
+    bool MovesAreTheSame(const Move& move,
+                         const Level::TutorialMove& predeterminedMove,
+                         const Piece& pieceType) {
+        if (&predeterminedMove.mPieceType != &pieceType) {
+            return false;
+        }
+
+        if (predeterminedMove.mPosition == move.mPosition &&
+            predeterminedMove.mRotation == move.mRotation) {
+            
+            return true;
+        }
+
+        auto& duplicateMoveCheck = pieceType.GetDuplicateMoveCheck(move.mRotation);
+        if (duplicateMoveCheck.HasValue()) {
+            auto& duplicateMoveCheckValue = duplicateMoveCheck.GetValue();
+            if (predeterminedMove.mPosition == move.mPosition + duplicateMoveCheckValue.mRelativePosition &&
+                predeterminedMove.mRotation == duplicateMoveCheckValue.mRotation) {
+                
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }
 
 Tutorial::Tutorial(Pht::IEngine& engine,
@@ -531,13 +557,42 @@ void Tutorial::OnBeginDragPiece() {
     StopDragAndDropAnimations();
 }
 
-void Tutorial::OnDragPieceEnd(int numMovesUsedIncludingCurrent) {
+void Tutorial::OnDragPieceEnd(int numMovesUsedIncludingCurrent, Rotation rotation) {
     if (!IsLevelPartOfTutorial()) {
         return;
     }
 
     if (mLevel->GetId() == 0) {
-        OnNewMoveDragAndDropTutorial(numMovesUsedIncludingCurrent);
+        switch (rotation) {
+            case Rotation::Deg0:
+            case Rotation::Deg180:
+                switch (numMovesUsedIncludingCurrent) {
+                    case 1:
+                        StartTapToRotateAnimation({-2.1f, -11.0f, UiLayer::root});
+                        break;
+                    case 2:
+                        StartDragAndDropAnimation(numMovesUsedIncludingCurrent - 1);
+                        break;
+                    case 3:
+                        StartTapToRotateAnimation({0.9f, -11.0f, UiLayer::root});
+                        break;
+                    default:
+                        break;
+                }
+                break;
+            case Rotation::Deg90:
+            case Rotation::Deg270:
+                switch (numMovesUsedIncludingCurrent) {
+                    case 1:
+                    case 2:
+                    case 3:
+                        StartDragAndDropAnimation(numMovesUsedIncludingCurrent - 1);
+                        break;
+                    default:
+                        break;
+                }
+                break;
+        }
     }
 }
 
@@ -945,10 +1000,7 @@ bool Tutorial::IsMoveAllowed(int numMovesUsedIncludingCurrent,
     auto& predeterminedMoves = mLevel->GetPredeterminedMoves();
     if (numMovesUsedIncludingCurrent <= predeterminedMoves.size()) {
         auto& predeterminedMove = predeterminedMoves[numMovesUsedIncludingCurrent - 1];
-        auto isMoveAllowed = predeterminedMove.mPosition == move.mPosition &&
-                             predeterminedMove.mRotation == move.mRotation &&
-                             &predeterminedMove.mPieceType == &pieceType;
-        
+        auto isMoveAllowed = MovesAreTheSame(move, predeterminedMove, pieceType);
         if (!isMoveAllowed) {
             switch (mActiveViewController) {
                 case Controller::PlacePieceWindow:
@@ -1095,7 +1147,7 @@ void Tutorial::CreateDragAndDropAnimation(Pht::Vec3 handInitialPosition,
 
     auto& handAnimation = dragAndDropAnimation->mHandAnimation;
     
-    auto waitDuration = 0.5f;
+    auto waitDuration = 0.3f;
     auto dragDuration = 2.3f;
     
     Pht::Vec3 handAdjustment {0.0f, 0.9f, 0.0f};

@@ -53,7 +53,7 @@ namespace RowBlast {
         void OnPause();
         void OnResumePlaying();
         void OnBeginDragPiece();
-        void OnDragPieceEnd(int numMovesUsedIncludingCurrent);
+        void OnDragPieceEnd(int numMovesUsedIncludingCurrent, Rotation rotation);
         void OnRotateActivePreviewPiece(int numMovesUsedIncludingCurrent, Rotation rotation);
         void OnRotateSelectable0PreviewPiece(int numMovesUsedIncludingCurrent, Rotation rotation);
         void OnNewMove(int numMovesUsedIncludingCurrent);

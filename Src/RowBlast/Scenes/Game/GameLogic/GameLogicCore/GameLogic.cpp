@@ -1501,7 +1501,7 @@ void GameLogic::EndPieceDrag() {
     HidePiecePath();
     mDraggedPieceIndex = PreviewPieceIndex::None;
     RemoveDraggedPiece();
-    mTutorial.OnDragPieceEnd(GetMovesUsedIncludingCurrent());
+    mTutorial.OnDragPieceEnd(GetMovesUsedIncludingCurrent(), mDraggedPiece.GetRotation());
 }
 
 void GameLogic::CancelDraggingBecausePieceLands() {
