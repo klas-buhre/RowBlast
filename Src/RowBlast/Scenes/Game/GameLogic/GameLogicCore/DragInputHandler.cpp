@@ -18,6 +18,10 @@ namespace {
     constexpr auto dragBeginDistanceThreshold = 5.2f;
     constexpr auto dragBeginDistanceThresholdSquared =
         dragBeginDistanceThreshold * dragBeginDistanceThreshold;
+
+    constexpr auto downTranslationDragBeginDistanceThreshold = 20.0f;
+    constexpr auto downTranslationDragBeginDistanceThresholdSquared =
+        downTranslationDragBeginDistanceThreshold * downTranslationDragBeginDistanceThreshold;
 }
 
 DragInputHandler::DragInputHandler(Pht::IEngine& engine,
@@ -105,10 +109,7 @@ void DragInputHandler::HandleTouchBeginInIdleState(const Pht::TouchEvent& touchE
 void
 DragInputHandler::HandleOngoingTouchInTouchingPreviewPieceButtonState(const Pht::TouchEvent& touchEvent) {
     auto rotation = GetPieceRotation(mDraggedPieceIndex);
-    auto dragDistanceSquared =
-        touchEvent.mTranslation.x * touchEvent.mTranslation.x + touchEvent.mTranslation.y * touchEvent.mTranslation.y;
-    if (dragDistanceSquared > dragBeginDistanceThresholdSquared &&
-        touchEvent.mTranslation.y < 0.0f &&
+    if (IsTouchDistanceLongEnoughForDrag(touchEvent) &&
         mGameLogic.IsDragPieceAllowed(mDraggedPieceIndex, rotation)) {
         
         mState = State::Dragging;
@@ -126,6 +127,24 @@ DragInputHandler::HandleOngoingTouchInTouchingPreviewPieceButtonState(const Pht:
         
         mGameLogic.HandleDraggedPieceMoved();
     }
+}
+
+bool DragInputHandler::IsTouchDistanceLongEnoughForDrag(const Pht::TouchEvent& touchEvent) {
+    auto dragDistanceSquared = touchEvent.mTranslation.x * touchEvent.mTranslation.x +
+                               touchEvent.mTranslation.y * touchEvent.mTranslation.y;
+    if (dragDistanceSquared > dragBeginDistanceThresholdSquared &&
+        touchEvent.mTranslation.y < 0.0f) {
+        
+        return true;
+    }
+    
+    if (dragDistanceSquared > downTranslationDragBeginDistanceThresholdSquared &&
+        touchEvent.mTranslation.y > 0.0f) {
+        
+        return true;
+    }
+
+    return false;
 }
 
 void DragInputHandler::HandleOngoingTouchInDraggingState(const Pht::TouchEvent& touchEvent) {
