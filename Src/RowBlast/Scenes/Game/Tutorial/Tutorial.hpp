@@ -92,6 +92,10 @@ namespace RowBlast {
             OtherMoves2Window,
             PlaceYellowPieceHintWindow,
             PlayOnYourOwnWindow,
+            RotateBluePieceWindow,
+            DragBluePieceWindow,
+            DragGreenPieceWindow,
+            RotateGreenPieceWindow,
             CascadingDialog,
             SameColorDialog,
             LaserDialog,
@@ -104,7 +108,8 @@ namespace RowBlast {
         void OnNewMoveDragAndDropTutorial(int numMovesUsedIncludingCurrent);
         void OnNewMoveFirstLevel(int numMovesUsedIncludingCurrent);
         void OnNewMoveSecondLevel(int numMovesUsedIncludingCurrent);
-        void OnRotatePreviewPiece(int numMovesUsedIncludingCurrent,
+        void OnRotatePreviewPiece(PreviewPieceIndex previewPieceIndex,
+                                  int numMovesUsedIncludingCurrent,
                                   Rotation rotation,
                                   const Pht::Vec3& handPosition);
         void SetActiveViewController(Controller controller);
@@ -148,6 +153,10 @@ namespace RowBlast {
         TutorialWindowController mPlaceMirroredSevenPieceWindowController;
         TutorialWindowController mOtherMoves2WindowController;
         TutorialWindowController mPlaceYellowPieceHintWindowController;
+        TutorialWindowController mRotateBluePieceWindowController;
+        TutorialWindowController mDragBluePieceWindowController;
+        TutorialWindowController mDragGreenPieceWindowController;
+        TutorialWindowController mRotateGreenPieceWindowController;
         PlayOnYourOwnWindowController mPlayOnYourOwnWindowController;
         CascadingDialogController mCascadingDialogController;
         SameColorDialogController mSameColorDialogController;

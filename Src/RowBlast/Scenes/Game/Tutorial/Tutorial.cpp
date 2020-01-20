@@ -217,6 +217,42 @@ Tutorial::Tutorial(Pht::IEngine& engine,
         },
         6.7f
     },
+    mRotateBluePieceWindowController {
+        engine,
+        commonResources,
+        {
+            "Tap the blue piece to rotate it.",
+        },
+        4.0f
+    },
+    mDragBluePieceWindowController {
+        engine,
+        commonResources,
+        {
+            "You play by putting pieces in",
+            "smart places. Drag the blue",
+            "piece into the playing field."
+        },
+        4.0f
+    },
+    mDragGreenPieceWindowController {
+        engine,
+        commonResources,
+        {
+            "Blocks are cleared when",
+            "horizontal rows are filled. Place",
+            "the green piece to clear three rows."
+        },
+        4.0f
+    },
+    mRotateGreenPieceWindowController {
+        engine,
+        commonResources,
+        {
+            "Tap the green piece to rotate it.",
+        },
+        4.0f
+    },
     mPlayOnYourOwnWindowController {engine, commonResources},
     mCascadingDialogController {engine, commonResources},
     mSameColorDialogController {engine, commonResources},
@@ -261,6 +297,10 @@ Tutorial::Tutorial(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(Controller::OtherMoves2Window), mOtherMoves2WindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::PlaceYellowPieceHintWindow), mPlaceYellowPieceHintWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::PlayOnYourOwnWindow), mPlayOnYourOwnWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::RotateBluePieceWindow), mRotateBluePieceWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::DragBluePieceWindow), mDragBluePieceWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::DragGreenPieceWindow), mDragGreenPieceWindowController.GetView());
+    mViewManager.AddView(static_cast<int>(Controller::RotateGreenPieceWindow), mRotateGreenPieceWindowController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::CascadingDialog), mCascadingDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::SameColorDialog), mSameColorDialogController.GetView());
     mViewManager.AddView(static_cast<int>(Controller::LaserDialog), mLaserDialogController.GetView());
@@ -417,6 +457,27 @@ void Tutorial::Update() {
                 SetActiveViewController(Controller::None);
             }
             break;
+        case Controller::RotateBluePieceWindow:
+            if (mRotateBluePieceWindowController.Update() == TutorialWindowController::Result::Done) {
+                SetActiveViewController(Controller::DragBluePieceWindow);
+                mDragBluePieceWindowController.SetUp();
+            }
+            break;
+        case Controller::DragBluePieceWindow:
+            if (mDragBluePieceWindowController.Update() == TutorialWindowController::Result::Done) {
+                SetActiveViewController(Controller::None);
+            }
+            break;
+        case Controller::DragGreenPieceWindow:
+            if (mDragGreenPieceWindowController.Update() == TutorialWindowController::Result::Done) {
+                SetActiveViewController(Controller::None);
+            }
+            break;
+        case Controller::RotateGreenPieceWindow:
+            if (mRotateGreenPieceWindowController.Update() == TutorialWindowController::Result::Done) {
+                SetActiveViewController(Controller::None);
+            }
+            break;
         case Controller::CascadingDialog:
         case Controller::SameColorDialog:
         case Controller::LaserDialog:
@@ -554,6 +615,7 @@ void Tutorial::OnBeginDragPiece() {
         return;
     }
 
+    SetActiveViewController(Controller::None);
     StopDragAndDropAnimations();
 }
 
@@ -602,12 +664,12 @@ void Tutorial::OnRotateActivePreviewPiece(int numMovesUsedIncludingCurrent, Rota
     }
 
     if (mLevel->GetId() == 0 && numMovesUsedIncludingCurrent == 1) {
-        OnRotatePreviewPiece(numMovesUsedIncludingCurrent,
+        OnRotatePreviewPiece(PreviewPieceIndex::Active,
+                             numMovesUsedIncludingCurrent,
                              rotation,
                              {-2.1f, -11.0f, UiLayer::root});
     }
 }
-
 
 void Tutorial::OnRotateSelectable0PreviewPiece(int numMovesUsedIncludingCurrent,
                                                Rotation rotation) {
@@ -616,23 +678,47 @@ void Tutorial::OnRotateSelectable0PreviewPiece(int numMovesUsedIncludingCurrent,
     }
 
     if (mLevel->GetId() == 0 && numMovesUsedIncludingCurrent == 3) {
-        OnRotatePreviewPiece(numMovesUsedIncludingCurrent,
+        OnRotatePreviewPiece(PreviewPieceIndex::Selectable0,
+                             numMovesUsedIncludingCurrent,
                              rotation,
                              {0.9f, -11.0f, UiLayer::root});
     }
 }
 
-void Tutorial::OnRotatePreviewPiece(int numMovesUsedIncludingCurrent,
+void Tutorial::OnRotatePreviewPiece(PreviewPieceIndex previewPieceIndex,
+                                    int numMovesUsedIncludingCurrent,
                                     Rotation rotation,
                                     const Pht::Vec3& handPosition) {
     switch (rotation) {
         case Rotation::Deg0:
         case Rotation::Deg180:
+            switch (previewPieceIndex) {
+                case PreviewPieceIndex::Active:
+                    SetActiveViewController(Controller::RotateBluePieceWindow);
+                    mRotateBluePieceWindowController.SetUp();
+                    break;
+                case PreviewPieceIndex::Selectable0:
+                    SetActiveViewController(Controller::RotateGreenPieceWindow);
+                    mRotateGreenPieceWindowController.SetUp();
+                    break;
+                default:
+                    break;
+            }
             StopDragAndDropAnimations();
             StartTapToRotateAnimation(handPosition);
             break;
         case Rotation::Deg90:
         case Rotation::Deg270:
+            switch (previewPieceIndex) {
+                case PreviewPieceIndex::Active:
+                    mRotateBluePieceWindowController.Close();
+                    break;
+                case PreviewPieceIndex::Selectable0:
+                    mRotateGreenPieceWindowController.Close();
+                    break;
+                default:
+                    break;
+            }
             mHandAnimation.Stop();
             StartDragAndDropAnimation(numMovesUsedIncludingCurrent - 1);
             break;
@@ -664,12 +750,18 @@ void Tutorial::OnNewMove(int numMovesUsedIncludingCurrent) {
 void Tutorial::OnNewMoveDragAndDropTutorial(int numMovesUsedIncludingCurrent) {
     switch (numMovesUsedIncludingCurrent) {
         case 1:
+            SetActiveViewController(Controller::RotateBluePieceWindow);
+            mRotateBluePieceWindowController.SetUp();
             StartTapToRotateAnimation({-2.1f, -11.0f, UiLayer::root});
             break;
         case 2:
+            SetActiveViewController(Controller::DragGreenPieceWindow);
+            mDragGreenPieceWindowController.SetUp();
             StartDragAndDropAnimation(numMovesUsedIncludingCurrent - 1);
             break;
         case 3:
+            SetActiveViewController(Controller::RotateGreenPieceWindow);
+            mRotateGreenPieceWindowController.SetUp();
             StartTapToRotateAnimation({0.9f, -11.0f, UiLayer::root});
             break;
         default:

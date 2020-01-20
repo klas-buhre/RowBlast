@@ -24,6 +24,9 @@ TutorialWindowView::TutorialWindowView(const CommonResources& commonResources,
     textProperties.mAlignment = Pht::TextAlignment::CenterX;
     
     switch (textLines.size()) {
+        case 1:
+            CreateText({0.0f, -0.2375f, UiLayer::text}, textLines[0], textProperties);
+            break;
         case 2:
             CreateText({0.0f, 0.30f, UiLayer::text}, textLines[0], textProperties);
             CreateText({0.0f, -0.775f, UiLayer::text}, textLines[1], textProperties);

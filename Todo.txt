@@ -49,11 +49,10 @@ Ongoing tasks:
 
   Temporary plan:
     -dragBeginDistanceThreshold could be a bit longer, more like in Dr Mario.
-    -Should introduce rotate first
-        -Windows with text like in SingleTap tutorial? They must disappear during draggin.
     -Release.
     -Make new screenshots and trailer.
     -Apply to Apple for marketing: AppStore.com/Promote
+    -Maybe try the color match game mode.
     
     
   Original plan:
