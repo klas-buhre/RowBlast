@@ -48,7 +48,6 @@ Backlog:
 Ongoing tasks:
 
   Temporary plan:
-    -dragBeginDistanceThreshold could be a bit longer, more like in Dr Mario.
     -Release.
     -Make new screenshots and trailer.
     -Apply to Apple for marketing: AppStore.com/Promote

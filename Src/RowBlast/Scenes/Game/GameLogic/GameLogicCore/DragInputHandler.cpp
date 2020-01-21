@@ -15,7 +15,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto dragBeginDistanceThreshold = 5.2f;
+    constexpr auto dragBeginDistanceThreshold = 10.0f;
     constexpr auto dragBeginDistanceThresholdSquared =
         dragBeginDistanceThreshold * dragBeginDistanceThreshold;
 
