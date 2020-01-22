@@ -3880,6 +3880,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_TEAM = Y6YMYQ86S3;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -3891,6 +3892,7 @@
 					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/FreeType/lib",
 					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/GameAnalytics/iOS",
 				);
+				MARKETING_VERSION = 1.0.4;
 				OTHER_CPLUSPLUSFLAGS = "-ISrc/PhotonBeamEngine/ThirdParty/FreeType/include/";
 				PRODUCT_BUNDLE_IDENTIFIER = com.teleporterstudios.rowblast;
 				PRODUCT_NAME = Game;
@@ -3910,6 +3912,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
+				CURRENT_PROJECT_VERSION = 57;
 				DEVELOPMENT_TEAM = Y6YMYQ86S3;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				INFOPLIST_FILE = Info.plist;
@@ -3919,6 +3922,7 @@
 					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/FreeType/lib",
 					"$(PROJECT_DIR)/Src/PhotonBeamEngine/ThirdParty/GameAnalytics/iOS",
 				);
+				MARKETING_VERSION = 1.0.4;
 				OTHER_CPLUSPLUSFLAGS = "-ISrc/PhotonBeamEngine/ThirdParty/FreeType/include/";
 				PRODUCT_BUNDLE_IDENTIFIER = com.teleporterstudios.rowblast;
 				PRODUCT_NAME = Game;

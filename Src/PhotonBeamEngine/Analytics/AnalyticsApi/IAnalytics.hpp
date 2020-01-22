@@ -1,7 +1,7 @@
 #ifndef IAnalytics_hpp
 #define IAnalytics_hpp
 
-// #define ANALYTICS_ENABLED
+#define ANALYTICS_ENABLED
 
 namespace Pht {
     class AnalyticsEvent;
