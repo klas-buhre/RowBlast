@@ -48,6 +48,9 @@ Backlog:
 Ongoing tasks:
 
   Temporary plan:
+    -The screenshots for iPhone 7 in app store is still the old ones.
+    -Try to have simplified tutorial animation windows.
+    -Try to fix the last levels in the first world.
     -Maybe try the color match game mode.
     
     
