@@ -49,6 +49,7 @@ Ongoing tasks:
 
   Temporary plan:
     -Try to have simplified tutorial animation windows.
+    -Trailer for iPhone 7.
     -Maybe try the color match game mode.
     
     
