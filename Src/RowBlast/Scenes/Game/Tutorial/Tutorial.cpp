@@ -554,37 +554,25 @@ Tutorial::Result Tutorial::OnLevelStart() {
             mCascadingDialogController.SetUp();
             return Result::TutorialHasFocus;
         case 4:
-            if (ShouldDisplayAnimationWindow()) {
-                SetActiveViewController(Controller::LaserDialog);
-                mLaserDialogController.SetUp();
-                return Result::TutorialHasFocus;
-            }
-            break;
+            SetActiveViewController(Controller::LaserDialog);
+            mLaserDialogController.SetUp();
+            return Result::TutorialHasFocus;
         case 5:
             SetActiveViewController(Controller::SameColorDialog);
             mSameColorDialogController.SetUp();
             return Result::TutorialHasFocus;
         case 7:
-            if (ShouldDisplayAnimationWindow()) {
-                SetActiveViewController(Controller::BombDialog);
-                mBombDialogController.SetUp();
-                return Result::TutorialHasFocus;
-            }
-            break;
+            SetActiveViewController(Controller::BombDialog);
+            mBombDialogController.SetUp();
+            return Result::TutorialHasFocus;
         case 11:
-            if (ShouldDisplayAnimationWindow()) {
-                SetActiveViewController(Controller::LevelBombDialog);
-                mLevelBombDialogController.SetUp();
-                return Result::TutorialHasFocus;
-            }
-            break;
+            SetActiveViewController(Controller::LevelBombDialog);
+            mLevelBombDialogController.SetUp();
+            return Result::TutorialHasFocus;
         case 14:
-            if (ShouldDisplayAnimationWindow()) {
-                SetActiveViewController(Controller::AsteroidDialog);
-                mAsteroidDialogController.SetUp();
-                return Result::TutorialHasFocus;
-            }
-            break;
+            SetActiveViewController(Controller::AsteroidDialog);
+            mAsteroidDialogController.SetUp();
+            return Result::TutorialHasFocus;
         default:
             break;
     }
@@ -1210,10 +1198,6 @@ bool Tutorial::IsLevelPartOfTutorial() const {
         default:
             return mLevel->IsPartOfTutorial();
     }
-}
-
-bool Tutorial::ShouldDisplayAnimationWindow() const {
-    return mUserServices.GetSettingsService().GetControlType() != ControlType::Drag;
 }
 
 void Tutorial::InitDragAndDropTutorial() {

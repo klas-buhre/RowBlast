@@ -259,6 +259,14 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
     auto& bombSwipeClip = mBombAnimation->CreateClip(bombSwipeKeyframes, 1);
     bombSwipeClip.SetInterpolation(Pht::Interpolation::None);
 
+    std::vector<Pht::Keyframe> bombDragAndDropKeyframes {
+        {.mTime = 0.0f, .mPosition = bombPosition2, .mRotation = Pht::Vec3{65.0f, -22.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = bombPosition2Time, .mPosition = bombPosition2, .mRotation = Pht::Vec3{90.0f, -32.0f, 0.0f}},
+        {.mTime = detonationTime, .mPosition = bombDetonationPosition, .mRotation = Pht::Vec3{90.0f, -32.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    mBombAnimation->CreateClip(bombDragAndDropKeyframes, 2);
+
     mHandAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     mHandAnimation->Init(container);
     
@@ -330,6 +338,17 @@ void BombDialogView::CreateAnimation(const PieceResources& pieceResources,
     auto& handAnimationSwipeClip = mHandPhtAnimation->CreateClip(handAnimationSwipeKeyframes, 1);
     handAnimationSwipeClip.SetInterpolation(Pht::Interpolation::Cosine);
     
+    std::vector<Pht::Keyframe> handAnimationDragKeyframes {
+        {
+            .mTime = 0.0f,
+            .mPosition = handInitialPosition
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    mHandPhtAnimation->CreateClip(handAnimationDragKeyframes, 2);
+
     mBlastRadius = &CreateSceneObject();
     mBlastRadius->GetTransform().SetScale(0.8f);
     mBlastRadius->SetRenderable(&blastRadiusAnimation.GetBombRadiusRenderable());
@@ -468,13 +487,19 @@ void BombDialogView::SetUp() {
             mBombMoves->SetIsVisible(true);
             mBombGhostPieceContainer->SetIsVisible(false);
             break;
-        case ControlType::Drag:
         case ControlType::Swipe:
             mHandPhtAnimation->SetDefaultClip(1);
             mBombAnimation->SetDefaultClip(1);
             mBlastRadiusPhtAnimation->SetDefaultClip(1);
             mBombMoves->SetIsVisible(false);
             mBombGhostPieceContainer->SetIsVisible(true);
+            break;
+        case ControlType::Drag:
+            mHandAnimation->Hide();
+            mHandPhtAnimation->SetDefaultClip(2);
+            mBombAnimation->SetDefaultClip(2);
+            mBombMoves->SetIsVisible(false);
+            mBombGhostPieceContainer->SetIsVisible(false);
             break;
     }
 
