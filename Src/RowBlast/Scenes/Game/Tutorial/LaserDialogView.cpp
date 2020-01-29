@@ -155,7 +155,15 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
     };
     auto& rowBombSwipeClip = mRowBombAnimation->CreateClip(rowBombSwipeKeyframes, 1);
     rowBombSwipeClip.SetInterpolation(Pht::Interpolation::None);
-    
+
+    std::vector<Pht::Keyframe> rowBombDragAndDropKeyframes {
+        {.mTime = 0.0f, .mPosition = rowBombPosition2, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = rowBombPosition2Time, .mPosition = rowBombPosition2, .mRotation = Pht::Vec3{0.0f, rowBombPosition2Time * rowBombRotationSpeed, 0.0f}},
+        {.mTime = detonationTime, .mPosition = rowBombDetonationPosition, .mRotation = Pht::Vec3{0.0f, detonationTime * rowBombRotationSpeed, 0.0f}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    mRowBombAnimation->CreateClip(rowBombDragAndDropKeyframes, 2);
+
     mHandAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
     mHandAnimation->Init(container);
     
@@ -227,6 +235,17 @@ void LaserDialogView::CreateAnimation(const PieceResources& pieceResources,
     auto& handAnimationSwipeClip = mHandPhtAnimation->CreateClip(handAnimationSwipeKeyframes, 1);
     handAnimationSwipeClip.SetInterpolation(Pht::Interpolation::Cosine);
 
+    std::vector<Pht::Keyframe> handAnimationDragKeyframes {
+        {
+            .mTime = 0.0f,
+            .mPosition = handInitialPosition
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    mHandPhtAnimation->CreateClip(handAnimationDragKeyframes, 2);
+
     mLaserEffect = std::make_unique<TutorialLaserParticleEffect>(mEngine, container);
     
     std::vector<Pht::Keyframe> laserKeyframes {
@@ -294,12 +313,18 @@ void LaserDialogView::SetUp() {
             mRowBombMoves->SetIsVisible(true);
             mRowBombGhostPieceContainer->SetIsVisible(false);
             break;
-        case ControlType::Drag:
         case ControlType::Swipe:
             mHandPhtAnimation->SetDefaultClip(1);
             mRowBombAnimation->SetDefaultClip(1);
             mRowBombMoves->SetIsVisible(false);
             mRowBombGhostPieceContainer->SetIsVisible(true);
+            break;
+        case ControlType::Drag:
+            mHandAnimation->Hide();
+            mHandPhtAnimation->SetDefaultClip(2);
+            mRowBombAnimation->SetDefaultClip(2);
+            mRowBombMoves->SetIsVisible(false);
+            mRowBombGhostPieceContainer->SetIsVisible(false);
             break;
     }
 

@@ -253,7 +253,15 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
     };
     auto& pieceSwipeClip = mPieceAnimation->CreateClip(pieceSwipeKeyframes, 1);
     pieceSwipeClip.SetInterpolation(Pht::Interpolation::None);
-    
+
+    std::vector<Pht::Keyframe> pieceDragAndDropKeyframes {
+        {.mTime = 0.0f, .mPosition = piecePosition2, .mIsVisible = true},
+        {.mTime = piecePosition2Time, .mPosition = piecePosition2},
+        {.mTime = detonationTime, .mPosition = pieceLandingPosition, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    mPieceAnimation->CreateClip(pieceDragAndDropKeyframes, 2);
+
     auto& yellowBlocks = CreateSceneObject();
     container.AddChild(yellowBlocks);
     
@@ -363,6 +371,17 @@ void LevelBombDialogView::CreateAnimation(const PieceResources& pieceResources,
     auto& handAnimationSwipeClip = mHandPhtAnimation->CreateClip(handAnimationSwipeKeyframes, 1);
     handAnimationSwipeClip.SetInterpolation(Pht::Interpolation::Cosine);
     
+    std::vector<Pht::Keyframe> handAnimationDragKeyframes {
+        {
+            .mTime = 0.0f,
+            .mPosition = handInitialPosition
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    mHandPhtAnimation->CreateClip(handAnimationDragKeyframes, 2);
+
     for (auto i = 0; i < 10; ++i) {
         mExplosionEffects.emplace_back(mEngine, TutorialExplosionParticleEffect::Kind::LevelBomb, container);
     }
@@ -480,12 +499,18 @@ void LevelBombDialogView::SetUp() {
             mMoves->SetIsVisible(true);
             mGhostPieceContainer->SetIsVisible(false);
             break;
-        case ControlType::Drag:
         case ControlType::Swipe:
             mHandPhtAnimation->SetDefaultClip(1);
             mPieceAnimation->SetDefaultClip(1);
             mMoves->SetIsVisible(false);
             mGhostPieceContainer->SetIsVisible(true);
+            break;
+        case ControlType::Drag:
+            mHandAnimation->Hide();
+            mHandPhtAnimation->SetDefaultClip(2);
+            mPieceAnimation->SetDefaultClip(2);
+            mMoves->SetIsVisible(false);
+            mGhostPieceContainer->SetIsVisible(false);
             break;
     }
 
