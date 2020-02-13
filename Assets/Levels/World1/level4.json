@@ -3,8 +3,8 @@
     "moves": 55,
     "starLimits": {
         "one": 100,
-        "two": 1600,
-        "three": 4000
+        "two": 600,
+        "three": 1200
     },
     "floatingBlocksSet": "Standard",
     "musicTrack": 2,

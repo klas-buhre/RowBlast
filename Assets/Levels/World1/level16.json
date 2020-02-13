@@ -4,7 +4,7 @@
     "starLimits": {
         "one": 150,
         "two": 2000,
-        "three": 5000
+        "three": 3000
     },
     "floatingBlocksSet": "Standard",
     "musicTrack": 2,
