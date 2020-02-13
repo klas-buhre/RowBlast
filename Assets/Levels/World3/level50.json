@@ -3,8 +3,8 @@
     "moves": 45,
     "starLimits": {
         "one": 150,
-        "two": 2000,
-        "three": 5000
+        "two": 1500,
+        "three": 3800
     },
     "floatingBlocksSet": "Asteroid",
     "musicTrack": 2,
