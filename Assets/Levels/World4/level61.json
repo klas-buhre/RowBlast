@@ -7,8 +7,8 @@
         "three": 5000
     },
     "floatingBlocksSet": "Standard",
-    "musicTrack": 1,
-    "background": "sky8.jpg",
+    "musicTrack": 2,
+    "background": "sky7.jpg",
     "lightIntensity": "Sunset",
     "pieces": [
         "LongI",
@@ -18,7 +18,7 @@
         "D",
         "F",
         "MirroredF",
-        "BigL",
+        "RowBomb",
         "Z",
         "MirroredZ"
     ],

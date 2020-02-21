@@ -1,6 +1,6 @@
 {
     "speed": 0.0,
-    "moves": 30,
+    "moves": 20,
     "starLimits": {
         "one": 150,
         "two": 2000,
@@ -8,7 +8,7 @@
     },
     "floatingBlocksSet": "Standard",
     "musicTrack": 1,
-    "background": "sky7.jpg",
+    "background": "sky8.jpg",
     "lightIntensity": "Sunset",
     "pieces": [
         "LongI",
@@ -17,7 +17,9 @@
         "B",
         "D",
         "Seven",
-        "MirroredSeven"
+        "MirroredSeven",
+        "Bomb",
+        "RowBomb"
     ],
     "clearGrid": [
         "        ",
@@ -32,20 +34,27 @@
         "        ",
         "        ",
         "        ",
-        "        ",
-        "  B  B  ",
-        "  GGGG  ",
-        "  GGGG  ",
-        "   GG   ",
-        "   GG   ",
-        "GpGGGqG ",
-        "G G G G ",
+        "   L    ",
+        "   L    ",
+        "   L    ",
+        "   L    ",
+        " GGGGGG ",
+        "pq    pq",
+        "bd    bd",
+        "pq    pq",
+        "bd    bd",
+        " GGGGGG ",
+        "       L",
+        "       L",
+        "       L",
         "GGG GGGG",
-        "        ",
-        "B     B ",
-        "GpGGGqG ",
-        "G G G G ",
-        "GGG GGGG"
+        "       L",
+        "       L",
+        "       L",
+        "GGG GGGG",
+        "pqpqpq  ",
+        "bdbdbd  ",
+        "pqpqpq  ",
+        "bdbdbd  "
     ]
 }
-
