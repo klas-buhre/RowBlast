@@ -3,8 +3,8 @@
     "moves": 55,
     "starLimits": {
         "one": 100,
-        "two": 800,
-        "three": 1600
+        "two": 700,
+        "three": 1400
     },
     "floatingBlocksSet": "Standard",
     "musicTrack": 2,
@@ -23,16 +23,17 @@
         "I",
         "ShortI",
         "B",
-        "D"
+        "D",
+        "I"
     ],
     "predeterminedMoves": [
         {
-            "position": [2, 10],
+            "position": [2, 9],
             "rotation": 0,
             "piece": "I"
         },
         {
-            "position": [0, 7],
+            "position": [0, 6],
             "rotation": 270,
             "piece": "B"
         }
@@ -57,7 +58,6 @@
         "  GGGGG",
         "  GGGGG",
         "G GGGGG",
-        "GG     ",
         "GG     ",
         "GG     ",
         "ggG    ",

@@ -21,7 +21,8 @@
         "RowBomb"
     ],
     "pieceSequence": [
-        "RowBomb"
+        "RowBomb",
+        "D"
     ],
     "clearGrid": [
         "       ",
@@ -35,7 +36,7 @@
         "       ",
         "       ",
         "      g",
-        "    lyr",
+        "     yr",
         "    lyr",
         "G   GGG",
         "GGG    ",
@@ -44,9 +45,9 @@
         "   GGGG",
         "   GGGG",
         "   GGGG",
-        "GGG    ",
-        "GGG    ",
-        "GGG    ",
+        "   GGGG",
+        "   GGGG",
+        "   GGGG",
         "   GGGG",
         "   GGGG",
         "   GGGG",
