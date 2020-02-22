@@ -4,7 +4,7 @@ using namespace RowBlast;
 
 namespace {
     const std::vector<MapPlace> places {
-        MapPlace {Portal {4, 66, {-20.0f, -1.5f, 10.0f}}}
+        MapPlace {Portal {4, 59, {-20.0f, -1.5f, 10.0f}}}
     };
 
     const std::vector<TerrainSegment>& terrainSegments {

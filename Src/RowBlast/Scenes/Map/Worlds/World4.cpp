@@ -3,18 +3,20 @@
 using namespace RowBlast;
 
 namespace {
+    constexpr auto offset = 15.0f;
+    
     const std::vector<MapPlace> places {
-        MapPlace {Portal {3, 51, {-20.0f, -1.5f, 10.0f}}}
+        MapPlace {Portal {3, 51, {-24.0f + offset, 3.0f, 10.0f}}},
+        MapPlace {MapLevel {51, {-21.5f + offset, 1.0f, 10.0f}, {0.0f, -0.7f, 0.0f}}},
+        MapPlace {MapLevel {52, {-19.5f + offset, -1.5f, 10.0f}}},
+        MapPlace {MapLevel {53, {-17.0f + offset, -3.5f, 10.0f}}},
+        MapPlace {MapLevel {54, {-13.5f + offset, -4.0f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
+        MapPlace {MapLevel {55, {-10.0f + offset, -3.5f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
+        MapPlace {MapLevel {56, {-7.5f + offset, -2.0f, 10.0f}, {0.0f, 2.3f, 0.0f}}},
+        MapPlace {MapLevel {57, {-4.5f + offset, -1.5f, 10.0f}, {-0.5f, 2.3f, 0.0f}}},
+        MapPlace {MapLevel {58, {-1.5f + offset, -2.0f, 10.0f}, {0.0f, 2.3f, 0.0f}}},
+        MapPlace {Portal {5, 59, {1.5f + offset, -3.5f, 10.0f}}}
 /*
-        MapPlace {Portal {3, 51, {-24.0f, 3.0f, 10.0f}}},
-        MapPlace {MapLevel {51, {-21.5f, 1.0f, 10.0f}, {0.0f, -0.7f, 0.0f}}},
-        MapPlace {MapLevel {52, {-19.5f, -1.5f, 10.0f}}},
-        MapPlace {MapLevel {53, {-17.0f, -3.5f, 10.0f}}},
-        MapPlace {MapLevel {54, {-13.5f, -4.0f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
-        MapPlace {MapLevel {55, {-10.0f, -3.5f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
-        MapPlace {MapLevel {56, {-7.5f, -2.0f, 10.0f}, {0.0f, 2.3f, 0.0f}}},
-        MapPlace {MapLevel {57, {-4.5f, -1.5f, 10.0f}, {-0.5f, 2.3f, 0.0f}}},
-        MapPlace {MapLevel {58, {-1.5f, -2.0f, 10.0f}}},
         MapPlace {MapLevel {59, {1.5f, -3.5f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
         MapPlace {MapLevel {60, {4.5f, -4.0f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
         MapPlace {MapLevel {61, {8.0f, -3.5f, 10.0f}, {0.0f, 2.6f, 0.0f}}},
@@ -37,30 +39,30 @@ namespace {
     };
 
     const std::vector<BlockPathVolume> blockPaths {
-        BlockPathVolume {{-25.0f, -1.0f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
-        BlockPathVolume {{-22.0f, -3.0f, 13.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::RowBomb},
-        BlockPathVolume {{-19.0f, 3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
-        BlockPathVolume {{-17.0f, 3.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{-16.5f, -7.0f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
-        BlockPathVolume {{-16.0f, 0.0f, 10.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{-14.0f, -5.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
-        BlockPathVolume {{-12.0f, -2.0f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
-        BlockPathVolume {{-10.0f, -4.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::RowBomb},
-        BlockPathVolume {{-7.0f, 3.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
-        BlockPathVolume {{-6.0f, -3.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
-        BlockPathVolume {{-3.0f, -4.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::Bomb},
-        BlockPathVolume {{-3.0f, 2.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
-        BlockPathVolume {{0.0f, -4.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{0.0f, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{4.0f, -5.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
-        BlockPathVolume {{6.0f, 0.0f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
-        BlockPathVolume {{8.0f, 2.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
-        BlockPathVolume {{9.0f, -5.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
-        BlockPathVolume {{11.0f, 2.0f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
-        BlockPathVolume {{16.5f, -4.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
-        BlockPathVolume {{15.0f, 3.0f, 13.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::RowBomb},
-        BlockPathVolume {{19.0f, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
-        BlockPathVolume {{23.0f, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI}
+        BlockPathVolume {{-25.0f + offset, -1.0f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
+        BlockPathVolume {{-22.0f + offset, -3.0f, 13.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::RowBomb},
+        BlockPathVolume {{-19.0f + offset, 3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
+        BlockPathVolume {{-17.0f + offset, 3.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{-16.5f + offset, -7.0f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
+        BlockPathVolume {{-16.0f + offset, 0.0f, 10.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{-14.0f + offset, -5.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{-12.0f + offset, -2.0f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
+        BlockPathVolume {{-10.0f + offset, -4.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::RowBomb},
+        BlockPathVolume {{-7.0f + offset, 3.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
+        BlockPathVolume {{-6.0f + offset, -3.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{-3.0f + offset, -4.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::Bomb},
+        BlockPathVolume {{-3.0f + offset, 2.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{0.0f + offset, -4.0f, 13.7f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{0.0f + offset, 0.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{4.0f + offset, -5.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{6.0f + offset, 0.0f, 8.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::L},
+        BlockPathVolume {{8.0f + offset, 2.5f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::B},
+        BlockPathVolume {{9.0f + offset, -5.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
+        BlockPathVolume {{11.0f + offset, 2.0f, 5.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::SingleBlock},
+        BlockPathVolume {{16.5f + offset, -4.0f, 0.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI},
+        BlockPathVolume {{15.0f + offset, 3.0f, 13.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::RowBomb},
+        BlockPathVolume {{19.0f + offset, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::I},
+        BlockPathVolume {{23.0f + offset, -3.0f, 12.0f}, {0.0f, 0.0f, 0.0f}, FloatingPieceType::ShortI}
     };
 
     const std::vector<CloudPathVolume> cloudPaths {
