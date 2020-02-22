@@ -1,6 +1,6 @@
 {
     "speed": 0.2,
-    "moves": 48,
+    "moves": 50,
     "starLimits": {
         "one": 150,
         "two": 2000,
