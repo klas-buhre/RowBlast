@@ -1,10 +1,10 @@
 {
     "speed": 0.0,
-    "moves": 30,
+    "moves": 21,
     "starLimits": {
         "one": 150,
-        "two": 2000,
-        "three": 5000
+        "two": 600,
+        "three": 1200
     },
     "floatingBlocksSet": "Standard",
     "musicTrack": 2,
