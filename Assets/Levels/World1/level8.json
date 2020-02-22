@@ -1,6 +1,6 @@
 {
     "speed": 0.0,
-    "moves": 52,
+    "moves": 55,
     "gestureMovesFactor": 1.04,
     "starLimits": {
         "one": 100,
@@ -41,24 +41,24 @@
         "GGG GGG",
         "GGG GGG",
         "GGG GGG",
-        "GGG    ",
+        "GGGG   ",
         "    GGG",
         "    GGG",
-        "GGG    ",
-        "GGG    ",
+        "GGGG   ",
+        "GGGG   ",
         "    GGG",
         "    GGG",
         "    GGG",
-        "GGG    ",
+        "GGGG   ",
         "    GGG",
-        "GGG    ",
-        "GGG    ",
+        "GGGG   ",
+        "GGGG   ",
         "GGG GGG",
         "GGG    ",
-        "    GGG",
-        "    GGG",
+        "   GGGG",
+        "   GGGG",
         "GGG    ",
         "GGG    ",
-        "    GGG"
+        "   GGGG"
     ]
 }

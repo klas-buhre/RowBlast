@@ -48,9 +48,6 @@ Backlog:
 Ongoing tasks:
 
   Temporary plan:
-    -Release.
-    -Make new screenshots and trailer.
-    -Apply to Apple for marketing: AppStore.com/Promote
     -Maybe try the color match game mode.
     
     

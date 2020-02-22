@@ -38,6 +38,8 @@
 		1772E90D237F3CCC0024E90A /* terrain3_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1772E90C237F3CCC0024E90A /* terrain3_2.jpg */; };
 		1774768022DA42B800EEE97C /* NoMoreLevelsDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774767E22DA42B800EEE97C /* NoMoreLevelsDialogView.cpp */; };
 		1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */; };
+		17875F16240061320082D984 /* level74.json in Resources */ = {isa = PBXBuildFile; fileRef = 17875F15240061320082D984 /* level74.json */; };
+		17875F192401BFD90082D984 /* World5.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17875F172401BFD90082D984 /* World5.cpp */; };
 		1787AB042378A9E200E3D314 /* terrain1_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1787AB032378A9E100E3D314 /* terrain1_2.jpg */; };
 		1787AB082379D2BD00E3D314 /* terrain1_2888.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1787AB072379D2BD00E3D314 /* terrain1_2888.obj */; };
 		17A75B5A23211A2C001BA90D /* GhostPieceBlocks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17A75B4623211A2C001BA90D /* GhostPieceBlocks.cpp */; };
@@ -608,6 +610,9 @@
 		1774767F22DA42B800EEE97C /* NoMoreLevelsDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogView.hpp; sourceTree = "<group>"; };
 		1774768122DA42E400EEE97C /* NoMoreLevelsDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoMoreLevelsDialogController.cpp; sourceTree = "<group>"; };
 		1774768222DA42E400EEE97C /* NoMoreLevelsDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoMoreLevelsDialogController.hpp; sourceTree = "<group>"; };
+		17875F15240061320082D984 /* level74.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = level74.json; sourceTree = "<group>"; };
+		17875F172401BFD90082D984 /* World5.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = World5.cpp; sourceTree = "<group>"; };
+		17875F182401BFD90082D984 /* World5.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = World5.hpp; sourceTree = "<group>"; };
 		1787AB032378A9E100E3D314 /* terrain1_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain1_2.jpg; sourceTree = "<group>"; };
 		1787AB072379D2BD00E3D314 /* terrain1_2888.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = terrain1_2888.obj; sourceTree = "<group>"; };
 		17A75B4323211A2C001BA90D /* SlidingText.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SlidingText.hpp; sourceTree = "<group>"; };
@@ -2189,6 +2194,8 @@
 				62216B9C21EB377E001CB9A1 /* World3.hpp */,
 				62216B9921EB377E001CB9A1 /* World4.cpp */,
 				62216BA021EB377E001CB9A1 /* World4.hpp */,
+				17875F172401BFD90082D984 /* World5.cpp */,
+				17875F182401BFD90082D984 /* World5.hpp */,
 			);
 			path = Worlds;
 			sourceTree = "<group>";
@@ -2377,6 +2384,7 @@
 				62276E302274A96000679BC6 /* level71.json */,
 				62276E422274A96000679BC6 /* level72.json */,
 				62276E412274A96000679BC6 /* level73.json */,
+				17875F15240061320082D984 /* level74.json */,
 			);
 			path = World4;
 			sourceTree = "<group>";
@@ -3418,6 +3426,7 @@
 				6270DC6D1FCB231B00FB457D /* ethnocentric_rg_it.ttf in Resources */,
 				62B1CB88210F8F8600D0F195 /* laser_bomb_emission.png in Resources */,
 				625D3B5721724A9A00D67EC2 /* gray_asteroid.jpg in Resources */,
+				17875F16240061320082D984 /* level74.json in Resources */,
 				62B1CB63210F8EE500D0F195 /* cloud_E_512.png in Resources */,
 				62276E732274A96000679BC6 /* level28.json in Resources */,
 				62276E592274A96000679BC6 /* level47.json in Resources */,
@@ -3599,6 +3608,7 @@
 				17A75B5C23211A2C001BA90D /* BlastArea.cpp in Sources */,
 				1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */,
 				625698062182392C003A3A9D /* CylinderMesh.cpp in Sources */,
+				17875F192401BFD90082D984 /* World5.cpp in Sources */,
 				62216BE221EB377E001CB9A1 /* GameHudController.cpp in Sources */,
 				62216C1B21EB377F001CB9A1 /* Level.cpp in Sources */,
 				62216A9821EB376E001CB9A1 /* GradientRectangle.cpp in Sources */,
