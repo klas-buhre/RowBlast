@@ -5,11 +5,18 @@
 #include "World2.hpp"
 #include "World3.hpp"
 #include "World4.hpp"
+#include "World5.hpp"
 
 using namespace RowBlast;
 
 Universe::Universe() :
-    mWorlds {GetWorld1(), GetWorld2(), GetWorld3(), GetWorld4()} {}
+    mWorlds {
+        GetWorld1(),
+        GetWorld2(),
+        GetWorld3(),
+        GetWorld4(),
+        GetWorld5()
+    } {}
 
 const World& Universe::GetWorld(int worldId) const {
     assert(worldId <= mWorlds.size());
