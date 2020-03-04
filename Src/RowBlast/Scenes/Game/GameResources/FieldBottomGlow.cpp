@@ -13,8 +13,8 @@ using namespace RowBlast;
 namespace {
     constexpr auto glowWidthInCells = 9.2f;
     constexpr auto glowHeightInCells = 1.0f;
-    constexpr auto glowOpacity = 0.275f;
-    constexpr auto pulseAmplitude = 0.435f;
+    constexpr auto glowOpacity = 0.75f;
+    constexpr auto pulseAmplitude = 0.3f;
     constexpr auto pulseDuration = 1.25f;
 }
 

@@ -46,23 +46,17 @@ Backlog:
      mostly be the target audince and in the playtest they are not.
 
 Ongoing tasks:
-
-  Temporary plan:
-    -Maybe try the color match game mode.
     
     
-  Original plan:
-    -Major user stories before release:
+  Plan:
+    -Major user stories:
+        -Se row below.                                                              ~1 day
+        -Find more moves.                                                           ~1 week
+        -Purchasing                                                                 ~1 week
         -Items in the next release (match-3, hud, bombs dragged piece)              ~1-2 weeks
         -Interacting with publishers                                                ~1 week
-        -Task after publisher (preview pieces, level end, clear blocks)             ~1-2 weeks
-        -Reduce the risk mixing up the rotate tap with a drag start.                ~1 week
-        -Find more moves.                                                           ~1 week
-        -Replace bad levels in world 1 with levels of width 9 and asteroid levels.  ~1 week
-        -Remove moves from world 1 to 3 after finding more moves.                   ~0.5 weeks
-        -Update the tutorial with drag controls                                     ~1.5 weeks
-        -Purchasing                                                                 ~1 week
-         Total cost:                                                                 9-11 weeks
+        -Task after publisher (preview pieces, clear blocks)                        ~1-2 weeks
+         Total cost:                                                                 5-7 weeks
 
 
     -Do:

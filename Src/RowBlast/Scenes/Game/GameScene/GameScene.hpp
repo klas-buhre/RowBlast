@@ -258,6 +258,14 @@ namespace RowBlast {
         const Pht::Vec2& GetDraggedPieceShadowOffset() const {
             return mDraggedPieceShadowOffset;
         }
+        
+        float GetRowBelowSliceHeightInCells() const {
+            return mRowBelowSliceHeightInCells;
+        }
+        
+        float GetFieldPadding() const {
+            return mFieldPadding;
+        }
 
     private:
         void UpdateCameraPosition();
@@ -325,12 +333,14 @@ namespace RowBlast {
         Pht::SceneObject* mStarsContainer {nullptr};
         Pht::SceneObject* mDraggedPiece {nullptr};
         Pht::SceneObject* mDraggedPieceShadow {nullptr};
+        Pht::SceneObject* mRowBelowQuad {nullptr};
         const Pht::Vec3 mFieldPosition;
         const float mDraggedPieceZ {mCellSize / 2.0f + 0.3f};
         const float mDraggedPieceShadowZ {mCellSize / 2.0f + 0.2f};
         const float mBlastAreaZ {mCellSize / 2.0f + 0.15f};
         const float mShieldZ {mCellSize / 2.0f + 0.1f};
         const float mFieldBottomGlowZ {mCellSize / 2.0f + 0.1f};
+        const float mRowBelowQuadZ {mCellSize / 2.0f + 0.09f};
         const float mGhostPieceZ {mCellSize / 2.0f + 0.02f};
         const float mPressedGhostPieceZ {mCellSize / 2.0f + 0.2f};
         const float mBlueprintAnimationZ {-0.6f};
@@ -338,6 +348,8 @@ namespace RowBlast {
         const float mFieldGridZ {-1.8f};
         const float mBigAsteroidZ {-1.0f};
         const float mBouncingBlockZ {-0.2f};
+        const float mRowBelowSliceHeightInCells {0.25f};
+        const float mFieldPadding {0.1f};
         Pht::Vec2 mDraggedPieceShadowOffset {-0.075f, -0.075f};
         float mFieldWidth {0.0f};
         float mFieldHeight {0.0f};
