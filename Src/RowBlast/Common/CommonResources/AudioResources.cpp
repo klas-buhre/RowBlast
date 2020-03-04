@@ -8,11 +8,11 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto gameMusicVolume = 0.36f;
-    constexpr auto mapMusicVolume = 0.55f;
+    constexpr auto gameMusicVolume = 0.3f;
+    constexpr auto mapMusicVolume = 0.4f;
     constexpr auto fadeInDuration = 0.22f;
     constexpr auto maxSoundGain = 1.0f;
-    constexpr auto clearBlocksGain = 0.75f;
+    constexpr auto clearBlocksGain = 0.6f;
 }
 
 void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
@@ -30,7 +30,7 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
                     static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
     audio.LoadSound("start_game.wav",
                     1,
-                    maxSoundGain,
+                    0.65f,
                     static_cast<Pht::AudioResourceId>(SoundId::StartGame));
     audio.LoadSound("leave_title.wav",
                     1,
@@ -110,7 +110,7 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
                     static_cast<Pht::AudioResourceId>(SoundId::AddMove));
     audio.LoadSound("all_cleared.wav",
                     1,
-                    maxSoundGain,
+                    0.8f,
                     static_cast<Pht::AudioResourceId>(SoundId::AllCleared));
     audio.LoadSound("level_completed.wav",
                     1,
