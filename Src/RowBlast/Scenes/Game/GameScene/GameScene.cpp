@@ -24,7 +24,6 @@ namespace {
     constexpr auto blueprintZ = -0.8f;
     constexpr auto fieldBorderZ = -0.5f;
     constexpr auto lowerClipAreaHeightInCells = 2.55f;
-    constexpr auto fieldPadding = 0.1f;
     constexpr auto scissorBoxPadding = 0.1f;
     constexpr auto lightAnimationDuration = 5.0f;
     const Pht::Vec3 lightDirectionA {0.785f, 1.0f, 0.67f};
@@ -340,8 +339,8 @@ void GameScene::CreateFieldContainer() {
 }
 
 Pht::QuadMesh::Vertices GameScene::CreateFieldVertices() {
-    auto width = mFieldWidth + fieldPadding;
-    auto height = mFieldHeight + fieldPadding;
+    auto width = mFieldWidth + mFieldPadding;
+    auto height = mFieldHeight + mFieldPadding;
     auto f = fieldQuadBrightness;
 
     return {
@@ -511,18 +510,54 @@ void GameScene::CreateStarsContainer() {
 
 void GameScene::InitFieldBorder(const Level& level) {
     Pht::Vec3 leftBorderPosition {
-        mFieldPosition.x - (mFieldWidth + fieldPadding) / 2.0f,
+        mFieldPosition.x - (mFieldWidth + mFieldPadding) / 2.0f,
         mFieldPosition.y,
         fieldBorderZ
     };
 
     Pht::Vec3 rightBorderPosition {
-        mFieldPosition.x + (mFieldWidth + fieldPadding) / 2.0f,
+        mFieldPosition.x + (mFieldWidth + mFieldPadding) / 2.0f,
         mFieldPosition.y,
         fieldBorderZ
     };
 
     mFieldBorder.Init(leftBorderPosition, rightBorderPosition, level.GetNumRows());
+    
+    mRowBelowQuad = &mScene->CreateSceneObject();
+    mFieldBlocksContainer->AddChild(*mRowBelowQuad);
+    
+    auto rowBelowOpacity = 0.3f;
+    Pht::Material rowBelowMaterial;
+    rowBelowMaterial.SetOpacity(rowBelowOpacity);
+
+    auto width = mFieldWidth + mFieldPadding;
+    auto height = mRowBelowSliceHeightInCells * mCellSize;
+    Pht::Vec4 quadColor {0.9f, 0.9f, 1.0f, 1.0f};
+    Pht::QuadMesh::Vertices vertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, quadColor},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, quadColor},
+        {{width / 2.0f, height / 2.0f, 0.0f}, quadColor},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, quadColor},
+    };
+
+    auto& quad = mScene->CreateSceneObject(Pht::QuadMesh {vertices}, rowBelowMaterial);
+    mRowBelowQuad->AddChild(quad);
+    
+    Pht::Material lineMaterial;
+    
+    auto lineWidth = 0.1f;
+    Pht::Vec4 upperLineColor {0.9f, 0.9f, 1.0f, 1.0f};
+    Pht::Vec4 lowerLineColor {0.9f, 0.9f, 1.0f, rowBelowOpacity};
+    Pht::QuadMesh::Vertices lineVertices {
+        {{-width / 2.0f, -lineWidth / 2.0f, 0.0f}, lowerLineColor},
+        {{width / 2.0f, -lineWidth / 2.0f, 0.0f}, lowerLineColor},
+        {{width / 2.0f, lineWidth / 2.0f, 0.0f}, upperLineColor},
+        {{-width / 2.0f, lineWidth / 2.0f, 0.0f}, upperLineColor},
+    };
+
+    auto& line = mScene->CreateSceneObject(Pht::QuadMesh {lineVertices}, lineMaterial);
+    line.GetTransform().SetPosition({0.0f, height / 2.0f - lineWidth / 2.0f, 0.05f});
+    mRowBelowQuad->AddChild(line);
 }
 
 void GameScene::Update() {
@@ -556,19 +591,29 @@ void GameScene::UpdateCameraPosition() {
     Pht::Vec3 up {0.0f, 1.0f, 0.0f};
     mCamera->SetTarget(target, up);
     
+    auto scissorBoxLowerEdge = cameraYPosition - frustumSize.y / 2.0f + lowerClipAreaHeight +
+                               bottomPadding - mRowBelowSliceHeightInCells * mCellSize;
     Pht::Vec2 scissorBoxLowerLeft {
         mFieldPosition.x -
-        (mFieldWidth + fieldPadding + FieldBorder::borderThickness + FieldBorder::frameThickness + scissorBoxPadding) / 2.0f,
-        cameraYPosition - frustumSize.y / 2.0f + lowerClipAreaHeight + bottomPadding
+        (mFieldWidth + mFieldPadding + FieldBorder::borderThickness + FieldBorder::frameThickness + scissorBoxPadding) / 2.0f,
+        scissorBoxLowerEdge
     };
     
     Pht::Vec2 scissorBoxSize {
-        mFieldWidth + fieldPadding + FieldBorder::borderThickness + FieldBorder::frameThickness + scissorBoxPadding,
-        15.4f * mCellSize
+        mFieldWidth + mFieldPadding + FieldBorder::borderThickness + FieldBorder::frameThickness + scissorBoxPadding,
+        15.4f * mCellSize + mRowBelowSliceHeightInCells * mCellSize
     };
 
     Pht::ScissorBox scissorBox {scissorBoxLowerLeft, scissorBoxSize};
     SetScissorBox(scissorBox);
+    
+    Pht::Vec3 rowBelowQuadPosition {
+        mFieldPosition.x - mFieldLoweLeft.x,
+        scissorBoxLowerEdge + (mRowBelowSliceHeightInCells * mCellSize / 2.0f) - mFieldLoweLeft.y,
+        mRowBelowQuadZ
+    };
+    
+    mRowBelowQuad->GetTransform().SetPosition(rowBelowQuadPosition);
 }
 
 void GameScene::SetScissorBox(const Pht::ScissorBox& scissorBox) {

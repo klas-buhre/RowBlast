@@ -16,6 +16,7 @@
 #include "GameScene.hpp"
 #include "CommonResources.hpp"
 #include "Level.hpp"
+#include "FieldBorder.hpp"
 
 using namespace RowBlast;
 
@@ -113,6 +114,8 @@ void FieldGrid::Init(const Level& level) {
         Segment gridSegment {i * gridSegmentHeightNumCells, gridSegmentSceneObject};
         mSegments.push_back(gridSegment);
     }
+    
+    AddBottomRow(container, level.GetNumRows(), gridSegmentWidthNumCells);
 }
 
 Pht::RenderableObject& FieldGrid::GetGridSegmentRenderable(int gridSegmentWidthNumCells) {
@@ -127,4 +130,37 @@ Pht::RenderableObject& FieldGrid::GetGridSegmentRenderable(int gridSegmentWidthN
             assert(!"Unsupported number of columns");
             break;
     }
+}
+
+void FieldGrid::AddBottomRow(Pht::SceneObject& container,
+                             int numLevelRows,
+                             int gridSegmentWidthNumCells) {
+    Pht::Material rowBelowMaterial;
+
+    auto width = gridSegmentWidthNumCells * mScene.GetCellSize() + mScene.GetFieldPadding() +
+                 FieldBorder::borderThickness + FieldBorder::frameThickness;
+    auto height = mScene.GetRowBelowSliceHeightInCells() * mScene.GetCellSize();
+
+    Pht::Vec4 upperColor {0.8f, 0.9f, 1.0f, 1.0f};
+    Pht::Vec4 lowerColor {0.8f, 0.9f, 1.0f, 0.7f};
+
+    Pht::QuadMesh::Vertices vertices {
+        {{-width / 2.0f, -height / 2.0f, 0.0f}, lowerColor},
+        {{width / 2.0f, -height / 2.0f, 0.0f}, lowerColor},
+        {{width / 2.0f, height / 2.0f, 0.0f}, upperColor},
+        {{-width / 2.0f, height / 2.0f, 0.0f}, upperColor},
+    };
+
+    auto& quad = mScene.GetScene().CreateSceneObject(Pht::QuadMesh {vertices}, rowBelowMaterial);
+    auto& fieldLowerLeft = mScene.GetFieldLoweLeft();
+    auto segmentWidth = mScene.GetCellSize() * static_cast<float>(gridSegmentWidthNumCells);
+    
+    Pht::Vec3 position {
+        fieldLowerLeft.x + segmentWidth / 2.0f,
+        fieldLowerLeft.y - height / 2.0f,
+        mScene.GetFieldGridZ() + 0.05f
+    };
+    
+    quad.GetTransform().SetPosition(position);
+    container.AddChild(quad);
 }
