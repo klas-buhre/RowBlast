@@ -54,7 +54,7 @@ void FlyingBlocksSystem::Init() {
     }
 }
 
-void FlyingBlocksSystem::AddBlockRows(const Field::RemovedSubCells& subCells) {
+void FlyingBlocksSystem::AddBlocks(const Field::RemovedSubCells& subCells) {
     for (auto& removedSubCell: subCells) {
         Pht::Vec3 explosiveForceDirecton {
             Pht::NormalizedRand() - 0.5f,
@@ -66,6 +66,7 @@ void FlyingBlocksSystem::AddBlockRows(const Field::RemovedSubCells& subCells) {
         auto force = explosiveForceDirecton * rowExplosionForceMagnitude;
 
         FlyingBlock flyingBlock {
+            .mEffect = FlyingBlock::Effect::Fly,
             .mVelocity = force / subCellMass,
             .mAngularVelocity = Pht::Vec3 {
                 720.0f * Pht::NormalizedRand() - 360.0f,
@@ -83,11 +84,30 @@ void FlyingBlocksSystem::AddBlockRows(const Field::RemovedSubCells& subCells) {
     }
 }
 
+void FlyingBlocksSystem::AddBlockRows(const Field::RemovedSubCells& subCells) {
+    for (auto& removedSubCell: subCells) {
+        FlyingBlock flyingBlock {
+            .mEffect = FlyingBlock::Effect::Shrink,
+            .mVelocity = {0.0f, 0.0f, 0.0f},
+            .mAngularVelocity = Pht::Vec3 {
+                720.0f * Pht::NormalizedRand() - 360.0f,
+                720.0f * Pht::NormalizedRand() - 360.0f,
+                720.0f * Pht::NormalizedRand() - 360.0f
+            },
+            .mSceneObject = &SetUpBlockSceneObject(removedSubCell),
+            .mScale = 1.0f
+        };
+
+        mFlyingBlocks.PushBack(flyingBlock);
+    }
+}
+
 Pht::SceneObject& FlyingBlocksSystem::SetUpBlockSceneObject(const RemovedSubCell& removedSubCell) {
     auto& sceneObject = AccuireSceneObject();
     sceneObject.SetRenderable(&GetBlockRenderableObject(removedSubCell));
     auto& transform = sceneObject.GetTransform();
     transform.SetPosition(CalculateBlockInitialPosition(removedSubCell));
+    transform.SetScale(1.0f);
 
     switch (removedSubCell.mBlockKind) {
         case BlockKind::Bomb:
@@ -143,8 +163,10 @@ void FlyingBlocksSystem::AddBlocksRemovedByExplosion(const Field::RemovedSubCell
         auto& transform = sceneObject.GetTransform();
         transform.SetPosition(CalculateBlockInitialPosition(removedSubCell));
         transform.SetRotation({0.0f, 0.0f, RotationToDeg(removedSubCell.mRotation)});
+        transform.SetScale(1.0f);
     
         FlyingBlock flyingBlock {
+            .mEffect = FlyingBlock::Effect::Fly,
             .mAppliedForce = FlyingBlock::AppliedForce::Explosion,
             .mVelocity = force / subCellMass,
             .mAngularVelocity = Pht::Vec3 {
@@ -206,6 +228,7 @@ void FlyingBlocksSystem::AddBlocksRemovedByTheShield(const Field::RemovedSubCell
         auto force = shieldForceDirecton * shieldForceMagnitude;
 
         FlyingBlock flyingBlock {
+            .mEffect = FlyingBlock::Effect::Fly,
             .mVelocity = force / subCellMass,
             .mAngularVelocity = Pht::Vec3 {
                 720.0f * Pht::NormalizedRand() - 360.0f,
@@ -229,35 +252,63 @@ void FlyingBlocksSystem::UpdateBlocks(float dt) {
 
     while (i < mFlyingBlocks.Size()) {
         auto& flyingBlock = mFlyingBlocks.At(i);
-        switch (flyingBlock.mAppliedForce) {
-            case FlyingBlock::AppliedForce::ClearedLine:
-            case FlyingBlock::AppliedForce::RowExplosion:
-                flyingBlock.mVelocity += gravitationalAcceleration * dt;
+        auto shouldErase = false;
+        
+        switch (flyingBlock.mEffect) {
+            case FlyingBlock::Effect::Fly:
+                shouldErase = UpdateFlyingBlock(flyingBlock, dt);
                 break;
-            case FlyingBlock::AppliedForce::Explosion:
-                flyingBlock.mVelocity += explosionGravitationalAcceleration * dt;
+            case FlyingBlock::Effect::Shrink:
+                shouldErase = UpdateShrinkingBlock(flyingBlock, dt);
                 break;
         }
         
-        auto& transform = flyingBlock.mSceneObject->GetTransform();
-        transform.Translate(flyingBlock.mVelocity * dt);
-        transform.Rotate(flyingBlock.mAngularVelocity * dt);
-        
-        auto position = transform.GetPosition();
-        auto& cameraPosition = mScene.GetCamera().GetSceneObject().GetTransform().GetPosition();
-        
-        if (position.z > cameraPosition.z - 5.0f) {
-            position.z = cameraPosition.z - 5.0f;
-            transform.SetPosition(position);
-        }
-
-        if (transform.GetPosition().y < cameraPosition.y - eraseLimit) {
+        if (shouldErase) {
             ReleaseSceneObject(*flyingBlock.mSceneObject);
             mFlyingBlocks.Erase(i);
         } else {
             ++i;
         }
     }
+}
+
+bool FlyingBlocksSystem::UpdateFlyingBlock(FlyingBlock& flyingBlock, float dt) {
+    switch (flyingBlock.mAppliedForce) {
+        case FlyingBlock::AppliedForce::ClearedLine:
+        case FlyingBlock::AppliedForce::RowExplosion:
+            flyingBlock.mVelocity += gravitationalAcceleration * dt;
+            break;
+        case FlyingBlock::AppliedForce::Explosion:
+            flyingBlock.mVelocity += explosionGravitationalAcceleration * dt;
+            break;
+    }
+    
+    auto& transform = flyingBlock.mSceneObject->GetTransform();
+    transform.Translate(flyingBlock.mVelocity * dt);
+    transform.Rotate(flyingBlock.mAngularVelocity * dt);
+    
+    auto position = transform.GetPosition();
+    auto& cameraPosition = mScene.GetCamera().GetSceneObject().GetTransform().GetPosition();
+    
+    if (position.z > cameraPosition.z - 5.0f) {
+        position.z = cameraPosition.z - 5.0f;
+        transform.SetPosition(position);
+    }
+
+    return transform.GetPosition().y < cameraPosition.y - eraseLimit;
+}
+
+bool FlyingBlocksSystem::UpdateShrinkingBlock(FlyingBlock& flyingBlock, float dt) {
+    flyingBlock.mScale -= 3.0f * dt;
+    if (flyingBlock.mScale < 0.0f) {
+        flyingBlock.mScale = 0.0f;
+    }
+    
+    auto& transform = flyingBlock.mSceneObject->GetTransform();
+    transform.SetScale(flyingBlock.mScale);
+    transform.Rotate(flyingBlock.mAngularVelocity * dt);
+    
+    return flyingBlock.mScale == 0.0f;
 }
 
 void FlyingBlocksSystem::HandleCollisions(float dt) {

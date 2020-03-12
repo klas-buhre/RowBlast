@@ -157,7 +157,7 @@ void FieldExplosionsSystem::RemoveBlocksHitByLaser(ExplosionState& state,
             }
         }
         
-        mFlyingBlocksSystem.AddBlockRows(removedSubCells);
+        mFlyingBlocksSystem.AddBlocks(removedSubCells);
     }
 }
 
