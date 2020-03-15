@@ -264,25 +264,25 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
     mHandPhtAnimation->CreateClip(handAnimationDragKeyframes, 2);
 
     std::vector<Pht::Keyframe> blockN3N2Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-3.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-3.9f, -4.5f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -2.0f, UiLayer::block}, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 100.0f, 0.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(blockN3N2, blockN3N2Keyframes);
 
     std::vector<Pht::Keyframe> blockN3N3Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-3.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-4.2f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -3.0f, UiLayer::block}, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(blockN3N3, blockN3N3Keyframes);
 
     std::vector<Pht::Keyframe> blockN3N4Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-3.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-4.0f, -7.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-3.0f, -4.0f, UiLayer::block}, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(blockN3N4, blockN3N4Keyframes);
@@ -307,144 +307,144 @@ void AsteroidDialogView::CreateAnimation(const PieceResources& pieceResources,
 
     std::vector<Pht::Keyframe> blockN2N2Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{-2.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-2.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-2.5f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(blockN2N2, blockN2N2Keyframes);
 
     std::vector<Pht::Keyframe> blockN2N3Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{-2.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-2.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-2.5f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(blockN2N3, blockN2N3Keyframes);
 
     std::vector<Pht::Keyframe> blockN2N4Keyframes {
-        {.mTime = 0.0f, .mPosition = Pht::Vec3{-2.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-2.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-2.5f, -7.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 150.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = 0.0f, .mPosition = Pht::Vec3{-2.0f, -4.0f, UiLayer::block}, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 150.0f, 0.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(blockN2N4, blockN2N4Keyframes);
 
     std::vector<Pht::Keyframe> blockN1N2Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-1.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-1.0f, -4.7f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 50.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 50.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(blockN1N2, blockN1N2Keyframes);
 
     std::vector<Pht::Keyframe> blockN1N3Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-1.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-1.0f, -6.1f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 100.0f, 0.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(blockN1N3, blockN1N3Keyframes);
 
     std::vector<Pht::Keyframe> blockN1N4Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{-1.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{-1.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{-1.0f, -7.2f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(blockN1N4, blockN1N4Keyframes);
 
     std::vector<Pht::Keyframe> block0N2Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{0.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{0.0f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 150.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{50.0f, 150.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(block0N2, block0N2Keyframes);
 
     std::vector<Pht::Keyframe> block0N3Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{0.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{0.0f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 50.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 50.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(block0N3, block0N3Keyframes);
 
     std::vector<Pht::Keyframe> block0N4Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{0.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{0.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{0.0f, -7.7f, 0.0f}, .mRotation = Pht::Vec3{70.0f, 50.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{70.0f, 50.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(block0N4, block0N4Keyframes);
 
     std::vector<Pht::Keyframe> block1N2Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{1.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{1.0f, -4.4f, 0.0f}, .mRotation = Pht::Vec3{150.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{150.0f, 100.0f, 0.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(block1N2, block1N2Keyframes);
 
     std::vector<Pht::Keyframe> block1N3Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{1.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{1.0f, -6.2f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 150.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 150.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(block1N3, block1N3Keyframes);
 
     std::vector<Pht::Keyframe> block1N4Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{1.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{1.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{1.0f, -7.3f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 150.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 150.0f, 0.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(block1N4, block1N4Keyframes);
 
     std::vector<Pht::Keyframe> block2N2Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{2.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{2.4f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 50.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 100.0f, 50.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(block2N2, block2N2Keyframes);
 
     std::vector<Pht::Keyframe> block2N3Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{2.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{2.5f, -6.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 100.0f, 150.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 100.0f, 150.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(block2N3, block2N3Keyframes);
 
     std::vector<Pht::Keyframe> block2N4Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{2.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{2.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{2.5f, -6.9f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{100.0f, 0.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(block2N4, block2N4Keyframes);
 
     std::vector<Pht::Keyframe> block3N2Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -2.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{3.0f, -2.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{3.9f, -5.0f, 0.0f}, .mRotation = Pht::Vec3{150.0f, 100.0f, 0.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{150.0f, 100.0f, 0.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(block3N2, block3N2Keyframes);
 
     std::vector<Pht::Keyframe> block3N3Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -3.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{3.0f, -3.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{4.0f, -6.2f, 0.0f}, .mRotation = Pht::Vec3{150.0f, 0.0f, 10.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{150.0f, 0.0f, 10.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(block3N3, block3N3Keyframes);
 
     std::vector<Pht::Keyframe> block3N4Keyframes {
         {.mTime = 0.0f, .mPosition = Pht::Vec3{3.0f, -4.0f, UiLayer::block}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = false},
-        {.mTime = pieceLandTime, .mPosition = Pht::Vec3{3.0f, -4.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
-        {.mTime = pieceLandTime + blockFlyDuration, .mPosition = Pht::Vec3{4.2f, -7.5f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 150.0f, 100.0f}, .mIsVisible = false},
+        {.mTime = pieceLandTime, .mScale = Pht::Vec3{0.8f, 0.8f, 0.8f}, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mIsVisible = true},
+        {.mTime = pieceLandTime + blockFlyDuration, .mScale = Pht::Vec3{0.0f, 0.0f, 0.0f}, .mRotation = Pht::Vec3{0.0f, 150.0f, 100.0f}, .mIsVisible = false},
         {.mTime = animationDuration}
     };
     animationSystem.CreateAnimation(block3N4, block3N4Keyframes);
