@@ -21,16 +21,23 @@ namespace RowBlast {
     class FlyingBlocksSystem {
     public:
         struct FlyingBlock {
+            enum class Effect {
+                Fly,
+                Shrink
+            };
+            
             enum class AppliedForce {
                 ClearedLine,
                 Explosion,
                 RowExplosion
             };
             
+            Effect mEffect {Effect::Fly};
             AppliedForce mAppliedForce {AppliedForce::ClearedLine};
             Pht::Vec3 mVelocity;
             Pht::Vec3 mAngularVelocity;
             Pht::SceneObject* mSceneObject {nullptr};
+            float mScale {1.0f};
         };
 
         FlyingBlocksSystem(GameScene& scene,
@@ -40,6 +47,7 @@ namespace RowBlast {
         
         void Init();
         void Update(float dt);
+        void AddBlocks(const Field::RemovedSubCells& subCells);
         void AddBlockRows(const Field::RemovedSubCells& subCells);
         void AddBlocksRemovedByExplosion(const Field::RemovedSubCells& subCells,
                                          const Pht::IVec2& detonationPos,
@@ -57,6 +65,8 @@ namespace RowBlast {
         Pht::SceneObject& AccuireSceneObject();
         void ReleaseSceneObject(Pht::SceneObject& sceneObject);
         void UpdateBlocks(float dt);
+        bool UpdateFlyingBlock(FlyingBlock& flyingBlock, float dt);
+        bool UpdateShrinkingBlock(FlyingBlock& flyingBlock, float dt);
         void HandleCollisions(float dt);
         
         static constexpr int maxNumBlockSceneObjects {Field::maxNumRows * Field::maxNumColumns};

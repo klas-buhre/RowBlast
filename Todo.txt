@@ -46,11 +46,11 @@ Backlog:
      mostly be the target audince and in the playtest they are not.
 
 Ongoing tasks:
-    
+    -Tune shrink effect.
+    -Maybe add particle effect for clear rows.
     
   Plan:
     -Major user stories:
-        -Se row below.                                                              ~1 day
         -Find more moves.                                                           ~1 week
         -Purchasing                                                                 ~1 week
         -Items in the next release (match-3, hud, bombs dragged piece)              ~1-2 weeks

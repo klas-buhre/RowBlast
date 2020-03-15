@@ -40,7 +40,7 @@ void ClearLastBlocksAnimation::UpdateInBeforeClearState(float dt) {
     mElapsedTime += dt;
     if (mElapsedTime > beforeClearTime) {
         auto removedCells = mField.RemoveAllNonEmptySubCells();
-        mFlyingBlocksSystem.AddBlockRows(removedCells);
+        mFlyingBlocksSystem.AddBlocks(removedCells);
         mState = State::Ongoing;
     }
 }
