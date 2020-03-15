@@ -19,6 +19,7 @@ namespace {
     const Pht::Vec3 gravitationalAcceleration {0.0f, -65.0f, 0.0f};
     const Pht::Vec3 explosionGravitationalAcceleration {0.0f, -40.0f, 0.0f};
     constexpr auto eraseLimit = 20.0f;
+    constexpr auto shrinkSpeed = 3.0f;
 }
 
 FlyingBlocksSystem::FlyingBlocksSystem(GameScene& scene,
@@ -299,7 +300,7 @@ bool FlyingBlocksSystem::UpdateFlyingBlock(FlyingBlock& flyingBlock, float dt) {
 }
 
 bool FlyingBlocksSystem::UpdateShrinkingBlock(FlyingBlock& flyingBlock, float dt) {
-    flyingBlock.mScale -= 3.0f * dt;
+    flyingBlock.mScale -= shrinkSpeed * dt;
     if (flyingBlock.mScale < 0.0f) {
         flyingBlock.mScale = 0.0f;
     }
