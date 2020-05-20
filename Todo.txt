@@ -46,8 +46,6 @@ Backlog:
      mostly be the target audince and in the playtest they are not.
 
 Ongoing tasks:
-    -Tune shrink effect.
-    -Maybe add particle effect for clear rows.
     
   Plan:
     -Major user stories:
