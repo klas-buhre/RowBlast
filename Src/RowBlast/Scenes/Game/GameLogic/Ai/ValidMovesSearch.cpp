@@ -799,7 +799,7 @@ int ValidMovesSearch::HandleCollisionRight(const MovingPiece& piece) {
 int ValidMovesSearch::HandleCollisionDown(const MovingPiece& piece) {
     auto& cellSearchData = GetSearchDataForOneRotation(piece);
     if (cellSearchData.mCollisionRow == collisionNotCalculated) {
-        auto collisionRow {DetectCollisionDown(piece)};
+        auto collisionRow = DetectCollisionDown(piece);
         
         for (auto row = piece.mPosition.y; row >= collisionRow; --row) {
             auto& downwardCellSearchData =

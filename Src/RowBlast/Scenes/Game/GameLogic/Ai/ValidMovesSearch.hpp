@@ -14,7 +14,6 @@ namespace RowBlast {
                             MovingPiece piece,
                             const Level::TutorialMove* predeterminedMove,
                             const std::vector<Level::TutorialMove>* suggestedMoves);
-        bool IsLocationVisited(const MovingPiece& piece) const;
 
     private:
         enum class SearchDirection {
@@ -119,6 +118,7 @@ namespace RowBlast {
                                                    const MovingPiece& piece,
                                                    const Movement* previousMovement);
         void MarkLocationAsVisited(const MovingPiece& piece);
+        bool IsLocationVisited(const MovingPiece& piece) const;
         SearchDataForOneRotation& GetSearchDataForOneRotation(const MovingPiece& piece);
         SearchDataForOneRotation& GetSearchDataForOneRotation(const Pht::IVec2& position,
                                                               Rotation rotation);

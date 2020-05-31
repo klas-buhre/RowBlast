@@ -132,9 +132,115 @@ Ongoing tasks:
              cause wierd movements and increase the cost of the search. Instead we could find all moves
              that have not been found yet (that dont cause a collision) and try to search back upwards
              using the core part. If the search finds the valid area and it is possible to cover the
-             entire upwards search path with the complete piece then that new move is valid. For
+             entire upwards search path with complete pieces then that new move is valid. For
              example, the I piece would not fit in a one-cell wide stair, but the core part would and
-             therefore this makes sure that is not a valid moves.
+             therefore this makes sure that is not a valid moves. Example:
+                
+                The I position is valid (?) since it is possible to cover the the path to the upper
+                valid area in I pieces:
+                
+                X   i X
+                XXXXi X
+                Xiiii X
+                XIXXXXX
+                XIXXXXX
+                XI
+                XX
+                
+                
+                Also F is valid:
+                
+                XXXXXF X
+                X  FFFFX
+                XXXXXXXX
+                
+                
+                But what about this. F should not be valid:
+                
+                XfXXXXXX
+                XffXXXXX
+                XfXXXXXX
+                XfXXXXXX
+                XF     X
+                XFF    X
+                XF     X
+                XF     X
+                XXXXXXXX
+                
+                
+             Maybe a better solution is simply to find all moves (that dont cause a collision)
+             that have not been found yet and check if they overlap with the valid area or is
+             right next to it. Add those moves to the total result. Example:
+             
+                The I position is valid since it is next to the valid area (.) :
+                 
+                X.....X
+                XXXX..X
+                XIII..X
+                X XXXXX
+                X XXXXX
+
+
+                The I position is valid since it is next to the valid area (.) :
+                 
+                X.....X
+                XXX.XXX
+                XIII  X
+                X XXXXX
+                X XXXXX
+
+
+                The I position is NOT valid since it is not next to the valid area (.) :
+              
+                X.....X
+                XXXXX.X
+                XIII .X
+                X XXXXX
+                X XXXXX
+
+
+                F is valid:
+
+                X......X
+                XXXXXF.X
+                X  FFFFX
+                XXXXXXXX
+
+
+                Also F is valid:
+
+                X......X
+                XXXFXXXX
+                X FFFF X
+                XXXXXXXX
+
+
+                F is NOT valid:
+                
+                X......X
+                X.XXXXXX
+                X. XXXXX
+                X XXXXXX
+                X XXXXXX
+                XF     X
+                XFF    X
+                XF     X
+                XF     X
+                XXXXXXXX
+
+             Subproblems:
+              -How to find all moves that don't cause a collision in a efficient manner.
+              -How to detect if a move overlaps or is right next to the valid area. The valid area
+               is not really computed at the moment. Let Field::CheckCollision() take an optional
+               valid area argument that it can fill in if handed to it. Then the ValidMovesSearch
+               can pass its own valid area which is a 2D bool array in the mField.CheckCollision(),
+               mField.DetectCollisionLeft(), mField.DetectCollisionRight() and
+               mField.DetectCollisionDown().
+              -How to find closest exisisting valid move with a movement that can be the previous
+               movement.
+
+
+                
             -Non-reachable empty cells can have red stripes that fade in when starting a drag.
              Preferably with a red egde round the area. To calculate the valid area: for all valid
              moves, fill the valid area by painting the field by moving
