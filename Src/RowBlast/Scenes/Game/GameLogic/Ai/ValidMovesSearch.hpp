@@ -101,7 +101,7 @@ namespace RowBlast {
                       const MovingPiece& piece,
                       const Movement* previousMovement);
         bool IsMoveDiscardedByTutorial(const MovingPiece& piece) const;
-        void FindAllRemainingValidMoves(ValidMoves& validMoves, MovingPiece piece);
+        void FindMostRemainingValidMoves(ValidMoves& validMoves, MovingPiece piece);
         void Search(ValidMoves& validMoves,
                     MovingPiece piece,
                     const Movement* previousMovement,
@@ -110,6 +110,7 @@ namespace RowBlast {
         bool MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement);
         SearchCollisionResult HandleCollision(const MovingPiece& piece,
                                               SearchMovement searchMovement);
+        void FindRemainingValidMovesNextValidArea(ValidMoves& validMoves, MovingPiece piece);
         void SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
                                       const MovingPiece& piece,
                                       const Movement* previousMovement);

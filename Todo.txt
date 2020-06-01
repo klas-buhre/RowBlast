@@ -246,6 +246,9 @@ Ongoing tasks:
                can pass its own valid area which is a 2D bool array in the mField.CheckCollision(),
                mField.DetectCollisionLeft(), mField.DetectCollisionRight() and
                mField.DetectCollisionDown().
+               When the valid area is calculated, check each cell of the move to see if the cell
+               is in the valid area or just below, or just right or left of a valid area cell.
+               Being above the valid area is not treated as valid since pieces cannot move upwards.
               -How to find closest exisisting valid move with a movement that can be the previous
                movement.
 

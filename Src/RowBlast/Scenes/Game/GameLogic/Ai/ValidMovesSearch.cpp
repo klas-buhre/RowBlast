@@ -75,7 +75,8 @@ void ValidMovesSearch::FindValidMoves(ValidMoves& validMoves,
     InitSearchGrid();
     FindMostValidMovesWithHumanLikeSearch(validMoves, piece);
     ResetVisitedLocations();
-    FindAllRemainingValidMoves(validMoves, piece);
+    FindMostRemainingValidMoves(validMoves, piece);
+    FindRemainingValidMovesNextValidArea(validMoves, piece);
 }
 
 void ValidMovesSearch::InitSearchGrid() {
@@ -530,7 +531,7 @@ bool ValidMovesSearch::IsMoveDiscardedByTutorial(const MovingPiece& piece) const
     return false;
 }
 
-void ValidMovesSearch::FindAllRemainingValidMoves(ValidMoves& validMoves, MovingPiece piece) {
+void ValidMovesSearch::FindMostRemainingValidMoves(ValidMoves& validMoves, MovingPiece piece) {
     Search(validMoves, piece, nullptr, SearchMovement::Start);
 }
 
@@ -655,6 +656,27 @@ ValidMovesSearch::HandleCollision(const MovingPiece& piece, SearchMovement searc
     }
     
     return SearchCollisionResult::NoCollision;
+}
+
+void ValidMovesSearch::FindRemainingValidMovesNextValidArea(ValidMoves& validMoves,
+                                                            MovingPiece piece) {
+    auto numRotations = piece.mPieceType.GetNumRotations();
+    auto yBegin = piece.mPosition.y;
+    auto lowestVisibleRow = mField.GetLowestVisibleRow();
+
+    for (auto rotation = 0; rotation < numRotations; ++rotation) {
+        auto& pieceDimensions = piece.mPieceType.GetDimensions(piece.mRotation);
+        auto xBegin = -pieceDimensions.mXmin;
+        auto xEnd = mField.GetNumColumns() - pieceDimensions.mXmax;
+        
+        for (auto x = xBegin; x < xEnd; ++x) {
+            // for (auto y = yBegin; y >= lowestVisibleRow;) {
+                
+            // }
+        }
+        
+        piece.RotateClockwise();
+    }
 }
 
 void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
