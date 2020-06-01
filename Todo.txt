@@ -229,7 +229,17 @@ Ongoing tasks:
                 XXXXXXXX
 
              Subproblems:
-              -How to find all moves that don't cause a collision in a efficient manner.
+              -How to find all moves that don't cause a collision in a efficient manner. Collision
+               rows and columns are already cached in the search data.
+               For each rotation:
+                 Scan the visible part of the field using a MovingPiece. Start at the upper left.
+                 Step 1:
+                 Check what the collision row is for this position and move to the collision row
+                 and add to moves if not found before. If there is no cached collision row then move
+                 using mField.CheckCollisionDown().
+                 Step 2:
+                 Then move down through the blocks by calling mField.CheckCollision() until no
+                 collision and then repeat step 1.
               -How to detect if a move overlaps or is right next to the valid area. The valid area
                is not really computed at the moment. Let Field::CheckCollision() take an optional
                valid area argument that it can fill in if handed to it. Then the ValidMovesSearch
