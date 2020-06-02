@@ -229,26 +229,6 @@ Ongoing tasks:
                 XXXXXXXX
 
              Subproblems:
-              -How to find all moves that don't cause a collision in a efficient manner. Collision
-               rows and columns are already cached in the search data.
-               For each rotation:
-                 Scan the visible part of the field using a MovingPiece. Start at the upper left.
-                 Step 1:
-                 Check what the collision row is for this position and move to the collision row
-                 and add to moves if not found before. If there is no cached collision row then move
-                 using mField.CheckCollisionDown().
-                 Step 2:
-                 Then move down through the blocks by calling mField.CheckCollision() until no
-                 collision and then repeat step 1.
-              -How to detect if a move overlaps or is right next to the valid area. The valid area
-               is not really computed at the moment. Let Field::CheckCollision() take an optional
-               valid area argument that it can fill in if handed to it. Then the ValidMovesSearch
-               can pass its own valid area which is a 2D bool array in the mField.CheckCollision(),
-               mField.DetectCollisionLeft(), mField.DetectCollisionRight() and
-               mField.DetectCollisionDown().
-               When the valid area is calculated, check each cell of the move to see if the cell
-               is in the valid area or just below, or just right or left of a valid area cell.
-               Being above the valid area is not treated as valid since pieces cannot move upwards.
               -How to find closest exisisting valid move with a movement that can be the previous
                movement.
 

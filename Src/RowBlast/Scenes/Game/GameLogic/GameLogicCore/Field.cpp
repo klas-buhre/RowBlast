@@ -319,31 +319,38 @@ bool Field::IsCellAccordingToBlueprint(int row, int column) const {
     return true;
 }
 
-int Field::DetectCollisionDown(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const {
+int Field::DetectCollisionDown(const PieceBlocks& pieceBlocks,
+                               const Pht::IVec2& position,
+                               ValidArea* validArea) const {
     Pht::IVec2 step {0, -1};
-    auto collisionPosition = ScanUntilCollision(pieceBlocks, position, step);
+    auto collisionPosition = ScanUntilCollision(pieceBlocks, position, step, validArea);
     return collisionPosition.y + 1;
 }
 
-int Field::DetectCollisionRight(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const {
+int Field::DetectCollisionRight(const PieceBlocks& pieceBlocks,
+                                const Pht::IVec2& position,
+                                ValidArea* validArea) const {
     Pht::IVec2 step {1, 0};
-    auto collisionPosition = ScanUntilCollision(pieceBlocks, position, step);
+    auto collisionPosition = ScanUntilCollision(pieceBlocks, position, step, validArea);
     return collisionPosition.x - 1;
 }
 
-int Field::DetectCollisionLeft(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const {
+int Field::DetectCollisionLeft(const PieceBlocks& pieceBlocks,
+                               const Pht::IVec2& position,
+                               ValidArea* validArea) const {
     Pht::IVec2 step {-1, 0};
-    auto collisionPosition = ScanUntilCollision(pieceBlocks, position, step);
+    auto collisionPosition = ScanUntilCollision(pieceBlocks, position, step, validArea);
     return collisionPosition.x + 1;
 }
 
 Pht::IVec2 Field::ScanUntilCollision(const PieceBlocks& pieceBlocks,
                                      Pht::IVec2 position,
-                                     const Pht::IVec2& step) const {
+                                     const Pht::IVec2& step,
+                                     ValidArea* validArea) const {
     auto isScanStart = true;
     
     for (;;) {
-        CheckCollision(mCollisionResult, pieceBlocks, position, step, isScanStart);
+        CheckCollision(mCollisionResult, pieceBlocks, position, step, isScanStart, validArea);
         
         if (isScanStart) {
             isScanStart = false;
@@ -368,7 +375,8 @@ void Field::CheckCollision(CollisionResult& result,
                            const PieceBlocks& pieceBlocks,
                            const Pht::IVec2& position,
                            const Pht::IVec2& scanDirection,
-                           bool isScanStart) const {
+                           bool isScanStart,
+                           ValidArea* validArea) const {
     result.mIsCollision = IsCollision::No;
     result.mCollisionPoints.Clear();
     
@@ -418,6 +426,10 @@ void Field::CheckCollision(CollisionResult& result,
             if (firstSubCellIntersects == Intersection::NextWillBe ||
                 secondSubCellIntersects == Intersection::NextWillBe) {
                 result.mIsCollision = IsCollision::NextWillBe;
+            }
+            
+            if (validArea) {
+                (*validArea)[fieldRow][fieldColumn] = validCell;
             }
         }
     }

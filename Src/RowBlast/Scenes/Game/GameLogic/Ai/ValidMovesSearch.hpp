@@ -63,8 +63,9 @@ namespace RowBlast {
         };
         
         using SearchGrid = std::vector<std::vector<CellSearchData>>;
-
+        
         void InitSearchGrid();
+        void ResetValidArea();
         void ResetVisitedLocations();
         void FindMostValidMovesWithHumanLikeSearch(ValidMoves& validMoves, MovingPiece piece);
         void AdjustPosition(MovingPiece& piece);
@@ -96,7 +97,7 @@ namespace RowBlast {
                         const Movement* previousMovement,
                         AllowRecursion allowRecursion,
                         PositionAdjustment positionAdjustment);
-        bool IsCollision(const MovingPiece& piece) const;
+        bool IsCollision(const MovingPiece& piece, bool fillValidArea = true);
         void SaveMove(ValidMoves& validMoves,
                       const MovingPiece& piece,
                       const Movement* previousMovement);
@@ -110,7 +111,8 @@ namespace RowBlast {
         bool MovePieceAndCheckEdges(MovingPiece& piece, SearchMovement searchMovement);
         SearchCollisionResult HandleCollision(const MovingPiece& piece,
                                               SearchMovement searchMovement);
-        void FindRemainingValidMovesNextValidArea(ValidMoves& validMoves, MovingPiece piece);
+        void FindRemainingValidMovesConnectedToValidArea(ValidMoves& validMoves, MovingPiece piece);
+        bool IsConnectedToValidArea(const MovingPiece& piece) const;
         void SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
                                       const MovingPiece& piece,
                                       const Movement* previousMovement);
@@ -130,13 +132,14 @@ namespace RowBlast {
         void SetFoundMove(const MovingPiece& piece, Move& move);
         int HandleCollisionLeft(const MovingPiece& piece);
         int HandleCollisionRight(const MovingPiece& piece);
-        int HandleCollisionDown(const MovingPiece& piece);
-        int DetectCollisionLeft(const MovingPiece& piece) const;
-        int DetectCollisionRight(const MovingPiece& piece) const;
-        int DetectCollisionDown(const MovingPiece& piece) const;
+        int HandleCollisionDown(const MovingPiece& piece, bool fillValidArea = true);
+        int DetectCollisionLeft(const MovingPiece& piece);
+        int DetectCollisionRight(const MovingPiece& piece);
+        int DetectCollisionDown(const MovingPiece& piece, bool fillValidArea = true);
         
         Field& mField;
         SearchGrid mSearchGrid;
+        ValidArea mValidArea;
         mutable Field::CollisionResult mCollisionResult;
         const Level::TutorialMove* mPredeterminedMove {nullptr};
         const std::vector<Level::TutorialMove>* mSuggestedMoves {nullptr};

@@ -61,6 +61,11 @@ namespace RowBlast {
         FilledRowIndices mFilledRowIndices;
         float mGrayLevelCellsInFilledRows {0.0f};
     };
+    
+    static constexpr int validCell {1};
+    static constexpr int invalidCell {-1};
+    
+    using ValidArea = std::vector<std::vector<int>>;
 
     class Field {
     public:
@@ -97,14 +102,21 @@ namespace RowBlast {
         void SaveInTempGrid();
         void RestoreFromTempGrid();
         void SetBlocksYPositionAndBounceFlag();
-        int DetectCollisionDown(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
-        int DetectCollisionRight(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
-        int DetectCollisionLeft(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
+        int DetectCollisionDown(const PieceBlocks& pieceBlocks,
+                                const Pht::IVec2& position,
+                                ValidArea* validArea = nullptr) const;
+        int DetectCollisionRight(const PieceBlocks& pieceBlocks,
+                                 const Pht::IVec2& position,
+                                 ValidArea* validArea = nullptr) const;
+        int DetectCollisionLeft(const PieceBlocks& pieceBlocks,
+                                const Pht::IVec2& position,
+                                ValidArea* validArea = nullptr) const;
         void CheckCollision(CollisionResult& result,
                             const PieceBlocks& pieceBlocks,
                             const Pht::IVec2& position,
                             const Pht::IVec2& scanDirection,
-                            bool isScanStart) const;
+                            bool isScanStart,
+                            ValidArea* validArea = nullptr) const;
         int DetectFreeSpaceUp(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
         int DetectFreeSpaceDown(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
         int DetectFreeSpaceRight(const PieceBlocks& pieceBlocks, const Pht::IVec2& position) const;
@@ -200,7 +212,8 @@ namespace RowBlast {
         bool IsCellAccordingToBlueprint(int row, int column) const;
         Pht::IVec2 ScanUntilCollision(const PieceBlocks& pieceBlocks,
                                       Pht::IVec2 position,
-                                      const Pht::IVec2& step) const;
+                                      const Pht::IVec2& step,
+                                      ValidArea* validArea = nullptr) const;
         Pht::IVec2 ScanUntilNoCollision(const PieceBlocks& pieceBlocks,
                                         Pht::IVec2 position,
                                         const Pht::IVec2& step) const;
