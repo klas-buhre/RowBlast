@@ -427,15 +427,32 @@ void Field::CheckCollision(CollisionResult& result,
                 secondSubCellIntersects == Intersection::NextWillBe) {
                 result.mIsCollision = IsCollision::NextWillBe;
             }
-            
-            if (validArea) {
-                (*validArea)[fieldRow][fieldColumn] = validCell;
-            }
         }
     }
     
     if (result.mCollisionPoints.Size() > 0) {
         result.mIsCollision = IsCollision::Yes;
+    } else {
+        if (validArea) {
+            for (auto pieceRow = 0; pieceRow < pieceNumRows; ++pieceRow) {
+                for (auto pieceColumn = 0; pieceColumn < pieceNumColumns; ++pieceColumn) {
+                    auto& pieceCell = pieceGrid[pieceRow][pieceColumn];
+                    if (pieceCell.mFirstSubCell.IsEmpty()) {
+                        continue;
+                    }
+
+                    auto fieldRow = position.y + pieceRow;
+                    auto fieldColumn = position.x + pieceColumn;
+                    if (fieldRow < mLowestVisibleRow || fieldRow >= mNumRows || fieldColumn < 0 ||
+                        fieldColumn >= mNumColumns) {
+
+                        continue;
+                    }
+
+                    (*validArea)[fieldRow][fieldColumn] = validCell;
+                }
+            }
+        }
     }
 }
 
