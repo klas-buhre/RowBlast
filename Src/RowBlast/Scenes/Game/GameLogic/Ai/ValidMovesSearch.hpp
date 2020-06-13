@@ -113,10 +113,17 @@ namespace RowBlast {
                                               SearchMovement searchMovement);
         void FindRemainingValidMovesConnectedToValidArea(ValidMoves& validMoves, MovingPiece piece);
         bool IsConnectedToValidArea(const MovingPiece& piece) const;
+        const Move* FindConnectedMove(const ValidMoves& validMoves, const MovingPiece& piece) const;
+        bool AreGridBoxesConnected(const MovingPiece& piece, const Move& move) const;
+        bool IsConnected1D(int coord1, int size1, int coord2, int size2) const;
         void SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
                                       const MovingPiece& piece,
                                       const Movement* previousMovement);
+        void SaveMoveNoChecks(ValidMoves& validMoves,
+                              const MovingPiece& piece,
+                              const Movement* previousMovement);
         bool IsDuplicateMoveFoundAtDifferentLocation(const MovingPiece& piece) const;
+        bool IsMovePassingInitialCheck(const MovingPiece& piece) const;
         const Movement* AddMovementAndRemoveDetour(ValidMoves& validMoves,
                                                    const MovingPiece& piece,
                                                    const Movement* previousMovement);

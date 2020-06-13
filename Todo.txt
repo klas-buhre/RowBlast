@@ -231,7 +231,8 @@ Ongoing tasks:
              Subproblems:
               -How to find exisisting valid move with a movement that can be the previous movement.
                 Have to go through all existing valid moves and find a move that either overlaps or
-                borders the newly found move.
+                borders the newly found move. First check if any of the grid boxes overlap or
+                border then if it does then check if the actual piece overlaps or borders.
 
                 
         -Release.

@@ -704,8 +704,11 @@ void ValidMovesSearch::FindRemainingValidMovesConnectedToValidArea(ValidMoves& v
                     row = HandleCollisionDown(piece, false);
                     piece.mPosition.y = row;
                     
-                    if (IsConnectedToValidArea(piece)) {
-                        SaveMoveIfNotFoundBefore(validMoves, piece, nullptr);
+                    if (IsConnectedToValidArea(piece) && IsMovePassingInitialCheck(piece)) {
+                        auto* connectedMove = FindConnectedMove(validMoves, piece);
+                        if (connectedMove) {
+                            SaveMoveNoChecks(validMoves, piece, connectedMove->mLastMovement);
+                        }
                     }
                 }
                 
@@ -766,6 +769,36 @@ bool ValidMovesSearch::IsConnectedToValidArea(const MovingPiece& piece) const {
     return false;
 }
 
+const Move* ValidMovesSearch::FindConnectedMove(const ValidMoves& validMoves,
+                                                const MovingPiece& piece) const {
+    auto& moves = validMoves.mMoves;
+    auto numMoves = moves.Size();
+
+    for (auto i = 0; i < numMoves; ++i) {
+        auto& move = moves.At(i);
+        if (AreGridBoxesConnected(piece, move)) {
+            return &move;
+        }
+    }
+    
+    return nullptr;
+}
+
+bool ValidMovesSearch::AreGridBoxesConnected(const MovingPiece& piece, const Move& move) const {
+    auto piecePosition = piece.mPosition;
+    auto movePosition = move.mPosition;
+    auto& pieceType = piece.mPieceType;
+    auto pieceNumRows = pieceType.GetGridNumRows();
+    auto pieceNumColumns = pieceType.GetGridNumColumns();
+    
+    return IsConnected1D(piecePosition.x, pieceNumColumns, movePosition.x, pieceNumColumns) &&
+           IsConnected1D(piecePosition.y, pieceNumRows, movePosition.y, pieceNumRows);
+}
+
+bool ValidMovesSearch::IsConnected1D(int coord1, int size1, int coord2, int size2) const {
+    return coord1 + size1 + 1 >= coord2 && coord2 + size2 >= coord1 - 1;
+}
+
 void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
                                                 const MovingPiece& piece,
                                                 const Movement* previousMovement) {
@@ -788,6 +821,16 @@ void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
     SetFoundMove(piece, validMoves.mMoves.Back());
 }
 
+void ValidMovesSearch::SaveMoveNoChecks(ValidMoves& validMoves,
+                                        const MovingPiece& piece,
+                                        const Movement* previousMovement) {
+    auto* lastMovement = AddMovement(validMoves, piece, previousMovement);
+    Move move {piece.mPosition, piece.mRotation, lastMovement};
+
+    validMoves.mMoves.PushBack(move);
+    SetFoundMove(piece, validMoves.mMoves.Back());
+}
+
 bool ValidMovesSearch::IsDuplicateMoveFoundAtDifferentLocation(const MovingPiece& piece) const {
     auto& duplicateMoveCheck = piece.mPieceType.GetDuplicateMoveCheck(piece.mRotation);
     if (duplicateMoveCheck.HasValue()) {
@@ -803,6 +846,22 @@ bool ValidMovesSearch::IsDuplicateMoveFoundAtDifferentLocation(const MovingPiece
     }
     
     return false;
+}
+
+bool ValidMovesSearch::IsMovePassingInitialCheck(const MovingPiece& piece) const {
+    if (GetFoundMove(piece) || IsDuplicateMoveFoundAtDifferentLocation(piece) ||
+        CollisionDetection::IsIllegalTiltedBondPosition(mField,
+                                                        piece.mPosition,
+                                                        piece.mRotation,
+                                                        piece.mPieceType)) {
+        return false;
+    }
+    
+    if (IsMoveDiscardedByTutorial(piece)) {
+        return false;
+    }
+
+    return true;
 }
 
 const Movement* ValidMovesSearch::AddMovementAndRemoveDetour(ValidMoves& validMoves,
