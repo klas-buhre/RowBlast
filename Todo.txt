@@ -229,20 +229,11 @@ Ongoing tasks:
                 XXXXXXXX
 
              Subproblems:
-              -How to find closest exisisting valid move with a movement that can be the previous
-               movement.
-
+              -How to find exisisting valid move with a movement that can be the previous movement.
+                Have to go through all existing valid moves and find a move that either overlaps or
+                borders the newly found move.
 
                 
-            -Non-reachable empty cells can have red stripes that fade in when starting a drag.
-             Preferably with a red egde round the area. To calculate the valid area: for all valid
-             moves, fill the valid area by painting the field by moving
-             the move upwards until collision or above the falling piece.
-        -Update the tutorial with drag controls.
-        -Replace bad levels (especially in world 1) with levels of width 9 and asteroid levels. Try
-         to make levels that don't have too much open area directly down to the bottom of the field
-         from the falling piece since that makes the whole game a bit more random as you cannot see
-         below the lowest visible row.
         -Release.
         -Purchasing.
         -Release.
