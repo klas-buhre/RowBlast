@@ -116,6 +116,7 @@ namespace RowBlast {
         const Move* FindConnectedMove(const ValidMoves& validMoves, const MovingPiece& piece) const;
         bool AreGridBoxesConnected(const MovingPiece& piece, const Move& move) const;
         bool IsConnected1D(int coord1, int size1, int coord2, int size2) const;
+        bool ArePiecesConnected(const MovingPiece& piece, const Move& move) const;
         void SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
                                       const MovingPiece& piece,
                                       const Movement* previousMovement);

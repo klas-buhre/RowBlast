@@ -729,9 +729,7 @@ bool ValidMovesSearch::IsConnectedToValidArea(const MovingPiece& piece) const {
 
     for (auto pieceRow = 0; pieceRow < pieceNumRows; ++pieceRow) {
         for (auto pieceColumn = 0; pieceColumn < pieceNumColumns; ++pieceColumn) {
-            auto& pieceCell = pieceGrid[pieceRow][pieceColumn];
-            
-            auto& pieceSubCell = pieceCell.mFirstSubCell;
+            auto& pieceSubCell = pieceGrid[pieceRow][pieceColumn].mFirstSubCell;
             if (pieceSubCell.IsEmpty()) {
                 continue;
             }
@@ -776,7 +774,7 @@ const Move* ValidMovesSearch::FindConnectedMove(const ValidMoves& validMoves,
 
     for (auto i = 0; i < numMoves; ++i) {
         auto& move = moves.At(i);
-        if (AreGridBoxesConnected(piece, move)) {
+        if (AreGridBoxesConnected(piece, move) && ArePiecesConnected(piece, move)) {
             return &move;
         }
     }
@@ -797,6 +795,42 @@ bool ValidMovesSearch::AreGridBoxesConnected(const MovingPiece& piece, const Mov
 
 bool ValidMovesSearch::IsConnected1D(int coord1, int size1, int coord2, int size2) const {
     return coord1 + size1 + 1 >= coord2 && coord2 + size2 >= coord1 - 1;
+}
+
+bool ValidMovesSearch::ArePiecesConnected(const MovingPiece& piece, const Move& move) const {
+    auto piecePosition = piece.mPosition;
+    auto movePosition = move.mPosition;
+    auto& pieceType = piece.mPieceType;
+    auto pieceNumRows = pieceType.GetGridNumRows();
+    auto pieceNumColumns = pieceType.GetGridNumColumns();
+    auto& pieceGrid = pieceType.GetGrid(piece.mRotation);
+    auto& moveGrid = pieceType.GetGrid(move.mRotation);
+    
+    for (auto pieceRow = 0; pieceRow < pieceNumRows; ++pieceRow) {
+        for (auto pieceColumn = 0; pieceColumn < pieceNumColumns; ++pieceColumn) {
+            auto& pieceSubCell = pieceGrid[pieceRow][pieceColumn].mFirstSubCell;
+            if (pieceSubCell.IsEmpty()) {
+                continue;
+            }
+
+            auto rowDiff = piecePosition.y - movePosition.y;
+            auto columnDiff = piecePosition.x - movePosition.x;
+            auto moveRow = pieceRow + rowDiff;
+            auto moveColumn = pieceColumn + columnDiff;
+            if (moveRow < 0 || moveRow >= pieceNumRows || moveColumn < 0 ||
+                moveColumn >= pieceNumColumns) {
+
+                continue;
+            }
+
+            auto& moveSubCell = moveGrid[moveRow][moveColumn].mFirstSubCell;
+            if (!moveSubCell.IsEmpty()) {
+                return true;
+            }
+        }
+    }
+    
+    return false;
 }
 
 void ValidMovesSearch::SaveMoveIfNotFoundBefore(ValidMoves& validMoves,
