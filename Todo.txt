@@ -57,11 +57,6 @@ Ongoing tasks:
 
 
     -Do:
-        -3. Redesign the game HUD:                                                  ~1.5 days
-            -Maybe try to invert the gradient and add a shadow from the field.
-            -Tune all colors in lower hud.
-            -Move the preview piece positions to centered positions now that
-             there is no rectangle tilt.
         -2. This item might be moved to after publisher contact:
             Can have levels that have lots of octagons (or circles) instead of      ~7 days
             normal full blocks. The octagons/circles have different colors and
@@ -85,8 +80,6 @@ Ongoing tasks:
             level after a failed attempt. Reduce music gain as well.
         -3. Bombs and laser dragged piece with white or red transparent material    ~1 days
             instead of textures.
-        -4. Maybe try a "PropellerPiece": XX                                        ~1 days
-                                            XX
         -5. Release.                                                                ~1 days
         -6. Send mail to publishers.
     -After contacted publisher:
@@ -104,14 +97,6 @@ Ongoing tasks:
         -Maybe a short delay before clearing filled rows after piece lands?         ~2 days
          And a short particle effect with twinkles in the filled row before
          the blocks gets thrown away?
-
-        -Just try to reduce the risk mixing up the rotate tap with at drag start. Maybe sort out
-         by tuning dragBeginDistanceThreshold. Also, could have a threshold distance that the piece
-         must travel in order to be placed, or a minimum drag time. Maybe the touch should be
-         treated as a rotate if it not considered a valid drag? Right now the drag is just cancelled
-         and there is no rotate. Tune the field y position for the zoomed displays since there is
-         more room now after removing one row.
-        -5. Release.
 
     -Mid-term future:
         -Purchasing.
