@@ -24,6 +24,7 @@ namespace RowBlast {
         void OnBombExplosionFinished(float numBlocksCleared, const Pht::IVec2& gridPosition);
         void OnLaserFinished(float numBlocksCleared, const Pht::IVec2& gridPosition);
         void OnFilledSlots(const Field::PieceFilledSlots& slotsCoveredByPiece);
+        void OnAsteroidIsDown();
         void OnUndoMove();
         void GoToCascadingState();
         int CalculateBonusPointsAtLevelCompleted(int movesLeft) const;
@@ -35,6 +36,7 @@ namespace RowBlast {
                                                  const Pht::Vec2& scoreTextPosition);
         void OnClearedFiveRows(const Pht::Vec2& scoreTextPosition, int numCombos);
         void OnClearedFourRows(const Pht::Vec2& scoreTextPosition, int numCombos);
+        Pht::Optional<Pht::Vec2> CalcAsteroidScoreTextPosition() const;
         
         enum class State {
             NotCascading,
@@ -47,6 +49,7 @@ namespace RowBlast {
         MediumText& mMediumText;
         EffectManager& mEffectManager;
         State mState {State::Inactive};
+        bool mAsteroidIsDown {false};
         int mNumCombos {0};
         int mPreviousNumCombos {0};
         int mNumCascades {0};

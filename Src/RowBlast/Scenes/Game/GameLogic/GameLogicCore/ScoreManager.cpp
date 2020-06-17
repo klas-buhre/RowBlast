@@ -17,8 +17,10 @@ namespace {
     constexpr auto comboIncreasePoints = 40;
     constexpr auto clearFourRowsIncreasePoints = 800;
     constexpr auto clearFiveRowsIncreasePoints = 1800;
+    constexpr auto asteroidIsDownIncreasePoints = 500;
     constexpr auto fillSlotPoints = 10;
     constexpr auto laserScoreTextDelay = 0.275f;
+    constexpr auto asteroidIsDownScoreTextDelay = 0.5f;
     
     Pht::Vec2 CalcScoreTextPosition(const Field::RemovedSubCells& removedSubCells,
                                     Pht::Optional<int> landedPieceId) {
@@ -116,6 +118,7 @@ ScoreManager::ScoreManager(const Field& field,
 
 void ScoreManager::Init() {
     mState = State::Inactive;
+    mAsteroidIsDown = false;
     mNumCombos = 0;
     mPreviousNumCombos = 0;
     mNumCascades = 0;
@@ -241,6 +244,20 @@ void ScoreManager::OnFilledSlots(const Field::PieceFilledSlots& slotsCoveredByPi
     }
 }
 
+void ScoreManager::OnAsteroidIsDown() {
+    if (mAsteroidIsDown) {
+        return;
+    }
+    
+    mAsteroidIsDown = true;
+    auto scoreTextPosition = CalcAsteroidScoreTextPosition();
+    if (scoreTextPosition.HasValue()) {
+        mGameLogic.IncreaseScore(asteroidIsDownIncreasePoints,
+                                 scoreTextPosition.GetValue(),
+                                 asteroidIsDownScoreTextDelay);
+    }
+}
+
 void ScoreManager::OnUndoMove() {
     mNumCombos = mPreviousNumCombos;
 }
@@ -251,4 +268,24 @@ void ScoreManager::GoToCascadingState() {
 
 int ScoreManager::CalculateBonusPointsAtLevelCompleted(int movesLeft) const {
     return mClearOneRowPoints * movesLeft;
+}
+
+Pht::Optional<Pht::Vec2> ScoreManager::CalcAsteroidScoreTextPosition() const {
+    for (auto row = 0; row < mField.GetNumRows(); ++row) {
+        for (auto column = 0; column < mField.GetNumColumns(); ++column) {
+            switch (mField.GetCell(row, column).mFirstSubCell.mBlockKind) {
+                case BlockKind::BigAsteroidMainCell:
+                    return Pht::Vec2 {
+                        static_cast<float>(column) + 0.5f,
+                        static_cast<float>(row) + 1.75f
+                    };
+                case BlockKind::SmallAsteroid:
+                    return Pht::Vec2 {static_cast<float>(column), static_cast<float>(row) + 0.75f};
+                default:
+                    break;
+            }
+        }
+    }
+    
+    return Pht::Optional<Pht::Vec2> {};
 }

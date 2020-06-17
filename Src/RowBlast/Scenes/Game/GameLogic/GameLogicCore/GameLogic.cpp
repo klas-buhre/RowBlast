@@ -677,6 +677,7 @@ void GameLogic::UpdateLevelProgress() {
             assert(asteroidRow.HasValue());
             if (asteroidRow.GetValue() == 0) {
                 mNumObjectsLeftToClear = 0;
+                mScoreManager.OnAsteroidIsDown();
             } else {
                 mNumObjectsLeftToClear = 1;
             }

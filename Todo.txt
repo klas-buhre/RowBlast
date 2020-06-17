@@ -93,7 +93,6 @@ Ongoing tasks:
              then you have 3, which is like it is in Bubble Witch 3.
             -Is it good to have 2 next preview pieces with regard to maximizing
              revenue at out of moves?
-        -There should be a score text above the asteroid when at the bottom.        ~1 day
         -Maybe a short delay before clearing filled rows after piece lands?         ~2 days
          And a short particle effect with twinkles in the filled row before
          the blocks gets thrown away?
