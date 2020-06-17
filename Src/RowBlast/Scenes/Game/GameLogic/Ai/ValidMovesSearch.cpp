@@ -756,7 +756,7 @@ bool ValidMovesSearch::IsConnectedToValidArea(const MovingPiece& piece) const {
                 return true;
             }
             
-            if (fieldColumn < mField.GetNumColumns() - 1 &&
+            if (fieldColumn < mField.GetNumColumns() - 2 &&
                 mValidArea[fieldRow][fieldColumn + 1] == validCell) {
                 
                 return true;
@@ -817,6 +817,28 @@ bool ValidMovesSearch::ArePiecesConnected(const MovingPiece& piece, const Move& 
             auto columnDiff = piecePosition.x - movePosition.x;
             auto moveRow = pieceRow + rowDiff;
             auto moveColumn = pieceColumn + columnDiff;
+
+            if (moveRow < pieceNumRows - 2 && moveRow >= -1 && moveColumn >= 0 &&
+                moveColumn < pieceNumColumns &&
+                !moveGrid[moveRow + 1][moveColumn].mFirstSubCell.IsEmpty()) {
+                
+                return true;
+            }
+
+            if (moveColumn < pieceNumColumns && moveColumn >= 1 && moveRow >= 0 &&
+                moveRow < pieceNumRows &&
+                !moveGrid[moveRow][moveColumn - 1].mFirstSubCell.IsEmpty()) {
+                
+                return true;
+            }
+
+            if (moveColumn < pieceNumColumns - 2 && moveColumn >= -1 && moveRow >= 0 &&
+                moveRow < pieceNumRows &&
+                !moveGrid[moveRow][moveColumn + 1].mFirstSubCell.IsEmpty()) {
+                
+                return true;
+            }
+            
             if (moveRow < 0 || moveRow >= pieceNumRows || moveColumn < 0 ||
                 moveColumn >= pieceNumColumns) {
 
