@@ -818,13 +818,6 @@ bool ValidMovesSearch::ArePiecesConnected(const MovingPiece& piece, const Move& 
             auto moveRow = pieceRow + rowDiff;
             auto moveColumn = pieceColumn + columnDiff;
 
-            if (moveRow < pieceNumRows - 2 && moveRow >= -1 && moveColumn >= 0 &&
-                moveColumn < pieceNumColumns &&
-                !moveGrid[moveRow + 1][moveColumn].mFirstSubCell.IsEmpty()) {
-                
-                return true;
-            }
-
             if (moveColumn < pieceNumColumns && moveColumn >= 1 && moveRow >= 0 &&
                 moveRow < pieceNumRows &&
                 !moveGrid[moveRow][moveColumn - 1].mFirstSubCell.IsEmpty()) {

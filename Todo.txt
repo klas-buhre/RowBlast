@@ -53,7 +53,7 @@ Ongoing tasks:
         -Items in the next release (match-3, hud, bombs dragged piece)              ~1-2 weeks
         -Interacting with publishers                                                ~1 week
         -Task after publisher (preview pieces, clear blocks)                        ~1-2 weeks
-         Total cost:                                                                 5-7 weeks
+         Total cost:                                                                 4-6 weeks
 
 
     -Do:
