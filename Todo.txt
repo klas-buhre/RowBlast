@@ -8,8 +8,8 @@ Backlog:
 
   -Gameplay:
     -Could have ice blocks that are level blocks that can be used to fill and clear rows but they
-     shatter if landed on or if falling down in a cascade. Or, they could turn into a block if the
-     ice is cleared which it will be by filling the row or explosion/laser.
+     could turn into a block if the ice is cleared which it will be by filling the row or
+     explosion/laser.
     -The UFO could be booster. It could clear 3 rows.
     -Maybe blocks in the visible part of the field could disappear on some levels. For each move,
      one of the colored blocks randomly disappears.
@@ -35,7 +35,7 @@ Backlog:
     -Animation that moves the pause button out of the screen.
   -Make ready for release:
     -Should give free gold coins after a new install?
-    -Maybe only one or two continues per game round? Like in Dr. Mario. And you get 10 more moves.
+    -Maybe only one or two continues per game round? Like in Dr. Mario.
     -Go through all user services and check that all state store/load is enabled.
     -Make sure analytics is enabled and that user terms accept is saved and checked.
     -Make sure analytics debug log is disabled.
@@ -50,7 +50,7 @@ Ongoing tasks:
   Plan:
     -Major user stories:
         -Purchasing                                                                 ~1 week
-        -Items in the next release (match-3, hud, bombs dragged piece)              ~1-2 weeks
+        -Items in the next release (match-3)                                        ~1-2 weeks
         -Interacting with publishers                                                ~1 week
         -Task after publisher (preview pieces, clear blocks)                        ~1-2 weeks
          Total cost:                                                                 4-6 weeks
@@ -78,8 +78,6 @@ Ongoing tasks:
             game, clear level, etc..). Maybe clean up blocks sound in audacity.
             The music track should be switched for the next attempt to clear a
             level after a failed attempt. Reduce music gain as well.
-        -3. Bombs and laser dragged piece with white or red transparent material    ~1 days
-            instead of textures.
         -5. Release.                                                                ~1 days
         -6. Send mail to publishers.
     -After contacted publisher:
