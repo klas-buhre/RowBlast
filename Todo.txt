@@ -74,10 +74,6 @@ Ongoing tasks:
             different colors but without welds, which may fall appart when
             landing over an edge, which would be like in Puyo Puyo. Maybe the
             matching logic can be like in Puyo Puyo as well?
-        -3. Reduce the gain in most sounds (clear blocks, button clicks, start      ~1 day
-            game, clear level, etc..). Maybe clean up blocks sound in audacity.
-            The music track should be switched for the next attempt to clear a
-            level after a failed attempt. Reduce music gain as well.
         -5. Release.                                                                ~1 days
         -6. Send mail to publishers.
     -After contacted publisher:

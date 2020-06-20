@@ -18,7 +18,7 @@ namespace {
 void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
     auto& audio = engine.GetAudio();
     
-    audio.LoadSound("logo.wav", 1, maxSoundGain, static_cast<Pht::AudioResourceId>(SoundId::Logo));
+    audio.LoadSound("logo.wav", 1, 0.9f, static_cast<Pht::AudioResourceId>(SoundId::Logo));
     audio.PlaySound(static_cast<Pht::AudioResourceId>(SoundId::Logo));
     
     audio.LoadMusicTrack("map.mp4", static_cast<Pht::AudioResourceId>(MusicTrackId::Map));
@@ -30,11 +30,11 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
                     static_cast<Pht::AudioResourceId>(SoundId::ButtonClick));
     audio.LoadSound("start_game.wav",
                     1,
-                    0.65f,
+                    0.55f,
                     static_cast<Pht::AudioResourceId>(SoundId::StartGame));
     audio.LoadSound("leave_title.wav",
                     1,
-                    0.65f,
+                    0.55f,
                     static_cast<Pht::AudioResourceId>(SoundId::LeaveTitle));
     audio.LoadSound("sliding_text_whoosh1.wav",
                     1,
@@ -114,11 +114,11 @@ void RowBlast::LoadAudioResouces(Pht::IEngine& engine) {
                     static_cast<Pht::AudioResourceId>(SoundId::AllCleared));
     audio.LoadSound("level_completed.wav",
                     1,
-                    maxSoundGain,
+                    0.8f,
                     static_cast<Pht::AudioResourceId>(SoundId::LevelCompleted));
     audio.LoadSound("star.wav",
                     3,
-                    0.75f,
+                    0.7f,
                     static_cast<Pht::AudioResourceId>(SoundId::Star));
     audio.LoadSound("fireworks1.wav",
                     5,
