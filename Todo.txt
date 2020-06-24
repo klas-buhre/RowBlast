@@ -88,19 +88,19 @@ Ongoing tasks:
             -Is it good to have 2 next preview pieces with regard to maximizing
              revenue at out of moves?
         -Maybe a short delay before clearing filled rows after piece lands?         ~2 days
-         And a short particle effect with twinkles in the filled row before
-         the blocks gets thrown away?
 
     -Mid-term future:
         -Purchasing.
-        -Release.
         -Try to get the game featured by apple by contacting them by filling out the form.
 
     -Maybe:
+        -Add a drag & drop page in the how to play dialog.
+        -A popup saying you are spending 10 coins to get more moves before getting the extra moves?
+         Candy crush does not have it. check other games.
         -A z-axis (backwards compared to the portal camera movement) camera movement could happen
          after going back to the map after clearing a level before the ufo animation. Can have a
          white fade effect when going to the map scene after clearing a level.
-        -Maybe introduce real fog (https://www.youtube.com/watch?v=qslBNLeSPUc )instead of lower
+        -Maybe introduce real fog (https://www.youtube.com/watch?v=qslBNLeSPUc ) instead of lower
          haze layers. Could add a terrain shader with fog support and a cloud shader. Could also
          have culling of distant objects in the renderer so that the map scene can have terrain
          segments far away without any extra cost, which would look better during the z camera

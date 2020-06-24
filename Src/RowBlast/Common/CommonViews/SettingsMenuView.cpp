@@ -160,8 +160,8 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                    controlsButtonPosition,
                                                    buttonInputSize,
                                                    settingsButtonStyle);
-    mDragControlsText = &(mControlsButton->CreateText({-1.5f, -0.23f, UiLayer::buttonText},
-                                                      "DragNDrop",
+    mDragControlsText = &(mControlsButton->CreateText({-1.55f, -0.23f, UiLayer::buttonText},
+                                                      "Drag&Drop",
                                                       buttonTextProperties).GetSceneObject());
     mDragControlsIcon1 = &mControlsButton->CreateIcon("hand.png",
                                                       {-2.0f, -0.13f, UiLayer::buttonText},
