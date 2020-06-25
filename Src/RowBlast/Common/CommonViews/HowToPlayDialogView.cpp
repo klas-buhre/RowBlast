@@ -19,7 +19,7 @@ using namespace RowBlast;
 namespace {
     const Pht::Vec3 lightDirectionA {0.785f, 1.0f, 0.67f};
     const Pht::Vec3 lightDirectionB {1.0f, 1.0f, 0.74f};
-    constexpr auto numPages = 9;
+    constexpr auto numPages = 10;
 }
 
 HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
@@ -90,6 +90,7 @@ HowToPlayDialogView::HowToPlayDialogView(Pht::IEngine& engine,
     }
 
     CreateGoalPage(guiResources, pieceResources, levelResources, zoom);
+    CreateDragAndDropPage(commonResources, pieceResources, levelResources, zoom);
     CreateControlsPage(guiResources, zoom);
     CreatePlacePiecePage(guiResources, pieceResources, levelResources, zoom);
     CreateOtherMovesPage(guiResources, pieceResources, levelResources, zoom);
@@ -123,6 +124,36 @@ void HowToPlayDialogView::CreateGoalPage(const GuiResources& guiResources,
     container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
     
     mPages.push_back(Page {container, &animation});
+}
+
+void HowToPlayDialogView::CreateDragAndDropPage(const CommonResources& commonResources,
+                                                const PieceResources& pieceResources,
+                                                const LevelResources& levelResources,
+                                                PotentiallyZoomedScreen zoom) {
+    auto& container = CreateSceneObject();
+    GetRoot().AddChild(container);
+    
+    auto& guiResources = commonResources.GetGuiResources();
+    auto largeTextProperties = guiResources.GetLargeWhiteTextProperties(zoom);
+    largeTextProperties.mAlignment = Pht::TextAlignment::CenterX;
+    CreateText({0.0f, 8.25f, UiLayer::text}, "DRAG & DROP", largeTextProperties, container);
+    
+    auto handAnimation = std::make_unique<HandAnimation>(mEngine, 1.0f, true);
+        
+    auto& animation = CreateDragAndDropAnimation(container,
+                                                 commonResources,
+                                                 pieceResources,
+                                                 levelResources,
+                                                 *handAnimation);
+
+    auto textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
+    textProperties.mAlignment = Pht::TextAlignment::CenterX;
+    CreateText({0.0f, -5.8f, UiLayer::text}, "Use drag & drop to place pieces.", textProperties, container);
+    CreateText({0.0f, -6.875f, UiLayer::text}, "Tap a piece to rotate it.", textProperties, container);
+    
+    container.AddChild(CreateFilledCircleIcon(static_cast<int>(mPages.size()), true));
+    
+    mPages.push_back(Page {container, &animation, std::move(handAnimation)});
 }
 
 void HowToPlayDialogView::CreateControlsPage(const GuiResources& guiResources,
@@ -1046,6 +1077,196 @@ Pht::Animation& HowToPlayDialogView::CreateSwitchPieceAnimation(Pht::SceneObject
     return rootAnimation;
 }
 
+Pht::Animation& HowToPlayDialogView::CreateDragAndDropAnimation(Pht::SceneObject& parent,
+                                                                const CommonResources& commonResources,
+                                                                const PieceResources& pieceResources,
+                                                                const LevelResources& levelResources,
+                                                                HandAnimation& handAnimation) {
+    auto& container = CreateSceneObject();
+    container.GetTransform().SetPosition({0.0f, 2.5f, 0.0f});
+    container.GetTransform().SetScale(1.0f);
+    parent.AddChild(container);
+    
+    CreateFieldQuad(container);
+    
+    auto animationDuration = 6.0f;
+    auto rotateTime = 1.0f;
+    auto rotateDuration = 0.25f;
+    auto dragBeginTime = 2.5f;
+    auto dragDuration = 2.3f;
+    auto lPieceFallDuration = 0.3f;
+    auto fallWaitDuration = 0.35f;
+    auto fallDuration = 0.2f;
+    auto rowClearTime = dragBeginTime + dragDuration + lPieceFallDuration;
+    
+    auto& animationSystem = mEngine.GetAnimationSystem();
+    auto& rootAnimation =
+        animationSystem.CreateAnimation(container, {{.mTime = 0.0f}, {.mTime = animationDuration}});
+    
+    handAnimation.Init(container);
+    
+    Pht::Vec3 lPieceInitialPosition {-0.5f, 3.3f, UiLayer::block};
+    auto& lPiece = CreateLPiece(lPieceInitialPosition, container, pieceResources);
+    Pht::Vec3 remainingLPieceInitialPosition {-0.5f, -1.0f, UiLayer::block};
+    auto& remainingLPiece = CreateTwoBlocks(remainingLPieceInitialPosition, BlockColor::Yellow, container, pieceResources);
+    remainingLPiece.SetIsVisible(false);
+    Pht::Vec3 grayBlockInitialPosition {1.0f, -1.0f, UiLayer::block};
+    auto& grayBlock = CreateGrayBlock(grayBlockInitialPosition, container, levelResources);
+    Pht::Vec3 greenBlocksInitialPosition {2.5f, -1.0f, UiLayer::block};
+    auto& greenBlocks = CreateTwoBlocks(greenBlocksInitialPosition, BlockColor::Green, container, pieceResources);
+    auto& leftGrayBlocks = CreateThreeGrayBlocks({-2.0f, -2.0f, UiLayer::block}, container, levelResources);
+    auto& rightGrayBlocks = CreateThreeGrayBlocks({2.0f, -2.0f, UiLayer::block}, container, levelResources);
+    CreateThreeGrayBlocksWithGap({-1.5f, -3.0f, UiLayer::block}, container, levelResources);
+    CreateThreeGrayBlocks({2.0f, -3.0f, UiLayer::block}, container, levelResources);
+    CreateThreeGrayBlocksWithGap({-1.5f, -4.0f, UiLayer::block}, container, levelResources);
+    CreateThreeGrayBlocks({2.0f, -4.0f, UiLayer::block}, container, levelResources);
+
+    std::vector<Pht::Keyframe> lPieceAnimationKeyframes {
+        {.mTime = 0.0f, .mPosition = lPieceInitialPosition, .mIsVisible = false},
+        {.mTime = dragBeginTime, .mPosition = lPieceInitialPosition, .mIsVisible = true},
+        {.mTime = dragBeginTime + dragDuration, .mPosition = lPieceInitialPosition},
+        {.mTime = rowClearTime, .mPosition = Pht::Vec3{-0.5f, -1.5f, UiLayer::block}, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(lPiece, lPieceAnimationKeyframes);
+
+    std::vector<Pht::Keyframe> remainingLPieceKeyframes {
+        {.mTime = 0.0f, .mPosition = remainingLPieceInitialPosition, .mIsVisible = false},
+        {.mTime = rowClearTime, .mIsVisible = true},
+        {.mTime = rowClearTime + fallWaitDuration, .mPosition = remainingLPieceInitialPosition},
+        {.mTime = rowClearTime + fallWaitDuration + fallDuration, .mPosition = Pht::Vec3{-0.5f, -2.0f, UiLayer::block}},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(remainingLPiece, remainingLPieceKeyframes);
+
+    std::vector<Pht::Keyframe> grayBlockKeyframes {
+        {.mTime = 0.0f, .mPosition = grayBlockInitialPosition},
+        {.mTime = rowClearTime + fallWaitDuration, .mPosition = grayBlockInitialPosition},
+        {.mTime = rowClearTime + fallWaitDuration + fallDuration, .mPosition = Pht::Vec3{1.0f, -2.0f, UiLayer::block}},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(grayBlock, grayBlockKeyframes);
+
+    std::vector<Pht::Keyframe> greenBlocksKeyframes {
+        {.mTime = 0.0f, .mPosition = greenBlocksInitialPosition},
+        {.mTime = rowClearTime + fallWaitDuration, .mPosition = greenBlocksInitialPosition},
+        {.mTime = rowClearTime + fallWaitDuration + fallDuration, .mPosition = Pht::Vec3{2.5f, -2.0f, UiLayer::block}},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(greenBlocks, greenBlocksKeyframes);
+
+    std::vector<Pht::Keyframe> leftGrayBlocksKeyframes {
+        {.mTime = 0.0f, .mIsVisible = true},
+        {.mTime = rowClearTime, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(leftGrayBlocks, leftGrayBlocksKeyframes);
+
+    std::vector<Pht::Keyframe> rightGrayBlocksKeyframes {
+        {.mTime = 0.0f, .mIsVisible = true},
+        {.mTime = rowClearTime, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(rightGrayBlocks, rightGrayBlocksKeyframes);
+
+    auto& gameHudRectangles = commonResources.GetGameHudRectangles();
+    
+    auto& selectablePieces = CreateSceneObject();
+    selectablePieces.GetTransform().SetPosition({-0.4f, -5.975f, UiLayer::panel});
+    selectablePieces.GetTransform().SetScale(0.71f);
+    container.AddChild(selectablePieces);
+
+    auto& selectablePiecesRectangle = CreateSceneObject();
+    selectablePiecesRectangle.SetRenderable(&gameHudRectangles.GetSelectablePiecesRectangle());
+    selectablePiecesRectangle.GetTransform().SetPosition({0.55f, 0.0f, 0.0f});
+    selectablePieces.AddChild(selectablePiecesRectangle);
+
+    auto& selectablePiecesSceneObject = CreateSceneObject();
+    selectablePiecesSceneObject.GetTransform().SetScale(1.1f);
+    Pht::Vec3 slot1Pos {-2.27f, 0.0f, UiLayer::buttonText};
+    Pht::Vec3 slot2Pos {0.52f, 0.0f, UiLayer::buttonText};
+    Pht::Vec3 slot3Pos {3.31f, 0.0f, UiLayer::buttonText};
+    CreateDPreviewPiece(slot1Pos, selectablePiecesSceneObject, pieceResources);
+    CreateIPreviewPiece(slot2Pos, selectablePiecesSceneObject, pieceResources);
+    auto& lPreviewPiece = CreateLPreviewPiece(slot3Pos, selectablePiecesSceneObject, pieceResources);
+    selectablePieces.AddChild(selectablePiecesSceneObject);
+    
+    std::vector<Pht::Keyframe> lPreviewPieceKeyframes {
+        {.mTime = 0.0f, .mRotation = Pht::Vec3{0.0f, 0.0f, 90.0f}, .mIsVisible = true},
+        {.mTime = rotateTime, .mRotation = Pht::Vec3{0.0f, 0.0f, 90.0f}},
+        {.mTime = rotateTime + rotateDuration, .mRotation = Pht::Vec3{0.0f, 0.0f, 0.0f}},
+        {.mTime = dragBeginTime, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    animationSystem.CreateAnimation(lPreviewPiece, lPreviewPieceKeyframes);
+
+    Pht::Vec3 draggedPieceInitailPosition {2.1f, -6.0f, UiLayer::textShadow - 0.01f};
+    Pht::Vec3 draggedPieceDropPosition {-0.5f, -1.5f, UiLayer::textShadow - 0.01f};
+    auto& draggedPiece = CreateLPieceDraggedPiece(draggedPieceInitailPosition, 90.0f, container, levelResources);
+    
+    std::vector<Pht::Keyframe> draggedPieceKeyframes {
+        {.mTime = 0.0f, .mIsVisible = false},
+        {.mTime = dragBeginTime, .mPosition = draggedPieceInitailPosition, .mIsVisible = true},
+        {.mTime = dragBeginTime + dragDuration, .mPosition = draggedPieceDropPosition, .mIsVisible = false},
+        {.mTime = animationDuration}
+    };
+    auto& draggedPieceAnimation = animationSystem.CreateAnimation(draggedPiece, draggedPieceKeyframes);
+    draggedPieceAnimation.SetInterpolation(Pht::Interpolation::Cosine);
+    
+    Pht::Vec3 handInitialPosition {3.0f, -5.5f, UiLayer::root};
+    Pht::Vec3 handDropPosition {0.4f, -1.0f, UiLayer::root};
+    
+    std::vector<Pht::Keyframe> handAnimationKeyframes {
+        {
+            .mTime = 0.0f,
+            .mPosition = handInitialPosition,
+            .mCallback = [&handAnimation, &handInitialPosition] () {
+                handAnimation.StartInNotTouchingScreenState(handInitialPosition, 115.0f, 10.0f);
+            }
+        },
+        {
+            .mTime = rotateTime - 0.2f,
+            .mPosition = handInitialPosition,
+            .mCallback = [&handAnimation] () {
+                handAnimation.BeginTouch(0.0f);
+            }
+        },
+        {
+            .mTime = dragBeginTime - 0.2f,
+            .mPosition = handInitialPosition,
+            .mCallback = [&handAnimation, dragDuration] () {
+                handAnimation.BeginTouch(dragDuration);
+            }
+        },
+        {
+            .mTime = dragBeginTime,
+            .mPosition = handInitialPosition
+        },
+        {
+            .mTime = dragBeginTime + dragDuration,
+            .mPosition = handDropPosition
+        },
+        {
+            .mTime = dragBeginTime + 0.2f + dragDuration,
+            .mPosition = handDropPosition
+        },
+        {
+            .mTime = animationDuration - 0.1f,
+            .mPosition = handInitialPosition
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+
+    auto& handPhtAnimation =
+        animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes);
+    handPhtAnimation.SetInterpolation(Pht::Interpolation::Cosine);
+
+    return rootAnimation;
+}
+
+
 void HowToPlayDialogView::CreateFieldQuad(Pht::SceneObject& parent) {
     Pht::Material fieldMaterial;
     fieldMaterial.SetOpacity(0.93f);
@@ -1153,6 +1374,13 @@ Pht::SceneObject& HowToPlayDialogView::CreateDPiece(const Pht::Vec3& position,
     CreateBond({halfCellSize * 2.0f, 0.0f, halfCellSize}, bondRenderable, 90.0f, dPiece);
     
     return dPiece;
+}
+
+Pht::SceneObject& HowToPlayDialogView::CreateGrayBlock(const Pht::Vec3& position,
+                                                       Pht::SceneObject& parent,
+                                                       const LevelResources& levelResources) {
+    auto& blockRenderable = levelResources.GetLevelBlockRenderable(BlockKind::Full);
+    return CreateBlock(position, blockRenderable, parent);
 }
 
 Pht::SceneObject& HowToPlayDialogView::CreateTwoBlocks(const Pht::Vec3& position,
@@ -1288,15 +1516,16 @@ Pht::SceneObject& HowToPlayDialogView::CreateIPreviewPiece(const Pht::Vec3& posi
     return iPiece;
 }
 
-void HowToPlayDialogView::CreateBlock(const Pht::Vec3& position,
-                                      Pht::RenderableObject& blockRenderable,
-                                      Pht::SceneObject& parent) {
+Pht::SceneObject& HowToPlayDialogView::CreateBlock(const Pht::Vec3& position,
+                                                   Pht::RenderableObject& blockRenderable,
+                                                   Pht::SceneObject& parent) {
     auto& block = CreateSceneObject();
     auto& transform = block.GetTransform();
     transform.SetPosition(position);
     transform.SetScale(0.8f);
     block.SetRenderable(&blockRenderable);
     parent.AddChild(block);
+    return block;
 }
 
 void HowToPlayDialogView::CreateBond(const Pht::Vec3& position,
@@ -1331,6 +1560,27 @@ Pht::SceneObject& HowToPlayDialogView::CreateLPieceGhostPiece(const Pht::Vec3& p
     }
     
     return ghostPiece;
+}
+
+Pht::SceneObject& HowToPlayDialogView::CreateLPieceDraggedPiece(const Pht::Vec3& position,
+                                                                float rotation,
+                                                                Pht::SceneObject& parent,
+                                                                const LevelResources& levelResources) {
+    auto& draggedPiece = CreateSceneObject();
+    parent.AddChild(draggedPiece);
+    
+    auto& transform = draggedPiece.GetTransform();
+    transform.SetPosition(position);
+    transform.SetScale(0.8f);
+    transform.SetRotation({0.0f, 0.0f, rotation});
+    
+    auto& pieceTypes = levelResources.GetPieceTypes();
+    auto i = pieceTypes.find("L");
+    if (i != std::end(pieceTypes)) {
+        draggedPiece.SetRenderable(i->second->GetDraggedPieceRenderable());
+    }
+    
+    return draggedPiece;
 }
 
 void HowToPlayDialogView::CreateSingleTapIcon(const Pht::Vec3& position, Pht::SceneObject& parent) {

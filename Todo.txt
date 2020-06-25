@@ -94,7 +94,6 @@ Ongoing tasks:
         -Try to get the game featured by apple by contacting them by filling out the form.
 
     -Maybe:
-        -Add a drag & drop page in the how to play dialog.
         -A popup saying you are spending 10 coins to get more moves before getting the extra moves?
          Candy crush does not have it. check other games.
         -A z-axis (backwards compared to the portal camera movement) camera movement could happen

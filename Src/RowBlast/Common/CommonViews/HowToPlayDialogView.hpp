@@ -76,6 +76,10 @@ namespace RowBlast {
                             const PieceResources& pieceResources,
                             const LevelResources& levelResources,
                             PotentiallyZoomedScreen zoom);
+        void CreateDragAndDropPage(const CommonResources& commonResources,
+                                   const PieceResources& pieceResources,
+                                   const LevelResources& levelResources,
+                                   PotentiallyZoomedScreen zoom);
         void CreateControlsPage(const GuiResources& guiResources, PotentiallyZoomedScreen zoom);
         void CreatePlacePiecePage(const GuiResources& guiResources,
                                   const PieceResources& pieceResources,
@@ -112,6 +116,11 @@ namespace RowBlast {
                                                    const PieceResources& pieceResources,
                                                    const LevelResources& levelResources,
                                                    HandAnimation* handAnimation);
+        Pht::Animation& CreateDragAndDropAnimation(Pht::SceneObject& parent,
+                                                   const CommonResources& commonResources,
+                                                   const PieceResources& pieceResources,
+                                                   const LevelResources& levelResources,
+                                                   HandAnimation& handAnimation);
         Pht::Animation& CreateBlocksAnimation(Pht::SceneObject& parent,
                                               const BlocksChildAnimations& childAnimations,
                                               const PieceResources& pieceResources,
@@ -140,6 +149,9 @@ namespace RowBlast {
                                           BlockColor color,
                                           Pht::SceneObject& parent,
                                           const PieceResources& pieceResources);
+        Pht::SceneObject& CreateGrayBlock(const Pht::Vec3& position,
+                                          Pht::SceneObject& parent,
+                                          const LevelResources& levelResources);
         Pht::SceneObject& CreateThreeGrayBlocks(const Pht::Vec3& position,
                                                 Pht::SceneObject& parent,
                                                 const LevelResources& levelResources);
@@ -155,9 +167,9 @@ namespace RowBlast {
         Pht::SceneObject& CreateDPreviewPiece(const Pht::Vec3& position,
                                               Pht::SceneObject& parent,
                                               const PieceResources& pieceResources);
-        void CreateBlock(const Pht::Vec3& position,
-                         Pht::RenderableObject& blockRenderable,
-                         Pht::SceneObject& parent);
+        Pht::SceneObject& CreateBlock(const Pht::Vec3& position,
+                                      Pht::RenderableObject& blockRenderable,
+                                      Pht::SceneObject& parent);
         void CreateBond(const Pht::Vec3& position,
                         Pht::RenderableObject& bondRenderable,
                         float rotation,
@@ -166,6 +178,10 @@ namespace RowBlast {
                                                  float rotation,
                                                  Pht::SceneObject& parent,
                                                  const LevelResources& levelResources);
+        Pht::SceneObject& CreateLPieceDraggedPiece(const Pht::Vec3& position,
+                                                   float rotation,
+                                                   Pht::SceneObject& parent,
+                                                   const LevelResources& levelResources);
         void CreateSingleTapIcon(const Pht::Vec3& position, Pht::SceneObject& parent);
         void CreateSwipeIcon(const Pht::Vec3& position, Pht::SceneObject& parent);
         void SetPage(int pageIndex);
