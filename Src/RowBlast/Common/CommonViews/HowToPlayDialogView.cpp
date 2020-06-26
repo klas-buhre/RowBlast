@@ -1089,11 +1089,11 @@ Pht::Animation& HowToPlayDialogView::CreateDragAndDropAnimation(Pht::SceneObject
     
     CreateFieldQuad(container);
     
-    auto animationDuration = 6.0f;
+    auto animationDuration = 7.0f;
     auto rotateTime = 1.0f;
     auto rotateDuration = 0.25f;
     auto dragBeginTime = 2.5f;
-    auto dragDuration = 2.3f;
+    auto dragDuration = 2.0f;
     auto lPieceFallDuration = 0.3f;
     auto fallWaitDuration = 0.35f;
     auto fallDuration = 0.2f;
