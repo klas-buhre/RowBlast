@@ -49,6 +49,7 @@ Ongoing tasks:
     
   Plan:
     -Major user stories:
+        -Don't show next pieces before continue with additional moves               ~1 week
         -Purchasing                                                                 ~1 week
         -Items in the next release (match-3)                                        ~1-2 weeks
         -Interacting with publishers                                                ~1 week
@@ -94,8 +95,16 @@ Ongoing tasks:
         -Try to get the game featured by apple by contacting them by filling out the form.
 
     -Maybe:
+        -Should it really be possible to see which pieces you will have if you purchase more moves?
+         Could have it like Dr Mario and Bubble Witch where the pieces simply run out in the
+         selectebles container and next container. In Tetris Marathon the pieces don't disappear but
+         there is a new set of next pieces after choosing to continue. That can be a bit dishonest
+         to the players.
         -A popup saying you are spending 10 coins to get more moves before getting the extra moves?
-         Candy crush does not have it. check other games.
+         Candy crush does not have it.
+         Toon Blast does not have it.
+         Dr Mario has it.
+         Angry Birds Match 3 does not have it.
         -A z-axis (backwards compared to the portal camera movement) camera movement could happen
          after going back to the map after clearing a level before the ufo animation. Can have a
          white fade effect when going to the map scene after clearing a level.
