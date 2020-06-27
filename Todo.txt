@@ -46,7 +46,17 @@ Backlog:
      mostly be the target audince and in the playtest they are not.
 
 Ongoing tasks:
-    
+
+    -Should it really be possible to see which pieces you will have if you purchase more moves?
+     Could have it like Dr Mario and Bubble Witch where the pieces simply run out in the
+     selectebles container and next container. In Tetris Marathon the pieces don't disappear but
+     there is a new set of next pieces after choosing to continue. That can be a bit dishonest
+     to the players.
+        -Fix bug: If undo is selected just after puchasing more moves then all preview pieces are
+         gone.
+        -Fix single tap and swipe modes since they are broken now the last 5 moves.
+
+
   Plan:
     -Major user stories:
         -Don't show next pieces before continue with additional moves               ~1 week
@@ -95,11 +105,6 @@ Ongoing tasks:
         -Try to get the game featured by apple by contacting them by filling out the form.
 
     -Maybe:
-        -Should it really be possible to see which pieces you will have if you purchase more moves?
-         Could have it like Dr Mario and Bubble Witch where the pieces simply run out in the
-         selectebles container and next container. In Tetris Marathon the pieces don't disappear but
-         there is a new set of next pieces after choosing to continue. That can be a bit dishonest
-         to the players.
         -A popup saying you are spending 10 coins to get more moves before getting the extra moves?
          Candy crush does not have it.
          Toon Blast does not have it.

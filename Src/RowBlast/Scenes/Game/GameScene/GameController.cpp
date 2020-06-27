@@ -679,7 +679,7 @@ void GameController::UpdateInOutOfMovesStateStore() {
 
 void GameController::AddMovesAndGoToPlayingState() {
     mUserServices.GetPurchasingService().WithdrawCoins(CoinWithdrawReason::AddMoves);
-    mGameLogic.SetMovesLeft(5);
+    mGameLogic.OnPurchasedMoreMoves();
     
     Pht::CustomAnalyticsEvent analyticsEvent {
         "Purchases:BoughtMoves:Level" + std::to_string(mLevel->GetId())

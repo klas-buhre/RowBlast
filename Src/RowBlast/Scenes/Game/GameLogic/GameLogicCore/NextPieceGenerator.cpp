@@ -9,18 +9,21 @@ void NextPieceGenerator::Init(const std::vector<const Piece*>& pieceTypes,
     mPieceTypes = &pieceTypes;
     
     GenerateSequence(initialPieceSequence);
-    
-    mNext2Pieces[0] = GetNextFromSequence();
-    mNext2Pieces[1] = GetNextFromSequence();
+    SetNext2Pieces();
 }
 
-const Piece& NextPieceGenerator::GetNext() {
+void NextPieceGenerator::SetNext2Pieces() {
+    mNext2Pieces[0] = GetNextFromSequence(Pht::Optional<int> {});
+    mNext2Pieces[1] = GetNextFromSequence(Pht::Optional<int> {});
+}
+
+const Piece* NextPieceGenerator::GetNext(int numMovesLeft) {
     auto* next = mNext2Pieces[0];
     
     mNext2Pieces[0] = mNext2Pieces[1];
-    mNext2Pieces[1] = GetNextFromSequence();
+    mNext2Pieces[1] = GetNextFromSequence(numMovesLeft);
     
-    return *next;
+    return next;
 }
 
 void NextPieceGenerator::GenerateSequence(const std::vector<const Piece*>& initialPieceSequence) {
@@ -48,7 +51,11 @@ void NextPieceGenerator::GenerateSequence(const std::vector<const Piece*>& initi
     mIndexInSequence = 0;
 }
 
-const Piece* NextPieceGenerator::GetNextFromSequence() {
+const Piece* NextPieceGenerator::GetNextFromSequence(Pht::Optional<int> numMovesLeft) {
+    if (numMovesLeft.HasValue() && numMovesLeft.GetValue() < 5) {
+        return nullptr;
+    }
+    
     if (mIndexInSequence >= mSequence.Size()) {
         GenerateSequence({});
     }

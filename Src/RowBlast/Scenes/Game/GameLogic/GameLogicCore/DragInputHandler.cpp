@@ -115,6 +115,11 @@ DragInputHandler::HandleOngoingTouchInTouchingPreviewPieceButtonState(const Pht:
         mState = State::Dragging;
         
         auto* pieceType = GetPieceType(mDraggedPieceIndex);
+        if (pieceType == nullptr) {
+            EndDrag();
+            return;
+        }
+
         auto rotation = GetPieceRotation(mDraggedPieceIndex);
         mDraggedPiece.BeginDrag(*pieceType, rotation);
         UpdatePiecePosition(touchEvent);

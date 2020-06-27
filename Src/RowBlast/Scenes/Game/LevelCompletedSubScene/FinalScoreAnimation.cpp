@@ -34,7 +34,7 @@ void FinalScoreAnimation::Start() {
     }
 
     auto numMovesLeft = mGameLogic.GetMovesLeft();
-    if (numMovesLeft == 0) {
+    if (numMovesLeft == 0 || mGameLogic.HasPurchasedMoreMoves()) {
         return;
     }
 

@@ -141,10 +141,7 @@ namespace RowBlast {
         int CalculateBonusPointsAtLevelCompleted() const;
         const FallingPiece* GetFallingPiece() const;
         const DraggedPiece* GetDraggedPiece() const;
-        
-        void SetMovesLeft(int movesLeft) {
-            mMovesLeft = movesLeft;
-        }
+        void OnPurchasedMoreMoves();
         
         FallingPieceAnimation& GetFallingPieceAnimation() {
             return mFallingPieceAnimation;
@@ -184,6 +181,10 @@ namespace RowBlast {
         
         bool IsCascading() const {
             return mCascadeState == CascadeState::Cascading;
+        }
+        
+        bool HasPurchasedMoreMoves() const {
+            return mHasPurchasedMoreMoves;
         }
         
         int GetNumObjectsLeftToClear() const {
@@ -356,6 +357,7 @@ namespace RowBlast {
         Pht::Optional<Move> mValidMoveBelowDraggedPiece;
         int mMovesUsed {0};
         int mMovesLeft {0};
+        bool mHasPurchasedMoreMoves {false};
         int mNumObjectsLeftToClear {0};
         bool mShouldUndoMove {false};
         int mNumUndosUsed {0};

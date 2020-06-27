@@ -163,16 +163,17 @@ void GameLogic::Init(const Level& level) {
     
     mMovesLeft = mLevel->GetNumMoves();
     mMovesUsed = 0;
+    mHasPurchasedMoreMoves = false;
     
     mCurrentMove = MoveData {};
     auto& nextPieceGenerator = mCurrentMove.mNextPieceGenerator;
     nextPieceGenerator.Init(mLevel->GetPieceTypes(), mLevel->GetPieceSequence());
     if (!IsFallingPieceVisibleAtNewMove()) {
-        mCurrentMove.mPieceType = &nextPieceGenerator.GetNext();
+        mCurrentMove.mPieceType = nextPieceGenerator.GetNext(mMovesLeft);
     }
     
-    mCurrentMove.mSelectablePieces[0] = &nextPieceGenerator.GetNext();
-    mCurrentMove.mSelectablePieces[1] = &nextPieceGenerator.GetNext();
+    mCurrentMove.mSelectablePieces[0] = nextPieceGenerator.GetNext(mMovesLeft);
+    mCurrentMove.mSelectablePieces[1] = nextPieceGenerator.GetNext(mMovesLeft);
         
     mCurrentMoveTmp = mCurrentMove;
     mPreviousMove = mCurrentMove;
@@ -363,22 +364,23 @@ void GameLogic::ManagePreviewPieces(NewMoveReason newMoveReason) {
         case PreviewPieceIndex::None:
             mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
             mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
-            mCurrentMove.mSelectablePieces[1] = &mCurrentMove.mNextPieceGenerator.GetNext();
+            mCurrentMove.mSelectablePieces[1] = mCurrentMove.mNextPieceGenerator.GetNext(mMovesLeft);
             mCurrentMove.mPreviewPieceRotations = PieceRotations {};
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
             break;
         case PreviewPieceIndex::Active:
-            SetPreviewPiece(PreviewPieceIndex::Active, &mCurrentMove.mNextPieceGenerator.GetNext());
+            SetPreviewPiece(PreviewPieceIndex::Active,
+                            mCurrentMove.mNextPieceGenerator.GetNext(mMovesLeft));
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillActive;
             break;
         case PreviewPieceIndex::Selectable0:
             SetPreviewPiece(PreviewPieceIndex::Selectable0,
-                            &mCurrentMove.mNextPieceGenerator.GetNext());
+                            mCurrentMove.mNextPieceGenerator.GetNext(mMovesLeft));
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0;
             break;
         case PreviewPieceIndex::Selectable1:
             SetPreviewPiece(PreviewPieceIndex::Selectable1,
-                            &mCurrentMove.mNextPieceGenerator.GetNext());
+                            mCurrentMove.mNextPieceGenerator.GetNext(mMovesLeft));
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillSelectable1;
             break;
     }
@@ -752,6 +754,18 @@ void GameLogic::IncreaseScore(int points,
 
 int GameLogic::CalculateBonusPointsAtLevelCompleted() const {
     return mScoreManager.CalculateBonusPointsAtLevelCompleted(mMovesLeft);
+}
+
+void GameLogic::OnPurchasedMoreMoves() {
+    mMovesLeft = 5;
+    mHasPurchasedMoreMoves = true;
+
+    auto& nextPieceGenerator = mCurrentMove.mNextPieceGenerator;
+    nextPieceGenerator.SetNext2Pieces();
+    
+    mCurrentMove.mPieceType = nextPieceGenerator.GetNext(mMovesLeft);
+    mCurrentMove.mSelectablePieces[0] = nextPieceGenerator.GetNext(mMovesLeft);
+    mCurrentMove.mSelectablePieces[1] = nextPieceGenerator.GetNext(mMovesLeft);
 }
 
 const FallingPiece* GameLogic::GetFallingPiece() const {
