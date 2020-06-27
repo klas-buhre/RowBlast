@@ -232,10 +232,7 @@ namespace RowBlast {
                                  const Piece* pieceType);
         void NotifyListenersOfNewMove(NewMoveReason newMoveReason);
         void ManagePreviewPieces(NewMoveReason newMoveReason);
-        void SetPreviewPiece(PreviewPieceIndex previewPieceIndex,
-                             const Piece* pieceType,
-                             Rotation rotation,
-                             Rotation hudRotation);
+        void SetPreviewPiece(PreviewPieceIndex previewPieceIndex, const Piece* pieceType);
         void ManageMoveHistory(NewMoveReason newMoveReason);
         void StartBlastAreaAtGhostPiece();
         void SetBlastAreaPositionAtGhostPiece();

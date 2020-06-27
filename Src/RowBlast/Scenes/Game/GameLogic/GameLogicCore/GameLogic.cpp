@@ -368,24 +368,17 @@ void GameLogic::ManagePreviewPieces(NewMoveReason newMoveReason) {
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
             break;
         case PreviewPieceIndex::Active:
-            SetPreviewPiece(PreviewPieceIndex::Active,
-                            &mCurrentMove.mNextPieceGenerator.GetNext(),
-                            Rotation::Deg0,
-                            Rotation::Deg0);
+            SetPreviewPiece(PreviewPieceIndex::Active, &mCurrentMove.mNextPieceGenerator.GetNext());
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillActive;
             break;
         case PreviewPieceIndex::Selectable0:
             SetPreviewPiece(PreviewPieceIndex::Selectable0,
-                            &mCurrentMove.mNextPieceGenerator.GetNext(),
-                            Rotation::Deg0,
-                            Rotation::Deg0);
+                            &mCurrentMove.mNextPieceGenerator.GetNext());
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillSelectable0;
             break;
         case PreviewPieceIndex::Selectable1:
             SetPreviewPiece(PreviewPieceIndex::Selectable1,
-                            &mCurrentMove.mNextPieceGenerator.GetNext(),
-                            Rotation::Deg0,
-                            Rotation::Deg0);
+                            &mCurrentMove.mNextPieceGenerator.GetNext());
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillSelectable1;
             break;
     }
@@ -397,26 +390,23 @@ void GameLogic::ManagePreviewPieces(NewMoveReason newMoveReason) {
     }
 }
 
-void GameLogic::SetPreviewPiece(PreviewPieceIndex previewPieceIndex,
-                                const Piece* pieceType,
-                                Rotation rotation,
-                                Rotation hudRotation) {
+void GameLogic::SetPreviewPiece(PreviewPieceIndex previewPieceIndex, const Piece* pieceType) {
     auto& pieceRotations = mCurrentMove.mPreviewPieceRotations;
     switch (previewPieceIndex) {
         case PreviewPieceIndex::Active:
             mCurrentMove.mPieceType = pieceType;
-            pieceRotations.mRotations.mActive = rotation;
-            pieceRotations.mHudRotations.mActive = hudRotation;
+            pieceRotations.mRotations.mActive = Rotation::Deg0;
+            pieceRotations.mHudRotations.mActive = Rotation::Deg0;
             break;
         case PreviewPieceIndex::Selectable0:
             mCurrentMove.mSelectablePieces[0] = pieceType;
-            pieceRotations.mRotations.mSelectable0 = rotation;
-            pieceRotations.mHudRotations.mSelectable0 = hudRotation;
+            pieceRotations.mRotations.mSelectable0 = Rotation::Deg0;
+            pieceRotations.mHudRotations.mSelectable0 = Rotation::Deg0;
             break;
         case PreviewPieceIndex::Selectable1:
             mCurrentMove.mSelectablePieces[1] = pieceType;
-            pieceRotations.mRotations.mSelectable1 = rotation;
-            pieceRotations.mHudRotations.mSelectable1 = hudRotation;
+            pieceRotations.mRotations.mSelectable1 = Rotation::Deg0;
+            pieceRotations.mHudRotations.mSelectable1 = Rotation::Deg0;
             break;
         case PreviewPieceIndex::None:
             assert(false);
