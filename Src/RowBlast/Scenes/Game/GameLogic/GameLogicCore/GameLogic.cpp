@@ -699,7 +699,7 @@ void GameLogic::PrepareForNewMove() {
 
 bool GameLogic::IsUndoMovePossible() const {
     return mCurrentMove.mId != mPreviousMove.mId && mMovesUsed > 1 && mNumUndosUsed < numUndos &&
-           mTutorial.IsUndoMoveAllowed(GetMovesUsedIncludingCurrent());
+           mTutorial.IsUndoMoveAllowed(GetMovesUsedIncludingCurrent()) && !mHasPurchasedMoreMoves;
 }
 
 bool GameLogic::HandleUndo() {
