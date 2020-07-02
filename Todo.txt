@@ -46,15 +46,14 @@ Backlog:
      mostly be the target audince and in the playtest they are not.
 
 Ongoing tasks:
-
+    -Play through all levels to check that there are no bugs from the find more moves feature. At
+     level 44 at the moment.
     -Should it really be possible to see which pieces you will have if you purchase more moves?
      Could have it like Dr Mario and Bubble Witch where the pieces simply run out in the
      selectebles container and next container. In Tetris Marathon the pieces don't disappear but
      there is a new set of next pieces after choosing to continue. That can be a bit dishonest
      to the players.
-        -Fix bug: If undo is selected just after puchasing more moves then all preview pieces are
-         gone.
-        -Fix single tap and swipe modes since they are broken now the last 5 moves.
+        -Fix swipe modes since it is broken now the last 5 moves if you use drag and drop.
 
 
   Plan:

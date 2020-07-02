@@ -283,7 +283,7 @@ GameLogic::Result GameLogic::NewMove(NewMoveReason newMoveReason) {
     ManageMoveHistory(newMoveReason);
     mIsOngoingMove = true;
     
-    if (mControlType == ControlType::Drag && mMovesLeft == 0) {
+    if (mMovesLeft == 0) {
         return Result::OutOfMoves;
     }
     
@@ -330,10 +330,6 @@ GameLogic::Result GameLogic::SpawnFallingPiece(FallingPieceSpawnReason fallingPi
     }
 
     mFallingPieceScaleAnimation.StartScaleUp();
-    
-    if (mMovesLeft == 0) {
-        return Result::OutOfMoves;
-    }
     
     return Result::None;
 }
@@ -766,6 +762,10 @@ void GameLogic::OnPurchasedMoreMoves() {
     mCurrentMove.mPieceType = nextPieceGenerator.GetNext(mMovesLeft);
     mCurrentMove.mSelectablePieces[0] = nextPieceGenerator.GetNext(mMovesLeft);
     mCurrentMove.mSelectablePieces[1] = nextPieceGenerator.GetNext(mMovesLeft);
+    
+    if (mControlType != ControlType::Drag) {
+        SpawnFallingPiece(FallingPieceSpawnReason::Other, nullptr);
+    }
 }
 
 const FallingPiece* GameLogic::GetFallingPiece() const {
@@ -1021,6 +1021,7 @@ void GameLogic::RemoveClearedRowsAndPullDownLoosePieces(bool doBounceCalculation
             break;
         case Level::Objective::Build:
             assert(false);
+            break;
     }
 
     if (doBounceCalculations) {
@@ -1295,7 +1296,7 @@ void GameLogic::RotatateAndAdjustPosition(Rotation newRotation,
 }
 
 void GameLogic::SwitchPiece() {
-    if (!mTutorial.IsSwitchPieceAllowed()) {
+    if (!mTutorial.IsSwitchPieceAllowed() || mMovesLeft == 1) {
         return;
     }
     
@@ -1309,10 +1310,22 @@ void GameLogic::SwitchPiece() {
     
     auto* previousActivePieceType = mCurrentMove.mPieceType;
     
-    mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
-    mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
-    mCurrentMove.mSelectablePieces[1] = previousActivePieceType;
-    mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
+    switch (mMovesLeft) {
+        case 1:
+            break;
+        case 2:
+            mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
+            mCurrentMove.mSelectablePieces[0] = previousActivePieceType;
+            mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
+            break;
+        default:
+            mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
+            mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
+            mCurrentMove.mSelectablePieces[1] = previousActivePieceType;
+            mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
+            break;
+    }
+
     mCurrentMove.mPreviewPieceRotations = PieceRotations {};
     
     SpawnFallingPiece(FallingPieceSpawnReason::Switch, mCurrentMove.mPieceType);
