@@ -1223,7 +1223,7 @@ void Tutorial::CreateDragAndDropAnimation(Pht::Vec3 handInitialPosition,
 
     auto& handAnimation = dragAndDropAnimation->mHandAnimation;
     
-    auto waitDuration = 0.3f;
+    auto waitDuration = 0.5f;
     auto dragDuration = 2.3f;
     
     Pht::Vec3 handAdjustment {0.0f, 0.9f, 0.0f};
@@ -1256,12 +1256,8 @@ void Tutorial::CreateDragAndDropAnimation(Pht::Vec3 handInitialPosition,
             .mPosition = handDropPosition
         },
         {
-            .mTime = waitDuration + 0.4f + dragDuration,
-            .mPosition = handDropPosition
-        },
-        {
             .mTime = animationDuration - 0.1f,
-            .mPosition = handInitialPosition
+            .mPosition = handDropPosition + Pht::Vec3{0.6f, 0.6f, 0.0f}
         },
         {
             .mTime = animationDuration

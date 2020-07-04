@@ -1247,12 +1247,8 @@ Pht::Animation& HowToPlayDialogView::CreateDragAndDropAnimation(Pht::SceneObject
             .mPosition = handDropPosition
         },
         {
-            .mTime = dragBeginTime + 0.2f + dragDuration,
-            .mPosition = handDropPosition
-        },
-        {
             .mTime = animationDuration - 0.1f,
-            .mPosition = handInitialPosition
+            .mPosition = handDropPosition + Pht::Vec3{1.0f, 1.0f, 0.0f}
         },
         {
             .mTime = animationDuration
