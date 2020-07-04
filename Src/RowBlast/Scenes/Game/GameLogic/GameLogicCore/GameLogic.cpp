@@ -365,9 +365,21 @@ void GameLogic::ManagePreviewPieces(NewMoveReason newMoveReason) {
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
             break;
         case PreviewPieceIndex::Active:
-            SetPreviewPiece(PreviewPieceIndex::Active,
-                            mCurrentMove.mNextPieceGenerator.GetNext(mMovesLeft));
-            mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillActive;
+            if (mControlType == ControlType::Swipe && mMovesLeft < 3) {
+                if (mCurrentMove.mSelectablePieces[0] == nullptr) {
+                    mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[1];
+                    mCurrentMove.mSelectablePieces[1] = nullptr;
+                } else {
+                    mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
+                    mCurrentMove.mSelectablePieces[0] = mCurrentMove.mSelectablePieces[1];
+                    mCurrentMove.mSelectablePieces[1] = nullptr;
+                }
+                mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndSwitch;
+            } else {
+                SetPreviewPiece(PreviewPieceIndex::Active,
+                                mCurrentMove.mNextPieceGenerator.GetNext(mMovesLeft));
+                mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::NextPieceAndRefillActive;
+            }
             break;
         case PreviewPieceIndex::Selectable0:
             SetPreviewPiece(PreviewPieceIndex::Selectable0,
@@ -1300,7 +1312,8 @@ void GameLogic::SwitchPiece() {
         return;
     }
     
-    auto& nextPieceType = *mCurrentMove.mSelectablePieces[0];
+    auto& nextPieceType = mCurrentMove.mSelectablePieces[0] != nullptr ?
+                          *mCurrentMove.mSelectablePieces[0] : *mCurrentMove.mSelectablePieces[1];
     if (!IsThereRoomToSwitchPiece(nextPieceType, nextPieceType.GetSpawnRotation())) {
         mMediumText.StartNoRoomMessage();
         return;
@@ -1314,8 +1327,11 @@ void GameLogic::SwitchPiece() {
         case 1:
             break;
         case 2:
-            mCurrentMove.mPieceType = mCurrentMove.mSelectablePieces[0];
+            mCurrentMove.mPieceType =
+                mCurrentMove.mSelectablePieces[0] != nullptr ?
+                mCurrentMove.mSelectablePieces[0] : mCurrentMove.mSelectablePieces[1];
             mCurrentMove.mSelectablePieces[0] = previousActivePieceType;
+            mCurrentMove.mSelectablePieces[1] = nullptr;
             mPreviewPieceAnimationToStart = PreviewPieceAnimationToStart::SwitchPiece;
             break;
         default:
