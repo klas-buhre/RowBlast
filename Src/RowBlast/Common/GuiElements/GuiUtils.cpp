@@ -217,3 +217,44 @@ void GuiUtils::CreateTitleBarLine(Pht::IEngine& engine, Pht::GuiView& view, floa
     lineSceneObject.GetTransform().SetPosition(position);
     view.GetRoot().AddChild(lineSceneObject);
 }
+
+Pht::SceneObject& GuiUtils::CreateLoseLifeIcon(Pht::IEngine& engine,
+                                               Pht::GuiView& view,
+                                               const Pht::Vec3& position,
+                                               const CommonResources& commonResources) {
+    auto& heart = view.CreateSceneObject();
+    auto& heartTransform = heart.GetTransform();
+    heartTransform.SetPosition(position);
+
+    auto& heartMesh =
+        view.CreateSceneObject(Pht::ObjMesh {"heart_392.obj", 3.95f},
+                               commonResources.GetMaterials().GetRedMaterial(),
+                               engine.GetSceneManager());
+                          
+    auto& heartMeshTransform = heartMesh.GetTransform();
+    heartMeshTransform.SetPosition({0.0f, 0.0f, UiLayer::buttonOverlayObject2});
+    heart.AddChild(heartMesh);
+
+    Pht::Material shaddowMaterial {Pht::Color{0.05f, 0.05f, 0.05f}};
+    shaddowMaterial.SetOpacity(0.14f);
+    shaddowMaterial.SetDepthTestAllowedOverride(true);
+    auto& heartShaddow =
+        view.CreateSceneObject(Pht::ObjMesh {"heart_392.obj", 3.85f},
+                               shaddowMaterial,
+                               engine.GetSceneManager());
+    auto& heartShaddowTransform = heartShaddow.GetTransform();
+    heartShaddowTransform.SetPosition({-0.13f, -0.12f, UiLayer::buttonOverlayObject1});
+    heart.AddChild(heartShaddow);
+
+    Pht::TextProperties minus1TextProperties {
+        commonResources.GetHussarFontSize27(PotentiallyZoomedScreen::Yes),
+        1.0f,
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f},
+        Pht::TextShadow::Yes,
+        {0.05f, 0.05f},
+        {0.27f, 0.27f, 0.27f, 0.5f}
+    };
+    view.CreateText({-0.35f, -0.25f, UiLayer::buttonText}, "-1", minus1TextProperties, heart);
+                                               
+    return heart;
+}

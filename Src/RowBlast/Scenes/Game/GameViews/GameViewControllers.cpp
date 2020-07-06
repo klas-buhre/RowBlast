@@ -90,6 +90,8 @@ void GameViewControllers::Init(GameScene& scene, Pht::FadeEffect& storeFadeEffec
     mOutOfMovesDialogController.SetGuiLightProvider(scene);
     mLevelGoalDialogController.SetGuiLightProvider(scene);
     mHowToPlayDialogController.SetGuiLightProvider(scene);
+    mMapConfirmationDialogController.SetGuiLightProvider(scene);
+    mRestartConfirmationDialogController.SetGuiLightProvider(scene);
 }
 
 void GameViewControllers::SetActiveController(Controller controller) {

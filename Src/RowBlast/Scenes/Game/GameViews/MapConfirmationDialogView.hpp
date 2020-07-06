@@ -15,10 +15,17 @@ namespace Pht {
 
 namespace RowBlast {
     class CommonResources;
+    class IGuiLightProvider;
     
     class MapConfirmationDialogView: public Pht::GuiView {
     public:
         MapConfirmationDialogView(Pht::IEngine& engine, const CommonResources& commonResources);
+
+        void SetUp();
+        
+        void SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+            mGuiLightProvider = &guiLightProvider;
+        }
 
         const MenuButton& GetYesButton() const {
             return *mYesButton;
@@ -29,6 +36,7 @@ namespace RowBlast {
         }
         
     private:
+        IGuiLightProvider* mGuiLightProvider {nullptr};
         std::unique_ptr<MenuButton> mYesButton;
         std::unique_ptr<MenuButton> mNoButton;
     };

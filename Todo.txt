@@ -46,7 +46,9 @@ Backlog:
      mostly be the target audince and in the playtest they are not.
 
 Ongoing tasks:
-
+    -Maybe add vibration when placing a piece and when claring lines and for bombs and lasers.
+     Although many games don't have that.
+    
 
   Plan:
     -Major user stories:

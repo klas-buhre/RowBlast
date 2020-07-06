@@ -52,6 +52,10 @@ namespace RowBlast {
         void CreateTitleBarLine(Pht::IEngine& engine,
                                 Pht::GuiView& view,
                                 float titleBarHeight = 2.6f);
+        Pht::SceneObject& CreateLoseLifeIcon(Pht::IEngine& engine,
+                                             Pht::GuiView& view,
+                                             const Pht::Vec3& position,
+                                             const CommonResources& commonResources);
     }
 }
 

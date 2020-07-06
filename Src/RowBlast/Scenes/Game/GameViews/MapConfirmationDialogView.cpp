@@ -5,10 +5,12 @@
 #include "IRenderer.hpp"
 #include "QuadMesh.hpp"
 #include "ISceneManager.hpp"
+#include "IGuiLightProvider.hpp"
 
 // Game includes.
 #include "CommonResources.hpp"
 #include "UiLayer.hpp"
+#include "GuiUtils.hpp"
 
 using namespace RowBlast;
 
@@ -53,6 +55,9 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     mYesButton->CreateText({-0.25f, -0.23f, UiLayer::buttonText},
                            "Yes",
                            guiResources.GetBlackButtonTextProperties(zoom));
+
+    auto& heart = GuiUtils::CreateLoseLifeIcon(engine, *this, {1.8f, 0.0f, 0.0f}, commonResources);
+    mYesButton->GetSceneObject().AddChild(heart);
     
     MenuButton::Style blueButtonStyle;
     blueButtonStyle.mMeshFilename = GuiResources::mMediumButtonSkewedMeshFilename;
@@ -75,4 +80,10 @@ MapConfirmationDialogView::MapConfirmationDialogView(Pht::IEngine& engine,
     mNoButton->CreateText({-0.2f, -0.23f, UiLayer::buttonText},
                           "No",
                           guiResources.GetWhiteButtonTextWithShadowPropertiesPotentiallyZoomedScreen());
+}
+
+void MapConfirmationDialogView::SetUp() {
+    if (mGuiLightProvider) {
+        mGuiLightProvider->SetDefaultGuiLightDirections();
+    }
 }

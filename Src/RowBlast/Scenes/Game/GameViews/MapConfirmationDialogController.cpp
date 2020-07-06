@@ -15,8 +15,13 @@ MapConfirmationDialogController(Pht::IEngine& engine, const CommonResources& com
     mSlidingMenuAnimation {engine, mView} {}
 
 void MapConfirmationDialogController::SetUp() {
+    mView.SetUp();
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::SlideDirection::Scale);
+}
+
+void MapConfirmationDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+    mView.SetGuiLightProvider(guiLightProvider);
 }
 
 void MapConfirmationDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {

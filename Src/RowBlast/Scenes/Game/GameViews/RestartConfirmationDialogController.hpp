@@ -27,6 +27,7 @@ namespace RowBlast {
                                             const UserServices& userServices);
         
         void SetUp();
+        void SetGuiLightProvider(IGuiLightProvider& guiLightProvider);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
 
