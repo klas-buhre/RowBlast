@@ -46,13 +46,18 @@ Backlog:
      mostly be the target audince and in the playtest they are not.
 
 Ongoing tasks:
-    -Maybe add vibration when placing a piece and when claring lines and for bombs and lasers.
-     Although many games don't have that.
-    
+    -Purchasing
+        -Complete all purchasing related info in app storer connect (https://help.apple.com/app-store-connect/#/devb6df5ee51)
+            -Just fill in the tax information. It is possible to contact Apple to do changes even
+             though it says the form cannot be changed once it is submitted. Probably need to add
+             in TIN number later if I get F-Skatt and moms and all that, to get tax reduction.
+             
+             
 
   Plan:
     -Major user stories:
         -Purchasing                                                                 ~1 week
+        -Haptic feedback?                                                           ~1 week
         -Items in the next release (match-3)                                        ~1-2 weeks
         -Interacting with publishers                                                ~1 week
         -Task after publisher (preview pieces, clear blocks)                        ~1-2 weeks
@@ -93,7 +98,8 @@ Ongoing tasks:
         -Maybe a short delay before clearing filled rows after piece lands?         ~2 days
 
     -Mid-term future:
-        -Purchasing.
+        -Maybe add haptic feedback (vibration) when placing a piece and when claring lines and for
+         bombs and lasers. Although many games don't have that.
         -Try to get the game featured by apple by contacting them by filling out the form.
 
     -Maybe:

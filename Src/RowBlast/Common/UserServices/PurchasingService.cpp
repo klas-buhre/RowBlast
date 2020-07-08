@@ -72,11 +72,11 @@ namespace {
 PurchasingService::PurchasingService(Pht::IEngine& engine) :
     mEngine {engine},
     mProducts {
-        {ProductId::Currency10Coins, 10, "20,00 kr"},
-        {ProductId::Currency50Coins, 50, "85,00 kr"},
-        {ProductId::Currency100Coins, 100, "159,00 kr"},
-        {ProductId::Currency250Coins, 250, "319,00 kr"},
-        {ProductId::Currency500Coins, 500, "595,00 kr"}
+        {ProductId::Currency10Coins, 10, "25,00 kr"},
+        {ProductId::Currency50Coins, 50, "99,00 kr"},
+        {ProductId::Currency100Coins, 100, "179,00 kr"},
+        {ProductId::Currency250Coins, 250, "359,00 kr"},
+        {ProductId::Currency500Coins, 500, "649,00 kr"}
     } {
 
     // LoadState();
