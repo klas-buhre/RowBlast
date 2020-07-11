@@ -35,7 +35,7 @@
     mEngine->Init(false);
     
     GLKViewExtension* glkViewExtension = (GLKViewExtension*)self.view;
-    [glkViewExtension setEngine: mEngine];
+    [glkViewExtension setEngine:mEngine];
     
 #if 0
     if (mEngine->GetInputHandler().GetUseGestureRecognizers()) {

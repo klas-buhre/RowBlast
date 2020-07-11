@@ -24,6 +24,8 @@
 		1750CAFD2326B6C10092B2E6 /* disable.png in Resources */ = {isa = PBXBuildFile; fileRef = 1750CAFC2326B6C10092B2E6 /* disable.png */; };
 		1750CB022328F9810092B2E6 /* SettingsMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1750CAFE2328F9800092B2E6 /* SettingsMenuView.cpp */; };
 		1750CB032328F9810092B2E6 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */; };
+		1752255124B73E140002BE3E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1752255024B73E140002BE3E /* StoreKit.framework */; };
+		1752255924B9F86A0002BE3E /* PurchasingIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1752255824B9F86A0002BE3E /* PurchasingIOS.mm */; };
 		175BE1182379E9420049DF16 /* terrain1_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 175BE1172379E9410049DF16 /* terrain1_4.jpg */; };
 		175BE129237C69B00049DF16 /* Terrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 175BE127237C69AF0049DF16 /* Terrain.cpp */; };
 		1766C7442360CF0300C8E355 /* triangle_320.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1766C7432360CF0300C8E355 /* triangle_320.obj */; };
@@ -593,6 +595,10 @@
 		1750CAFF2328F9800092B2E6 /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
 		1750CB002328F9800092B2E6 /* SettingsMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuView.hpp; sourceTree = "<group>"; };
 		1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuController.cpp; sourceTree = "<group>"; };
+		1752255024B73E140002BE3E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		1752255624B8C6CC0002BE3E /* IPurchasing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IPurchasing.hpp; sourceTree = "<group>"; };
+		1752255824B9F86A0002BE3E /* PurchasingIOS.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = PurchasingIOS.mm; sourceTree = "<group>"; };
+		1752255B24BA062C0002BE3E /* Purchasing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Purchasing.hpp; sourceTree = "<group>"; };
 		175BE1172379E9410049DF16 /* terrain1_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain1_4.jpg; sourceTree = "<group>"; };
 		175BE127237C69AF0049DF16 /* Terrain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Terrain.cpp; sourceTree = "<group>"; };
 		175BE128237C69AF0049DF16 /* Terrain.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Terrain.hpp; sourceTree = "<group>"; };
@@ -1571,6 +1577,7 @@
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
+				1752255124B73E140002BE3E /* StoreKit.framework in Frameworks */,
 				4D27E4840F9AD71900447247 /* OpenGLES.framework in Frameworks */,
 				4D27E4B50F9AD7D600447247 /* QuartzCore.framework in Frameworks */,
 			);
@@ -1579,6 +1586,32 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1752255224B8C6090002BE3E /* Purchasing */ = {
+			isa = PBXGroup;
+			children = (
+				1752255324B8C6630002BE3E /* iOS */,
+				1752255424B8C6630002BE3E /* PurchasingApi */,
+			);
+			path = Purchasing;
+			sourceTree = "<group>";
+		};
+		1752255324B8C6630002BE3E /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				1752255824B9F86A0002BE3E /* PurchasingIOS.mm */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		1752255424B8C6630002BE3E /* PurchasingApi */ = {
+			isa = PBXGroup;
+			children = (
+				1752255624B8C6CC0002BE3E /* IPurchasing.hpp */,
+				1752255B24BA062C0002BE3E /* Purchasing.hpp */,
+			);
+			path = PurchasingApi;
+			sourceTree = "<group>";
+		};
 		17A75B4223211A2C001BA90D /* GameResources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1634,6 +1667,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1752255024B73E140002BE3E /* StoreKit.framework */,
 				623B94AC21F4859E00B62D9B /* libz.tbd */,
 				623B94AA21F4858D00B62D9B /* libsqlite3.tbd */,
 				623B94A821F4856F00B62D9B /* SystemConfiguration.framework */,
@@ -2497,8 +2531,8 @@
 		623B94BF21F6357400B62D9B /* Platform */ = {
 			isa = PBXGroup;
 			children = (
-				623B94C021F6357400B62D9B /* PlatformApi */,
 				623B94C321F6357400B62D9B /* iOS */,
+				623B94C021F6357400B62D9B /* PlatformApi */,
 			);
 			path = Platform;
 			sourceTree = "<group>";
@@ -2689,6 +2723,7 @@
 				625697312182392B003A3A9D /* Math */,
 				625696D12182392B003A3A9D /* Mesh */,
 				623B94BF21F6357400B62D9B /* Platform */,
+				1752255224B8C6090002BE3E /* Purchasing */,
 				625696E72182392B003A3A9D /* Renderer */,
 				6256974F2182392B003A3A9D /* Scene */,
 				625697752182392B003A3A9D /* ThirdParty */,
@@ -3604,6 +3639,7 @@
 				62216A7721EB376E001CB9A1 /* MenuWindow.cpp in Sources */,
 				62216C6E21F08B7F001CB9A1 /* OptionsMenuController.cpp in Sources */,
 				62216C3A21EB377F001CB9A1 /* NextLevelParticleEffect.cpp in Sources */,
+				1752255924B9F86A0002BE3E /* PurchasingIOS.mm in Sources */,
 				62216BD721EB377E001CB9A1 /* SlidingFieldAnimation.cpp in Sources */,
 				17A75B5C23211A2C001BA90D /* BlastArea.cpp in Sources */,
 				1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */,
