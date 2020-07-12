@@ -17,6 +17,7 @@ namespace Pht {
         };
         
         AnalyticsEvent(Kind kind);
+        virtual ~AnalyticsEvent() {}
         
         Kind GetKind() const {
             return mKind;

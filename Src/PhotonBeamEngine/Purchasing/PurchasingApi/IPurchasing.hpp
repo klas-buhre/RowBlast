@@ -1,32 +1,11 @@
 #ifndef IPurchasing_hpp
 #define IPurchasing_hpp
 
-#include <string>
 #include <memory>
-#include <vector>
+
+#include "PurchaseEvent.hpp"
 
 namespace Pht {
-    struct Product {
-        std::string mId;
-        std::string mLocalizedPrice;
-    };
-    
-    struct PurchaseEvent {
-        virtual ~PurchaseEvent() {}
-        
-        enum Kind {
-            Complete,
-            Error,
-            Products
-        };
-        
-        Kind mKind {Kind::Error};
-    };
-    
-    struct ProductsEvent: public PurchaseEvent {
-        std::vector<Product> mProducts;
-    };
-    
     class IPurchasing {
     public:
         virtual ~IPurchasing() {}

@@ -26,6 +26,7 @@
 		1750CB032328F9810092B2E6 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */; };
 		1752255124B73E140002BE3E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1752255024B73E140002BE3E /* StoreKit.framework */; };
 		1752255924B9F86A0002BE3E /* PurchasingIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1752255824B9F86A0002BE3E /* PurchasingIOS.mm */; };
+		1752256224BB66CC0002BE3E /* PurchaseEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256024BB66CC0002BE3E /* PurchaseEvent.cpp */; };
 		175BE1182379E9420049DF16 /* terrain1_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 175BE1172379E9410049DF16 /* terrain1_4.jpg */; };
 		175BE129237C69B00049DF16 /* Terrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 175BE127237C69AF0049DF16 /* Terrain.cpp */; };
 		1766C7442360CF0300C8E355 /* triangle_320.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1766C7432360CF0300C8E355 /* triangle_320.obj */; };
@@ -599,6 +600,8 @@
 		1752255624B8C6CC0002BE3E /* IPurchasing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IPurchasing.hpp; sourceTree = "<group>"; };
 		1752255824B9F86A0002BE3E /* PurchasingIOS.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = PurchasingIOS.mm; sourceTree = "<group>"; };
 		1752255B24BA062C0002BE3E /* Purchasing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Purchasing.hpp; sourceTree = "<group>"; };
+		1752255E24BB62990002BE3E /* PurchaseEvent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseEvent.hpp; sourceTree = "<group>"; };
+		1752256024BB66CC0002BE3E /* PurchaseEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseEvent.cpp; sourceTree = "<group>"; };
 		175BE1172379E9410049DF16 /* terrain1_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain1_4.jpg; sourceTree = "<group>"; };
 		175BE127237C69AF0049DF16 /* Terrain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Terrain.cpp; sourceTree = "<group>"; };
 		175BE128237C69AF0049DF16 /* Terrain.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Terrain.hpp; sourceTree = "<group>"; };
@@ -1607,6 +1610,8 @@
 			isa = PBXGroup;
 			children = (
 				1752255624B8C6CC0002BE3E /* IPurchasing.hpp */,
+				1752256024BB66CC0002BE3E /* PurchaseEvent.cpp */,
+				1752255E24BB62990002BE3E /* PurchaseEvent.hpp */,
 				1752255B24BA062C0002BE3E /* Purchasing.hpp */,
 			);
 			path = PurchasingApi;
@@ -3825,6 +3830,7 @@
 				62216C1A21EB377F001CB9A1 /* LevelLoader.cpp in Sources */,
 				62216BE621EB377E001CB9A1 /* MapConfirmationDialogController.cpp in Sources */,
 				62216A8A21EB376E001CB9A1 /* StringUtils.cpp in Sources */,
+				1752256224BB66CC0002BE3E /* PurchaseEvent.cpp in Sources */,
 				623B94BB21F5D13700B62D9B /* RowBlastAnalyticsConfig.cpp in Sources */,
 				62216BDA21EB377E001CB9A1 /* OutOfMovesDialogController.cpp in Sources */,
 				62216C3221EB377F001CB9A1 /* World2.cpp in Sources */,
