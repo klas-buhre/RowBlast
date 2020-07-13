@@ -180,6 +180,7 @@ void StoreMenuView::CreateProductSection(const Pht::Vec3& position,
 
     ProductSection productSection;
     productSection.mProductId = productId;
+    productSection.mContainer = &container;
 
     CreateGlowEffect(engine, container, productSection, glowSize);
     CreateTwinklesEffect(engine, container, productSection, twinklesVolume);
@@ -215,9 +216,9 @@ void StoreMenuView::CreateProductSection(const Pht::Vec3& position,
         Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
     };
     
-    button->CreateText({-1.4f, -0.21f, UiLayer::buttonText},
-                       product->mLocalizedPriceString,
-                       textProperties);
+    productSection.mLocalizedPriceText = &button->CreateText({-1.4f, -0.21f, UiLayer::buttonText},
+                                                             product->mLocalizedPriceString,
+                                                             textProperties);
     productSection.mPurchaseButton = std::move(button);
     
     CreateText({-0.1f, -0.95f, UiLayer::text},

@@ -39,12 +39,14 @@ namespace RowBlast {
         struct ProductSection {
             ProductId mProductId;
             std::unique_ptr<MenuButton> mPurchaseButton;
+            Pht::SceneObject* mContainer {nullptr};
+            Pht::TextComponent* mLocalizedPriceText {nullptr};
             Pht::SceneObject* mCoinPilesAndStacks {nullptr};
             std::unique_ptr<Pht::SceneObject> mGlowEffect;
             std::unique_ptr<Pht::SceneObject> mTwinklesEffect;
         };
         
-        const std::vector<ProductSection>& GetProductSections() const {
+        std::vector<ProductSection>& GetProductSections() {
             return mProductSections;
         }
         

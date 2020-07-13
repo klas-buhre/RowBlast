@@ -6,6 +6,7 @@
 #include "FileStorage.hpp"
 #include "IAnalytics.hpp"
 #include "AnalyticsEvent.hpp"
+#include "IPurchasing.hpp"
 
 using namespace RowBlast;
 
@@ -14,6 +15,14 @@ namespace {
     constexpr auto maxCoinBalance = 99500;
     const std::string filename {"purchasing.dat"};
     const std::string coinBalanceMember {"coinBalance"};
+    
+    std::vector<std::string> phtProductIds {
+        "Currency_10_Coins",
+        "Currency_50_Coins",
+        "Currency_100_Coins",
+        "Currency_250_Coins",
+        "Currency_500_Coins",
+    };
     
     std::string ToItemId(ProductId productId) {
         switch (productId) {
@@ -82,8 +91,21 @@ PurchasingService::PurchasingService(Pht::IEngine& engine) :
     // LoadState();
 }
 
+void PurchasingService::FetchProducts(const std::function<void(const std::vector<GoldCoinProduct>&)>& onResponse,
+                                      const std::function<void()>& onTimeout) {
+    mFetchProductsTransaction.mOnProductsResponse = onResponse;
+    mFetchProductsTransaction.mOnTimeout = onTimeout;
+    mFetchProductsTransaction.mElapsedTime = 0.0f;
+    
+    mEngine.GetPurchasing().FetchProducts(phtProductIds);
+    mState = State::FetchingProducts;
+}
+
 void PurchasingService::Update() {
     switch (mState) {
+        case State::FetchingProducts:
+            UpdateInFetchingProductsState();
+            break;
         case State::PurchasePending:
             UpdateInPurchasePendingState();
             break;
@@ -95,11 +117,35 @@ void PurchasingService::Update() {
     }
 }
 
-void PurchasingService::UpdateInPurchasePendingState() {
-    mTransaction.mElapsedTime += mEngine.GetLastFrameSeconds();
+void PurchasingService::UpdateInFetchingProductsState() {
+    mFetchProductsTransaction.mElapsedTime += mEngine.GetLastFrameSeconds();
+    if (mFetchProductsTransaction.mElapsedTime > transactionTimeout) {
+        mFetchProductsTransaction.mOnTimeout();
+        mState = State::Idle;
+    }
+    
+    auto& purchasing = mEngine.GetPurchasing();
+    if (purchasing.HasEvents()) {
+        auto event = purchasing.PopNextEvent();
+        if (event->GetKind() == Pht::PurchaseEvent::ProductsResponse) {
+            auto* productsResponseEvent = static_cast<Pht::ProductsResponseEvent*>(event.get());
+            auto& phtProducts = productsResponseEvent->GetProducts();
+            std::vector<GoldCoinProduct> goldCoinProducts;
+            
+            for (auto& phtProduct: phtProducts) {
+                // Convert each phtProduct into a GoldCoinProduct.
+            }
 
-    if (mTransaction.mElapsedTime > transactionTimeout) {
-        switch (mTransaction.mProduct->mId) {
+            mFetchProductsTransaction.mOnProductsResponse(goldCoinProducts);
+            mState = State::Idle;
+        }
+    }
+}
+
+void PurchasingService::UpdateInPurchasePendingState() {
+    mPaymentTransaction.mElapsedTime += mEngine.GetLastFrameSeconds();
+    if (mPaymentTransaction.mElapsedTime > transactionTimeout) {
+        switch (mPaymentTransaction.mProduct->mId) {
             case ProductId::Currency100Coins:
                 OnPurchaseFailed(PurchaseFailureReason::Other);
                 break;
@@ -115,15 +161,15 @@ void PurchasingService::UpdateInPurchasePendingState() {
 
 void PurchasingService::OnPurchaseSucceeded() {
     mState = State::Idle;
-    mCoinBalance += mTransaction.mProduct->mNumCoins;
+    mCoinBalance += mPaymentTransaction.mProduct->mNumCoins;
     SaveState();
 
     Pht::BusinessAnalyticsEvent businessAnalyticsEvent {
         "USD",
         200,
         "GoldCoins",
-        ToItemId(mTransaction.mProduct->mId),
-        ToCartType(mTransaction.mTriggerProduct)
+        ToItemId(mPaymentTransaction.mProduct->mId),
+        ToCartType(mPaymentTransaction.mTriggerProduct)
     };
     
     auto& analytics = mEngine.GetAnalytics();
@@ -132,14 +178,14 @@ void PurchasingService::OnPurchaseSucceeded() {
     Pht::ResourceAnalyticsEvent resourceAnalyticsEvent {
         Pht::ResourceFlow::Source,
         "coins",
-        static_cast<float>(mTransaction.mProduct->mNumCoins),
+        static_cast<float>(mPaymentTransaction.mProduct->mNumCoins),
         "coins",
-        ToItemId(mTransaction.mProduct->mId)
+        ToItemId(mPaymentTransaction.mProduct->mId)
     };
     
     analytics.AddEvent(resourceAnalyticsEvent);
     
-    mTransaction.mOnPurchaseSucceeded(*mTransaction.mProduct);
+    mPaymentTransaction.mOnPurchaseSucceeded(*mPaymentTransaction.mProduct);
 }
 
 void PurchasingService::OnPurchaseFailed(PurchaseFailureReason reason) {
@@ -148,7 +194,7 @@ void PurchasingService::OnPurchaseFailed(PurchaseFailureReason reason) {
     Pht::ErrorAnalyticsEvent analyticsEvent {Pht::ErrorSeverity::Info, ToErrorMessage(reason)};
     mEngine.GetAnalytics().AddEvent(analyticsEvent);
     
-    mTransaction.mOnPurchaseFailed(reason);
+    mPaymentTransaction.mOnPurchaseFailed(reason);
 }
 
 void PurchasingService::StartPurchase(ProductId productId,
@@ -162,11 +208,11 @@ void PurchasingService::StartPurchase(ProductId productId,
         mState = State::PurchasePending;
     }
     
-    mTransaction.mProduct = product;
-    mTransaction.mTriggerProduct = triggerProduct;
-    mTransaction.mOnPurchaseSucceeded = onPurchaseSucceeded;
-    mTransaction.mOnPurchaseFailed = onPurchaseFailed;
-    mTransaction.mElapsedTime = 0.0f;
+    mPaymentTransaction.mProduct = product;
+    mPaymentTransaction.mTriggerProduct = triggerProduct;
+    mPaymentTransaction.mOnPurchaseSucceeded = onPurchaseSucceeded;
+    mPaymentTransaction.mOnPurchaseFailed = onPurchaseFailed;
+    mPaymentTransaction.mElapsedTime = 0.0f;
 }
 
 const GoldCoinProduct* PurchasingService::GetGoldCoinProduct(ProductId productId) const {
