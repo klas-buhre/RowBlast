@@ -47,6 +47,8 @@ Backlog:
 
 Ongoing tasks:
     -Purchasing
+        -Review the previous commit carefully. Got a weird bug where the purchasing service might
+         have overwritten data in the LifeService.
         -The product sections in the store should only be visible if the corresponding product in
          the app store has been fetched. Contact the app store when the store is started by the user
          instead when the app loads. The prices should be displayed according to the prices
