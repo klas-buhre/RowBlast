@@ -1,31 +1,32 @@
 #include "IPurchasing.hpp"
+#include "Purchasing.hpp"
 
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
 
 using namespace Pht;
 
-class Purchasing;
+class PurchasingIOS;
 
 @interface ProductsDelegate : NSObject <SKProductsRequestDelegate> {
-    Purchasing* mPurchasing;
+    PurchasingIOS* mPurchasing;
 };
 
-- (void) setPurchasing: (Purchasing*) purchasing;
+- (void) setPurchasing: (PurchasingIOS*) purchasing;
 
 @end
 
 @interface PaymentTransactionObserver : NSObject <SKPaymentTransactionObserver> {
-    Purchasing* mPurchasing;
+    PurchasingIOS* mPurchasing;
 };
 
-- (void) setPurchasing: (Purchasing*) purchasing;
+- (void) setPurchasing: (PurchasingIOS*) purchasing;
 
 @end
 
-class Purchasing: public IPurchasing {
+class PurchasingIOS: public IPurchasing {
 public:
-    Purchasing() {
+    PurchasingIOS() {
         PaymentTransactionObserver *observer = [[PaymentTransactionObserver alloc] init];
         [observer setPurchasing:this];
         [[SKPaymentQueue defaultQueue] addTransactionObserver:observer];
@@ -141,7 +142,7 @@ private:
     mPurchasing->SetSkProducts(skProducts);
 }
 
-- (void) setPurchasing:(Purchasing*)purchasing {
+- (void) setPurchasing:(PurchasingIOS*)purchasing {
     mPurchasing = purchasing;
 }
 
@@ -170,8 +171,12 @@ private:
     }
 }
 
-- (void) setPurchasing:(Purchasing*)purchasing {
+- (void) setPurchasing:(PurchasingIOS*)purchasing {
     mPurchasing = purchasing;
 }
 
 @end
+
+std::unique_ptr<IPurchasing> Pht::CreatePurchasingApi() {
+    return std::make_unique<PurchasingIOS>();
+}

@@ -11,6 +11,7 @@
 #include "AnimationSystem.hpp"
 #include "ParticleSystem.hpp"
 #include "IAnalytics.hpp"
+#include "IPurchasing.hpp"
 
 namespace Pht {
     class IApplication;
@@ -26,6 +27,7 @@ namespace Pht {
         IAnimationSystem& GetAnimationSystem() override;
         IParticleSystem& GetParticleSystem() override;
         IAnalytics& GetAnalytics() override;
+        IPurchasing& GetPurchasing() override;
         float GetLastFrameSeconds() const override;
         
         void Init(bool createFrameBuffer);
@@ -49,6 +51,7 @@ namespace Pht {
         AnimationSystem mAnimationSystem;
         ParticleSystem mParticleSystem;
         std::unique_ptr<IAnalytics> mAnalytics;
+        std::unique_ptr<IPurchasing> mPurchasing;
         std::unique_ptr<IApplication> mApplication;
         float mLastFrameSeconds {0.0f};
         Scene* mScene {nullptr};

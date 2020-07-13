@@ -6,6 +6,7 @@
 #include "RenderableObject.hpp"
 #include "SceneObject.hpp"
 #include "Analytics.hpp"
+#include "Purchasing.hpp"
 
 using namespace Pht;
 
@@ -17,7 +18,8 @@ Engine::Engine(bool createFrameBuffer, const Vec2& screenInputSize) :
     mRenderer {CreateRenderer(createFrameBuffer)},
     mInputHandler {screenInputSize},
     mSceneManager {*mRenderer, mInputHandler},
-    mAnalytics {CreateAnalyticsApi()} {
+    mAnalytics {CreateAnalyticsApi()},
+    mPurchasing {CreatePurchasingApi()} {
     
     std::srand(static_cast<int>(std::time(0)));
 }
@@ -91,6 +93,10 @@ IParticleSystem& Engine::GetParticleSystem() {
 
 IAnalytics& Engine::GetAnalytics() {
     return *mAnalytics;
+}
+
+IPurchasing& Engine::GetPurchasing() {
+    return *mPurchasing;
 }
 
 float Engine::GetLastFrameSeconds() const {

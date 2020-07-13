@@ -9,6 +9,7 @@ namespace Pht {
     class IAnimationSystem;
     class IParticleSystem;
     class IAnalytics;
+    class IPurchasing;
 
     class IEngine {
     public:
@@ -21,6 +22,7 @@ namespace Pht {
         virtual IAnimationSystem& GetAnimationSystem() = 0;
         virtual IParticleSystem& GetParticleSystem() = 0;
         virtual IAnalytics& GetAnalytics() = 0;
+        virtual IPurchasing& GetPurchasing() = 0;
         virtual float GetLastFrameSeconds() const = 0;
     };
 }
