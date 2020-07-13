@@ -47,16 +47,22 @@ Backlog:
 
 Ongoing tasks:
     -Purchasing
-        -Have saved a product 10 gold coins in App Store Connect. Test it using the sandbox
-         environment.
+        -The product sections in the store should only be visible if the corresponding product in
+         the app store has been fetched. Contact the app store when the store is started by the user
+         instead when the app loads. The prices should be displayed according to the prices
+         configured in the app store.
+        -Add a dialog that says there is no internet connection when trying to open the store
+         without internet connection.
+        -Connect the PurchasingService with IPurchasing.
+        -Test it using the sandbox environment.
         -May need another dialog saying that the user is not allowed to make payments when
          [SKPaymentQueue canMakePayments] returns false.
-        -Probably need a pull event interface insead of a callback interface. A callback interface
-         does not work with the update-based architecture in the game.
-        -Complete all purchasing related info in app storer connect (https://help.apple.com/app-store-connect/#/devb6df5ee51)
-            -Just fill in the tax information. It is possible to contact Apple to do changes even
-             though it says the form cannot be changed once it is submitted. Probably need to add
-             in TIN number later if I get F-Skatt and moms and all that, to get tax reduction.
+        -The hand in the hand animation in the tutorial should fade in and out instead of just
+         disappearing.
+        -About tax information on app store connect  (https://help.apple.com/app-store-connect/#/devb6df5ee51)
+         It is possible to contact Apple to do changes even though it says the form cannot be
+         changed once it is submitted. Probably need to add TIN number later if I get F-Skatt and
+         moms and all that, to get tax reduction.
         
              
 
