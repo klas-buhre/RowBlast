@@ -27,6 +27,15 @@
 		1752255124B73E140002BE3E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1752255024B73E140002BE3E /* StoreKit.framework */; };
 		1752255924B9F86A0002BE3E /* PurchasingIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1752255824B9F86A0002BE3E /* PurchasingIOS.mm */; };
 		1752256224BB66CC0002BE3E /* PurchaseEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256024BB66CC0002BE3E /* PurchaseEvent.cpp */; };
+		1752257624BE1EB80002BE3E /* StoreMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256724BE1EB80002BE3E /* StoreMenuController.cpp */; };
+		1752257724BE1EB80002BE3E /* PurchaseFailedDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256924BE1EB80002BE3E /* PurchaseFailedDialogView.cpp */; };
+		1752257824BE1EB80002BE3E /* PurchaseFailedDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256A24BE1EB80002BE3E /* PurchaseFailedDialogController.cpp */; };
+		1752257924BE1EB80002BE3E /* PurchaseCanceledDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256D24BE1EB80002BE3E /* PurchaseCanceledDialogController.cpp */; };
+		1752257A24BE1EB80002BE3E /* StoreMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256F24BE1EB80002BE3E /* StoreMenuView.cpp */; };
+		1752257B24BE1EB80002BE3E /* StoreController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752257224BE1EB80002BE3E /* StoreController.cpp */; };
+		1752257C24BE1EB80002BE3E /* PurchaseSuccessfulDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752257324BE1EB80002BE3E /* PurchaseSuccessfulDialogView.cpp */; };
+		1752257D24BE1EB80002BE3E /* PurchaseCanceledDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752257424BE1EB80002BE3E /* PurchaseCanceledDialogView.cpp */; };
+		1752257E24BE1EB80002BE3E /* PurchaseSuccessfulDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752257524BE1EB80002BE3E /* PurchaseSuccessfulDialogController.cpp */; };
 		175BE1182379E9420049DF16 /* terrain1_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 175BE1172379E9410049DF16 /* terrain1_4.jpg */; };
 		175BE129237C69B00049DF16 /* Terrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 175BE127237C69AF0049DF16 /* Terrain.cpp */; };
 		1766C7442360CF0300C8E355 /* triangle_320.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1766C7432360CF0300C8E355 /* triangle_320.obj */; };
@@ -120,16 +129,7 @@
 		62216A7B21EB376E001CB9A1 /* LevelGoalDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A3221EB376E001CB9A1 /* LevelGoalDialogController.cpp */; };
 		62216A7C21EB376E001CB9A1 /* NoLivesDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A3321EB376E001CB9A1 /* NoLivesDialogController.cpp */; };
 		62216A7D21EB376E001CB9A1 /* NoLivesDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A3521EB376E001CB9A1 /* NoLivesDialogView.cpp */; };
-		62216A7E21EB376E001CB9A1 /* StoreMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A3721EB376E001CB9A1 /* StoreMenuController.cpp */; };
-		62216A7F21EB376E001CB9A1 /* PurchaseFailedDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A3921EB376E001CB9A1 /* PurchaseFailedDialogView.cpp */; };
 		62216A8021EB376E001CB9A1 /* LevelGoalDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A3A21EB376E001CB9A1 /* LevelGoalDialogView.cpp */; };
-		62216A8121EB376E001CB9A1 /* PurchaseFailedDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A3B21EB376E001CB9A1 /* PurchaseFailedDialogController.cpp */; };
-		62216A8321EB376E001CB9A1 /* PurchaseCanceledDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A3F21EB376E001CB9A1 /* PurchaseCanceledDialogController.cpp */; };
-		62216A8421EB376E001CB9A1 /* StoreMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A4121EB376E001CB9A1 /* StoreMenuView.cpp */; };
-		62216A8521EB376E001CB9A1 /* StoreController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A4621EB376E001CB9A1 /* StoreController.cpp */; };
-		62216A8621EB376E001CB9A1 /* PurchaseSuccessfulDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A4721EB376E001CB9A1 /* PurchaseSuccessfulDialogView.cpp */; };
-		62216A8721EB376E001CB9A1 /* PurchaseCanceledDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A4821EB376E001CB9A1 /* PurchaseCanceledDialogView.cpp */; };
-		62216A8921EB376E001CB9A1 /* PurchaseSuccessfulDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A4D21EB376E001CB9A1 /* PurchaseSuccessfulDialogController.cpp */; };
 		62216A8A21EB376E001CB9A1 /* StringUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A5021EB376E001CB9A1 /* StringUtils.cpp */; };
 		62216A8B21EB376E001CB9A1 /* UserServices.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A5421EB376E001CB9A1 /* UserServices.cpp */; };
 		62216A8C21EB376E001CB9A1 /* ProgressService.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216A5521EB376E001CB9A1 /* ProgressService.cpp */; };
@@ -602,6 +602,24 @@
 		1752255B24BA062C0002BE3E /* PurchasingFactory.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchasingFactory.hpp; sourceTree = "<group>"; };
 		1752255E24BB62990002BE3E /* PurchaseEvent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseEvent.hpp; sourceTree = "<group>"; };
 		1752256024BB66CC0002BE3E /* PurchaseEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseEvent.cpp; sourceTree = "<group>"; };
+		1752256424BE1EB80002BE3E /* PurchaseCanceledDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseCanceledDialogView.hpp; sourceTree = "<group>"; };
+		1752256524BE1EB80002BE3E /* PurchaseSuccessfulDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseSuccessfulDialogController.hpp; sourceTree = "<group>"; };
+		1752256624BE1EB80002BE3E /* PurchaseCanceledDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseCanceledDialogController.hpp; sourceTree = "<group>"; };
+		1752256724BE1EB80002BE3E /* StoreMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreMenuController.cpp; sourceTree = "<group>"; };
+		1752256824BE1EB80002BE3E /* StoreMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreMenuView.hpp; sourceTree = "<group>"; };
+		1752256924BE1EB80002BE3E /* PurchaseFailedDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseFailedDialogView.cpp; sourceTree = "<group>"; };
+		1752256A24BE1EB80002BE3E /* PurchaseFailedDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseFailedDialogController.cpp; sourceTree = "<group>"; };
+		1752256B24BE1EB80002BE3E /* StoreController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreController.hpp; sourceTree = "<group>"; };
+		1752256C24BE1EB80002BE3E /* PurchaseSuccessfulDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseSuccessfulDialogView.hpp; sourceTree = "<group>"; };
+		1752256D24BE1EB80002BE3E /* PurchaseCanceledDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseCanceledDialogController.cpp; sourceTree = "<group>"; };
+		1752256E24BE1EB80002BE3E /* StoreMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreMenuController.hpp; sourceTree = "<group>"; };
+		1752256F24BE1EB80002BE3E /* StoreMenuView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreMenuView.cpp; sourceTree = "<group>"; };
+		1752257024BE1EB80002BE3E /* PurchaseFailedDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseFailedDialogView.hpp; sourceTree = "<group>"; };
+		1752257124BE1EB80002BE3E /* PurchaseFailedDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseFailedDialogController.hpp; sourceTree = "<group>"; };
+		1752257224BE1EB80002BE3E /* StoreController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreController.cpp; sourceTree = "<group>"; };
+		1752257324BE1EB80002BE3E /* PurchaseSuccessfulDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseSuccessfulDialogView.cpp; sourceTree = "<group>"; };
+		1752257424BE1EB80002BE3E /* PurchaseCanceledDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseCanceledDialogView.cpp; sourceTree = "<group>"; };
+		1752257524BE1EB80002BE3E /* PurchaseSuccessfulDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseSuccessfulDialogController.cpp; sourceTree = "<group>"; };
 		175BE1172379E9410049DF16 /* terrain1_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain1_4.jpg; sourceTree = "<group>"; };
 		175BE127237C69AF0049DF16 /* Terrain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Terrain.cpp; sourceTree = "<group>"; };
 		175BE128237C69AF0049DF16 /* Terrain.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Terrain.hpp; sourceTree = "<group>"; };
@@ -728,32 +746,14 @@
 		62216A2C21EB376E001CB9A1 /* GuiResources.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuiResources.cpp; sourceTree = "<group>"; };
 		62216A2D21EB376E001CB9A1 /* GlossyButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GlossyButton.cpp; sourceTree = "<group>"; };
 		62216A2E21EB376E001CB9A1 /* CloseButton.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CloseButton.hpp; sourceTree = "<group>"; };
-		62216A3021EB376E001CB9A1 /* PurchaseCanceledDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseCanceledDialogView.hpp; sourceTree = "<group>"; };
 		62216A3221EB376E001CB9A1 /* LevelGoalDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelGoalDialogController.cpp; sourceTree = "<group>"; };
 		62216A3321EB376E001CB9A1 /* NoLivesDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NoLivesDialogController.cpp; sourceTree = "<group>"; };
-		62216A3421EB376E001CB9A1 /* PurchaseSuccessfulDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseSuccessfulDialogController.hpp; sourceTree = "<group>"; };
 		62216A3521EB376E001CB9A1 /* NoLivesDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = NoLivesDialogView.cpp; sourceTree = "<group>"; };
-		62216A3621EB376E001CB9A1 /* PurchaseCanceledDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseCanceledDialogController.hpp; sourceTree = "<group>"; };
-		62216A3721EB376E001CB9A1 /* StoreMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreMenuController.cpp; sourceTree = "<group>"; };
-		62216A3821EB376E001CB9A1 /* StoreMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreMenuView.hpp; sourceTree = "<group>"; };
-		62216A3921EB376E001CB9A1 /* PurchaseFailedDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseFailedDialogView.cpp; sourceTree = "<group>"; };
 		62216A3A21EB376E001CB9A1 /* LevelGoalDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelGoalDialogView.cpp; sourceTree = "<group>"; };
-		62216A3B21EB376E001CB9A1 /* PurchaseFailedDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseFailedDialogController.cpp; sourceTree = "<group>"; };
-		62216A3D21EB376E001CB9A1 /* StoreController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreController.hpp; sourceTree = "<group>"; };
-		62216A3E21EB376E001CB9A1 /* PurchaseSuccessfulDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseSuccessfulDialogView.hpp; sourceTree = "<group>"; };
-		62216A3F21EB376E001CB9A1 /* PurchaseCanceledDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseCanceledDialogController.cpp; sourceTree = "<group>"; };
-		62216A4021EB376E001CB9A1 /* StoreMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreMenuController.hpp; sourceTree = "<group>"; };
-		62216A4121EB376E001CB9A1 /* StoreMenuView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreMenuView.cpp; sourceTree = "<group>"; };
-		62216A4221EB376E001CB9A1 /* PurchaseFailedDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseFailedDialogView.hpp; sourceTree = "<group>"; };
-		62216A4321EB376E001CB9A1 /* PurchaseFailedDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseFailedDialogController.hpp; sourceTree = "<group>"; };
 		62216A4421EB376E001CB9A1 /* LevelGoalDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelGoalDialogView.hpp; sourceTree = "<group>"; };
-		62216A4621EB376E001CB9A1 /* StoreController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreController.cpp; sourceTree = "<group>"; };
-		62216A4721EB376E001CB9A1 /* PurchaseSuccessfulDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseSuccessfulDialogView.cpp; sourceTree = "<group>"; };
-		62216A4821EB376E001CB9A1 /* PurchaseCanceledDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseCanceledDialogView.cpp; sourceTree = "<group>"; };
 		62216A4A21EB376E001CB9A1 /* LevelGoalDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelGoalDialogController.hpp; sourceTree = "<group>"; };
 		62216A4B21EB376E001CB9A1 /* NoLivesDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NoLivesDialogController.hpp; sourceTree = "<group>"; };
 		62216A4C21EB376E001CB9A1 /* NoLivesDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = NoLivesDialogView.hpp; sourceTree = "<group>"; };
-		62216A4D21EB376E001CB9A1 /* PurchaseSuccessfulDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseSuccessfulDialogController.cpp; sourceTree = "<group>"; };
 		62216A4F21EB376E001CB9A1 /* InputUtil.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InputUtil.hpp; sourceTree = "<group>"; };
 		62216A5021EB376E001CB9A1 /* StringUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StringUtils.cpp; sourceTree = "<group>"; };
 		62216A5121EB376E001CB9A1 /* StringUtils.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StringUtils.hpp; sourceTree = "<group>"; };
@@ -1617,6 +1617,31 @@
 			path = PurchasingApi;
 			sourceTree = "<group>";
 		};
+		1752256324BE1EB80002BE3E /* StoreViews */ = {
+			isa = PBXGroup;
+			children = (
+				1752256D24BE1EB80002BE3E /* PurchaseCanceledDialogController.cpp */,
+				1752256624BE1EB80002BE3E /* PurchaseCanceledDialogController.hpp */,
+				1752257424BE1EB80002BE3E /* PurchaseCanceledDialogView.cpp */,
+				1752256424BE1EB80002BE3E /* PurchaseCanceledDialogView.hpp */,
+				1752256A24BE1EB80002BE3E /* PurchaseFailedDialogController.cpp */,
+				1752257124BE1EB80002BE3E /* PurchaseFailedDialogController.hpp */,
+				1752256924BE1EB80002BE3E /* PurchaseFailedDialogView.cpp */,
+				1752257024BE1EB80002BE3E /* PurchaseFailedDialogView.hpp */,
+				1752257524BE1EB80002BE3E /* PurchaseSuccessfulDialogController.cpp */,
+				1752256524BE1EB80002BE3E /* PurchaseSuccessfulDialogController.hpp */,
+				1752257324BE1EB80002BE3E /* PurchaseSuccessfulDialogView.cpp */,
+				1752256C24BE1EB80002BE3E /* PurchaseSuccessfulDialogView.hpp */,
+				1752257224BE1EB80002BE3E /* StoreController.cpp */,
+				1752256B24BE1EB80002BE3E /* StoreController.hpp */,
+				1752256724BE1EB80002BE3E /* StoreMenuController.cpp */,
+				1752256E24BE1EB80002BE3E /* StoreMenuController.hpp */,
+				1752256F24BE1EB80002BE3E /* StoreMenuView.cpp */,
+				1752256824BE1EB80002BE3E /* StoreMenuView.hpp */,
+			);
+			path = StoreViews;
+			sourceTree = "<group>";
+		};
 		17A75B4223211A2C001BA90D /* GameResources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1726,6 +1751,7 @@
 				62216A5D21EB376E001CB9A1 /* CommonResources */,
 				62216A2F21EB376E001CB9A1 /* CommonViews */,
 				62216A1E21EB376E001CB9A1 /* GuiElements */,
+				1752256324BE1EB80002BE3E /* StoreViews */,
 				62216A5221EB376E001CB9A1 /* UserServices */,
 				62216A4E21EB376E001CB9A1 /* Utils */,
 			);
@@ -1772,28 +1798,10 @@
 				62216A4B21EB376E001CB9A1 /* NoLivesDialogController.hpp */,
 				62216A3521EB376E001CB9A1 /* NoLivesDialogView.cpp */,
 				62216A4C21EB376E001CB9A1 /* NoLivesDialogView.hpp */,
-				62216A3F21EB376E001CB9A1 /* PurchaseCanceledDialogController.cpp */,
-				62216A3621EB376E001CB9A1 /* PurchaseCanceledDialogController.hpp */,
-				62216A4821EB376E001CB9A1 /* PurchaseCanceledDialogView.cpp */,
-				62216A3021EB376E001CB9A1 /* PurchaseCanceledDialogView.hpp */,
-				62216A3B21EB376E001CB9A1 /* PurchaseFailedDialogController.cpp */,
-				62216A4321EB376E001CB9A1 /* PurchaseFailedDialogController.hpp */,
-				62216A3921EB376E001CB9A1 /* PurchaseFailedDialogView.cpp */,
-				62216A4221EB376E001CB9A1 /* PurchaseFailedDialogView.hpp */,
-				62216A4D21EB376E001CB9A1 /* PurchaseSuccessfulDialogController.cpp */,
-				62216A3421EB376E001CB9A1 /* PurchaseSuccessfulDialogController.hpp */,
-				62216A4721EB376E001CB9A1 /* PurchaseSuccessfulDialogView.cpp */,
-				62216A3E21EB376E001CB9A1 /* PurchaseSuccessfulDialogView.hpp */,
 				1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */,
 				1750CAFF2328F9800092B2E6 /* SettingsMenuController.hpp */,
 				1750CAFE2328F9800092B2E6 /* SettingsMenuView.cpp */,
 				1750CB002328F9800092B2E6 /* SettingsMenuView.hpp */,
-				62216A4621EB376E001CB9A1 /* StoreController.cpp */,
-				62216A3D21EB376E001CB9A1 /* StoreController.hpp */,
-				62216A3721EB376E001CB9A1 /* StoreMenuController.cpp */,
-				62216A4021EB376E001CB9A1 /* StoreMenuController.hpp */,
-				62216A4121EB376E001CB9A1 /* StoreMenuView.cpp */,
-				62216A3821EB376E001CB9A1 /* StoreMenuView.hpp */,
 			);
 			path = CommonViews;
 			sourceTree = "<group>";
@@ -3633,7 +3641,6 @@
 			files = (
 				62216BC321EB377E001CB9A1 /* LevelBombDialogView.cpp in Sources */,
 				62216C2121EB377F001CB9A1 /* FlashingBlocksAnimationSystem.cpp in Sources */,
-				62216A8621EB376E001CB9A1 /* PurchaseSuccessfulDialogView.cpp in Sources */,
 				62216A7821EB376E001CB9A1 /* MenuButton.cpp in Sources */,
 				623B94D521FA0AEB00B62D9B /* BeginTextAnimation.cpp in Sources */,
 				1736707422DF67D600D8A28C /* SwipeControlsHintDialogView.cpp in Sources */,
@@ -3665,7 +3672,6 @@
 				623B94D121F6357400B62D9B /* ImageIOS.mm in Sources */,
 				62216C2421EB377F001CB9A1 /* PreviewPiecesAnimation.cpp in Sources */,
 				62216C4121EB377F001CB9A1 /* LivesDialogController.cpp in Sources */,
-				62216A8121EB376E001CB9A1 /* PurchaseFailedDialogController.cpp in Sources */,
 				62216C3C21EB377F001CB9A1 /* MapPin.cpp in Sources */,
 				17A75B6123211A2C001BA90D /* MediumText.cpp in Sources */,
 				6220AF3C223527AC00D66C76 /* Animation.cpp in Sources */,
@@ -3677,6 +3683,7 @@
 				1711872E22EB9EB2009CC07F /* TutorialWindowView.cpp in Sources */,
 				62216BE021EB377E001CB9A1 /* GameOverDialogController.cpp in Sources */,
 				62216C4321EB377F001CB9A1 /* LivesDialogView.cpp in Sources */,
+				1752257724BE1EB80002BE3E /* PurchaseFailedDialogView.cpp in Sources */,
 				62216BE721EB377E001CB9A1 /* GameOverDialogView.cpp in Sources */,
 				62216C0721EB377F001CB9A1 /* MiddleIPiece.cpp in Sources */,
 				62243E9722B7952500EB922F /* OpenALBuffer.cpp in Sources */,
@@ -3688,6 +3695,7 @@
 				62216BF721EB377E001CB9A1 /* Cell.cpp in Sources */,
 				625698522182392C003A3A9D /* ParticleEffect.cpp in Sources */,
 				62216BD021EB377E001CB9A1 /* SameColorDialogController.cpp in Sources */,
+				1752257D24BE1EB80002BE3E /* PurchaseCanceledDialogView.cpp in Sources */,
 				17A75B5D23211A2C001BA90D /* FieldBorder.cpp in Sources */,
 				625698442182392C003A3A9D /* Button.cpp in Sources */,
 				625698582182392C003A3A9D /* FastNoise.cc in Sources */,
@@ -3710,7 +3718,6 @@
 				62216BDD21EB377E001CB9A1 /* GameViewControllers.cpp in Sources */,
 				625698462182392C003A3A9D /* GuiView.cpp in Sources */,
 				62216C2221EB377F001CB9A1 /* FallingPieceAnimation.cpp in Sources */,
-				62216A7E21EB376E001CB9A1 /* StoreMenuController.cpp in Sources */,
 				625698482182392C003A3A9D /* TextComponent.cpp in Sources */,
 				62216BFA21EB377E001CB9A1 /* FieldExplosionsSystem.cpp in Sources */,
 				625698552182392C003A3A9D /* Engine.cpp in Sources */,
@@ -3756,13 +3763,13 @@
 				62216BF021EB377E001CB9A1 /* GameScene.cpp in Sources */,
 				62216C4A21EB41C5001CB9A1 /* AcceptTermsController.cpp in Sources */,
 				625698372182392C003A3A9D /* JsonUtil.cpp in Sources */,
-				62216A8321EB376E001CB9A1 /* PurchaseCanceledDialogController.cpp in Sources */,
 				62216A7621EB376E001CB9A1 /* SlidingMenuAnimation.cpp in Sources */,
 				62216C0621EB377F001CB9A1 /* MirroredFPiece.cpp in Sources */,
 				621D867F2204694D00E505AE /* PieceTrailParticleEffect.cpp in Sources */,
 				6256984F2182392C003A3A9D /* SceneObjectUtils.cpp in Sources */,
 				62216A9121EB376E001CB9A1 /* Materials.cpp in Sources */,
 				625698082182392C003A3A9D /* SphereMesh.cpp in Sources */,
+				1752257B24BE1EB80002BE3E /* StoreController.cpp in Sources */,
 				1730C97222EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp in Sources */,
 				623F5E4022B55D5200242C10 /* GLES3TextureCache.cpp in Sources */,
 				62216C3421EB377F001CB9A1 /* World4.cpp in Sources */,
@@ -3776,11 +3783,9 @@
 				62216BFB21EB377E001CB9A1 /* GameLogic.cpp in Sources */,
 				623F5E4222B55D5200242C10 /* GLES3ShaderProgram.cpp in Sources */,
 				62216BF821EB377E001CB9A1 /* ClickInputHandler.cpp in Sources */,
-				62216A7F21EB376E001CB9A1 /* PurchaseFailedDialogView.cpp in Sources */,
 				62216C0921EB377F001CB9A1 /* TrianglePiece.cpp in Sources */,
 				625698532182392C003A3A9D /* ParticleEmitter.cpp in Sources */,
 				62216BD421EB377E001CB9A1 /* ClearLastBlocksAnimation.cpp in Sources */,
-				62216A8921EB376E001CB9A1 /* PurchaseSuccessfulDialogController.cpp in Sources */,
 				62270D6022663000009D9625 /* TutorialLaserParticleEffect.cpp in Sources */,
 				62216C1021EB377F001CB9A1 /* FPiece.cpp in Sources */,
 				625698342182392C003A3A9D /* InputHandler.cpp in Sources */,
@@ -3807,8 +3812,11 @@
 				623F5E6322B563A900242C10 /* StaticBatcher.cpp in Sources */,
 				62216BC421EB377E001CB9A1 /* SameColorDialogView.cpp in Sources */,
 				62216BFD21EB377E001CB9A1 /* Field.cpp in Sources */,
+				1752257924BE1EB80002BE3E /* PurchaseCanceledDialogController.cpp in Sources */,
+				1752257624BE1EB80002BE3E /* StoreMenuController.cpp in Sources */,
 				62216C6B21F08B2A001CB9A1 /* OptionsMenuView.cpp in Sources */,
 				62216C4021EB377F001CB9A1 /* MapHudView.cpp in Sources */,
+				1752257C24BE1EB80002BE3E /* PurchaseSuccessfulDialogView.cpp in Sources */,
 				623F5E6622B563A900242C10 /* RenderQueue.cpp in Sources */,
 				623B94D021F6357400B62D9B /* AppDelegate.mm in Sources */,
 				62216BFC21EB377E001CB9A1 /* NextPieceGenerator.cpp in Sources */,
@@ -3823,7 +3831,6 @@
 				62216C6221EDDF36001CB9A1 /* TextDocumentLoader.cpp in Sources */,
 				62216BD821EB377E001CB9A1 /* FireworksParticleEffect.cpp in Sources */,
 				17A75B5A23211A2C001BA90D /* GhostPieceBlocks.cpp in Sources */,
-				62216A8721EB376E001CB9A1 /* PurchaseCanceledDialogView.cpp in Sources */,
 				62780A87221C68130089BDE5 /* PortalCameraMovement.cpp in Sources */,
 				62216C1421EB377F001CB9A1 /* DiamondPiece.cpp in Sources */,
 				62216BFF21EB377E001CB9A1 /* FieldGravitySystem.cpp in Sources */,
@@ -3859,6 +3866,7 @@
 				62216A7421EB376E001CB9A1 /* CloseButton.cpp in Sources */,
 				6255827422CE5B6A0060C383 /* DraggedPiece.cpp in Sources */,
 				6242DEF521C50E7600D17F46 /* Audio.cpp in Sources */,
+				1752257824BE1EB80002BE3E /* PurchaseFailedDialogController.cpp in Sources */,
 				173F538723858C8A0092483E /* ScoreTexts.cpp in Sources */,
 				625698022182392C003A3A9D /* PrismMesh.cpp in Sources */,
 				62216C3121EB377F001CB9A1 /* World3.cpp in Sources */,
@@ -3888,7 +3896,6 @@
 				6256984A2182392C003A3A9D /* ObjMeshLoader.cpp in Sources */,
 				62216C2021EB377F001CB9A1 /* EffectManager.cpp in Sources */,
 				62216BE921EB377E001CB9A1 /* GhostPieceProducer.cpp in Sources */,
-				62216A8521EB376E001CB9A1 /* StoreController.cpp in Sources */,
 				62216C1E21EB377F001CB9A1 /* LaserParticleEffect.cpp in Sources */,
 				625698542182392C003A3A9D /* CameraShake.cpp in Sources */,
 				6256983A2182392C003A3A9D /* Transform.cpp in Sources */,
@@ -3901,9 +3908,9 @@
 				62216C3721EB377F001CB9A1 /* MapTutorial.cpp in Sources */,
 				623B94CF21F6357400B62D9B /* FileSystemIOS.mm in Sources */,
 				62216C2B21EB377F001CB9A1 /* SlotsFilledAnimationSystem.cpp in Sources */,
-				62216A8421EB376E001CB9A1 /* StoreMenuView.cpp in Sources */,
 				62216A9321EB376E001CB9A1 /* AudioResources.cpp in Sources */,
 				1750CB022328F9810092B2E6 /* SettingsMenuView.cpp in Sources */,
+				1752257A24BE1EB80002BE3E /* StoreMenuView.cpp in Sources */,
 				62216C1121EB377F001CB9A1 /* LongIPiece.cpp in Sources */,
 				623F5E6022B563A900242C10 /* Camera.cpp in Sources */,
 				62216BEA21EB377E001CB9A1 /* FieldSceneSystem.cpp in Sources */,
@@ -3913,6 +3920,7 @@
 				62216C0B21EB377F001CB9A1 /* PlusPiece.cpp in Sources */,
 				62243E9822B7952500EB922F /* OpenALContext.cpp in Sources */,
 				62216BDB21EB377E001CB9A1 /* GameMenuView.cpp in Sources */,
+				1752257E24BE1EB80002BE3E /* PurchaseSuccessfulDialogController.cpp in Sources */,
 				623B94AF21F4862800B62D9B /* GameAnalyticsIOS.mm in Sources */,
 				62216C5F21EDDA7E001CB9A1 /* ScrollPanel.cpp in Sources */,
 				623B94D221F6357400B62D9B /* GLKViewControllerExtension.mm in Sources */,
