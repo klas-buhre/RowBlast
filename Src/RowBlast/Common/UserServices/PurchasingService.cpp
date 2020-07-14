@@ -16,12 +16,12 @@ namespace {
     const std::string filename {"purchasing.dat"};
     const std::string coinBalanceMember {"coinBalance"};
     
-    std::vector<std::string> phtProductIds {
-        "Currency_10_Coins",
-        "Currency_50_Coins",
-        "Currency_100_Coins",
-        "Currency_250_Coins",
-        "Currency_500_Coins",
+    std::vector<std::pair<ProductId, std::string>> productIdToPhtProductId {
+        {ProductId::Currency10Coins, "Currency_10_Coins"},
+        {ProductId::Currency50Coins, "Currency_50_Coins"},
+        {ProductId::Currency100Coins, "Currency_100_Coins"},
+        {ProductId::Currency250Coins, "Currency_250_Coins"},
+        {ProductId::Currency500Coins, "Currency_500_Coins"},
     };
     
     std::string ToItemId(ProductId productId) {
@@ -80,7 +80,7 @@ namespace {
 
 PurchasingService::PurchasingService(Pht::IEngine& engine) :
     mEngine {engine},
-    mProducts {
+    mAllGoldCoinProducts {
         {ProductId::Currency10Coins, 10, "25,00 kr"},
         {ProductId::Currency50Coins, 50, "99,00 kr"},
         {ProductId::Currency100Coins, 100, "179,00 kr"},
@@ -96,6 +96,11 @@ void PurchasingService::FetchProducts(const std::function<void(const std::vector
     mFetchProductsTransaction.mOnProductsResponse = onResponse;
     mFetchProductsTransaction.mOnTimeout = onTimeout;
     mFetchProductsTransaction.mElapsedTime = 0.0f;
+    
+    std::vector<std::string> phtProductIds;
+    for (auto& entry: productIdToPhtProductId) {
+        phtProductIds.push_back(entry.second);
+    }
     
     mEngine.GetPurchasing().FetchProducts(phtProductIds);
     mState = State::FetchingProducts;
@@ -133,7 +138,10 @@ void PurchasingService::UpdateInFetchingProductsState() {
             std::vector<GoldCoinProduct> goldCoinProducts;
             
             for (auto& phtProduct: phtProducts) {
-                // Convert each phtProduct into a GoldCoinProduct.
+                auto goldCoinProduct = ToGoldCoinProduct(phtProduct);
+                if (goldCoinProduct.HasValue()) {
+                    goldCoinProducts.push_back(goldCoinProduct.GetValue());
+                }
             }
 
             mFetchProductsTransaction.mOnProductsResponse(goldCoinProducts);
@@ -216,13 +224,39 @@ void PurchasingService::StartPurchase(ProductId productId,
 }
 
 const GoldCoinProduct* PurchasingService::GetGoldCoinProduct(ProductId productId) const {
-    for (auto& product: mProducts) {
+    for (auto& product: mAllGoldCoinProducts) {
         if (product.mId == productId) {
             return &product;
         }
     }
     
     return nullptr;
+}
+
+Pht::Optional<GoldCoinProduct>
+PurchasingService::ToGoldCoinProduct(const Pht::Product& phtProduct) {
+    auto mappingEntry = std::find_if(std::begin(productIdToPhtProductId),
+                                     std::end(productIdToPhtProductId),
+                                     [&phtProduct] (auto& entry) {
+                                         return entry.second == phtProduct.mId;
+                                     });
+    if (mappingEntry == std::end(productIdToPhtProductId)) {
+        return Pht::Optional<GoldCoinProduct> {};
+    }
+    
+    auto goldCoinProductId = mappingEntry->first;
+    auto existingGoldCoinProduct = std::find_if(std::begin(mAllGoldCoinProducts),
+                                                std::end(mAllGoldCoinProducts),
+                                                [&goldCoinProductId] (auto& goldCoinProduct) {
+                                                    return goldCoinProduct.mId == goldCoinProductId;
+                                                });
+    if (existingGoldCoinProduct == std::end(mAllGoldCoinProducts)) {
+        return Pht::Optional<GoldCoinProduct> {};
+    }
+
+    auto goldCoinProduct = *existingGoldCoinProduct;
+    goldCoinProduct.mLocalizedPriceString = phtProduct.mLocalizedPrice;
+    return goldCoinProduct;
 }
 
 void PurchasingService::WithdrawCoins(CoinWithdrawReason coinWithdrawReason) {

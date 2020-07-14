@@ -5,8 +5,12 @@
 #include <vector>
 #include <functional>
 
+// Engine includes.
+#include "Optional.hpp"
+
 namespace Pht {
     class IEngine;
+    class Product;
 }
 
 namespace RowBlast {
@@ -67,6 +71,7 @@ namespace RowBlast {
         void UpdateInPurchasePendingState();
         void OnPurchaseSucceeded();
         void OnPurchaseFailed(PurchaseFailureReason reason);
+        Pht::Optional<GoldCoinProduct> ToGoldCoinProduct(const Pht::Product& phtProduct);
         void SaveState();
         bool LoadState();
         
@@ -96,7 +101,7 @@ namespace RowBlast {
         int mCoinBalance {0};
         PaymentTransaction mPaymentTransaction;
         FetchProductsTransaction mFetchProductsTransaction;
-        std::vector<GoldCoinProduct> mProducts;
+        std::vector<GoldCoinProduct> mAllGoldCoinProducts;
     };
 }
 
