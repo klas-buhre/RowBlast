@@ -5,8 +5,8 @@
 #include "IApplication.hpp"
 #include "RenderableObject.hpp"
 #include "SceneObject.hpp"
-#include "Analytics.hpp"
-#include "Purchasing.hpp"
+#include "AnalyticsFactory.hpp"
+#include "PurchasingFactory.hpp"
 
 using namespace Pht;
 

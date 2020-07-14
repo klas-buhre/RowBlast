@@ -1,5 +1,5 @@
-#ifndef Purchasing_hpp
-#define Purchasing_hpp
+#ifndef PurchasingFactory_hpp
+#define PurchasingFactory_hpp
 
 #include <memory>
 

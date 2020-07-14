@@ -1,5 +1,5 @@
-#ifndef Analytics_hpp
-#define Analytics_hpp
+#ifndef AnalyticsFactory_hpp
+#define AnalyticsFactory_hpp
 
 #include <memory>
 

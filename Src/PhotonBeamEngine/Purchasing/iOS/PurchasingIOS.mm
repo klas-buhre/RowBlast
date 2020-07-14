@@ -1,5 +1,5 @@
 #include "IPurchasing.hpp"
-#include "Purchasing.hpp"
+#include "PurchasingFactory.hpp"
 
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
@@ -12,7 +12,7 @@ class PurchasingIOS;
     PurchasingIOS* mPurchasing;
 };
 
-- (void) setPurchasing: (PurchasingIOS*) purchasing;
+- (void) setPurchasing:(PurchasingIOS*)purchasing;
 
 @end
 
@@ -20,7 +20,7 @@ class PurchasingIOS;
     PurchasingIOS* mPurchasing;
 };
 
-- (void) setPurchasing: (PurchasingIOS*) purchasing;
+- (void) setPurchasing:(PurchasingIOS*)purchasing;
 
 @end
 
@@ -151,7 +151,7 @@ private:
 @implementation PaymentTransactionObserver
 
 - (void) paymentQueue:(SKPaymentQueue*)queue updatedTransactions:(NSArray*)transactions {
-    for (SKPaymentTransaction *transaction in transactions) {
+    for (SKPaymentTransaction* transaction in transactions) {
         switch (transaction.transactionState) {
             case SKPaymentTransactionStatePurchased:
                 mPurchasing->PushEvent(std::make_unique<PurchaseEvent>(PurchaseEvent::Complete));

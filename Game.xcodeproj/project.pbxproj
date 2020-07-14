@@ -599,7 +599,7 @@
 		1752255024B73E140002BE3E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1752255624B8C6CC0002BE3E /* IPurchasing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IPurchasing.hpp; sourceTree = "<group>"; };
 		1752255824B9F86A0002BE3E /* PurchasingIOS.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = PurchasingIOS.mm; sourceTree = "<group>"; };
-		1752255B24BA062C0002BE3E /* Purchasing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Purchasing.hpp; sourceTree = "<group>"; };
+		1752255B24BA062C0002BE3E /* PurchasingFactory.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchasingFactory.hpp; sourceTree = "<group>"; };
 		1752255E24BB62990002BE3E /* PurchaseEvent.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PurchaseEvent.hpp; sourceTree = "<group>"; };
 		1752256024BB66CC0002BE3E /* PurchaseEvent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseEvent.cpp; sourceTree = "<group>"; };
 		175BE1172379E9410049DF16 /* terrain1_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain1_4.jpg; sourceTree = "<group>"; };
@@ -1177,7 +1177,7 @@
 		623B94AA21F4858D00B62D9B /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		623B94AC21F4859E00B62D9B /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		623B94AE21F4862800B62D9B /* GameAnalyticsIOS.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = GameAnalyticsIOS.mm; sourceTree = "<group>"; };
-		623B94B121F5BBE500B62D9B /* Analytics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Analytics.hpp; sourceTree = "<group>"; };
+		623B94B121F5BBE500B62D9B /* AnalyticsFactory.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AnalyticsFactory.hpp; sourceTree = "<group>"; };
 		623B94B421F5C14800B62D9B /* IAnalytics.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IAnalytics.hpp; sourceTree = "<group>"; };
 		623B94B721F5CEFA00B62D9B /* AnalyticsConfig.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = AnalyticsConfig.hpp; sourceTree = "<group>"; };
 		623B94B921F5D13700B62D9B /* RowBlastAnalyticsConfig.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RowBlastAnalyticsConfig.cpp; sourceTree = "<group>"; };
@@ -1612,7 +1612,7 @@
 				1752255624B8C6CC0002BE3E /* IPurchasing.hpp */,
 				1752256024BB66CC0002BE3E /* PurchaseEvent.cpp */,
 				1752255E24BB62990002BE3E /* PurchaseEvent.hpp */,
-				1752255B24BA062C0002BE3E /* Purchasing.hpp */,
+				1752255B24BA062C0002BE3E /* PurchasingFactory.hpp */,
 			);
 			path = PurchasingApi;
 			sourceTree = "<group>";
@@ -2516,10 +2516,10 @@
 		623B94A421F4828100B62D9B /* AnalyticsApi */ = {
 			isa = PBXGroup;
 			children = (
-				623B94B121F5BBE500B62D9B /* Analytics.hpp */,
 				623B94B721F5CEFA00B62D9B /* AnalyticsConfig.hpp */,
 				623B94BC21F60DF200B62D9B /* AnalyticsEvent.cpp */,
 				623B94BD21F60DF200B62D9B /* AnalyticsEvent.hpp */,
+				623B94B121F5BBE500B62D9B /* AnalyticsFactory.hpp */,
 				623B94B421F5C14800B62D9B /* IAnalytics.hpp */,
 			);
 			path = AnalyticsApi;

@@ -1,10 +1,9 @@
-#include "Analytics.hpp"
-#include "AnalyticsConfig.hpp"
-
 #import <Foundation/Foundation.h>
 
 #import "GameAnalytics.h"
 
+#include "AnalyticsFactory.hpp"
+#include "AnalyticsConfig.hpp"
 #include "AnalyticsEvent.hpp"
 
 #define DEBUG

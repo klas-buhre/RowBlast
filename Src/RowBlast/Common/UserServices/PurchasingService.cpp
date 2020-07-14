@@ -127,6 +127,7 @@ void PurchasingService::UpdateInFetchingProductsState() {
     if (mFetchProductsTransaction.mElapsedTime > transactionTimeout) {
         mFetchProductsTransaction.mOnTimeout();
         mState = State::Idle;
+        return;
     }
     
     auto& purchasing = mEngine.GetPurchasing();
