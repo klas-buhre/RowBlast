@@ -2,6 +2,7 @@
 
 // Engine includes.
 #include "IEngine.hpp"
+#include "NetworkStatus.hpp"
 
 // Game includes.
 #include "UiLayer.hpp"
@@ -99,7 +100,12 @@ void StoreController::StartStore(TriggerProduct triggerProduct,
     mUpdateFadeOnClose = updateFadeOnClose;
     mUpdateFadeOnCanAffordTriggerProduct = updateFadeOnCanAffordTriggerProduct;
     mSlideOutOnCanAffordTriggerProduct = slideOutOnCanAffordTriggerProduct;
-    GoToStoreMenuState(updateFadeOnStart, SlidingMenuAnimation::SlideDirection::Left);
+    
+    if (mHasFetchedProducts) {
+        GoToStoreMenuState(updateFadeOnStart, SlidingMenuAnimation::SlideDirection::Left);
+    } else {
+        FetchProducts(updateFadeOnStart);
+    }
 }
 
 StoreController::Result StoreController::Update() {
@@ -109,6 +115,7 @@ StoreController::Result StoreController::Update() {
         case State::StoreMenu:
             result = UpdateStoreMenu();
             break;
+        case State::FetchingProducts:
         case State::PurchasePending:
             mSpinningWheelEffect.Update();
             break;
@@ -157,20 +164,49 @@ StoreController::Result StoreController::UpdateStoreMenu() {
     return result;
 }
 
+void StoreController::FetchProducts(SlidingMenuAnimation::UpdateFade updateFadeOnStart) {
+    if (!Pht::NetworkStatus::IsConnected()) {
+        GoToNoNetworkConnectionDialogState();
+        return;
+    }
+    
+    if (updateFadeOnStart == SlidingMenuAnimation::UpdateFade::Yes) {
+        mFadeEffect.SetMidFade();
+    }
+    
+    mSpinningWheelEffect.Start();
+    
+    mUserServices.GetPurchasingService().FetchProducts(
+        [this] (const std::vector<GoldCoinProduct>& products) {
+            mSpinningWheelEffect.Stop();
+            mStoreMenuController.GetView().SetUpProducts(products);
+            mHasFetchedProducts = true;
+            GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::No,
+                               SlidingMenuAnimation::SlideDirection::Left);
+        },
+        [this] () {
+            mSpinningWheelEffect.Stop();
+            GoToCannotContactStoreDialog();
+        });
+        
+    GoToFetchingProductsState();
+}
+
 void StoreController::StartPurchase(ProductId productId) {
     mSpinningWheelEffect.Start();
     
-    auto& purchasingService = mUserServices.GetPurchasingService();
-    purchasingService.StartPurchase(productId,
-                                    mTriggerProduct,
-                                    [this] (const GoldCoinProduct& product) {
-                                        mSpinningWheelEffect.Stop();
-                                        GoToPurchaseSuccessfulDialogState(product);
-                                    },
-                                    [this] (PurchaseFailureReason purchaseFailureReason) {
-                                        mSpinningWheelEffect.Stop();
-                                        OnPurchaseFailed(purchaseFailureReason);
-                                    });
+    mUserServices.GetPurchasingService().StartPurchase(
+        productId,
+        mTriggerProduct,
+        [this] (const GoldCoinProduct& product) {
+            mSpinningWheelEffect.Stop();
+            GoToPurchaseSuccessfulDialogState(product);
+        },
+        [this] (PurchaseFailureReason purchaseFailureReason) {
+            mSpinningWheelEffect.Stop();
+            OnPurchaseFailed(purchaseFailureReason);
+        });
+
     GoToPurchasePendingState();
 }
 
@@ -256,6 +292,14 @@ void StoreController::GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& p
     }
 }
 
+void StoreController::GoToNoNetworkConnectionDialogState() {
+    // TODO: implement
+}
+
+void StoreController::GoToCannotContactStoreDialog() {
+    // TODO: implement
+}
+
 void StoreController::GoToPurchaseFailedDialogState() {
     mState = State::PurchaseFailedDialog;
     SetActiveViewController(ViewController::PurchaseFailedDialog);
@@ -270,6 +314,11 @@ void StoreController::GoToPurchaseCanceledDialogState() {
 
 void StoreController::GoToIdleState() {
     mState = State::Idle;
+    SetActiveViewController(ViewController::None);
+}
+
+void StoreController::GoToFetchingProductsState() {
+    mState = State::FetchingProducts;
     SetActiveViewController(ViewController::None);
 }
 

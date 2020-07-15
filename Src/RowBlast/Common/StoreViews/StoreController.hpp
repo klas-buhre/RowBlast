@@ -61,12 +61,16 @@ namespace RowBlast {
         };
 
         Result UpdateStoreMenu();
+        void FetchProducts(SlidingMenuAnimation::UpdateFade updateFadeOnStart);
         void StartPurchase(ProductId productId);
         void OnPurchaseFailed(PurchaseFailureReason purchaseFailureReason);
         Result UpdatePurchaseSuccessfulDialog();
         void UpdatePurchaseFailedDialog();
         void UpdatePurchaseCanceledDialog();
         void SetActiveViewController(ViewController viewController);
+        void GoToNoNetworkConnectionDialogState();
+        void GoToCannotContactStoreDialog();
+        void GoToFetchingProductsState();
         void GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade,
                                 SlidingMenuAnimation::SlideDirection slideDirection);
         void GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& product);
@@ -76,6 +80,7 @@ namespace RowBlast {
         void GoToPurchasePendingState();
         
         enum class State {
+            FetchingProducts,
             StoreMenu,
             PurchasePending,
             PurchaseSuccessfulDialog,
@@ -97,6 +102,7 @@ namespace RowBlast {
         PurchaseSuccessfulDialogController mPurchaseSuccessfulDialogController;
         PurchaseFailedDialogController mPurchaseFailedDialogController;
         PurchaseCanceledDialogController mPurchaseCanceledDialogController;
+        bool mHasFetchedProducts {false};
     };
 }
 

@@ -432,6 +432,22 @@ void StoreMenuView::SetUp() {
     mGuiLightProvider.SetDefaultGuiLightDirections();
 }
 
+void StoreMenuView::SetUpProducts(const std::vector<GoldCoinProduct>& products) {
+    for (auto& productSection: mProductSections) {
+        productSection.mContainer->SetIsVisible(false);
+        
+        auto goldCoinProduct = std::find_if(std::begin(products),
+                                            std::end(products),
+                                            [&productSection] (const auto& product) {
+                                                return product.mId == productSection.mProductId;
+                                            });
+        if (goldCoinProduct != std::end(products)) {
+            productSection.mContainer->SetIsVisible(true);
+            productSection.mLocalizedPriceText->GetText() = goldCoinProduct->mLocalizedPriceString;
+        }
+    }
+}
+
 void StoreMenuView::Update() {
     UpdateAnimations();
     UpdateCoinBalanceText();

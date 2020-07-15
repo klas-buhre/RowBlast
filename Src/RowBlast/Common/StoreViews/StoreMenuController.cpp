@@ -98,6 +98,10 @@ StoreMenuController::Result StoreMenuController::OnTouch(const Pht::TouchEvent& 
     }
     
     for (auto& productSection: mView.GetProductSections()) {
+        if (!productSection.mContainer->IsVisible()) {
+            continue;
+        }
+
         if (productSection.mPurchaseButton->IsClicked(touchEvent)) {
             mDeferredResult = Result {productSection.mProductId};
             mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,

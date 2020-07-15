@@ -30,6 +30,7 @@ namespace RowBlast {
                       PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void SetUp();
+        void SetUpProducts(const std::vector<GoldCoinProduct>& products);
         void Update();
         
         const MenuButton& GetCloseButton() const {
@@ -46,7 +47,7 @@ namespace RowBlast {
             std::unique_ptr<Pht::SceneObject> mTwinklesEffect;
         };
         
-        std::vector<ProductSection>& GetProductSections() {
+        const std::vector<ProductSection>& GetProductSections() const {
             return mProductSections;
         }
         

@@ -55,7 +55,7 @@ namespace RowBlast {
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();
         
-        Pht::GuiView& GetView() {
+        StoreMenuView& GetView() {
             return mView;
         }
 

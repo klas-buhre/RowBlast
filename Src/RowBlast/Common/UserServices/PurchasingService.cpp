@@ -131,7 +131,7 @@ void PurchasingService::UpdateInFetchingProductsState() {
     }
     
     auto& purchasing = mEngine.GetPurchasing();
-    if (purchasing.HasEvents()) {
+    while (purchasing.HasEvents()) {
         auto event = purchasing.PopNextEvent();
         if (event->GetKind() == Pht::PurchaseEvent::ProductsResponse) {
             auto* productsResponseEvent = static_cast<Pht::ProductsResponseEvent*>(event.get());
