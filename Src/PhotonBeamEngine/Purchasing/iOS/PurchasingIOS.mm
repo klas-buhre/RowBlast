@@ -8,7 +8,7 @@ using namespace Pht;
 
 class PurchasingIOS;
 
-@interface ProductsDelegate : NSObject <SKProductsRequestDelegate> {
+@interface ProductsDelegate: NSObject<SKProductsRequestDelegate> {
     PurchasingIOS* mPurchasing;
 };
 
@@ -16,7 +16,7 @@ class PurchasingIOS;
 
 @end
 
-@interface PaymentTransactionObserver : NSObject <SKPaymentTransactionObserver> {
+@interface PaymentTransactionObserver: NSObject<SKPaymentTransactionObserver> {
     PurchasingIOS* mPurchasing;
 };
 

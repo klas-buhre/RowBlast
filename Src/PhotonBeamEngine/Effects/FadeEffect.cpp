@@ -47,6 +47,13 @@ void FadeEffect::Reset() {
     mSceneObject->SetIsVisible(false);
 }
 
+void FadeEffect::SetMidFade() {
+    mFade = mMidFade;
+    mState = State::FadingIn;
+    mSceneObject->SetIsVisible(true);
+    mQuad->GetMaterial().SetOpacity(mFade);
+}
+
 void FadeEffect::Start() {
     mState = State::FadingOut;
     mSceneObject->SetIsVisible(true);
