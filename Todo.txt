@@ -47,6 +47,14 @@ Backlog:
 
 Ongoing tasks:
     -Purchasing
+        -Dialogs:
+            -No internet connection.
+            -Cannot contact app store.
+            -Purchase canceled.         Special icon.
+            -Payments are disabled.
+            -Purchase failed.
+            -Purchase successful.       Special icon.
+            
         -The product sections in the store should only be visible if the corresponding product in
          the app store has been fetched. Contact the app store when the store is started by the user
          instead when the app loads. The prices should be displayed according to the prices

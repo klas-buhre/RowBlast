@@ -1,4 +1,4 @@
-#include "PurchaseFailedDialogView.hpp"
+#include "StoreErrorDialogView.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -9,9 +9,11 @@
 
 using namespace RowBlast;
 
-PurchaseFailedDialogView::PurchaseFailedDialogView(Pht::IEngine& engine,
-                                                   const CommonResources& commonResources,
-                                                   PotentiallyZoomedScreen zoom) {
+StoreErrorDialogView::StoreErrorDialogView(Pht::IEngine& engine,
+                                           const CommonResources& commonResources,
+                                           const std::string& caption,
+                                           const std::vector<std::string>& textLines,
+                                           PotentiallyZoomedScreen zoom) {
     auto& guiResources = commonResources.GetGuiResources();
     auto& menuWindow = guiResources.GetMediumDarkMenuWindow();
     
@@ -21,8 +23,9 @@ PurchaseFailedDialogView::PurchaseFailedDialogView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
-    CreateText({-3.0f, 5.05f, UiLayer::text}, "PURCHASE FAILED", textProperties);
+    auto textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
+    textProperties.mAlignment = Pht::TextAlignment::CenterX;
+    CreateText({0.0f, 5.05f, UiLayer::text}, caption, textProperties);
     
     mCloseButton = GuiUtils::CreateCloseButton(engine, *this, guiResources, zoom);
     GuiUtils::CreateTitleBarLine(engine, *this);
@@ -35,8 +38,14 @@ PurchaseFailedDialogView::PurchaseFailedDialogView(Pht::IEngine& engine,
                          GetRoot(),
                          {1.0f, 0.43f, 0.43f, 1.0f});
     
-    CreateText({-4.95f, -1.0f, UiLayer::text}, "No money was removed from", textProperties);
-    CreateText({-2.3f, -2.075f, UiLayer::text}, " your account.", textProperties);
+    switch (textLines.size()) {
+        case 2:
+            CreateText({0.0f, -1.0f, UiLayer::text}, textLines[0], textProperties);
+            CreateText({0.0f, -2.075f, UiLayer::text}, textLines[1], textProperties);
+            break;
+        default:
+            break;
+    }
 
     Pht::Vec2 okButtonInputSize {194.0f, 43.0f};
 

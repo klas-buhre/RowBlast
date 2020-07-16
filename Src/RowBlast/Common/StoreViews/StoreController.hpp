@@ -8,7 +8,7 @@
 // Game includes.
 #include "StoreMenuController.hpp"
 #include "PurchaseSuccessfulDialogController.hpp"
-#include "PurchaseFailedDialogController.hpp"
+#include "StoreErrorDialogController.hpp"
 #include "PurchaseCanceledDialogController.hpp"
 #include "UserServices.hpp"
 #include "SpinningWheelEffect.hpp"
@@ -57,6 +57,7 @@ namespace RowBlast {
             PurchaseSuccessfulDialog,
             PurchaseFailedDialog,
             PurchaseCanceledDialog,
+            NoInternetAccessDialog,
             None
         };
 
@@ -67,8 +68,9 @@ namespace RowBlast {
         Result UpdatePurchaseSuccessfulDialog();
         void UpdatePurchaseFailedDialog();
         void UpdatePurchaseCanceledDialog();
+        StoreController::Result UpdateNoInternetAccessDialog();
         void SetActiveViewController(ViewController viewController);
-        void GoToNoNetworkConnectionDialogState();
+        void GoToNoInternetAccessDialogState(SlidingMenuAnimation::UpdateFade updateFade);
         void GoToCannotContactStoreDialog();
         void GoToFetchingProductsState();
         void GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade,
@@ -81,6 +83,7 @@ namespace RowBlast {
         
         enum class State {
             FetchingProducts,
+            NoInternetAccessDialog,
             StoreMenu,
             PurchasePending,
             PurchaseSuccessfulDialog,
@@ -100,8 +103,9 @@ namespace RowBlast {
         Pht::GuiViewManager mViewManager;
         StoreMenuController mStoreMenuController;
         PurchaseSuccessfulDialogController mPurchaseSuccessfulDialogController;
-        PurchaseFailedDialogController mPurchaseFailedDialogController;
         PurchaseCanceledDialogController mPurchaseCanceledDialogController;
+        StoreErrorDialogController mPurchaseFailedDialogController;
+        StoreErrorDialogController mNoInternetAccessDialogController;
         bool mHasFetchedProducts {false};
     };
 }

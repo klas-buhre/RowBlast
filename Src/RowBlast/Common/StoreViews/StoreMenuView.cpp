@@ -210,17 +210,24 @@ void StoreMenuView::CreateProductSection(const Pht::Vec3& position,
                                                buttonInputSize,
                                                buttonStyle);
     
+    Pht::TextProperties buttonTextProperties {
+        commonResources.GetHussarFontSize20(PotentiallyZoomedScreen::No),
+        1.2f,
+        Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
+    };
+    buttonTextProperties.mAlignment = Pht::TextAlignment::CenterX;
+    
+    productSection.mLocalizedPriceText = &button->CreateText({0.0f, -0.21f, UiLayer::buttonText},
+                                                             product->mLocalizedPriceString,
+                                                             buttonTextProperties);
+    productSection.mPurchaseButton = std::move(button);
+
     Pht::TextProperties textProperties {
         commonResources.GetHussarFontSize20(PotentiallyZoomedScreen::No),
         1.2f,
         Pht::Vec4{1.0f, 1.0f, 1.0f, 1.0f}
     };
-    
-    productSection.mLocalizedPriceText = &button->CreateText({-1.4f, -0.21f, UiLayer::buttonText},
-                                                             product->mLocalizedPriceString,
-                                                             textProperties);
-    productSection.mPurchaseButton = std::move(button);
-    
+
     CreateText({-0.1f, -0.95f, UiLayer::text},
                std::to_string(product->mNumCoins),
                textProperties,

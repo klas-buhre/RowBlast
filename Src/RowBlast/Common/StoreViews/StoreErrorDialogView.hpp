@@ -1,7 +1,8 @@
-#ifndef PurchaseFailedDialogView_hpp
-#define PurchaseFailedDialogView_hpp
+#ifndef StoreErrorDialogView_hpp
+#define StoreErrorDialogView_hpp
 
 #include <memory>
+#include <vector>
 
 // Engine includes.
 #include "GuiView.hpp"
@@ -15,11 +16,13 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class PurchaseFailedDialogView: public Pht::GuiView {
+    class StoreErrorDialogView: public Pht::GuiView {
     public:
-        PurchaseFailedDialogView(Pht::IEngine& engine,
-                                 const CommonResources& commonResources,
-                                 PotentiallyZoomedScreen potentiallyZoomedScreen);
+        StoreErrorDialogView(Pht::IEngine& engine,
+                             const CommonResources& commonResources,
+                             const std::string& caption,
+                             const std::vector<std::string>& textLines,
+                             PotentiallyZoomedScreen potentiallyZoomedScreen);
 
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;

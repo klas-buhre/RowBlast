@@ -60,14 +60,23 @@ StoreController::StoreController(Pht::IEngine& engine,
         commonResources,
         ToPotentiallyZoomedScreen(sceneId)
     },
-    mPurchaseFailedDialogController {
+    mPurchaseCanceledDialogController {
         engine,
         commonResources,
         ToPotentiallyZoomedScreen(sceneId)
     },
-    mPurchaseCanceledDialogController {
+    mPurchaseFailedDialogController {
         engine,
         commonResources,
+        "PURCHASE FAILED",
+        {"No money was removed from", " your account."},
+        ToPotentiallyZoomedScreen(sceneId)
+    },
+    mNoInternetAccessDialogController {
+        engine,
+        commonResources,
+        "NO NETWORK ACCESS",
+        {"No internet access.", "Try again later."},
         ToPotentiallyZoomedScreen(sceneId)
     } {
 
@@ -75,9 +84,11 @@ StoreController::StoreController(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(ViewController::PurchaseSuccessfulDialog), mPurchaseSuccessfulDialogController.GetView());
     mViewManager.AddView(static_cast<int>(ViewController::PurchaseFailedDialog), mPurchaseFailedDialogController.GetView());
     mViewManager.AddView(static_cast<int>(ViewController::PurchaseCanceledDialog), mPurchaseCanceledDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(ViewController::NoInternetAccessDialog), mNoInternetAccessDialogController.GetView());
     
     mStoreMenuController.SetFadeEffect(mFadeEffect);
     mPurchaseSuccessfulDialogController.SetFadeEffect(mFadeEffect);
+    mNoInternetAccessDialogController.SetFadeEffect(mFadeEffect);
 }
 
 void StoreController::Init(Pht::SceneObject& parentObject) {
@@ -118,6 +129,9 @@ StoreController::Result StoreController::Update() {
         case State::FetchingProducts:
         case State::PurchasePending:
             mSpinningWheelEffect.Update();
+            break;
+        case State::NoInternetAccessDialog:
+            result = UpdateNoInternetAccessDialog();
             break;
         case State::PurchaseSuccessfulDialog:
             result = UpdatePurchaseSuccessfulDialog();
@@ -166,7 +180,7 @@ StoreController::Result StoreController::UpdateStoreMenu() {
 
 void StoreController::FetchProducts(SlidingMenuAnimation::UpdateFade updateFadeOnStart) {
     if (!Pht::NetworkStatus::IsConnected()) {
-        GoToNoNetworkConnectionDialogState();
+        GoToNoInternetAccessDialogState(updateFadeOnStart);
         return;
     }
     
@@ -240,11 +254,25 @@ StoreController::Result StoreController::UpdatePurchaseSuccessfulDialog() {
     return result;
 }
 
+StoreController::Result StoreController::UpdateNoInternetAccessDialog() {
+    StoreController::Result result {Result::None};
+    
+    switch (mNoInternetAccessDialogController.Update()) {
+        case StoreErrorDialogController::Result::None:
+            break;
+        case StoreErrorDialogController::Result::Close:
+            result = Result::Done;
+            break;
+    }
+    
+    return result;
+}
+
 void StoreController::UpdatePurchaseFailedDialog() {
     switch (mPurchaseFailedDialogController.Update()) {
-        case PurchaseFailedDialogController::Result::None:
+        case StoreErrorDialogController::Result::None:
             break;
-        case PurchaseFailedDialogController::Result::Close:
+        case StoreErrorDialogController::Result::Close:
             GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::No,
                                SlidingMenuAnimation::SlideDirection::Right);
             break;
@@ -292,8 +320,10 @@ void StoreController::GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& p
     }
 }
 
-void StoreController::GoToNoNetworkConnectionDialogState() {
-    // TODO: implement
+void StoreController::GoToNoInternetAccessDialogState(SlidingMenuAnimation::UpdateFade updateFade) {
+    mState = State::NoInternetAccessDialog;
+    SetActiveViewController(ViewController::NoInternetAccessDialog);
+    mNoInternetAccessDialogController.SetUp(updateFade);
 }
 
 void StoreController::GoToCannotContactStoreDialog() {
@@ -303,7 +333,7 @@ void StoreController::GoToCannotContactStoreDialog() {
 void StoreController::GoToPurchaseFailedDialogState() {
     mState = State::PurchaseFailedDialog;
     SetActiveViewController(ViewController::PurchaseFailedDialog);
-    mPurchaseFailedDialogController.SetUp();
+    mPurchaseFailedDialogController.SetUp(SlidingMenuAnimation::UpdateFade::No);
 }
 
 void StoreController::GoToPurchaseCanceledDialogState() {

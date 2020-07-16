@@ -1,4 +1,4 @@
-#include "PurchaseFailedDialogController.hpp"
+#include "StoreErrorDialogController.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -8,19 +8,25 @@
 
 using namespace RowBlast;
 
-PurchaseFailedDialogController::PurchaseFailedDialogController(Pht::IEngine& engine,
-                                                               const CommonResources& commonResources,
-                                                               PotentiallyZoomedScreen zoom) :
+StoreErrorDialogController::StoreErrorDialogController(Pht::IEngine& engine,
+                                                       const CommonResources& commonResources,
+                                                       const std::string& caption,
+                                                       const std::vector<std::string>& textLines,
+                                                       PotentiallyZoomedScreen zoom) :
     mInput {engine.GetInput()},
-    mView {engine, commonResources, zoom},
+    mView {engine, commonResources, caption, textLines, zoom},
     mSlidingMenuAnimation {engine, mView} {}
 
-void PurchaseFailedDialogController::SetUp() {
-    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
-                                SlidingMenuAnimation::SlideDirection::Scale);
+void StoreErrorDialogController::SetUp(SlidingMenuAnimation::UpdateFade updateFade) {
+    mUpdateFade = updateFade;
+    mSlidingMenuAnimation.SetUp(updateFade, SlidingMenuAnimation::SlideDirection::Scale);
 }
 
-PurchaseFailedDialogController::Result PurchaseFailedDialogController::Update() {
+void StoreErrorDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
+    mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
+}
+
+StoreErrorDialogController::Result StoreErrorDialogController::Update() {
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();
@@ -37,7 +43,7 @@ PurchaseFailedDialogController::Result PurchaseFailedDialogController::Update() 
     return Result::None;
 }
 
-PurchaseFailedDialogController::Result PurchaseFailedDialogController::HandleInput() {
+StoreErrorDialogController::Result StoreErrorDialogController::HandleInput() {
     return InputUtil::HandleInput<Result>(mInput,
                                           Result::None,
                                           [this] (const Pht::TouchEvent& touch) {
@@ -45,11 +51,11 @@ PurchaseFailedDialogController::Result PurchaseFailedDialogController::HandleInp
                                           });
 }
 
-PurchaseFailedDialogController::Result
-PurchaseFailedDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
+StoreErrorDialogController::Result
+StoreErrorDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent) || mView.GetOkButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Close;
-        mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+        mSlidingMenuAnimation.StartSlideOut(mUpdateFade,
                                             SlidingMenuAnimation::SlideDirection::Right);
     }
 

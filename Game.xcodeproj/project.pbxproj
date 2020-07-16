@@ -28,8 +28,8 @@
 		1752255924B9F86A0002BE3E /* PurchasingIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1752255824B9F86A0002BE3E /* PurchasingIOS.mm */; };
 		1752256224BB66CC0002BE3E /* PurchaseEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256024BB66CC0002BE3E /* PurchaseEvent.cpp */; };
 		1752257624BE1EB80002BE3E /* StoreMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256724BE1EB80002BE3E /* StoreMenuController.cpp */; };
-		1752257724BE1EB80002BE3E /* PurchaseFailedDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256924BE1EB80002BE3E /* PurchaseFailedDialogView.cpp */; };
-		1752257824BE1EB80002BE3E /* PurchaseFailedDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256A24BE1EB80002BE3E /* PurchaseFailedDialogController.cpp */; };
+		1752257724BE1EB80002BE3E /* StoreErrorDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256924BE1EB80002BE3E /* StoreErrorDialogView.cpp */; };
+		1752257824BE1EB80002BE3E /* StoreErrorDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256A24BE1EB80002BE3E /* StoreErrorDialogController.cpp */; };
 		1752257924BE1EB80002BE3E /* PurchaseCanceledDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256D24BE1EB80002BE3E /* PurchaseCanceledDialogController.cpp */; };
 		1752257A24BE1EB80002BE3E /* StoreMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256F24BE1EB80002BE3E /* StoreMenuView.cpp */; };
 		1752257B24BE1EB80002BE3E /* StoreController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752257224BE1EB80002BE3E /* StoreController.cpp */; };
@@ -609,15 +609,15 @@
 		1752256624BE1EB80002BE3E /* PurchaseCanceledDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseCanceledDialogController.hpp; sourceTree = "<group>"; };
 		1752256724BE1EB80002BE3E /* StoreMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreMenuController.cpp; sourceTree = "<group>"; };
 		1752256824BE1EB80002BE3E /* StoreMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreMenuView.hpp; sourceTree = "<group>"; };
-		1752256924BE1EB80002BE3E /* PurchaseFailedDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseFailedDialogView.cpp; sourceTree = "<group>"; };
-		1752256A24BE1EB80002BE3E /* PurchaseFailedDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseFailedDialogController.cpp; sourceTree = "<group>"; };
+		1752256924BE1EB80002BE3E /* StoreErrorDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreErrorDialogView.cpp; sourceTree = "<group>"; };
+		1752256A24BE1EB80002BE3E /* StoreErrorDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreErrorDialogController.cpp; sourceTree = "<group>"; };
 		1752256B24BE1EB80002BE3E /* StoreController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreController.hpp; sourceTree = "<group>"; };
 		1752256C24BE1EB80002BE3E /* PurchaseSuccessfulDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseSuccessfulDialogView.hpp; sourceTree = "<group>"; };
 		1752256D24BE1EB80002BE3E /* PurchaseCanceledDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseCanceledDialogController.cpp; sourceTree = "<group>"; };
 		1752256E24BE1EB80002BE3E /* StoreMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreMenuController.hpp; sourceTree = "<group>"; };
 		1752256F24BE1EB80002BE3E /* StoreMenuView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreMenuView.cpp; sourceTree = "<group>"; };
-		1752257024BE1EB80002BE3E /* PurchaseFailedDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseFailedDialogView.hpp; sourceTree = "<group>"; };
-		1752257124BE1EB80002BE3E /* PurchaseFailedDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PurchaseFailedDialogController.hpp; sourceTree = "<group>"; };
+		1752257024BE1EB80002BE3E /* StoreErrorDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreErrorDialogView.hpp; sourceTree = "<group>"; };
+		1752257124BE1EB80002BE3E /* StoreErrorDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = StoreErrorDialogController.hpp; sourceTree = "<group>"; };
 		1752257224BE1EB80002BE3E /* StoreController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = StoreController.cpp; sourceTree = "<group>"; };
 		1752257324BE1EB80002BE3E /* PurchaseSuccessfulDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseSuccessfulDialogView.cpp; sourceTree = "<group>"; };
 		1752257424BE1EB80002BE3E /* PurchaseCanceledDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseCanceledDialogView.cpp; sourceTree = "<group>"; };
@@ -1630,16 +1630,16 @@
 				1752256624BE1EB80002BE3E /* PurchaseCanceledDialogController.hpp */,
 				1752257424BE1EB80002BE3E /* PurchaseCanceledDialogView.cpp */,
 				1752256424BE1EB80002BE3E /* PurchaseCanceledDialogView.hpp */,
-				1752256A24BE1EB80002BE3E /* PurchaseFailedDialogController.cpp */,
-				1752257124BE1EB80002BE3E /* PurchaseFailedDialogController.hpp */,
-				1752256924BE1EB80002BE3E /* PurchaseFailedDialogView.cpp */,
-				1752257024BE1EB80002BE3E /* PurchaseFailedDialogView.hpp */,
 				1752257524BE1EB80002BE3E /* PurchaseSuccessfulDialogController.cpp */,
 				1752256524BE1EB80002BE3E /* PurchaseSuccessfulDialogController.hpp */,
 				1752257324BE1EB80002BE3E /* PurchaseSuccessfulDialogView.cpp */,
 				1752256C24BE1EB80002BE3E /* PurchaseSuccessfulDialogView.hpp */,
 				1752257224BE1EB80002BE3E /* StoreController.cpp */,
 				1752256B24BE1EB80002BE3E /* StoreController.hpp */,
+				1752256A24BE1EB80002BE3E /* StoreErrorDialogController.cpp */,
+				1752257124BE1EB80002BE3E /* StoreErrorDialogController.hpp */,
+				1752256924BE1EB80002BE3E /* StoreErrorDialogView.cpp */,
+				1752257024BE1EB80002BE3E /* StoreErrorDialogView.hpp */,
 				1752256724BE1EB80002BE3E /* StoreMenuController.cpp */,
 				1752256E24BE1EB80002BE3E /* StoreMenuController.hpp */,
 				1752256F24BE1EB80002BE3E /* StoreMenuView.cpp */,
@@ -3702,7 +3702,7 @@
 				1711872E22EB9EB2009CC07F /* TutorialWindowView.cpp in Sources */,
 				62216BE021EB377E001CB9A1 /* GameOverDialogController.cpp in Sources */,
 				62216C4321EB377F001CB9A1 /* LivesDialogView.cpp in Sources */,
-				1752257724BE1EB80002BE3E /* PurchaseFailedDialogView.cpp in Sources */,
+				1752257724BE1EB80002BE3E /* StoreErrorDialogView.cpp in Sources */,
 				62216BE721EB377E001CB9A1 /* GameOverDialogView.cpp in Sources */,
 				62216C0721EB377F001CB9A1 /* MiddleIPiece.cpp in Sources */,
 				62243E9722B7952500EB922F /* OpenALBuffer.cpp in Sources */,
@@ -3886,7 +3886,7 @@
 				62216A7421EB376E001CB9A1 /* CloseButton.cpp in Sources */,
 				6255827422CE5B6A0060C383 /* DraggedPiece.cpp in Sources */,
 				6242DEF521C50E7600D17F46 /* Audio.cpp in Sources */,
-				1752257824BE1EB80002BE3E /* PurchaseFailedDialogController.cpp in Sources */,
+				1752257824BE1EB80002BE3E /* StoreErrorDialogController.cpp in Sources */,
 				173F538723858C8A0092483E /* ScoreTexts.cpp in Sources */,
 				625698022182392C003A3A9D /* PrismMesh.cpp in Sources */,
 				62216C3121EB377F001CB9A1 /* World3.cpp in Sources */,
