@@ -13,6 +13,10 @@
 		1711872E22EB9EB2009CC07F /* TutorialWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872C22EB9EB2009CC07F /* TutorialWindowView.cpp */; };
 		1711873122EB9EC9009CC07F /* TutorialWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872F22EB9EC9009CC07F /* TutorialWindowController.cpp */; };
 		17148A8423A3F92C0093B0B6 /* FlyingBlocksSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17148A8323A3F92C0093B0B6 /* FlyingBlocksSystem.cpp */; };
+		172DF55A24C0ACF0002BD049 /* network.png in Resources */ = {isa = PBXBuildFile; fileRef = 172DF55924C0ACF0002BD049 /* network.png */; };
+		172DF55C24C0AD6F002BD049 /* unavailable.png in Resources */ = {isa = PBXBuildFile; fileRef = 172DF55B24C0AD6F002BD049 /* unavailable.png */; };
+		172DF55F24C0AF6A002BD049 /* NoInternetAccessDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 172DF55D24C0AF6A002BD049 /* NoInternetAccessDialogView.cpp */; };
+		172DF56224C0AF94002BD049 /* NoInternetAccessDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 172DF56024C0AF94002BD049 /* NoInternetAccessDialogController.cpp */; };
 		1730C96F22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730C96D22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp */; };
 		1730C97222EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730C97022EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp */; };
 		1730D47B22F5B92E0092D92B /* DragInputHandler.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1730D47922F5B92E0092D92B /* DragInputHandler.cpp */; };
@@ -578,6 +582,12 @@
 		1711873022EB9EC9009CC07F /* TutorialWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialWindowController.hpp; sourceTree = "<group>"; };
 		17148A8323A3F92C0093B0B6 /* FlyingBlocksSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlyingBlocksSystem.cpp; sourceTree = "<group>"; };
 		17148A8523A3F9350093B0B6 /* FlyingBlocksSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FlyingBlocksSystem.hpp; sourceTree = "<group>"; };
+		172DF55924C0ACF0002BD049 /* network.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = network.png; sourceTree = "<group>"; };
+		172DF55B24C0AD6F002BD049 /* unavailable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unavailable.png; sourceTree = "<group>"; };
+		172DF55D24C0AF6A002BD049 /* NoInternetAccessDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoInternetAccessDialogView.cpp; sourceTree = "<group>"; };
+		172DF55E24C0AF6A002BD049 /* NoInternetAccessDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoInternetAccessDialogView.hpp; sourceTree = "<group>"; };
+		172DF56024C0AF94002BD049 /* NoInternetAccessDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoInternetAccessDialogController.cpp; sourceTree = "<group>"; };
+		172DF56124C0AF94002BD049 /* NoInternetAccessDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = NoInternetAccessDialogController.hpp; sourceTree = "<group>"; };
 		1730C96D22EA2AFD003BD981 /* PlayOnYourOwnWindowView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayOnYourOwnWindowView.cpp; sourceTree = "<group>"; };
 		1730C96E22EA2AFD003BD981 /* PlayOnYourOwnWindowView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PlayOnYourOwnWindowView.hpp; sourceTree = "<group>"; };
 		1730C97022EA2B1E003BD981 /* PlayOnYourOwnWindowController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PlayOnYourOwnWindowController.cpp; sourceTree = "<group>"; };
@@ -1626,6 +1636,10 @@
 		1752256324BE1EB80002BE3E /* StoreViews */ = {
 			isa = PBXGroup;
 			children = (
+				172DF56024C0AF94002BD049 /* NoInternetAccessDialogController.cpp */,
+				172DF56124C0AF94002BD049 /* NoInternetAccessDialogController.hpp */,
+				172DF55D24C0AF6A002BD049 /* NoInternetAccessDialogView.cpp */,
+				172DF55E24C0AF6A002BD049 /* NoInternetAccessDialogView.hpp */,
 				1752256D24BE1EB80002BE3E /* PurchaseCanceledDialogController.cpp */,
 				1752256624BE1EB80002BE3E /* PurchaseCanceledDialogController.hpp */,
 				1752257424BE1EB80002BE3E /* PurchaseCanceledDialogView.cpp */,
@@ -2496,6 +2510,7 @@
 				62A8E336222EDBDE00F1BF73 /* info.png */,
 				6221D56B223039590098395A /* music_off.png */,
 				6221D56522302E790098395A /* music.png */,
+				172DF55924C0ACF0002BD049 /* network.png */,
 				62A8E334222EC73300F1BF73 /* play.png */,
 				621F145D22396CA7004165A2 /* previous.png */,
 				6229833C222E9761001A7E1C /* restart.png */,
@@ -2505,6 +2520,7 @@
 				6221D56D22303C070098395A /* sound_off.png */,
 				6221D567223030230098395A /* sound.png */,
 				62298338222D8E9C001A7E1C /* spinning_wheel.png */,
+				172DF55B24C0AD6F002BD049 /* unavailable.png */,
 				623EB0C7222EC49A00E41F92 /* undo.png */,
 			);
 			path = Gui;
@@ -3403,6 +3419,7 @@
 				6227D4F5206CFD25008EA77D /* bomb_798.obj in Resources */,
 				62276E802274A96000679BC6 /* level56.json in Resources */,
 				6221D56C223039590098395A /* music_off.png in Resources */,
+				172DF55A24C0ACF0002BD049 /* network.png in Resources */,
 				623F5E2F22B55D5200242C10 /* ParticleTextureColor.frag in Resources */,
 				1787AB042378A9E200E3D314 /* terrain1_2.jpg in Resources */,
 				622169DF21E0CADE001CB9A1 /* clear_blocks_brick_impact2.wav in Resources */,
@@ -3538,6 +3555,7 @@
 				62276E672274A96000679BC6 /* level49.json in Resources */,
 				62B1CB82210F8F8600D0F195 /* glow_lines.png in Resources */,
 				62276E812274A96000679BC6 /* level60.json in Resources */,
+				172DF55C24C0AD6F002BD049 /* unavailable.png in Resources */,
 				6229833D222E9761001A7E1C /* restart.png in Resources */,
 				62276E962274A96000679BC6 /* level16.json in Resources */,
 				6221D56622302E790098395A /* music.png in Resources */,
@@ -3675,6 +3693,7 @@
 				17A75B5C23211A2C001BA90D /* BlastArea.cpp in Sources */,
 				1774768322DA42E400EEE97C /* NoMoreLevelsDialogController.cpp in Sources */,
 				625698062182392C003A3A9D /* CylinderMesh.cpp in Sources */,
+				172DF55F24C0AF6A002BD049 /* NoInternetAccessDialogView.cpp in Sources */,
 				17875F192401BFD90082D984 /* World5.cpp in Sources */,
 				62216BE221EB377E001CB9A1 /* GameHudController.cpp in Sources */,
 				62216C1B21EB377F001CB9A1 /* Level.cpp in Sources */,
@@ -3732,6 +3751,7 @@
 				625698472182392C003A3A9D /* Scene.cpp in Sources */,
 				62216C1321EB377F001CB9A1 /* LPiece.cpp in Sources */,
 				6256984B2182392C003A3A9D /* LightComponent.cpp in Sources */,
+				172DF56224C0AF94002BD049 /* NoInternetAccessDialogController.cpp in Sources */,
 				625698032182392C003A3A9D /* VertexBuffer.cpp in Sources */,
 				62216A7921EB376E001CB9A1 /* GuiResources.cpp in Sources */,
 				62216C0C21EB377F001CB9A1 /* TPiece.cpp in Sources */,

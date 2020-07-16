@@ -48,7 +48,7 @@ Backlog:
 Ongoing tasks:
     -Purchasing
         -Dialogs:
-            -No internet connection.
+            -No internet connection.    Special icon.
             -Cannot contact app store.
             -Purchase canceled.         Special icon.
             -Payments are disabled.

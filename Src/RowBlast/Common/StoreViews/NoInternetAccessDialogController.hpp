@@ -1,8 +1,8 @@
-#ifndef StoreErrorDialogController_hpp
-#define StoreErrorDialogController_hpp
+#ifndef NoInternetAccessDialogController_hpp
+#define NoInternetAccessDialogController_hpp
 
 // Game includes.
-#include "StoreErrorDialogView.hpp"
+#include "NoInternetAccessDialogView.hpp"
 #include "SlidingMenuAnimation.hpp"
 #include "CommonResources.hpp"
 
@@ -12,18 +12,16 @@ namespace Pht {
 }
 
 namespace RowBlast {
-    class StoreErrorDialogController {
+    class NoInternetAccessDialogController {
     public:
         enum class Result {
             None,
             Close
         };
         
-        StoreErrorDialogController(Pht::IEngine& engine,
-                                   const CommonResources& commonResources,
-                                   const std::string& caption,
-                                   const std::vector<std::string>& textLines,
-                                   PotentiallyZoomedScreen potentiallyZoomedScreen);
+        NoInternetAccessDialogController(Pht::IEngine& engine,
+                                         const CommonResources& commonResources,
+                                         PotentiallyZoomedScreen potentiallyZoomedScreen);
         
         void SetUp(SlidingMenuAnimation::UpdateFade updateFadeOnShow,
                    SlidingMenuAnimation::UpdateFade updateFadeOnClose);
@@ -39,7 +37,7 @@ namespace RowBlast {
         Result OnTouch(const Pht::TouchEvent& touchEvent);
         
         Pht::IInput& mInput;
-        StoreErrorDialogView mView;
+        NoInternetAccessDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         SlidingMenuAnimation::UpdateFade mUpdateFadeOnClose {SlidingMenuAnimation::UpdateFade::No};
         Result mDeferredResult {Result::None};

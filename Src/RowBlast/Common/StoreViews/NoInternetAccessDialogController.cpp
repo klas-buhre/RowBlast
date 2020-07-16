@@ -1,4 +1,4 @@
-#include "StoreErrorDialogController.hpp"
+#include "NoInternetAccessDialogController.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -8,26 +8,24 @@
 
 using namespace RowBlast;
 
-StoreErrorDialogController::StoreErrorDialogController(Pht::IEngine& engine,
-                                                       const CommonResources& commonResources,
-                                                       const std::string& caption,
-                                                       const std::vector<std::string>& textLines,
-                                                       PotentiallyZoomedScreen zoom) :
+NoInternetAccessDialogController::NoInternetAccessDialogController(Pht::IEngine& engine,
+                                                                   const CommonResources& commonResources,
+                                                                   PotentiallyZoomedScreen zoom) :
     mInput {engine.GetInput()},
-    mView {engine, commonResources, caption, textLines, zoom},
+    mView {engine, commonResources, zoom},
     mSlidingMenuAnimation {engine, mView} {}
 
-void StoreErrorDialogController::SetUp(SlidingMenuAnimation::UpdateFade updateFadeOnShow,
-                                       SlidingMenuAnimation::UpdateFade updateFadeOnClose) {
+void NoInternetAccessDialogController::SetUp(SlidingMenuAnimation::UpdateFade updateFadeOnShow,
+                                             SlidingMenuAnimation::UpdateFade updateFadeOnClose) {
     mUpdateFadeOnClose = updateFadeOnClose;
     mSlidingMenuAnimation.SetUp(updateFadeOnShow, SlidingMenuAnimation::SlideDirection::Scale);
 }
 
-void StoreErrorDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
+void NoInternetAccessDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
-StoreErrorDialogController::Result StoreErrorDialogController::Update() {
+NoInternetAccessDialogController::Result NoInternetAccessDialogController::Update() {
     switch (mSlidingMenuAnimation.Update()) {
         case SlidingMenuAnimation::State::Idle:
             mSlidingMenuAnimation.StartSlideIn();
@@ -44,7 +42,7 @@ StoreErrorDialogController::Result StoreErrorDialogController::Update() {
     return Result::None;
 }
 
-StoreErrorDialogController::Result StoreErrorDialogController::HandleInput() {
+NoInternetAccessDialogController::Result NoInternetAccessDialogController::HandleInput() {
     return InputUtil::HandleInput<Result>(mInput,
                                           Result::None,
                                           [this] (const Pht::TouchEvent& touch) {
@@ -52,8 +50,8 @@ StoreErrorDialogController::Result StoreErrorDialogController::HandleInput() {
                                           });
 }
 
-StoreErrorDialogController::Result
-StoreErrorDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
+NoInternetAccessDialogController::Result
+NoInternetAccessDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent) || mView.GetOkButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::Close;
         mSlidingMenuAnimation.StartSlideOut(mUpdateFadeOnClose,

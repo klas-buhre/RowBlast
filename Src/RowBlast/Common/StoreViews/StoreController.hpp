@@ -10,6 +10,7 @@
 #include "PurchaseSuccessfulDialogController.hpp"
 #include "StoreErrorDialogController.hpp"
 #include "PurchaseCanceledDialogController.hpp"
+#include "NoInternetAccessDialogController.hpp"
 #include "UserServices.hpp"
 #include "SpinningWheelEffect.hpp"
 
@@ -58,6 +59,7 @@ namespace RowBlast {
             PurchaseFailedDialog,
             PurchaseCanceledDialog,
             NoInternetAccessDialog,
+            CannotContactServerDialog,
             None
         };
 
@@ -69,9 +71,10 @@ namespace RowBlast {
         void UpdatePurchaseFailedDialog();
         void UpdatePurchaseCanceledDialog();
         StoreController::Result UpdateNoInternetAccessDialog();
+        StoreController::Result UpdateCannotContactServerDialog();
         void SetActiveViewController(ViewController viewController);
         void GoToNoInternetAccessDialogState(SlidingMenuAnimation::UpdateFade updateFade);
-        void GoToCannotContactStoreDialog();
+        void GoToCannotContactServerState();
         void GoToFetchingProductsState();
         void GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade,
                                 SlidingMenuAnimation::SlideDirection slideDirection);
@@ -84,6 +87,7 @@ namespace RowBlast {
         enum class State {
             FetchingProducts,
             NoInternetAccessDialog,
+            CannotContactServerDialog,
             StoreMenu,
             PurchasePending,
             PurchaseSuccessfulDialog,
@@ -104,8 +108,9 @@ namespace RowBlast {
         StoreMenuController mStoreMenuController;
         PurchaseSuccessfulDialogController mPurchaseSuccessfulDialogController;
         PurchaseCanceledDialogController mPurchaseCanceledDialogController;
+        NoInternetAccessDialogController mNoInternetAccessDialogController;
         StoreErrorDialogController mPurchaseFailedDialogController;
-        StoreErrorDialogController mNoInternetAccessDialogController;
+        StoreErrorDialogController mCannotContactServerDialogController;
         bool mHasFetchedProducts {false};
     };
 }
