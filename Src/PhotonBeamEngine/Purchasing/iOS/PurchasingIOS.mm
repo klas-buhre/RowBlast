@@ -126,10 +126,14 @@ private:
         [numberFormatter setNumberStyle:NSNumberFormatterCurrencyStyle];
         [numberFormatter setLocale:product.priceLocale];
         NSString* formattedPriceString = [numberFormatter stringFromNumber:product.price];
+        NSData* priceData = [formattedPriceString
+                             dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
+        NSString* priceString = [[NSString alloc] initWithData:priceData
+                                                  encoding:NSASCIIStringEncoding];
         
         Pht::Product phtProduct {
             .mId = [product.productIdentifier UTF8String],
-            .mLocalizedPrice = [formattedPriceString UTF8String]
+            .mLocalizedPrice = [priceString UTF8String]
         };
         phtProducts.push_back(phtProduct);
     }

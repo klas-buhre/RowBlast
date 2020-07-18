@@ -47,6 +47,7 @@ Backlog:
 
 Ongoing tasks:
     -Purchasing
+        -Just follow the Sandboxtesting instructions.
         -Dialogs:
             -No internet connection.    Special icon.
             -Cannot contact app store.
@@ -55,15 +56,9 @@ Ongoing tasks:
             -Purchase failed.
             -Purchase successful.       Special icon.
             
-        -The product sections in the store should only be visible if the corresponding product in
-         the app store has been fetched. Contact the app store when the store is started by the user
-         instead when the app loads. The prices should be displayed according to the prices
-         configured in the app store.
         -Maybe the timeout for payment transactions in PurchasingService is a bad idea. If the
          PurchasingService decides that the payment transaction times out but the response comes
          after that then the product will not be delivered.
-        -Add a dialog that says there is no internet connection when trying to open the store
-         without internet connection.
         -Connect the PurchasingService with IPurchasing.
         -Test it using the sandbox environment.
         -May need another dialog saying that the user is not allowed to make payments when

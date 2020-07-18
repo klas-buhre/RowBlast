@@ -11,7 +11,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto transactionTimeout = 2.0f;
+    constexpr auto transactionTimeout = 15.0f;
     constexpr auto maxCoinBalance = 99500;
     const std::string filename {"purchasing.dat"};
     const std::string coinBalanceMember {"coinBalance"};
@@ -81,11 +81,11 @@ namespace {
 PurchasingService::PurchasingService(Pht::IEngine& engine) :
     mEngine {engine},
     mAllGoldCoinProducts {
-        {ProductId::Currency10Coins, 10, "25,00 kr"},
-        {ProductId::Currency50Coins, 50, "99,00 kr"},
-        {ProductId::Currency100Coins, 100, "179,00 kr"},
-        {ProductId::Currency250Coins, 250, "359,00 kr"},
-        {ProductId::Currency500Coins, 500, "649,00 kr"}
+        {ProductId::Currency10Coins, 10, ""},
+        {ProductId::Currency50Coins, 50, ""},
+        {ProductId::Currency100Coins, 100, ""},
+        {ProductId::Currency250Coins, 250, ""},
+        {ProductId::Currency500Coins, 500, ""}
     } {
 
     // LoadState();

@@ -218,7 +218,7 @@ void StoreMenuView::CreateProductSection(const Pht::Vec3& position,
     buttonTextProperties.mAlignment = Pht::TextAlignment::CenterX;
     
     productSection.mLocalizedPriceText = &button->CreateText({0.0f, -0.21f, UiLayer::buttonText},
-                                                             product->mLocalizedPriceString,
+                                                             " ",
                                                              buttonTextProperties);
     productSection.mPurchaseButton = std::move(button);
 
