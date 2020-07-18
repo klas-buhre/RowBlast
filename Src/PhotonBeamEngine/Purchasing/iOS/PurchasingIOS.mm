@@ -1,8 +1,8 @@
-#include "IPurchasing.hpp"
-#include "PurchasingFactory.hpp"
-
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
+
+#include "IPurchasing.hpp"
+#include "PurchasingFactory.hpp"
 
 using namespace Pht;
 
@@ -39,18 +39,14 @@ public:
             NSString* productIdString = [NSString stringWithUTF8String:productId.c_str()];
             [productIdsArray addObject:productIdString];
         };
-
+        
         NSSet* productIdsSet = [[NSSet alloc] initWithArray:productIdsArray];
-        SKProductsRequest* request = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdsSet];
+        mProductsRequest = [[SKProductsRequest alloc] initWithProductIdentifiers:productIdsSet];
+        mProductsDelegate = [[ProductsDelegate alloc] init];
         
-        // Keep a strong reference to the request to prevent it from being deallocated.
-        mProductsRequest = request;
-        
-        ProductsDelegate* delegate = [[ProductsDelegate alloc] init];
-        [delegate setPurchasing:this];
-
-        request.delegate = delegate;
-        [request start];
+        [mProductsDelegate setPurchasing:this];
+        mProductsRequest.delegate = mProductsDelegate;
+        [mProductsRequest start];
     }
     
     void StartPurchase(const std::string& productId) override {
@@ -108,9 +104,10 @@ private:
         
         return nullptr;
     }
-
+    
     std::vector<std::unique_ptr<PurchaseEvent>> mEvents;
     SKProductsRequest* mProductsRequest;
+    ProductsDelegate* mProductsDelegate;
     NSArray* mSkProducts;
 };
 
