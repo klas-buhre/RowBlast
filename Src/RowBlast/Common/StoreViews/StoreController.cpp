@@ -193,7 +193,7 @@ void StoreController::FetchProducts(SlidingMenuAnimation::UpdateFade updateFadeO
         GoToNoInternetAccessDialogState(updateFadeOnStart);
         return;
     }
-    
+
     if (updateFadeOnStart == SlidingMenuAnimation::UpdateFade::Yes) {
         mFadeEffect.SetMidFade();
     }
@@ -226,20 +226,22 @@ void StoreController::StartPurchase(ProductId productId) {
             mSpinningWheelEffect.Stop();
             GoToPurchaseSuccessfulDialogState(product);
         },
-        [this] (PurchaseFailureReason purchaseFailureReason) {
+        [this] (Pht::PurchaseError error) {
             mSpinningWheelEffect.Stop();
-            OnPurchaseFailed(purchaseFailureReason);
+            OnPurchaseFailed(error);
         });
 
     GoToPurchasePendingState();
 }
 
-void StoreController::OnPurchaseFailed(PurchaseFailureReason purchaseFailureReason) {
-    switch (purchaseFailureReason) {
-        case PurchaseFailureReason::UserCancelled:
+void StoreController::OnPurchaseFailed(Pht::PurchaseError error) {
+    switch (error) {
+        case Pht::PurchaseError::Cancelled:
             GoToPurchaseCanceledDialogState();
             break;
-        case PurchaseFailureReason::Other:
+        case Pht::PurchaseError::NotAllowed:
+        case Pht::PurchaseError::NoNetworkAccess:
+        case Pht::PurchaseError::Other:
             GoToPurchaseFailedDialogState();
             break;
     }

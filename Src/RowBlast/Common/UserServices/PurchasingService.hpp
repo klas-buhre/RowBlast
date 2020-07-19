@@ -7,6 +7,7 @@
 
 // Engine includes.
 #include "Optional.hpp"
+#include "PurchaseEvent.hpp"
 
 namespace Pht {
     class IEngine;
@@ -26,11 +27,6 @@ namespace RowBlast {
         ProductId mId {ProductId::Currency10Coins};
         int mNumCoins {0};
         std::string mLocalizedPriceString;
-    };
-    
-    enum class PurchaseFailureReason {
-        UserCancelled,
-        Other
     };
     
     enum class TriggerProduct {
@@ -54,7 +50,7 @@ namespace RowBlast {
         void StartPurchase(ProductId productId,
                            TriggerProduct triggerProduct,
                            const std::function<void(const GoldCoinProduct&)>& onPurchaseSucceeded,
-                           const std::function<void(PurchaseFailureReason)>& onPurchaseFailed);
+                           const std::function<void(Pht::PurchaseError)>& onPurchaseFailed);
         const GoldCoinProduct* GetGoldCoinProduct(ProductId productId) const;
         void WithdrawCoins(CoinWithdrawReason coinWithdrawReason);
         bool CanAfford(int priceInCoins) const;
@@ -70,7 +66,7 @@ namespace RowBlast {
         void UpdateInFetchingProductsState();
         void UpdateInPurchasePendingState();
         void OnPurchaseSucceeded();
-        void OnPurchaseFailed(PurchaseFailureReason reason);
+        void OnPurchaseFailed();
         Pht::Optional<GoldCoinProduct> ToGoldCoinProduct(const Pht::Product& phtProduct);
         void SaveState();
         bool LoadState();
@@ -86,7 +82,8 @@ namespace RowBlast {
             const GoldCoinProduct* mProduct {nullptr};
             TriggerProduct mTriggerProduct {TriggerProduct::Coins};
             std::function<void(const GoldCoinProduct&)> mOnPurchaseSucceeded;
-            std::function<void(PurchaseFailureReason)> mOnPurchaseFailed;
+            std::function<void(Pht::PurchaseError)> mOnPurchaseFailed;
+            Pht::PurchaseError mError {Pht::PurchaseError::Other};
             float mElapsedTime {0.0f};
         };
         

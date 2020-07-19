@@ -27,9 +27,9 @@ class PurchasingIOS;
 class PurchasingIOS: public IPurchasing {
 public:
     PurchasingIOS() {
-        PaymentTransactionObserver *observer = [[PaymentTransactionObserver alloc] init];
-        [observer setPurchasing:this];
-        [[SKPaymentQueue defaultQueue] addTransactionObserver:observer];
+        mPaymentTransactionObserver = [[PaymentTransactionObserver alloc] init];
+        [mPaymentTransactionObserver setPurchasing:this];
+        [[SKPaymentQueue defaultQueue] addTransactionObserver:mPaymentTransactionObserver];
     }
     
     void FetchProducts(const std::vector<std::string>& productIds) override {
@@ -106,6 +106,7 @@ private:
     }
     
     std::vector<std::unique_ptr<PurchaseEvent>> mEvents;
+    PaymentTransactionObserver* mPaymentTransactionObserver;
     SKProductsRequest* mProductsRequest;
     ProductsDelegate* mProductsDelegate;
     NSArray* mSkProducts;
@@ -159,8 +160,10 @@ private:
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 break;
             case SKPaymentTransactionStateFailed:
-                if ([[transaction error] code] == SKErrorPaymentCancelled) {
+                if (transaction.error.code == SKErrorPaymentCancelled) {
                     mPurchasing->PushErrorEvent(PurchaseError::Cancelled);
+                } else if (transaction.error.code == SKErrorCloudServiceNetworkConnectionFailed) {
+                    mPurchasing->PushErrorEvent(PurchaseError::NoNetworkAccess);
                 } else {
                     mPurchasing->PushErrorEvent(PurchaseError::Other);
                 }

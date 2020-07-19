@@ -66,7 +66,7 @@ namespace RowBlast {
         Result UpdateStoreMenu();
         void FetchProducts(SlidingMenuAnimation::UpdateFade updateFadeOnStart);
         void StartPurchase(ProductId productId);
-        void OnPurchaseFailed(PurchaseFailureReason purchaseFailureReason);
+        void OnPurchaseFailed(Pht::PurchaseError error);
         Result UpdatePurchaseSuccessfulDialog();
         void UpdatePurchaseFailedDialog();
         void UpdatePurchaseCanceledDialog();

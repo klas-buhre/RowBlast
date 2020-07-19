@@ -44,6 +44,7 @@ namespace Pht {
     enum class PurchaseError {
         Cancelled,
         NotAllowed,
+        NoNetworkAccess,
         Other
     };
     
