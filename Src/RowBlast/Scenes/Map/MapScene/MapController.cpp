@@ -677,7 +677,7 @@ void MapController::GoToStartLevelStateStore() {
     mState = State::StartLevel;
     mStartLevelState = StartLevelState::Store;
     mMapViewControllers.SetActiveController(MapViewControllers::None);
-    mStoreController.StartStore(TriggerProduct::Lives,
+    mStoreController.StartStore(StoreTrigger::Lives,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::UpdateFade::Yes,
@@ -726,7 +726,7 @@ void MapController::GoToAddLivesStateStore() {
     mState = State::AddLives;
     mAddLivesState = AddLivesState::Store;
     mMapViewControllers.SetActiveController(MapViewControllers::None);
-    mStoreController.StartStore(TriggerProduct::Lives,
+    mStoreController.StartStore(StoreTrigger::Lives,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::UpdateFade::Yes,
@@ -760,7 +760,7 @@ void MapController::GoToAboutMenuState(SlidingMenuAnimation::UpdateFade updateFa
 void MapController::GoToAddCoinsStoreState() {
     mState = State::AddCoinsStore;
     mMapViewControllers.SetActiveController(MapViewControllers::None);
-    mStoreController.StartStore(TriggerProduct::Coins,
+    mStoreController.StartStore(StoreTrigger::Coins,
                                 SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::UpdateFade::Yes,

@@ -41,7 +41,7 @@ namespace RowBlast {
                         SceneId sceneId);
         
         void Init(Pht::SceneObject& parentObject);
-        void StartStore(TriggerProduct triggerProduct,
+        void StartStore(StoreTrigger storeTrigger,
                         SlidingMenuAnimation::UpdateFade updateFadeOnStart,
                         SlidingMenuAnimation::UpdateFade updateFadeOnClose,
                         SlidingMenuAnimation::UpdateFade updateFadeOnCanAffordTriggerProduct,
@@ -67,6 +67,7 @@ namespace RowBlast {
         void FetchProducts(SlidingMenuAnimation::UpdateFade updateFadeOnStart);
         void StartPurchase(ProductId productId);
         void OnPurchaseFailed(Pht::PurchaseError error);
+        void UpdateInPurchaseSuccessfulDelayState();
         Result UpdatePurchaseSuccessfulDialog();
         void UpdatePurchaseFailedDialog();
         void UpdatePurchaseCanceledDialog();
@@ -78,7 +79,8 @@ namespace RowBlast {
         void GoToFetchingProductsState();
         void GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade,
                                 SlidingMenuAnimation::SlideDirection slideDirection);
-        void GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& product);
+        void GoToPurchaseSuccessfulDelayState();
+        void GoToPurchaseSuccessfulDialogState();
         void GoToPurchaseFailedDialogState();
         void GoToPurchaseCanceledDialogState();
         void GoToIdleState();
@@ -90,15 +92,18 @@ namespace RowBlast {
             CannotContactServerDialog,
             StoreMenu,
             PurchasePending,
+            PurchaseSuccessfulDelay,
             PurchaseSuccessfulDialog,
             PurchaseFailedDialog,
             PurchaseCanceledDialog,
             Idle
         };
 
+        Pht::IEngine& mEngine;
         UserServices& mUserServices;
         State mState {State::Idle};
-        TriggerProduct mTriggerProduct;
+        StoreTrigger mStoreTrigger;
+        GoldCoinProduct mPurchasedProduct;
         Pht::FadeEffect mFadeEffect;
         SlidingMenuAnimation::UpdateFade mUpdateFadeOnClose;
         SlidingMenuAnimation::UpdateFade mUpdateFadeOnCanAffordTriggerProduct;
@@ -112,6 +117,7 @@ namespace RowBlast {
         StoreErrorDialogController mPurchaseFailedDialogController;
         StoreErrorDialogController mCannotContactServerDialogController;
         bool mHasFetchedProducts {false};
+        float mElapsedTime = 0.0f;
     };
 }
 

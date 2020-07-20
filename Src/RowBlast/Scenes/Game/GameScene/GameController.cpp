@@ -802,7 +802,7 @@ void GameController::GoToPausedStateMapConfirmationDialog() {
 void GameController::GoToPausedStateStore() {
     mPausedState = PausedState::Store;
     mGameViewControllers.SetActiveController(GameViewControllers::None);
-    mStoreController.StartStore(TriggerProduct::Lives,
+    mStoreController.StartStore(StoreTrigger::Lives,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::No,
@@ -859,7 +859,7 @@ void GameController::GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::S
 void GameController::GoToOutOfMovesStateStore() {
     mOutOfMovesState = OutOfMovesState::Store;
     mGameViewControllers.SetActiveController(GameViewControllers::None);
-    mStoreController.StartStore(TriggerProduct::Moves,
+    mStoreController.StartStore(StoreTrigger::Moves,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::Yes,
@@ -883,7 +883,7 @@ void GameController::GoToGameOverStateNoLivesDialog() {
 void GameController::GoToGameOverStateStore() {
     mGameOverState = GameOverState::Store;
     mGameViewControllers.SetActiveController(GameViewControllers::None);
-    mStoreController.StartStore(TriggerProduct::Lives,
+    mStoreController.StartStore(StoreTrigger::Lives,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::No,

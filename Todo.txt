@@ -47,9 +47,7 @@ Backlog:
 
 Ongoing tasks:
     -Purchasing
-        -Add a short delay between Apples "You are all set/payment successful" dialog and my
-         purchase successful dialog, to prevent that my purchase successful dialog appears under
-         Apples dialog.
+        -Solve the "You are all set/payment successful" dialog problem.
         -Just follow the Sandboxtesting instructions.
         -Should implement support for the following scenario: the payment succeeds in app store but
          the user looses the network connection right before the response comes. Then deliver the

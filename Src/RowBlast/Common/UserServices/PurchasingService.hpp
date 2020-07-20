@@ -29,7 +29,7 @@ namespace RowBlast {
         std::string mLocalizedPriceString;
     };
     
-    enum class TriggerProduct {
+    enum class StoreTrigger {
         Coins,
         Moves,
         Lives
@@ -48,7 +48,7 @@ namespace RowBlast {
         void FetchProducts(const std::function<void(const std::vector<GoldCoinProduct>&)>& onResponse,
                            const std::function<void()>& onTimeout);
         void StartPurchase(ProductId productId,
-                           TriggerProduct triggerProduct,
+                           StoreTrigger storeTrigger,
                            const std::function<void(const GoldCoinProduct&)>& onPurchaseSucceeded,
                            const std::function<void(Pht::PurchaseError)>& onPurchaseFailed);
         const GoldCoinProduct* GetGoldCoinProduct(ProductId productId) const;
@@ -80,7 +80,7 @@ namespace RowBlast {
         
         struct PaymentTransaction {
             const GoldCoinProduct* mProduct {nullptr};
-            TriggerProduct mTriggerProduct {TriggerProduct::Coins};
+            StoreTrigger mStoreTrigger {StoreTrigger::Coins};
             std::function<void(const GoldCoinProduct&)> mOnPurchaseSucceeded;
             std::function<void(Pht::PurchaseError)> mOnPurchaseFailed;
             Pht::PurchaseError mError {Pht::PurchaseError::Other};

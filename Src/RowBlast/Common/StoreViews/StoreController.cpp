@@ -12,14 +12,15 @@ using namespace RowBlast;
 namespace {
     constexpr auto fade = 0.72f;
     constexpr auto fadeTime = 0.3f;
+    constexpr auto purchaseSuccessfulDelay = 0.15f;
     
-    int ToExitCriteriaInCoins(TriggerProduct triggerProduct) {
-        switch (triggerProduct) {
-            case TriggerProduct::Moves:
+    int ToExitCriteriaInCoins(StoreTrigger storeTrigger) {
+        switch (storeTrigger) {
+            case StoreTrigger::Moves:
                 return PurchasingService::addMovesPriceInCoins;
-            case TriggerProduct::Lives:
+            case StoreTrigger::Lives:
                 return PurchasingService::refillLivesPriceInCoins;
-            case TriggerProduct::Coins:
+            case StoreTrigger::Coins:
                 return 0;
         }
     }
@@ -39,6 +40,7 @@ StoreController::StoreController(Pht::IEngine& engine,
                                  UserServices& userServices,
                                  IGuiLightProvider& guiLightProvider,
                                  SceneId sceneId) :
+    mEngine {engine},
     mUserServices {userServices},
     mFadeEffect {
         engine.GetSceneManager(),
@@ -109,12 +111,12 @@ void StoreController::Init(Pht::SceneObject& parentObject) {
     SetActiveViewController(ViewController::None);
 }
 
-void StoreController::StartStore(TriggerProduct triggerProduct,
+void StoreController::StartStore(StoreTrigger storeTrigger,
                                  SlidingMenuAnimation::UpdateFade updateFadeOnStart,
                                  SlidingMenuAnimation::UpdateFade updateFadeOnClose,
                                  SlidingMenuAnimation::UpdateFade updateFadeOnCanAffordTriggerProduct,
                                  PurchaseSuccessfulDialogController::ShouldSlideOut slideOutOnCanAffordTriggerProduct) {
-    mTriggerProduct = triggerProduct;
+    mStoreTrigger = storeTrigger;
     mUpdateFadeOnClose = updateFadeOnClose;
     mUpdateFadeOnCanAffordTriggerProduct = updateFadeOnCanAffordTriggerProduct;
     mSlideOutOnCanAffordTriggerProduct = slideOutOnCanAffordTriggerProduct;
@@ -142,6 +144,9 @@ StoreController::Result StoreController::Update() {
             break;
         case State::CannotContactServerDialog:
             result = UpdateCannotContactServerDialog();
+            break;
+        case State::PurchaseSuccessfulDelay:
+            UpdateInPurchaseSuccessfulDelayState();
             break;
         case State::PurchaseSuccessfulDialog:
             result = UpdatePurchaseSuccessfulDialog();
@@ -221,10 +226,11 @@ void StoreController::StartPurchase(ProductId productId) {
     
     mUserServices.GetPurchasingService().StartPurchase(
         productId,
-        mTriggerProduct,
+        mStoreTrigger,
         [this] (const GoldCoinProduct& product) {
             mSpinningWheelEffect.Stop();
-            GoToPurchaseSuccessfulDialogState(product);
+            mPurchasedProduct = product;
+            GoToPurchaseSuccessfulDelayState();
         },
         [this] (Pht::PurchaseError error) {
             mSpinningWheelEffect.Stop();
@@ -247,6 +253,13 @@ void StoreController::OnPurchaseFailed(Pht::PurchaseError error) {
     }
 }
 
+void StoreController::UpdateInPurchaseSuccessfulDelayState() {
+    mElapsedTime += mEngine.GetLastFrameSeconds();
+    if (mElapsedTime >= purchaseSuccessfulDelay) {
+        GoToPurchaseSuccessfulDialogState();
+    }
+}
+
 StoreController::Result StoreController::UpdatePurchaseSuccessfulDialog() {
     StoreController::Result result {Result::None};
 
@@ -254,7 +267,7 @@ StoreController::Result StoreController::UpdatePurchaseSuccessfulDialog() {
         case PurchaseSuccessfulDialogController::Result::None:
             break;
         case PurchaseSuccessfulDialogController::Result::Close:
-            if (mUserServices.GetPurchasingService().CanAfford(ToExitCriteriaInCoins(mTriggerProduct))) {
+            if (mUserServices.GetPurchasingService().CanAfford(ToExitCriteriaInCoins(mStoreTrigger))) {
                 result = Result::Done;
             } else {
                 GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::No,
@@ -331,16 +344,22 @@ void StoreController::GoToStoreMenuState(SlidingMenuAnimation::UpdateFade update
     mStoreMenuController.SetUp(updateFade, mUpdateFadeOnClose, slideDirection);
 }
 
-void StoreController::GoToPurchaseSuccessfulDialogState(const GoldCoinProduct& product) {
+void StoreController::GoToPurchaseSuccessfulDelayState() {
+    mState = State::PurchaseSuccessfulDelay;
+    mElapsedTime = 0.0f;
+    SetActiveViewController(ViewController::None);
+}
+
+void StoreController::GoToPurchaseSuccessfulDialogState() {
     mState = State::PurchaseSuccessfulDialog;
     SetActiveViewController(ViewController::PurchaseSuccessfulDialog);
 
-    if (mUserServices.GetPurchasingService().CanAfford(ToExitCriteriaInCoins(mTriggerProduct))) {
-        mPurchaseSuccessfulDialogController.SetUp(product.mNumCoins,
+    if (mUserServices.GetPurchasingService().CanAfford(ToExitCriteriaInCoins(mStoreTrigger))) {
+        mPurchaseSuccessfulDialogController.SetUp(mPurchasedProduct.mNumCoins,
                                                   mSlideOutOnCanAffordTriggerProduct,
                                                   mUpdateFadeOnCanAffordTriggerProduct);
     } else {
-        mPurchaseSuccessfulDialogController.SetUp(product.mNumCoins,
+        mPurchaseSuccessfulDialogController.SetUp(mPurchasedProduct.mNumCoins,
                                                   PurchaseSuccessfulDialogController::ShouldSlideOut::Yes,
                                                   SlidingMenuAnimation::UpdateFade::No);
     }

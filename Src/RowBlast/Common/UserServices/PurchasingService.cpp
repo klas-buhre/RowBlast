@@ -39,13 +39,13 @@ namespace {
         }
     }
     
-    std::string ToCartType(TriggerProduct triggerProduct) {
-        switch (triggerProduct) {
-            case TriggerProduct::Coins:
+    std::string ToCartType(StoreTrigger storeTrigger) {
+        switch (storeTrigger) {
+            case StoreTrigger::Coins:
                 return "Coins";
-            case TriggerProduct::Moves:
+            case StoreTrigger::Moves:
                 return "Moves";
-            case TriggerProduct::Lives:
+            case StoreTrigger::Lives:
                 return "Lives";
         }
     }
@@ -185,7 +185,7 @@ void PurchasingService::OnPurchaseSucceeded() {
         2,     // TODO: fix
         "GoldCoins",
         ToItemId(mPaymentTransaction.mProduct->mId),
-        ToCartType(mPaymentTransaction.mTriggerProduct)
+        ToCartType(mPaymentTransaction.mStoreTrigger)
     };
     
     auto& analytics = mEngine.GetAnalytics();
@@ -217,10 +217,10 @@ void PurchasingService::OnPurchaseFailed() {
 }
 
 void PurchasingService::StartPurchase(ProductId productId,
-                                      TriggerProduct triggerProduct,
+                                      StoreTrigger storeTrigger,
                                       const std::function<void(const GoldCoinProduct&)>& onPurchaseSucceeded,
                                       const std::function<void(Pht::PurchaseError)>& onPurchaseFailed) {
-    mPaymentTransaction.mTriggerProduct = triggerProduct;
+    mPaymentTransaction.mStoreTrigger = storeTrigger;
     mPaymentTransaction.mOnPurchaseSucceeded = onPurchaseSucceeded;
     mPaymentTransaction.mOnPurchaseFailed = onPurchaseFailed;
     mPaymentTransaction.mElapsedTime = 0.0f;
