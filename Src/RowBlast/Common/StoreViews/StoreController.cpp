@@ -85,6 +85,13 @@ StoreController::StoreController(Pht::IEngine& engine,
         "CAN'T CONTACT SERVER",
         {"No response from server.", "Try again later."},
         ToPotentiallyZoomedScreen(sceneId)
+    },
+    mPaymentsDisabledOnDeviceDialogController {
+        engine,
+        commonResources,
+        "PAYMENT NOT ALLOWED",
+        {"Payments are disabled on", "this device."},
+        ToPotentiallyZoomedScreen(sceneId)
     } {
 
     mViewManager.AddView(static_cast<int>(ViewController::StoreMenu), mStoreMenuController.GetView());
@@ -93,6 +100,7 @@ StoreController::StoreController(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(ViewController::PurchaseCanceledDialog), mPurchaseCanceledDialogController.GetView());
     mViewManager.AddView(static_cast<int>(ViewController::NoInternetAccessDialog), mNoInternetAccessDialogController.GetView());
     mViewManager.AddView(static_cast<int>(ViewController::CannotContactServerDialog), mCannotContactServerDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(ViewController::PaymentsDisabledOnDeviceDialog), mPaymentsDisabledOnDeviceDialogController.GetView());
     
     mStoreMenuController.SetFadeEffect(mFadeEffect);
     mPurchaseSuccessfulDialogController.SetFadeEffect(mFadeEffect);
@@ -156,6 +164,12 @@ StoreController::Result StoreController::Update() {
             break;
         case State::PurchaseCanceledDialog:
             UpdatePurchaseCanceledDialog();
+            break;
+        case State::PaymentsDisabledOnDeviceDialog:
+            UpdatePaymentsDisabledOnDeviceDialog();
+            break;
+        case State::NoInternetAccessAtPurchaseAttemptDialog:
+            UpdateNoInternetAccessAtPurchaseAttemptDialog();
             break;
         case State::Idle:
             break;
@@ -246,9 +260,17 @@ void StoreController::OnPurchaseFailed(Pht::PurchaseError error) {
             GoToPurchaseCanceledDialogState();
             break;
         case Pht::PurchaseError::NotAllowed:
+            GoToPaymentsDisabledOnDeviceDialogState();
+            break;
         case Pht::PurchaseError::NoNetworkAccess:
+            GoToNoInternetAccessAtPurchaseAttemptDialogState();
+            break;
         case Pht::PurchaseError::Other:
-            GoToPurchaseFailedDialogState();
+            if (!Pht::NetworkStatus::IsConnected()) {
+                GoToNoInternetAccessAtPurchaseAttemptDialogState();
+            } else {
+                GoToPurchaseFailedDialogState();
+            }
             break;
     }
 }
@@ -293,6 +315,17 @@ StoreController::Result StoreController::UpdateNoInternetAccessDialog() {
     return result;
 }
 
+void StoreController::UpdateNoInternetAccessAtPurchaseAttemptDialog() {
+    switch (mNoInternetAccessDialogController.Update()) {
+        case NoInternetAccessDialogController::Result::None:
+            break;
+        case NoInternetAccessDialogController::Result::Close:
+            GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::No,
+                               SlidingMenuAnimation::SlideDirection::Right);
+            break;
+    }
+}
+
 StoreController::Result StoreController::UpdateCannotContactServerDialog() {
     StoreController::Result result {Result::None};
     
@@ -305,6 +338,17 @@ StoreController::Result StoreController::UpdateCannotContactServerDialog() {
     }
     
     return result;
+}
+
+void StoreController::UpdatePaymentsDisabledOnDeviceDialog() {
+    switch (mPaymentsDisabledOnDeviceDialogController.Update()) {
+        case StoreErrorDialogController::Result::None:
+            break;
+        case StoreErrorDialogController::Result::Close:
+            GoToStoreMenuState(SlidingMenuAnimation::UpdateFade::No,
+                               SlidingMenuAnimation::SlideDirection::Right);
+            break;
+    }
 }
 
 void StoreController::UpdatePurchaseFailedDialog() {
@@ -371,11 +415,25 @@ void StoreController::GoToNoInternetAccessDialogState(SlidingMenuAnimation::Upda
     mNoInternetAccessDialogController.SetUp(updateFade, updateFade);
 }
 
+void StoreController::GoToNoInternetAccessAtPurchaseAttemptDialogState() {
+    mState = State::NoInternetAccessAtPurchaseAttemptDialog;
+    SetActiveViewController(ViewController::NoInternetAccessDialog);
+    mNoInternetAccessDialogController.SetUp(SlidingMenuAnimation::UpdateFade::No,
+                                            SlidingMenuAnimation::UpdateFade::No);
+}
+
 void StoreController::GoToCannotContactServerState() {
     mState = State::CannotContactServerDialog;
     SetActiveViewController(ViewController::CannotContactServerDialog);
     mCannotContactServerDialogController.SetUp(SlidingMenuAnimation::UpdateFade::No,
                                                mUpdateFadeOnClose);
+}
+
+void StoreController::GoToPaymentsDisabledOnDeviceDialogState() {
+    mState = State::PaymentsDisabledOnDeviceDialog;
+    SetActiveViewController(ViewController::PaymentsDisabledOnDeviceDialog);
+    mPaymentsDisabledOnDeviceDialogController.SetUp(SlidingMenuAnimation::UpdateFade::No,
+                                                    SlidingMenuAnimation::UpdateFade::No);
 }
 
 void StoreController::GoToPurchaseFailedDialogState() {

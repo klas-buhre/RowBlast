@@ -84,7 +84,6 @@ namespace RowBlast {
             std::function<void(const GoldCoinProduct&)> mOnPurchaseSucceeded;
             std::function<void(Pht::PurchaseError)> mOnPurchaseFailed;
             Pht::PurchaseError mError {Pht::PurchaseError::Other};
-            float mElapsedTime {0.0f};
         };
         
         struct FetchProductsTransaction {

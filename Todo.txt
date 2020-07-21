@@ -47,27 +47,21 @@ Backlog:
 
 Ongoing tasks:
     -Purchasing
-        -Solve the "You are all set/payment successful" dialog problem.
+        -Issues:
+            -The "You are all set/payment successful" dialog problem.
         -Just follow the Sandboxtesting instructions.
         -Should implement support for the following scenario: the payment succeeds in app store but
          the user looses the network connection right before the response comes. Then deliver the
          coins when the app starts the next time according to:
          https://developer.apple.com/documentation/storekit/in-app_purchase/processing_a_transaction?language=objc
         -Dialogs:
-            -No internet connection.    Special icon.
-            -Cannot contact app store.
-            -Purchase canceled.         Special icon.
-            -Payments are disabled.
-            -Purchase failed.
-            -Purchase successful.       Special icon.
+            -No internet connection.    Special icon.   [OK]
+            -Cannot contact app store.                  [OK]
+            -Purchase canceled.         Special icon.   [OK]
+            -Payments are disabled.                     [OK]
+            -Purchase failed.                           [OK]
+            -Purchase successful.       Special icon.   [OK]
             
-        -Maybe the timeout for payment transactions in PurchasingService is a bad idea. If the
-         PurchasingService decides that the payment transaction times out but the response comes
-         after that then the product will not be delivered.
-        -Connect the PurchasingService with IPurchasing.
-        -Test it using the sandbox environment.
-        -May need another dialog saying that the user is not allowed to make payments when
-         [SKPaymentQueue canMakePayments] returns false.
         -The hand in the hand animation in the tutorial should fade in and out instead of just
          disappearing.
         -About tax information on app store connect  (https://help.apple.com/app-store-connect/#/devb6df5ee51)

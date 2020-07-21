@@ -60,6 +60,7 @@ namespace RowBlast {
             PurchaseCanceledDialog,
             NoInternetAccessDialog,
             CannotContactServerDialog,
+            PaymentsDisabledOnDeviceDialog,
             None
         };
 
@@ -69,18 +70,22 @@ namespace RowBlast {
         void OnPurchaseFailed(Pht::PurchaseError error);
         void UpdateInPurchaseSuccessfulDelayState();
         Result UpdatePurchaseSuccessfulDialog();
+        void UpdatePaymentsDisabledOnDeviceDialog();
         void UpdatePurchaseFailedDialog();
         void UpdatePurchaseCanceledDialog();
         StoreController::Result UpdateNoInternetAccessDialog();
+        void UpdateNoInternetAccessAtPurchaseAttemptDialog();
         StoreController::Result UpdateCannotContactServerDialog();
         void SetActiveViewController(ViewController viewController);
         void GoToNoInternetAccessDialogState(SlidingMenuAnimation::UpdateFade updateFade);
+        void GoToNoInternetAccessAtPurchaseAttemptDialogState();
         void GoToCannotContactServerState();
         void GoToFetchingProductsState();
         void GoToStoreMenuState(SlidingMenuAnimation::UpdateFade updateFade,
                                 SlidingMenuAnimation::SlideDirection slideDirection);
         void GoToPurchaseSuccessfulDelayState();
         void GoToPurchaseSuccessfulDialogState();
+        void GoToPaymentsDisabledOnDeviceDialogState();
         void GoToPurchaseFailedDialogState();
         void GoToPurchaseCanceledDialogState();
         void GoToIdleState();
@@ -96,6 +101,8 @@ namespace RowBlast {
             PurchaseSuccessfulDialog,
             PurchaseFailedDialog,
             PurchaseCanceledDialog,
+            PaymentsDisabledOnDeviceDialog,
+            NoInternetAccessAtPurchaseAttemptDialog,
             Idle
         };
 
@@ -116,6 +123,7 @@ namespace RowBlast {
         NoInternetAccessDialogController mNoInternetAccessDialogController;
         StoreErrorDialogController mPurchaseFailedDialogController;
         StoreErrorDialogController mCannotContactServerDialogController;
+        StoreErrorDialogController mPaymentsDisabledOnDeviceDialogController;
         bool mHasFetchedProducts {false};
         float mElapsedTime = 0.0f;
     };

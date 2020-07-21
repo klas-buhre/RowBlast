@@ -223,7 +223,6 @@ void PurchasingService::StartPurchase(ProductId productId,
     mPaymentTransaction.mStoreTrigger = storeTrigger;
     mPaymentTransaction.mOnPurchaseSucceeded = onPurchaseSucceeded;
     mPaymentTransaction.mOnPurchaseFailed = onPurchaseFailed;
-    mPaymentTransaction.mElapsedTime = 0.0f;
     mPaymentTransaction.mError = Pht::PurchaseError::Other;
     
     auto* product = GetGoldCoinProduct(productId);
