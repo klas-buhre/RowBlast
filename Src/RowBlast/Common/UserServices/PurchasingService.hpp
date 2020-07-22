@@ -65,8 +65,10 @@ namespace RowBlast {
     private:
         void UpdateInFetchingProductsState();
         void UpdateInPurchasePendingState();
-        void OnPurchaseSucceeded();
+        void OnPurchaseSucceeded(const GoldCoinProduct& product);
         void OnPurchaseFailed();
+        void HandleUnfinishedTransactions();
+        Pht::Optional<GoldCoinProduct> ToGoldCoinProduct(const std::string& phtProductId);
         Pht::Optional<GoldCoinProduct> ToGoldCoinProduct(const Pht::Product& phtProduct);
         void SaveState();
         bool LoadState();
@@ -79,7 +81,6 @@ namespace RowBlast {
         };
         
         struct PaymentTransaction {
-            const GoldCoinProduct* mProduct {nullptr};
             StoreTrigger mStoreTrigger {StoreTrigger::Coins};
             std::function<void(const GoldCoinProduct&)> mOnPurchaseSucceeded;
             std::function<void(Pht::PurchaseError)> mOnPurchaseFailed;
@@ -98,6 +99,7 @@ namespace RowBlast {
         PaymentTransaction mPaymentTransaction;
         FetchProductsTransaction mFetchProductsTransaction;
         std::vector<GoldCoinProduct> mAllGoldCoinProducts;
+        bool mFirstUpdate {true};
     };
 }
 

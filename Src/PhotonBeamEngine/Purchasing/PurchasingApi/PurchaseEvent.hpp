@@ -28,6 +28,18 @@ namespace Pht {
     private:
         Kind mKind {Kind::Error};
     };
+
+    class PurchaseCompleteEvent: public PurchaseEvent {
+    public:
+        PurchaseCompleteEvent(const std::string& productId);
+        
+        const std::string& GetProductId() const {
+            return mProductId;
+        }
+        
+    private:
+        std::string mProductId;
+    };
     
     class ProductsResponseEvent: public PurchaseEvent {
     public:

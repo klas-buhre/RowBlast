@@ -14,6 +14,7 @@ namespace Pht {
         virtual void StartPurchase(const std::string& productId) = 0;
         virtual bool HasEvents() const = 0;
         virtual std::unique_ptr<PurchaseEvent> PopNextEvent() = 0;
+        virtual void FinishTransaction(const std::string& productId) = 0;
     };
 }
 

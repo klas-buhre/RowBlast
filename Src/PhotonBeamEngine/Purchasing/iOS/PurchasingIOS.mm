@@ -27,6 +27,8 @@ class PurchasingIOS;
 class PurchasingIOS: public IPurchasing {
 public:
     PurchasingIOS() {
+        mPendingTransactions = [NSMutableDictionary dictionary];
+        
         mPaymentTransactionObserver = [[PaymentTransactionObserver alloc] init];
         [mPaymentTransactionObserver setPurchasing:this];
         [[SKPaymentQueue defaultQueue] addTransactionObserver:mPaymentTransactionObserver];
@@ -75,6 +77,14 @@ public:
         return back;
     }
     
+    void FinishTransaction(const std::string& productId) override {
+        NSString* productIdNsString = [NSString stringWithUTF8String:productId.c_str()];
+        if ([mPendingTransactions objectForKey:productIdNsString]) {
+            [[SKPaymentQueue defaultQueue] finishTransaction:[mPendingTransactions objectForKey:productIdNsString]];
+            [mPendingTransactions removeObjectForKey:productIdNsString];
+        }
+    }
+    
     void PushEvent(std::unique_ptr<PurchaseEvent> event) {
         mEvents.push_back(std::move(event));
     }
@@ -86,6 +96,10 @@ public:
 
     void SetSkProducts(NSArray* products) {
         mSkProducts = products;
+    }
+    
+    void AddPendingTransaction(SKPaymentTransaction* transaction) {
+        [mPendingTransactions setObject:transaction forKey:transaction.payment.productIdentifier];
     }
     
 private:
@@ -110,6 +124,7 @@ private:
     SKProductsRequest* mProductsRequest;
     ProductsDelegate* mProductsDelegate;
     NSArray* mSkProducts;
+    NSMutableDictionary* mPendingTransactions;
 };
 
 @implementation ProductsDelegate
@@ -155,10 +170,12 @@ private:
 - (void) paymentQueue:(SKPaymentQueue*)queue updatedTransactions:(NSArray*)transactions {
     for (SKPaymentTransaction* transaction in transactions) {
         switch (transaction.transactionState) {
-            case SKPaymentTransactionStatePurchased:
-                mPurchasing->PushEvent(std::make_unique<PurchaseEvent>(PurchaseEvent::Complete));
-                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+            case SKPaymentTransactionStatePurchased: {
+                std::string productId = [transaction.payment.productIdentifier UTF8String];
+                mPurchasing->PushEvent(std::make_unique<PurchaseCompleteEvent>(productId));
+                mPurchasing->AddPendingTransaction(transaction);
                 break;
+            }
             case SKPaymentTransactionStateFailed:
                 if (transaction.error.code == SKErrorPaymentCancelled) {
                     mPurchasing->PushErrorEvent(PurchaseError::Cancelled);
@@ -169,6 +186,13 @@ private:
                 }
                 [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
                 break;
+            case SKPaymentTransactionStateRestored: {
+                std::string productId = [transaction.originalTransaction.payment.productIdentifier UTF8String];
+                mPurchasing->PushEvent(std::make_unique<PurchaseCompleteEvent>(productId));
+                mPurchasing->AddPendingTransaction(transaction);
+                [[SKPaymentQueue defaultQueue] finishTransaction:transaction];
+                break;
+            }
             default:
                 break;
         }

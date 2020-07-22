@@ -103,7 +103,7 @@ void RowBlastApplication::SetUpAudio() {
 }
 
 void RowBlastApplication::OnUpdate() {
-    if (mState != State::GameScene) {
+    if (mState == State::MapScene) {
         mUserServices.Update();
     }
     

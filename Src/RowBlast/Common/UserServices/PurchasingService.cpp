@@ -111,6 +111,10 @@ void PurchasingService::FetchProducts(const std::function<void(const std::vector
 }
 
 void PurchasingService::Update() {
+    if (mFirstUpdate) {
+        HandleUnfinishedTransactions();
+    }
+
     switch (mState) {
         case State::FetchingProducts:
             UpdateInFetchingProductsState();
@@ -160,9 +164,16 @@ void PurchasingService::UpdateInPurchasePendingState() {
     while (purchasing.HasEvents()) {
         auto event = purchasing.PopNextEvent();
         switch (event->GetKind()) {
-            case Pht::PurchaseEvent::Complete:
-                OnPurchaseSucceeded();
+            case Pht::PurchaseEvent::Complete: {
+                auto* purchaseCompleteEvent = static_cast<const Pht::PurchaseCompleteEvent*>(event.get());
+                auto product = ToGoldCoinProduct(purchaseCompleteEvent->GetProductId());
+                if (product.HasValue()) {
+                    OnPurchaseSucceeded(product.GetValue());
+                    mPaymentTransaction.mOnPurchaseSucceeded(product.GetValue());
+                    purchasing.FinishTransaction(purchaseCompleteEvent->GetProductId());
+                }
                 break;
+            }
             case Pht::PurchaseEvent::Error: {
                 auto* errorEvent = static_cast<const Pht::PurchaseErrorEvent*>(event.get());
                 mPaymentTransaction.mError = errorEvent->GetErrorCode();
@@ -175,16 +186,16 @@ void PurchasingService::UpdateInPurchasePendingState() {
     }
 }
 
-void PurchasingService::OnPurchaseSucceeded() {
+void PurchasingService::OnPurchaseSucceeded(const GoldCoinProduct& product) {
     mState = State::Idle;
-    mCoinBalance += mPaymentTransaction.mProduct->mNumCoins;
+    mCoinBalance += product.mNumCoins;
     SaveState();
 
     Pht::BusinessAnalyticsEvent businessAnalyticsEvent {
         "USD", // TODO: fix
         2,     // TODO: fix
         "GoldCoins",
-        ToItemId(mPaymentTransaction.mProduct->mId),
+        ToItemId(product.mId),
         ToCartType(mPaymentTransaction.mStoreTrigger)
     };
     
@@ -194,14 +205,12 @@ void PurchasingService::OnPurchaseSucceeded() {
     Pht::ResourceAnalyticsEvent resourceAnalyticsEvent {
         Pht::ResourceFlow::Source,
         "coins",
-        static_cast<float>(mPaymentTransaction.mProduct->mNumCoins),
+        static_cast<float>(product.mNumCoins),
         "coins",
-        ToItemId(mPaymentTransaction.mProduct->mId)
+        ToItemId(product.mId)
     };
     
     analytics.AddEvent(resourceAnalyticsEvent);
-    
-    mPaymentTransaction.mOnPurchaseSucceeded(*mPaymentTransaction.mProduct);
 }
 
 void PurchasingService::OnPurchaseFailed() {
@@ -225,13 +234,12 @@ void PurchasingService::StartPurchase(ProductId productId,
     mPaymentTransaction.mOnPurchaseFailed = onPurchaseFailed;
     mPaymentTransaction.mError = Pht::PurchaseError::Other;
     
-    auto* product = GetGoldCoinProduct(productId);
-    if (product == nullptr || mState != State::Idle || mCoinBalance >= maxCoinBalance) {
+    if (GetGoldCoinProduct(productId) == nullptr || mState != State::Idle ||
+        mCoinBalance >= maxCoinBalance) {
+        
         mState = State::PurchaseFailure;
         return;
     }
-    
-    mPaymentTransaction.mProduct = product;
     
     auto mappingEntry = std::find_if(std::begin(productIdToPhtProductId),
                                      std::end(productIdToPhtProductId),
@@ -248,6 +256,23 @@ void PurchasingService::StartPurchase(ProductId productId,
     mState = State::PurchasePending;
 }
 
+void PurchasingService::HandleUnfinishedTransactions() {
+    auto& purchasing = mEngine.GetPurchasing();
+    while (purchasing.HasEvents()) {
+        auto event = purchasing.PopNextEvent();
+        if (event->GetKind() == Pht::PurchaseEvent::Complete) {
+            auto* purchaseCompleteEvent = static_cast<const Pht::PurchaseCompleteEvent*>(event.get());
+            auto product = ToGoldCoinProduct(purchaseCompleteEvent->GetProductId());
+            if (product.HasValue()) {
+                OnPurchaseSucceeded(product.GetValue());
+                purchasing.FinishTransaction(purchaseCompleteEvent->GetProductId());
+            }
+        }
+    }
+    
+    mFirstUpdate = false;
+}
+
 const GoldCoinProduct* PurchasingService::GetGoldCoinProduct(ProductId productId) const {
     for (auto& product: mAllGoldCoinProducts) {
         if (product.mId == productId) {
@@ -259,11 +284,11 @@ const GoldCoinProduct* PurchasingService::GetGoldCoinProduct(ProductId productId
 }
 
 Pht::Optional<GoldCoinProduct>
-PurchasingService::ToGoldCoinProduct(const Pht::Product& phtProduct) {
+PurchasingService::ToGoldCoinProduct(const std::string& phtProductId) {
     auto mappingEntry = std::find_if(std::begin(productIdToPhtProductId),
                                      std::end(productIdToPhtProductId),
-                                     [&phtProduct] (auto& entry) {
-                                         return entry.second == phtProduct.mId;
+                                     [&phtProductId] (auto& entry) {
+                                         return entry.second == phtProductId;
                                      });
     if (mappingEntry == std::end(productIdToPhtProductId)) {
         return Pht::Optional<GoldCoinProduct> {};
@@ -279,8 +304,17 @@ PurchasingService::ToGoldCoinProduct(const Pht::Product& phtProduct) {
         return Pht::Optional<GoldCoinProduct> {};
     }
 
-    auto goldCoinProduct = *existingGoldCoinProduct;
-    goldCoinProduct.mLocalizedPriceString = phtProduct.mLocalizedPrice;
+    return *existingGoldCoinProduct;
+}
+
+Pht::Optional<GoldCoinProduct>
+PurchasingService::ToGoldCoinProduct(const Pht::Product& phtProduct) {
+    auto goldCoinProduct = ToGoldCoinProduct(phtProduct.mId);
+    if (!goldCoinProduct.HasValue()) {
+        return Pht::Optional<GoldCoinProduct> {};
+    }
+        
+    goldCoinProduct.GetValue().mLocalizedPriceString = phtProduct.mLocalizedPrice;
     return goldCoinProduct;
 }
 
