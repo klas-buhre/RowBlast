@@ -18,6 +18,7 @@ namespace Pht {
         virtual void PopNextEvent() = 0;
         virtual bool ConsumeWholeTouch() = 0;
         virtual const Vec2& GetScreenInputSize() const = 0;
+        virtual void SetKeepInputRateAt60Hz(bool keepInputRateAt60Hz) = 0;
     };
 }
 

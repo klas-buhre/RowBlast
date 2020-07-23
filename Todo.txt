@@ -47,9 +47,6 @@ Backlog:
 
 Ongoing tasks:
     -Purchasing
-        -Issues:
-            -The "You are all set/payment successful" dialog problem.
-        -Just follow the Sandboxtesting instructions.
         -Dialogs:
             -No internet connection.    Special icon.   [OK]
             -Cannot contact app store.                  [OK]

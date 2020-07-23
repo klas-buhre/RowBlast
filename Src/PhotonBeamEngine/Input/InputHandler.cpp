@@ -103,6 +103,10 @@ const Vec2& InputHandler::GetScreenInputSize() const {
     return mScreenInputSize;
 }
 
+void InputHandler::SetKeepInputRateAt60Hz(bool keepInputRateAt60Hz) {
+    mKeepInputRateAt60Hz = keepInputRateAt60Hz;
+}
+
 void InputHandler::ProcessInputEvent(InputEvent& event) {
     switch (event.GetKind()) {
         case InputKind::Touch: {

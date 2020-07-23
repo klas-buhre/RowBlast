@@ -22,12 +22,17 @@ namespace Pht {
         void PopNextEvent() override;
         bool ConsumeWholeTouch() override;
         const Vec2& GetScreenInputSize() const override;
+        void SetKeepInputRateAt60Hz(bool keepInputRateAt60Hz) override;
 
         void Init(const IRenderer& renderer);
         void PushToQueue(InputEvent& event);
         
         bool GetUseGestureRecognizers() const {
             return mUseGestureRecognizers;
+        }
+        
+        bool GetKeepInputRateAt60Hz() const {
+            return mKeepInputRateAt60Hz;
         }
         
     private:
@@ -37,6 +42,7 @@ namespace Pht {
     
         bool mIsInputEnabled {true};
         bool mUseGestureRecognizers {true};
+        bool mKeepInputRateAt60Hz {true};
         std::vector<InputEvent> mEventQueue;
         int mQueueReadIndex {0};
         int mQueueWriteIndex {0};

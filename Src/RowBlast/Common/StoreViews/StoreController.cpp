@@ -2,6 +2,7 @@
 
 // Engine includes.
 #include "IEngine.hpp"
+#include "IInput.hpp"
 #include "NetworkStatus.hpp"
 
 // Game includes.
@@ -238,6 +239,10 @@ void StoreController::FetchProducts(SlidingMenuAnimation::UpdateFade updateFadeO
 void StoreController::StartPurchase(ProductId productId) {
     mSpinningWheelEffect.Start();
     
+    // Hack that prevents the purchase succesful dialog from appearing at the same time as the iOS
+    // purchase successful dialog.
+    mEngine.GetInput().SetKeepInputRateAt60Hz(false);
+    
     mUserServices.GetPurchasingService().StartPurchase(
         productId,
         mStoreTrigger,
@@ -247,6 +252,7 @@ void StoreController::StartPurchase(ProductId productId) {
             GoToPurchaseSuccessfulDelayState();
         },
         [this] (Pht::PurchaseError error) {
+            mEngine.GetInput().SetKeepInputRateAt60Hz(true);
             mSpinningWheelEffect.Stop();
             OnPurchaseFailed(error);
         });
@@ -395,6 +401,7 @@ void StoreController::GoToPurchaseSuccessfulDelayState() {
 }
 
 void StoreController::GoToPurchaseSuccessfulDialogState() {
+    mEngine.GetInput().SetKeepInputRateAt60Hz(true);
     mState = State::PurchaseSuccessfulDialog;
     SetActiveViewController(ViewController::PurchaseSuccessfulDialog);
 

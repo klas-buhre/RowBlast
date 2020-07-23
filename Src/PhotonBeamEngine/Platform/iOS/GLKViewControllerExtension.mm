@@ -70,12 +70,14 @@
     double timeStamp = CACurrentMediaTime();
     mEngine->Update(timeStamp - mTimestamp);
     mTimestamp = timeStamp;
-    
-    // Trick iOS to keep the touch input rate at 60 Hz. See:
-    // https://forums.developer.apple.com/thread/62315
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [(GLKView*)self.view setNeedsDisplay];
-    });
+
+    if (mEngine->GetInputHandler().GetKeepInputRateAt60Hz()) {
+        // Trick iOS to keep the touch input rate at 60 Hz. See:
+        // https://forums.developer.apple.com/thread/62315
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [(GLKView*)self.view setNeedsDisplay];
+        });
+    }
 }
 
 - (EAGLContext*) getContext {
