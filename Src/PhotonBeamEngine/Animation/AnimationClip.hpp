@@ -30,6 +30,7 @@ namespace Pht {
         Optional<float> mTextScale;
         Optional<bool> mIsVisible;
         std::function<void()> mCallback;
+        std::function<void(float)> mOnUpdate;
     };
 
     using AnimationClipId = uint32_t;

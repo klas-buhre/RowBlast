@@ -9,11 +9,14 @@
 #include "MathUtils.hpp"
 #include "QuadMesh.hpp"
 
+using namespace RowBlast;
+
 namespace {
     constexpr auto moveDuration = 0.19f;
     constexpr auto handSize = 1.65f;
     constexpr auto handUpScaleAdd = 0.5f;
     constexpr auto handShadowSize = 2.15f;
+    constexpr auto shadowOpacity = 0.29f;
     const Pht::Vec3 backwardPosition {0.2f, -1.3f, 0.0f};
     const Pht::Vec3 forwardPosition {0.1f, 0.05f, 0.0f};
     const Pht::Vec3 circlePosition {-0.17f, 0.75f, -0.1f};
@@ -35,8 +38,6 @@ namespace {
     }
 }
 
-using namespace RowBlast;
-
 HandAnimation::HandAnimation(Pht::IEngine& engine, float scale, bool useShadow) :
     mEngine {engine} {
     
@@ -54,7 +55,7 @@ HandAnimation::HandAnimation(Pht::IEngine& engine, float scale, bool useShadow) 
 
     if (useShadow) {
         Pht::Material handShadowMaterial {"hand48.png", 0.0f, 0.0f, 0.0f, 0.0f};
-        handShadowMaterial.SetOpacity(0.29f);
+        handShadowMaterial.SetOpacity(shadowOpacity);
         handShadowMaterial.SetBlend(Pht::Blend::Yes);
         mHandShadowSceneObject = sceneManager.CreateSceneObject(Pht::QuadMesh {handShadowSize, handShadowSize},
                                                                 handShadowMaterial,
@@ -263,5 +264,12 @@ void HandAnimation::Hide() {
 void HandAnimation::Unhide() {
     if (mState != State::Inactive) {
         mContainerSceneObject->SetIsVisible(true);
+    }
+}
+
+void HandAnimation::SetOpacity(float opacity) {
+    mHandSceneObject->GetRenderable()->GetMaterial().SetOpacity(opacity);
+    if (mHandShadowSceneObject) {
+        mHandShadowSceneObject->GetRenderable()->GetMaterial().SetOpacity(shadowOpacity * opacity);
     }
 }

@@ -188,6 +188,10 @@ void AnimationClip::UpdateInterpolation() {
                                         mInterpolation);
         SceneObjectUtils::ScaleRecursively(mSceneObject, interpolatedScale);
     }
+    
+    if (mKeyframe->mOnUpdate) {
+        mKeyframe->mOnUpdate(normalizedTime);
+    }
 }
 
 void AnimationClip::Play() {

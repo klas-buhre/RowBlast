@@ -30,6 +30,11 @@ namespace {
     const Pht::Vec3 otherMovesHandPosition2 {-1.8f, -7.76f, 0.0f};
     const Pht::Vec3 iPieceHandPosition {-1.1f, -3.86f, 0.0f};
     const Pht::Vec3 secondLevelBPieceHandPosition {-2.5f, -3.56f, 0.0f};
+    
+    enum class DragAndDropClip {
+        Movement,
+        Fade
+    };
 
     bool FindMove(const ClickInputHandler::VisibleMoves& moves,
                   const Level::TutorialMove& tutorialMove) {
@@ -1215,15 +1220,11 @@ void Tutorial::CreateDragAndDropAnimation(Pht::Vec3 handInitialPosition,
     dragAndDropAnimation->mContainer = &scene.CreateSceneObject(uiViewsContainer);
     dragAndDropAnimation->mHandAnimation.Init(*dragAndDropAnimation->mContainer);
     
-    auto animationDuration = 3.8f;
-    auto& animationSystem = mEngine.GetAnimationSystem();
-    dragAndDropAnimation->mAnimation =
-        &animationSystem.CreateAnimation(*dragAndDropAnimation->mContainer,
-                                         {{.mTime = 0.0f}, {.mTime = animationDuration}});
-
     auto& handAnimation = dragAndDropAnimation->mHandAnimation;
     
-    auto waitDuration = 0.5f;
+    auto animationDuration = 4.0f;
+    auto waitDuration = 0.75f;
+    auto initialPositionDuration = waitDuration + 0.2f;
     auto dragDuration = 2.3f;
     
     Pht::Vec3 handAdjustment {0.0f, 0.9f, 0.0f};
@@ -1248,11 +1249,11 @@ void Tutorial::CreateDragAndDropAnimation(Pht::Vec3 handInitialPosition,
             }
         },
         {
-            .mTime = waitDuration + 0.2f,
+            .mTime = initialPositionDuration,
             .mPosition = handInitialPosition
         },
         {
-            .mTime = waitDuration + 0.2f + dragDuration,
+            .mTime = initialPositionDuration + dragDuration,
             .mPosition = handDropPosition
         },
         {
@@ -1264,16 +1265,48 @@ void Tutorial::CreateDragAndDropAnimation(Pht::Vec3 handInitialPosition,
         }
     };
     
-    auto& handPhtAnimation =
-        animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes);
-    handPhtAnimation.SetInterpolation(Pht::Interpolation::Cosine);
+    auto& animationSystem = mEngine.GetAnimationSystem();
+    dragAndDropAnimation->mAnimation =
+        &animationSystem.CreateAnimation(handAnimation.GetSceneObject(), handAnimationKeyframes);
+    dragAndDropAnimation->mAnimation->SetInterpolation(Pht::Interpolation::Cosine,
+                                                       static_cast<Pht::AnimationClipId>(DragAndDropClip::Movement));
+    
+    auto fadeTime = 0.5f;
+    
+    std::vector<Pht::Keyframe> handOpacityAnimationKeyframes {
+        {
+            .mTime = 0.0f,
+            .mOnUpdate = [&handAnimation] (float elapsedTime) {
+                handAnimation.SetOpacity(elapsedTime);
+            }
+        },
+        {
+            .mTime = fadeTime,
+            .mOnUpdate = [&handAnimation] (float elapsedTime) {
+                handAnimation.SetOpacity(1.0f);
+            }
+        },
+        {
+            .mTime = animationDuration - fadeTime,
+            .mOnUpdate = [&handAnimation] (float elapsedTime) {
+                handAnimation.SetOpacity(1.0f - elapsedTime);
+            }
+        },
+        {
+            .mTime = animationDuration
+        }
+    };
+    
+    dragAndDropAnimation->mAnimation->CreateClip(handOpacityAnimationKeyframes,
+                                                 static_cast<Pht::AnimationClipId>(DragAndDropClip::Fade));
 
     mDragAndDropAnimations.push_back(std::move(dragAndDropAnimation));
 }
 
 void Tutorial::StartDragAndDropAnimation(int index) {
     auto& dragAndDropAnimation = *mDragAndDropAnimations[index];
-    dragAndDropAnimation.mAnimation->Play();
+    dragAndDropAnimation.mAnimation->Play(static_cast<Pht::AnimationClipId>(DragAndDropClip::Movement));
+    dragAndDropAnimation.mAnimation->Play(static_cast<Pht::AnimationClipId>(DragAndDropClip::Fade));
     dragAndDropAnimation.mContainer->SetIsVisible(true);
 }
 

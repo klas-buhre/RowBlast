@@ -29,6 +29,7 @@ namespace RowBlast {
         void Stop();
         void Hide();
         void Unhide();
+        void SetOpacity(float opacity);
         
         Pht::SceneObject& GetSceneObject() {
             return *mContainerSceneObject;

@@ -862,7 +862,7 @@ void GLES3Renderer::SetupBlend(const Material& material, ShaderId shaderId) {
                 mRenderState.SetBlendFunc(GL_SRC_ALPHA, GL_ONE);
             } else {
                 auto* texture = material.GetTexture();
-                if (texture && texture->HasPremultipliedAlpha()) {
+                if (texture && texture->HasPremultipliedAlpha() && material.GetOpacity() == 1.0f) {
                     mRenderState.SetBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
                 } else {
                     mRenderState.SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
