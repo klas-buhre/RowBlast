@@ -13,6 +13,7 @@
 		1711872E22EB9EB2009CC07F /* TutorialWindowView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872C22EB9EB2009CC07F /* TutorialWindowView.cpp */; };
 		1711873122EB9EC9009CC07F /* TutorialWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872F22EB9EC9009CC07F /* TutorialWindowController.cpp */; };
 		17148A8423A3F92C0093B0B6 /* FlyingBlocksSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17148A8323A3F92C0093B0B6 /* FlyingBlocksSystem.cpp */; };
+		1718FD1824D31F6A0062117C /* App.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1718FD1724D31F6A0062117C /* App.mm */; };
 		172DF55A24C0ACF0002BD049 /* network.png in Resources */ = {isa = PBXBuildFile; fileRef = 172DF55924C0ACF0002BD049 /* network.png */; };
 		172DF55C24C0AD6F002BD049 /* unavailable.png in Resources */ = {isa = PBXBuildFile; fileRef = 172DF55B24C0AD6F002BD049 /* unavailable.png */; };
 		172DF55F24C0AF6A002BD049 /* NoInternetAccessDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 172DF55D24C0AF6A002BD049 /* NoInternetAccessDialogView.cpp */; };
@@ -582,6 +583,8 @@
 		1711873022EB9EC9009CC07F /* TutorialWindowController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = TutorialWindowController.hpp; sourceTree = "<group>"; };
 		17148A8323A3F92C0093B0B6 /* FlyingBlocksSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FlyingBlocksSystem.cpp; sourceTree = "<group>"; };
 		17148A8523A3F9350093B0B6 /* FlyingBlocksSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FlyingBlocksSystem.hpp; sourceTree = "<group>"; };
+		1718FD1524D31F280062117C /* App.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = App.hpp; sourceTree = "<group>"; };
+		1718FD1724D31F6A0062117C /* App.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = App.mm; sourceTree = "<group>"; };
 		172DF55924C0ACF0002BD049 /* network.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = network.png; sourceTree = "<group>"; };
 		172DF55B24C0AD6F002BD049 /* unavailable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unavailable.png; sourceTree = "<group>"; };
 		172DF55D24C0AF6A002BD049 /* NoInternetAccessDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoInternetAccessDialogView.cpp; sourceTree = "<group>"; };
@@ -2584,6 +2587,7 @@
 		623B94C021F6357400B62D9B /* PlatformApi */ = {
 			isa = PBXGroup;
 			children = (
+				1718FD1524D31F280062117C /* App.hpp */,
 				623B94C121F6357400B62D9B /* FileSystem.hpp */,
 				623B94C221F6357400B62D9B /* IImage.hpp */,
 				17B8DBED24BF74EB007AFDBB /* NetworkStatus.hpp */,
@@ -2594,6 +2598,7 @@
 		623B94C321F6357400B62D9B /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				1718FD1724D31F6A0062117C /* App.mm */,
 				623B94C521F6357400B62D9B /* AppDelegate.h */,
 				623B94CA21F6357400B62D9B /* AppDelegate.mm */,
 				623B94C921F6357400B62D9B /* FileSystemIOS.mm */,
@@ -3740,6 +3745,7 @@
 				625698582182392C003A3A9D /* FastNoise.cc in Sources */,
 				62429F862295A16C002C08AD /* AddingMovesAnimation.cpp in Sources */,
 				625698452182392C003A3A9D /* Font.cpp in Sources */,
+				1718FD1824D31F6A0062117C /* App.mm in Sources */,
 				62216A9A21EB376E001CB9A1 /* FloatingBlocks.cpp in Sources */,
 				623F5E4322B55D5200242C10 /* GLES3TextRenderer.cpp in Sources */,
 				62216C4D21EB41F1001CB9A1 /* AcceptTermsDialogView.cpp in Sources */,

@@ -34,7 +34,6 @@ Backlog:
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
   -Make ready for release:
-    -Should give free gold coins after a new install?
     -Maybe only one or two continues per game round? Like in Dr. Mario.
     -Go through all user services and check that all state store/load is enabled.
     -Make sure analytics is enabled and that user terms accept is saved and checked.
@@ -43,9 +42,11 @@ Backlog:
     -Do a soft launch in a couple of countries? Maybe the nordic countries and UK? Only english
      localization is needed for that. And/or, before that, a small soft launch only in one country
      instead of a playtest since that may give bettar data than a playtest since the players will
-     mostly be the target audince and in the playtest they are not.
+     mostly be the target audience and in the playtest they are not.
 
 Ongoing tasks:
+    -In the out of moves dialog: Maybe there should be only a retry button instead of continue at
+     the early levels. 
     -Purchasing
         -Dialogs:
             -No internet connection.    Special icon.   [OK]

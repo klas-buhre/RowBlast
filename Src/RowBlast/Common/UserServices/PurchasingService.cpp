@@ -7,11 +7,13 @@
 #include "IAnalytics.hpp"
 #include "AnalyticsEvent.hpp"
 #include "IPurchasing.hpp"
+#include "App.hpp"
 
 using namespace RowBlast;
 
 namespace {
     constexpr auto fetchProductsTimeout = 10.0f;
+    constexpr auto coinBalanceAtFirstLaunch = 50;
     constexpr auto maxCoinBalance = 99500;
     const std::string filename {"purchasing.dat"};
     const std::string coinBalanceMember {"coinBalance"};
@@ -91,8 +93,12 @@ PurchasingService::PurchasingService(Pht::IEngine& engine) :
         {ProductId::Currency250Coins, 250, ""},
         {ProductId::Currency500Coins, 500, ""}
     } {
-
-    // LoadState();
+    
+    if (Pht::App::IsFirstLaunch()) {
+        mCoinBalance = coinBalanceAtFirstLaunch;
+    } else {
+        LoadState();
+    }
 }
 
 void PurchasingService::FetchProducts(const std::function<void(const std::vector<GoldCoinProduct>&)>& onResponse,
