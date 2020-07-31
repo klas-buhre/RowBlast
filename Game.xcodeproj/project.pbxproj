@@ -14,6 +14,8 @@
 		1711873122EB9EC9009CC07F /* TutorialWindowController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1711872F22EB9EC9009CC07F /* TutorialWindowController.cpp */; };
 		17148A8423A3F92C0093B0B6 /* FlyingBlocksSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17148A8323A3F92C0093B0B6 /* FlyingBlocksSystem.cpp */; };
 		1718FD1824D31F6A0062117C /* App.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1718FD1724D31F6A0062117C /* App.mm */; };
+		1718FD1B24D479DC0062117C /* OutOfMovesRetryDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1718FD1924D479DC0062117C /* OutOfMovesRetryDialogView.cpp */; };
+		1718FD1E24D47A040062117C /* OutOfMovesRetryDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1718FD1C24D47A040062117C /* OutOfMovesRetryDialogController.cpp */; };
 		172DF55A24C0ACF0002BD049 /* network.png in Resources */ = {isa = PBXBuildFile; fileRef = 172DF55924C0ACF0002BD049 /* network.png */; };
 		172DF55C24C0AD6F002BD049 /* unavailable.png in Resources */ = {isa = PBXBuildFile; fileRef = 172DF55B24C0AD6F002BD049 /* unavailable.png */; };
 		172DF55F24C0AF6A002BD049 /* NoInternetAccessDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 172DF55D24C0AF6A002BD049 /* NoInternetAccessDialogView.cpp */; };
@@ -173,14 +175,14 @@
 		62216BD721EB377E001CB9A1 /* SlidingFieldAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AD321EB377E001CB9A1 /* SlidingFieldAnimation.cpp */; };
 		62216BD821EB377E001CB9A1 /* FireworksParticleEffect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AD621EB377E001CB9A1 /* FireworksParticleEffect.cpp */; };
 		62216BD921EB377E001CB9A1 /* StarsAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AD721EB377E001CB9A1 /* StarsAnimation.cpp */; };
-		62216BDA21EB377E001CB9A1 /* OutOfMovesDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216ADC21EB377E001CB9A1 /* OutOfMovesDialogController.cpp */; };
+		62216BDA21EB377E001CB9A1 /* OutOfMovesContinueDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216ADC21EB377E001CB9A1 /* OutOfMovesContinueDialogController.cpp */; };
 		62216BDB21EB377E001CB9A1 /* GameMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216ADF21EB377E001CB9A1 /* GameMenuView.cpp */; };
 		62216BDC21EB377E001CB9A1 /* GameHudView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AE521EB377E001CB9A1 /* GameHudView.cpp */; };
 		62216BDD21EB377E001CB9A1 /* GameViewControllers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AE821EB377E001CB9A1 /* GameViewControllers.cpp */; };
 		62216BDE21EB377E001CB9A1 /* LevelCompletedDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AE921EB377E001CB9A1 /* LevelCompletedDialogController.cpp */; };
 		62216BDF21EB377E001CB9A1 /* GameMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AEB21EB377E001CB9A1 /* GameMenuController.cpp */; };
 		62216BE021EB377E001CB9A1 /* GameOverDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AEC21EB377E001CB9A1 /* GameOverDialogController.cpp */; };
-		62216BE121EB377E001CB9A1 /* OutOfMovesDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AEE21EB377E001CB9A1 /* OutOfMovesDialogView.cpp */; };
+		62216BE121EB377E001CB9A1 /* OutOfMovesContinueDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AEE21EB377E001CB9A1 /* OutOfMovesContinueDialogView.cpp */; };
 		62216BE221EB377E001CB9A1 /* GameHudController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AEF21EB377E001CB9A1 /* GameHudController.cpp */; };
 		62216BE321EB377E001CB9A1 /* MapConfirmationDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AF221EB377E001CB9A1 /* MapConfirmationDialogView.cpp */; };
 		62216BE421EB377E001CB9A1 /* RestartConfirmationDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62216AF321EB377E001CB9A1 /* RestartConfirmationDialogView.cpp */; };
@@ -585,6 +587,10 @@
 		17148A8523A3F9350093B0B6 /* FlyingBlocksSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = FlyingBlocksSystem.hpp; sourceTree = "<group>"; };
 		1718FD1524D31F280062117C /* App.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = App.hpp; sourceTree = "<group>"; };
 		1718FD1724D31F6A0062117C /* App.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = App.mm; sourceTree = "<group>"; };
+		1718FD1924D479DC0062117C /* OutOfMovesRetryDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OutOfMovesRetryDialogView.cpp; sourceTree = "<group>"; };
+		1718FD1A24D479DC0062117C /* OutOfMovesRetryDialogView.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OutOfMovesRetryDialogView.hpp; sourceTree = "<group>"; };
+		1718FD1C24D47A040062117C /* OutOfMovesRetryDialogController.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = OutOfMovesRetryDialogController.cpp; sourceTree = "<group>"; };
+		1718FD1D24D47A040062117C /* OutOfMovesRetryDialogController.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = OutOfMovesRetryDialogController.hpp; sourceTree = "<group>"; };
 		172DF55924C0ACF0002BD049 /* network.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = network.png; sourceTree = "<group>"; };
 		172DF55B24C0AD6F002BD049 /* unavailable.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unavailable.png; sourceTree = "<group>"; };
 		172DF55D24C0AF6A002BD049 /* NoInternetAccessDialogView.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = NoInternetAccessDialogView.cpp; sourceTree = "<group>"; };
@@ -847,7 +853,7 @@
 		62216AD821EB377E001CB9A1 /* ClearLastBlocksAnimation.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = ClearLastBlocksAnimation.hpp; sourceTree = "<group>"; };
 		62216AD921EB377E001CB9A1 /* LevelCompletedController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCompletedController.hpp; sourceTree = "<group>"; };
 		62216ADB21EB377E001CB9A1 /* IGameHudEventListener.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = IGameHudEventListener.hpp; sourceTree = "<group>"; };
-		62216ADC21EB377E001CB9A1 /* OutOfMovesDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutOfMovesDialogController.cpp; sourceTree = "<group>"; };
+		62216ADC21EB377E001CB9A1 /* OutOfMovesContinueDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutOfMovesContinueDialogController.cpp; sourceTree = "<group>"; };
 		62216ADD21EB377E001CB9A1 /* RestartConfirmationDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RestartConfirmationDialogView.hpp; sourceTree = "<group>"; };
 		62216ADE21EB377E001CB9A1 /* RestartConfirmationDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = RestartConfirmationDialogController.hpp; sourceTree = "<group>"; };
 		62216ADF21EB377E001CB9A1 /* GameMenuView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameMenuView.cpp; sourceTree = "<group>"; };
@@ -857,7 +863,7 @@
 		62216AE321EB377E001CB9A1 /* GameMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameMenuController.hpp; sourceTree = "<group>"; };
 		62216AE421EB377E001CB9A1 /* GameOverDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameOverDialogController.hpp; sourceTree = "<group>"; };
 		62216AE521EB377E001CB9A1 /* GameHudView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHudView.cpp; sourceTree = "<group>"; };
-		62216AE621EB377E001CB9A1 /* OutOfMovesDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OutOfMovesDialogView.hpp; sourceTree = "<group>"; };
+		62216AE621EB377E001CB9A1 /* OutOfMovesContinueDialogView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OutOfMovesContinueDialogView.hpp; sourceTree = "<group>"; };
 		62216AE721EB377E001CB9A1 /* GameHudController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHudController.hpp; sourceTree = "<group>"; };
 		62216AE821EB377E001CB9A1 /* GameViewControllers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameViewControllers.cpp; sourceTree = "<group>"; };
 		62216AE921EB377E001CB9A1 /* LevelCompletedDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = LevelCompletedDialogController.cpp; sourceTree = "<group>"; };
@@ -865,14 +871,14 @@
 		62216AEB21EB377E001CB9A1 /* GameMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameMenuController.cpp; sourceTree = "<group>"; };
 		62216AEC21EB377E001CB9A1 /* GameOverDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverDialogController.cpp; sourceTree = "<group>"; };
 		62216AED21EB377E001CB9A1 /* GameHudView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameHudView.hpp; sourceTree = "<group>"; };
-		62216AEE21EB377E001CB9A1 /* OutOfMovesDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutOfMovesDialogView.cpp; sourceTree = "<group>"; };
+		62216AEE21EB377E001CB9A1 /* OutOfMovesContinueDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OutOfMovesContinueDialogView.cpp; sourceTree = "<group>"; };
 		62216AEF21EB377E001CB9A1 /* GameHudController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameHudController.cpp; sourceTree = "<group>"; };
 		62216AF021EB377E001CB9A1 /* GameViewControllers.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameViewControllers.hpp; sourceTree = "<group>"; };
 		62216AF121EB377E001CB9A1 /* LevelCompletedDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = LevelCompletedDialogController.hpp; sourceTree = "<group>"; };
 		62216AF221EB377E001CB9A1 /* MapConfirmationDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapConfirmationDialogView.cpp; sourceTree = "<group>"; };
 		62216AF321EB377E001CB9A1 /* RestartConfirmationDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RestartConfirmationDialogView.cpp; sourceTree = "<group>"; };
 		62216AF421EB377E001CB9A1 /* RestartConfirmationDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RestartConfirmationDialogController.cpp; sourceTree = "<group>"; };
-		62216AF521EB377E001CB9A1 /* OutOfMovesDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OutOfMovesDialogController.hpp; sourceTree = "<group>"; };
+		62216AF521EB377E001CB9A1 /* OutOfMovesContinueDialogController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OutOfMovesContinueDialogController.hpp; sourceTree = "<group>"; };
 		62216AF621EB377E001CB9A1 /* GameMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = GameMenuView.hpp; sourceTree = "<group>"; };
 		62216AF721EB377E001CB9A1 /* MapConfirmationDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MapConfirmationDialogController.cpp; sourceTree = "<group>"; };
 		62216AF821EB377E001CB9A1 /* GameOverDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GameOverDialogView.cpp; sourceTree = "<group>"; };
@@ -2036,10 +2042,14 @@
 				62216AE021EB377E001CB9A1 /* MapConfirmationDialogController.hpp */,
 				62216AF221EB377E001CB9A1 /* MapConfirmationDialogView.cpp */,
 				62216AEA21EB377E001CB9A1 /* MapConfirmationDialogView.hpp */,
-				62216ADC21EB377E001CB9A1 /* OutOfMovesDialogController.cpp */,
-				62216AF521EB377E001CB9A1 /* OutOfMovesDialogController.hpp */,
-				62216AEE21EB377E001CB9A1 /* OutOfMovesDialogView.cpp */,
-				62216AE621EB377E001CB9A1 /* OutOfMovesDialogView.hpp */,
+				62216ADC21EB377E001CB9A1 /* OutOfMovesContinueDialogController.cpp */,
+				62216AF521EB377E001CB9A1 /* OutOfMovesContinueDialogController.hpp */,
+				62216AEE21EB377E001CB9A1 /* OutOfMovesContinueDialogView.cpp */,
+				62216AE621EB377E001CB9A1 /* OutOfMovesContinueDialogView.hpp */,
+				1718FD1C24D47A040062117C /* OutOfMovesRetryDialogController.cpp */,
+				1718FD1D24D47A040062117C /* OutOfMovesRetryDialogController.hpp */,
+				1718FD1924D479DC0062117C /* OutOfMovesRetryDialogView.cpp */,
+				1718FD1A24D479DC0062117C /* OutOfMovesRetryDialogView.hpp */,
 				62216AF421EB377E001CB9A1 /* RestartConfirmationDialogController.cpp */,
 				62216ADE21EB377E001CB9A1 /* RestartConfirmationDialogController.hpp */,
 				62216AF321EB377E001CB9A1 /* RestartConfirmationDialogView.cpp */,
@@ -3745,6 +3755,7 @@
 				625698582182392C003A3A9D /* FastNoise.cc in Sources */,
 				62429F862295A16C002C08AD /* AddingMovesAnimation.cpp in Sources */,
 				625698452182392C003A3A9D /* Font.cpp in Sources */,
+				1718FD1E24D47A040062117C /* OutOfMovesRetryDialogController.cpp in Sources */,
 				1718FD1824D31F6A0062117C /* App.mm in Sources */,
 				62216A9A21EB376E001CB9A1 /* FloatingBlocks.cpp in Sources */,
 				623F5E4322B55D5200242C10 /* GLES3TextRenderer.cpp in Sources */,
@@ -3780,7 +3791,7 @@
 				6256983B2182392C003A3A9D /* MathUtils.cpp in Sources */,
 				62216BCD21EB377E001CB9A1 /* CascadingDialogController.cpp in Sources */,
 				6246D7582264C661004B3021 /* TutorialUtils.cpp in Sources */,
-				62216BE121EB377E001CB9A1 /* OutOfMovesDialogView.cpp in Sources */,
+				62216BE121EB377E001CB9A1 /* OutOfMovesContinueDialogView.cpp in Sources */,
 				62216C5621ED0BFC001CB9A1 /* DocumentViewerScene.cpp in Sources */,
 				62216C2621EB377F001CB9A1 /* FallingPieceScaleAnimation.cpp in Sources */,
 				62216C3D21EB377F001CB9A1 /* PortalParticleEffect.cpp in Sources */,
@@ -3885,7 +3896,7 @@
 				62216A8A21EB376E001CB9A1 /* StringUtils.cpp in Sources */,
 				1752256224BB66CC0002BE3E /* PurchaseEvent.cpp in Sources */,
 				623B94BB21F5D13700B62D9B /* RowBlastAnalyticsConfig.cpp in Sources */,
-				62216BDA21EB377E001CB9A1 /* OutOfMovesDialogController.cpp in Sources */,
+				62216BDA21EB377E001CB9A1 /* OutOfMovesContinueDialogController.cpp in Sources */,
 				62216C3221EB377F001CB9A1 /* World2.cpp in Sources */,
 				62216C3621EB377F001CB9A1 /* World.cpp in Sources */,
 				1711873122EB9EC9009CC07F /* TutorialWindowController.cpp in Sources */,
@@ -3932,6 +3943,7 @@
 				623F5E6422B563A900242C10 /* SoftwareRasterizer.cpp in Sources */,
 				623F5E6222B563A900242C10 /* RenderPass.cpp in Sources */,
 				1730D47B22F5B92E0092D92B /* DragInputHandler.cpp in Sources */,
+				1718FD1B24D479DC0062117C /* OutOfMovesRetryDialogView.cpp in Sources */,
 				62216C2721EB377F001CB9A1 /* CollapsingFieldAnimationSystem.cpp in Sources */,
 				62216C3B21EB377F001CB9A1 /* SunParticleEffect.cpp in Sources */,
 				623768EC226A1117007FD5EC /* TutorialExplosionParticleEffect.cpp in Sources */,

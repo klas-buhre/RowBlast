@@ -1,4 +1,4 @@
-#include "OutOfMovesDialogController.hpp"
+#include "OutOfMovesContinueDialogController.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -9,30 +9,30 @@
 
 using namespace RowBlast;
 
-OutOfMovesDialogController::OutOfMovesDialogController(Pht::IEngine& engine,
-                                                       const CommonResources& commonResources,
-                                                       const UserServices& userServices) :
+OutOfMovesContinueDialogController::OutOfMovesContinueDialogController(Pht::IEngine& engine,
+                                                                       const CommonResources& commonResources,
+                                                                       const UserServices& userServices) :
     mInput {engine.GetInput()},
     mUserServices {userServices},
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void OutOfMovesDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
+void OutOfMovesContinueDialogController::SetFadeEffect(Pht::FadeEffect& fadeEffect) {
     mSlidingMenuAnimation.SetFadeEffect(fadeEffect);
 }
 
-void OutOfMovesDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
+void OutOfMovesContinueDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
     mView.SetGuiLightProvider(guiLightProvider);
 }
 
-void OutOfMovesDialogController::SetUp(GameScene& scene,
-                                       SlidingMenuAnimation::SlideDirection slideDirection,
-                                       SlidingMenuAnimation::UpdateFade updateFade) {
+void OutOfMovesContinueDialogController::SetUp(GameScene& scene,
+                                               SlidingMenuAnimation::SlideDirection slideDirection,
+                                               SlidingMenuAnimation::UpdateFade updateFade) {
     mView.SetUp(scene);
     mSlidingMenuAnimation.SetUp(updateFade, slideDirection);
 }
 
-OutOfMovesDialogController::Result OutOfMovesDialogController::Update() {
+OutOfMovesContinueDialogController::Result OutOfMovesContinueDialogController::Update() {
     mView.Update();
 
     switch (mSlidingMenuAnimation.Update()) {
@@ -57,7 +57,7 @@ OutOfMovesDialogController::Result OutOfMovesDialogController::Update() {
     return Result::None;
 }
 
-OutOfMovesDialogController::Result OutOfMovesDialogController::HandleInput() {
+OutOfMovesContinueDialogController::Result OutOfMovesContinueDialogController::HandleInput() {
     return InputUtil::HandleInput<Result>(mInput,
                                           Result::None,
                                           [this] (const Pht::TouchEvent& touch) {
@@ -65,7 +65,8 @@ OutOfMovesDialogController::Result OutOfMovesDialogController::HandleInput() {
                                           });
 }
 
-OutOfMovesDialogController::Result OutOfMovesDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
+OutOfMovesContinueDialogController::Result
+OutOfMovesContinueDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     if (mView.GetCloseButton().IsClicked(touchEvent)) {
         return Result::BackToMap;
     }

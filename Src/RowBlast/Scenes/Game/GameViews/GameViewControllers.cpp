@@ -29,7 +29,8 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mGameHudController {engine, commonResources},
     mGameMenuController {engine, commonResources},
     mGameOverDialogController {engine, commonResources, userServices},
-    mOutOfMovesDialogController {engine, commonResources, userServices},
+    mOutOfMovesContinueDialogController {engine, commonResources, userServices},
+    mOutOfMovesRetryDialogController {engine, commonResources, userServices},
     mLevelCompletedDialogController {engine, commonResources},
     mRestartConfirmationDialogController {engine, commonResources, userServices},
     mMapConfirmationDialogController {engine, commonResources},
@@ -57,7 +58,8 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mViewManager.AddView(static_cast<int>(GameHud), mGameHudController.GetView());
     mViewManager.AddView(static_cast<int>(GameMenu), mGameMenuController.GetView());
     mViewManager.AddView(static_cast<int>(GameOverDialog), mGameOverDialogController.GetView());
-    mViewManager.AddView(static_cast<int>(OutOfMovesDialog), mOutOfMovesDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(OutOfMovesContinueDialog), mOutOfMovesContinueDialogController.GetView());
+    mViewManager.AddView(static_cast<int>(OutOfMovesRetryDialog), mOutOfMovesRetryDialogController.GetView());
     mViewManager.AddView(static_cast<int>(LevelCompletedDialog), mLevelCompletedDialogController.GetView());
     mViewManager.AddView(static_cast<int>(SettingsMenu), mSettingsMenuController.GetView());
     mViewManager.AddView(static_cast<int>(NoLivesDialog), mNoLivesDialogController.GetView());
@@ -70,6 +72,7 @@ GameViewControllers::GameViewControllers(Pht::IEngine& engine,
     mSettingsMenuController.SetFadeEffect(mFadeEffect);
     mRestartConfirmationDialogController.SetFadeEffect(mFadeEffect);
     mMapConfirmationDialogController.SetFadeEffect(mFadeEffect);
+    mOutOfMovesRetryDialogController.SetFadeEffect(mFadeEffect);
 }
 
 void GameViewControllers::Init(GameScene& scene, Pht::FadeEffect& storeFadeEffect) {
@@ -82,12 +85,13 @@ void GameViewControllers::Init(GameScene& scene, Pht::FadeEffect& storeFadeEffec
     SetActiveController(None);
     
     mNoLivesDialogController.SetFadeEffect(storeFadeEffect);
-    mOutOfMovesDialogController.SetFadeEffect(storeFadeEffect);
+    mOutOfMovesContinueDialogController.SetFadeEffect(storeFadeEffect);
     mGameOverDialogController.SetFadeEffect(storeFadeEffect);
     
     mGameMenuController.SetGuiLightProvider(scene);
     mNoLivesDialogController.SetGuiLightProvider(scene);
-    mOutOfMovesDialogController.SetGuiLightProvider(scene);
+    mOutOfMovesContinueDialogController.SetGuiLightProvider(scene);
+    mOutOfMovesRetryDialogController.SetGuiLightProvider(scene);
     mLevelGoalDialogController.SetGuiLightProvider(scene);
     mHowToPlayDialogController.SetGuiLightProvider(scene);
     mMapConfirmationDialogController.SetGuiLightProvider(scene);

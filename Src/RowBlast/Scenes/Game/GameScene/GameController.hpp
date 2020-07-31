@@ -95,7 +95,9 @@ namespace RowBlast {
         Command UpdateInLevelCompletedState();
         Command UpdateInOutOfMovesState();
         void UpdateInOutOfMovesStateOutOfMovesAnimation();
-        Command UpdateOutOfMovesDialog();
+        Command UpdateOutOfMovesContinueDialog();
+        Command UpdateOutOfMovesRetryDialog();
+        Command UpdateInOutOfMovesStateNoLivesDialog();
         int CalculateProgressInLevelForAnalytics();
         void UpdateInOutOfMovesStateStore();
         Command UpdateInGameOverState();
@@ -117,8 +119,10 @@ namespace RowBlast {
         void GoToPausedStateGameMenu(SlidingMenuAnimation::UpdateFade updateFade,
                                      SlidingMenuAnimation::SlideDirection slideDirection);
         void GoToOutOfMovesStateOutOfMovesAnimation();
-        void GoToOutOfMovesStateOutOfMovesDialog(SlidingMenuAnimation::SlideDirection slideDirection,
-                                                 SlidingMenuAnimation::UpdateFade updateFade);
+        void GoToOutOfMovesStateOutOfMovesContinueDialog(SlidingMenuAnimation::SlideDirection slideDirection,
+                                                         SlidingMenuAnimation::UpdateFade updateFade);
+        void GoToOutOfMovesStateOutOfMovesRetryDialog();
+        void GoToOutOfMovesStateNoLivesDialog();
         void GoToOutOfMovesStateStore();
         void GoToGameOverStateGameOverDialog();
         void GoToGameOverStateNoLivesDialog();
@@ -152,7 +156,9 @@ namespace RowBlast {
         
         enum class OutOfMovesState {
             OutOfMovesAnimation,
-            OutOfMovesDialog,
+            OutOfMovesContinueDialog,
+            OutOfMovesRetryDialog,
+            NoLivesDialog,
             Store
         };
         
@@ -165,7 +171,7 @@ namespace RowBlast {
         GameState mState {GameState::LevelIntro};
         LevelIntroState mLevelIntroState {LevelIntroState::Overview};
         PausedState mPausedState {PausedState::GameMenu};
-        OutOfMovesState mOutOfMovesState {OutOfMovesState::OutOfMovesDialog};
+        OutOfMovesState mOutOfMovesState {OutOfMovesState::OutOfMovesContinueDialog};
         GameOverState mGameOverState {GameOverState::GameOverDialog};
         Pht::IEngine& mEngine;
         UserServices& mUserServices;

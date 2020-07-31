@@ -1,8 +1,8 @@
-#ifndef OutOfMovesDialogController_hpp
-#define OutOfMovesDialogController_hpp
+#ifndef OutOfMovesRetryDialogController_hpp
+#define OutOfMovesRetryDialogController_hpp
 
 // Game includes.
-#include "OutOfMovesDialogView.hpp"
+#include "OutOfMovesRetryDialogView.hpp"
 #include "SlidingMenuAnimation.hpp"
 
 namespace Pht {
@@ -14,17 +14,17 @@ namespace RowBlast {
     class CommonResources;
     class UserServices;
     
-    class OutOfMovesDialogController {
+    class OutOfMovesRetryDialogController {
     public:
         enum class Result {
             None,
-            PlayOn,
+            Retry,
             BackToMap
         };
         
-        OutOfMovesDialogController(Pht::IEngine& engine,
-                                   const CommonResources& commonResources,
-                                   const UserServices& userServices);
+        OutOfMovesRetryDialogController(Pht::IEngine& engine,
+                                        const CommonResources& commonResources,
+                                        const UserServices& userServices);
         
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider);
@@ -43,7 +43,7 @@ namespace RowBlast {
         
         Pht::IInput& mInput;
         const UserServices& mUserServices;
-        OutOfMovesDialogView mView;
+        OutOfMovesRetryDialogView mView;
         SlidingMenuAnimation mSlidingMenuAnimation;
         Result mDeferredResult {Result::None};
     };

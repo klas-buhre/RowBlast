@@ -1,5 +1,5 @@
-#ifndef OutOfMovesDialogView_hpp
-#define OutOfMovesDialogView_hpp
+#ifndef OutOfMovesRetryDialogView_hpp
+#define OutOfMovesRetryDialogView_hpp
 
 #include <memory>
 #include <vector>
@@ -20,15 +20,14 @@ namespace RowBlast {
     class IGuiLightProvider;
     class GameScene;
     
-    class OutOfMovesDialogView: public Pht::GuiView {
+    class OutOfMovesRetryDialogView: public Pht::GuiView {
     public:
-        OutOfMovesDialogView(Pht::IEngine& engine, const CommonResources& commonResources);
+        OutOfMovesRetryDialogView(Pht::IEngine& engine, const CommonResources& commonResources);
         
         void OnDeactivate() override;
         
         void SetUp(GameScene& scene);
         void Update();
-        void HandOverHudObjects();
         
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {
             mGuiLightProvider = &guiLightProvider;
@@ -38,8 +37,8 @@ namespace RowBlast {
             return *mCloseButton;
         }
         
-        const MenuButton& GetPlayOnButton() const {
-            return *mPlayOnButton;
+        const MenuButton& GetRetryButton() const {
+            return *mRetryButton;
         }
         
     private:
@@ -57,11 +56,10 @@ namespace RowBlast {
         GameScene* mScene {nullptr};
         IGuiLightProvider* mGuiLightProvider {nullptr};
         std::unique_ptr<MenuButton> mCloseButton;
-        std::unique_ptr<MenuButton> mPlayOnButton;
+        std::unique_ptr<MenuButton> mRetryButton;
         std::unique_ptr<Pht::SceneObject> mGlowEffect;
         std::unique_ptr<Pht::SceneObject> mParticles;
         std::unique_ptr<Pht::RenderableObject> mArrowRenderable;
-        Pht::SceneObject* mUpperHudSceneObject {nullptr};
         Pht::SceneObject* mMovesIconSceneObject {nullptr};
         float mRotationAnimationTime {0.0f};
         float mScaleAnimationTime {0.0f};

@@ -1,4 +1,4 @@
-#include "OutOfMovesDialogView.hpp"
+#include "OutOfMovesContinueDialogView.hpp"
 
 // Engine includes.
 #include "IEngine.hpp"
@@ -45,8 +45,8 @@ namespace {
     }
 }
 
-OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
-                                           const CommonResources& commonResources) :
+OutOfMovesContinueDialogView::OutOfMovesContinueDialogView(Pht::IEngine& engine,
+                                                           const CommonResources& commonResources) :
     mEngine {engine} {
     
     mUpperHudSceneObject = &CreateSceneObject();
@@ -84,8 +84,8 @@ OutOfMovesDialogView::OutOfMovesDialogView(Pht::IEngine& engine,
                                                  zoom);
 }
 
-void OutOfMovesDialogView::CreateAddMovesIcon(const Pht::Vec3& position,
-                                              const CommonResources& commonResources) {
+void OutOfMovesContinueDialogView::CreateAddMovesIcon(const Pht::Vec3& position,
+                                                      const CommonResources& commonResources) {
     auto& container = CreateSceneObject();
     container.GetTransform().SetPosition(position);
     GetRoot().AddChild(container);
@@ -100,8 +100,8 @@ void OutOfMovesDialogView::CreateAddMovesIcon(const Pht::Vec3& position,
     Pht::SceneObjectUtils::ScaleRecursively(container, 1.5f);
 }
 
-void OutOfMovesDialogView::CreateMovesIcon(Pht::SceneObject& parent,
-                                           const CommonResources& commonResources) {
+void OutOfMovesContinueDialogView::CreateMovesIcon(Pht::SceneObject& parent,
+                                                   const CommonResources& commonResources) {
     mMovesIconSceneObject = &CreateSceneObject();
     parent.AddChild(*mMovesIconSceneObject);
 
@@ -117,10 +117,10 @@ void OutOfMovesDialogView::CreateMovesIcon(Pht::SceneObject& parent,
     CreateArrow({0.0f, -0.25f, 0.0f}, {270.0f, 0.0f, 90.0f}, *mArrowRenderable, *mMovesIconSceneObject);
 }
 
-void OutOfMovesDialogView::CreateArrow(const Pht::Vec3& position,
-                                       const Pht::Vec3& rotation,
-                                       Pht::RenderableObject& renderable,
-                                       Pht::SceneObject& parent) {
+void OutOfMovesContinueDialogView::CreateArrow(const Pht::Vec3& position,
+                                               const Pht::Vec3& rotation,
+                                               Pht::RenderableObject& renderable,
+                                               Pht::SceneObject& parent) {
     auto& arrow = CreateSceneObject();
     arrow.GetTransform().SetPosition(position);
     arrow.GetTransform().SetRotation(rotation);
@@ -128,7 +128,7 @@ void OutOfMovesDialogView::CreateArrow(const Pht::Vec3& position,
     parent.AddChild(arrow);
 }
 
-void OutOfMovesDialogView::CreateGlowEffect(Pht::SceneObject& parentObject) {
+void OutOfMovesContinueDialogView::CreateGlowEffect(Pht::SceneObject& parentObject) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -165,7 +165,7 @@ void OutOfMovesDialogView::CreateGlowEffect(Pht::SceneObject& parentObject) {
     parentObject.AddChild(*mGlowEffect);
 }
 
-void OutOfMovesDialogView::CreateParticles(Pht::SceneObject& parentObject) {
+void OutOfMovesContinueDialogView::CreateParticles(Pht::SceneObject& parentObject) {
     Pht::EmitterSettings particleEmitterSettings {
         .mPosition = Pht::Vec3{0.0f, 0.0f, 0.0f},
         .mSize = Pht::Vec3{0.0f, 0.0f, 0.0f},
@@ -195,7 +195,7 @@ void OutOfMovesDialogView::CreateParticles(Pht::SceneObject& parentObject) {
     parentObject.AddChild(*mParticles);
 }
 
-void OutOfMovesDialogView::SetUp(GameScene& scene) {
+void OutOfMovesContinueDialogView::SetUp(GameScene& scene) {
     mScene = &scene;
     scene.SetUiCameraPosition(uiCameraPosition);
     
@@ -218,7 +218,7 @@ void OutOfMovesDialogView::SetUp(GameScene& scene) {
     mScaleAnimationTime = 0.0f;
 }
 
-void OutOfMovesDialogView::Update() {
+void OutOfMovesContinueDialogView::Update() {
     auto dt = mEngine.GetLastFrameSeconds();
     
     mGlowEffect->GetComponent<Pht::ParticleEffect>()->Update(dt);
@@ -226,7 +226,7 @@ void OutOfMovesDialogView::Update() {
     AnimateIconRotation(dt);
 }
 
-void OutOfMovesDialogView::AnimateIconRotation(float dt) {
+void OutOfMovesContinueDialogView::AnimateIconRotation(float dt) {
     mRotationAnimationTime += dt;
     if (mRotationAnimationTime > rotationAnimationDuration) {
         mRotationAnimationTime = 0.0f;
@@ -247,7 +247,7 @@ void OutOfMovesDialogView::AnimateIconRotation(float dt) {
     mMovesIconSceneObject->GetTransform().SetScale(scale);
 }
 
-void OutOfMovesDialogView::OnDeactivate() {
+void OutOfMovesContinueDialogView::OnDeactivate() {
     if (mScene) {
         mScene->SetDefaultUiCameraPosition();
     }
@@ -257,7 +257,7 @@ void OutOfMovesDialogView::OnDeactivate() {
     }
 }
 
-void OutOfMovesDialogView::HandOverHudObjects() {
+void OutOfMovesContinueDialogView::HandOverHudObjects() {
     auto& hud = mScene->GetHud();
     mUpperHudSceneObject->DetachChildren();
     hud.GetUpperContainer().AddChild(hud.GetProgressContainer());
