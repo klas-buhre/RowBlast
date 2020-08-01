@@ -66,7 +66,13 @@ OutOfMovesRetryDialogController::OnTouch(const Pht::TouchEvent& touchEvent) {
     }
 
     if (mView.GetRetryButton().IsClicked(touchEvent)) {
-        return Result::Retry;
+        if (mUserServices.GetLifeService().GetNumLives() > 0) {
+            return Result::Retry;
+        } else {
+            mDeferredResult = Result::Retry;
+            mSlidingMenuAnimation.StartSlideOut(SlidingMenuAnimation::UpdateFade::No,
+                                                SlidingMenuAnimation::SlideDirection::Left);
+        }
     }
     
     return Result::None;

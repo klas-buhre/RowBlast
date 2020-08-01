@@ -483,9 +483,9 @@ GameController::Command GameController::UpdateRestartConfirmationDialog() {
         case RestartConfirmationDialogController::Result::None:
             break;
         case RestartConfirmationDialogController::Result::RestartLevel:
+            mUserServices.FailLevel(mLevel->GetId());
             if (mUserServices.GetLifeService().GetNumLives() > 0) {
                 command = Command::RestartLevel;
-                mUserServices.FailLevel(mLevel->GetId());
             } else {
                 GoToPausedStateNoLivesDialog();
             }
@@ -626,7 +626,7 @@ GameController::Command GameController::UpdateInOutOfMovesState() {
 
 void GameController::UpdateInOutOfMovesStateOutOfMovesAnimation() {
     if (mSlidingText.Update() == SlidingText::State::Inactive) {
-        if (mLevel->GetId() < numLevelsWithOnlyRetryWhenOutOfMoves) {
+        if (mLevel->GetId() <= numLevelsWithOnlyRetryWhenOutOfMoves) {
             GoToOutOfMovesStateOutOfMovesRetryDialog();
         } else {
             GoToOutOfMovesStateOutOfMovesContinueDialog(SlidingMenuAnimation::SlideDirection::Left,
@@ -668,9 +668,9 @@ GameController::Command GameController::UpdateOutOfMovesRetryDialog() {
         case OutOfMovesRetryDialogController::Result::None:
             break;
         case OutOfMovesRetryDialogController::Result::Retry:
+            mUserServices.FailLevel(mLevel->GetId(), CalculateProgressInLevelForAnalytics());
             if (mUserServices.GetLifeService().GetNumLives() > 0) {
                 command = Command::RestartLevel;
-                mUserServices.FailLevel(mLevel->GetId());
             } else {
                 GoToOutOfMovesStateNoLivesDialog();
             }
@@ -701,7 +701,7 @@ GameController::Command GameController::UpdateInOutOfMovesStateNoLivesDialog() {
             }
             break;
         case NoLivesDialogController::Result::Close:
-            GoToOutOfMovesStateOutOfMovesRetryDialog();
+            command = Command::GoToMap;
             break;
     }
     
@@ -929,7 +929,7 @@ void GameController::GoToOutOfMovesStateNoLivesDialog() {
     mOutOfMovesState = OutOfMovesState::NoLivesDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::NoLivesDialog);
     mGameViewControllers.GetNoLivesDialogController().SetUp(SlidingMenuAnimation::UpdateFade::No,
-                                                            NoLivesDialogController::ShouldSlideOut::Yes,
+                                                            NoLivesDialogController::ShouldSlideOut::No,
                                                             NoLivesDialogController::ShouldSlideOut::No);
 }
 

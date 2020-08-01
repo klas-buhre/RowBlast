@@ -46,7 +46,11 @@ Backlog:
 
 Ongoing tasks:
     -In the out of moves dialog: Maybe there should be only a retry button instead of continue at
-     the early levels. 
+     the early levels.
+        -Trigger the store when the user cannot afford to refill lives.
+    -Figure out why some levels in the progress information is missing on gameanalytics.com.
+    -Maybe the clear rows effect could be selected in the settings menu; shrinking blocks or flying
+     blocks.
     -Purchasing
         -Dialogs:
             -No internet connection.    Special icon.   [OK]
