@@ -616,8 +616,11 @@ GameController::Command GameController::UpdateInOutOfMovesState() {
         case OutOfMovesState::NoLivesDialog:
             command = UpdateInOutOfMovesStateNoLivesDialog();
             break;
-        case OutOfMovesState::Store:
-            UpdateInOutOfMovesStateStore();
+        case OutOfMovesState::OutOfMovesStore:
+            UpdateInOutOfMovesStateOutOfMovesStore();
+            break;
+        case OutOfMovesState::OutOfLivesStore:
+            command = UpdateInOutOfMovesStateOutOfLivesStore();
             break;
     }
     
@@ -645,7 +648,7 @@ GameController::Command GameController::UpdateOutOfMovesContinueDialog() {
             if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::addMovesPriceInCoins)) {
                 AddMovesAndGoToPlayingState();
             } else {
-                GoToOutOfMovesStateStore();
+                GoToOutOfMovesStateOutOfMovesStore();
             }
             break;
         case OutOfMovesContinueDialogController::Result::BackToMap:
@@ -672,7 +675,7 @@ GameController::Command GameController::UpdateOutOfMovesRetryDialog() {
             if (mUserServices.GetLifeService().GetNumLives() > 0) {
                 command = Command::RestartLevel;
             } else {
-                GoToOutOfMovesStateNoLivesDialog();
+                GoToOutOfMovesStateNoLivesDialog(SlidingMenuAnimation::SlideDirection::Left);
             }
             break;
         case OutOfMovesRetryDialogController::Result::BackToMap:
@@ -695,9 +698,7 @@ GameController::Command GameController::UpdateInOutOfMovesStateNoLivesDialog() {
                 RefillLives();
                 command = Command::RestartLevel;
             } else {
-                // TODO: Should trigger the store here the player cannot afford to refill lives.
-                // GoToOutOfMovesStateRefillLivesStore();
-                //
+                GoToOutOfMovesStateOutOfLivesStore();
             }
             break;
         case NoLivesDialogController::Result::Close:
@@ -721,7 +722,7 @@ int GameController::CalculateProgressInLevelForAnalytics() {
     }
 }
 
-void GameController::UpdateInOutOfMovesStateStore() {
+void GameController::UpdateInOutOfMovesStateOutOfMovesStore() {
     switch (mStoreController.Update()) {
         case StoreController::Result::None:
             break;
@@ -734,6 +735,25 @@ void GameController::UpdateInOutOfMovesStateStore() {
             }
             break;
     }
+}
+
+GameController::Command GameController::UpdateInOutOfMovesStateOutOfLivesStore() {
+    auto command = Command::None;
+    
+    switch (mStoreController.Update()) {
+        case StoreController::Result::None:
+            break;
+        case StoreController::Result::Done:
+            if (mUserServices.GetPurchasingService().CanAfford(PurchasingService::refillLivesPriceInCoins)) {
+                RefillLives();
+                command = Command::RestartLevel;
+            } else {
+                GoToOutOfMovesStateNoLivesDialog(SlidingMenuAnimation::SlideDirection::Right);
+            }
+            break;
+    }
+    
+    return command;
 }
 
 void GameController::AddMovesAndGoToPlayingState() {
@@ -925,22 +945,33 @@ void GameController::GoToOutOfMovesStateOutOfMovesRetryDialog() {
                                                                     SlidingMenuAnimation::UpdateFade::Yes);
 }
 
-void GameController::GoToOutOfMovesStateNoLivesDialog() {
+void GameController::GoToOutOfMovesStateNoLivesDialog(SlidingMenuAnimation::SlideDirection slideDirection) {
     mOutOfMovesState = OutOfMovesState::NoLivesDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::NoLivesDialog);
     mGameViewControllers.GetNoLivesDialogController().SetUp(SlidingMenuAnimation::UpdateFade::No,
                                                             NoLivesDialogController::ShouldSlideOut::No,
-                                                            NoLivesDialogController::ShouldSlideOut::No);
+                                                            NoLivesDialogController::ShouldSlideOut::No,
+                                                            slideDirection);
 }
 
-void GameController::GoToOutOfMovesStateStore() {
-    mOutOfMovesState = OutOfMovesState::Store;
+void GameController::GoToOutOfMovesStateOutOfMovesStore() {
+    mOutOfMovesState = OutOfMovesState::OutOfMovesStore;
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     mStoreController.StartStore(StoreTrigger::Moves,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 SlidingMenuAnimation::UpdateFade::Yes,
                                 PurchaseSuccessfulDialogController::ShouldSlideOut::Yes);
+}
+
+void GameController::GoToOutOfMovesStateOutOfLivesStore() {
+    mOutOfMovesState = OutOfMovesState::OutOfLivesStore;
+    mGameViewControllers.SetActiveController(GameViewControllers::None);
+    mStoreController.StartStore(StoreTrigger::Lives,
+                                SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::UpdateFade::No,
+                                PurchaseSuccessfulDialogController::ShouldSlideOut::No);
 }
 
 void GameController::GoToGameOverStateGameOverDialog() {

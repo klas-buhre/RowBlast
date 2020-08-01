@@ -37,7 +37,8 @@ namespace RowBlast {
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         void SetUp(SlidingMenuAnimation::UpdateFade updateFadeOnStart,
                    ShouldSlideOut shouldSlideOutOnClose,
-                   ShouldSlideOut shouldSlideOutOnRefillLives);
+                   ShouldSlideOut shouldSlideOutOnRefillLives,
+                   SlidingMenuAnimation::SlideDirection slideDirectionOnStart = SlidingMenuAnimation::SlideDirection::Left);
         Result Update();
         
         Pht::GuiView& GetView() {

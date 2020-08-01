@@ -99,7 +99,8 @@ namespace RowBlast {
         Command UpdateOutOfMovesRetryDialog();
         Command UpdateInOutOfMovesStateNoLivesDialog();
         int CalculateProgressInLevelForAnalytics();
-        void UpdateInOutOfMovesStateStore();
+        void UpdateInOutOfMovesStateOutOfMovesStore();
+        Command UpdateInOutOfMovesStateOutOfLivesStore();
         Command UpdateInGameOverState();
         Command UpdateGameOverDialog();
         Command UpdateInGameOverStateNoLivesDialog();
@@ -122,8 +123,9 @@ namespace RowBlast {
         void GoToOutOfMovesStateOutOfMovesContinueDialog(SlidingMenuAnimation::SlideDirection slideDirection,
                                                          SlidingMenuAnimation::UpdateFade updateFade);
         void GoToOutOfMovesStateOutOfMovesRetryDialog();
-        void GoToOutOfMovesStateNoLivesDialog();
-        void GoToOutOfMovesStateStore();
+        void GoToOutOfMovesStateNoLivesDialog(SlidingMenuAnimation::SlideDirection slideDirection);
+        void GoToOutOfMovesStateOutOfMovesStore();
+        void GoToOutOfMovesStateOutOfLivesStore();
         void GoToGameOverStateGameOverDialog();
         void GoToGameOverStateNoLivesDialog();
         void GoToGameOverStateStore();
@@ -159,7 +161,8 @@ namespace RowBlast {
             OutOfMovesContinueDialog,
             OutOfMovesRetryDialog,
             NoLivesDialog,
-            Store
+            OutOfMovesStore,
+            OutOfLivesStore
         };
         
         enum class GameOverState {
