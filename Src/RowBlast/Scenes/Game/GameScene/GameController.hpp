@@ -111,7 +111,7 @@ namespace RowBlast {
         void ChangeGameState(GameLogic::Result gameLogicResult);
         void GoToPlayingState();
         void GoToPausedStateNoLivesDialog();
-        void GoToPausedStateRestartConfirmationDialog();
+        void GoToPausedStateRestartConfirmationDialog(SlidingMenuAnimation::UpdateFade updateFade);
         void GoToPausedStateMapConfirmationDialog();
         void GoToPausedStateStore();
         void GoToPausedStateSettingsMenu();

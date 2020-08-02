@@ -18,10 +18,9 @@ RestartConfirmationDialogController(Pht::IEngine& engine,
     mView {engine, commonResources},
     mSlidingMenuAnimation {engine, mView} {}
 
-void RestartConfirmationDialogController::SetUp() {
+void RestartConfirmationDialogController::SetUp(SlidingMenuAnimation::UpdateFade updateFadeOnStart) {
     mView.SetUp();
-    mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
-                                SlidingMenuAnimation::SlideDirection::Scale);
+    mSlidingMenuAnimation.SetUp(updateFadeOnStart, SlidingMenuAnimation::SlideDirection::Scale);
 }
 
 void RestartConfirmationDialogController::SetGuiLightProvider(IGuiLightProvider& guiLightProvider) {

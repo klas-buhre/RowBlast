@@ -26,7 +26,7 @@ namespace RowBlast {
                                             const CommonResources& commonResources,
                                             const UserServices& userServices);
         
-        void SetUp();
+        void SetUp(SlidingMenuAnimation::UpdateFade updateFadeOnStart);
         void SetGuiLightProvider(IGuiLightProvider& guiLightProvider);
         void SetFadeEffect(Pht::FadeEffect& fadeEffect);
         Result Update();

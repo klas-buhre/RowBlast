@@ -400,7 +400,7 @@ void GameController::UpdateGameMenu() {
             GoToPausedStateSettingsMenu();
             break;
         case GameMenuController::Result::RestartGame:
-            GoToPausedStateRestartConfirmationDialog();
+            GoToPausedStateRestartConfirmationDialog(SlidingMenuAnimation::UpdateFade::No);
             break;
         case GameMenuController::Result::BackToMap:
             GoToPausedStateMapConfirmationDialog();
@@ -530,7 +530,7 @@ GameController::Command GameController::UpdateInPausedStateStore() {
                 RefillLives();
                 command = Command::RestartLevel;
             } else {
-                GoToPausedStateRestartConfirmationDialog();
+                GoToPausedStateRestartConfirmationDialog(SlidingMenuAnimation::UpdateFade::Yes);
             }
             break;
     }
@@ -866,10 +866,10 @@ void GameController::GoToPausedStateNoLivesDialog() {
                                                             NoLivesDialogController::ShouldSlideOut::No);
 }
 
-void GameController::GoToPausedStateRestartConfirmationDialog() {
+void GameController::GoToPausedStateRestartConfirmationDialog(SlidingMenuAnimation::UpdateFade updateFade) {
     mPausedState = PausedState::RestartConfirmationDialog;
     mGameViewControllers.SetActiveController(GameViewControllers::RestartConfirmationDialog);
-    mGameViewControllers.GetRestartConfirmationDialogController().SetUp();
+    mGameViewControllers.GetRestartConfirmationDialogController().SetUp(updateFade);
 }
 
 void GameController::GoToPausedStateMapConfirmationDialog() {
@@ -883,7 +883,7 @@ void GameController::GoToPausedStateStore() {
     mGameViewControllers.SetActiveController(GameViewControllers::None);
     mStoreController.StartStore(StoreTrigger::Lives,
                                 SlidingMenuAnimation::UpdateFade::No,
-                                SlidingMenuAnimation::UpdateFade::No,
+                                SlidingMenuAnimation::UpdateFade::Yes,
                                 SlidingMenuAnimation::UpdateFade::No,
                                 PurchaseSuccessfulDialogController::ShouldSlideOut::No);
 }
