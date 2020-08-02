@@ -48,7 +48,7 @@ namespace RowBlast {
         void Init();
         void Update(float dt);
         void AddBlocks(const Field::RemovedSubCells& subCells);
-        void AddBlockRows(const Field::RemovedSubCells& subCells);
+        void AddBlockRowsWithShrinkEffect(const Field::RemovedSubCells& subCells);
         void AddBlocksRemovedByExplosion(const Field::RemovedSubCells& subCells,
                                          const Pht::IVec2& detonationPos,
                                          float explosiveForceMagnitude,

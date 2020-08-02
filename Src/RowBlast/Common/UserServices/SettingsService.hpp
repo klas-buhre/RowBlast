@@ -7,6 +7,11 @@ namespace RowBlast {
         Click,
         Swipe
     };
+    
+    enum class ClearRowsEffect {
+        Shrink,
+        Fly
+    };
 
     class SettingsService {
     public:
@@ -17,6 +22,7 @@ namespace RowBlast {
         void SetIsRotateAllPiecesEnabled(bool isRotateAllPiecesEnabled);
         void SetIsSoundEnabled(bool isSoundEnabled);
         void SetIsMusicEnabled(bool isMusicEnabled);
+        void SetClearRowsEffect(ClearRowsEffect clearRowsEffect);
         
         ControlType GetControlType() const {
             return mControlType;
@@ -37,6 +43,10 @@ namespace RowBlast {
         bool IsMusicEnabled() const {
             return mIsMusicEnabled;
         }
+        
+        ClearRowsEffect GetClearRowsEffect() const {
+            return mClearRowsEffect;
+        }
 
     private:
         void SaveState();
@@ -47,6 +57,7 @@ namespace RowBlast {
         bool mIsRotateAllPiecesEnabled {false};
         bool mIsSoundEnabled {true};
         bool mIsMusicEnabled {true};
+        ClearRowsEffect mClearRowsEffect {ClearRowsEffect::Shrink};
     };
 }
 

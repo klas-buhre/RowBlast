@@ -85,7 +85,7 @@ void FlyingBlocksSystem::AddBlocks(const Field::RemovedSubCells& subCells) {
     }
 }
 
-void FlyingBlocksSystem::AddBlockRows(const Field::RemovedSubCells& subCells) {
+void FlyingBlocksSystem::AddBlockRowsWithShrinkEffect(const Field::RemovedSubCells& subCells) {
     for (auto& removedSubCell: subCells) {
         FlyingBlock flyingBlock {
             .mEffect = FlyingBlock::Effect::Shrink,

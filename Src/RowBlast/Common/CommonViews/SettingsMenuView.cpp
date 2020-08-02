@@ -59,7 +59,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     GetRoot().AddChild(lineSceneObject);
     
     auto& container = CreateSceneObject();
-    container.GetTransform().SetPosition({0.0f, 3.0f, 0.0f});
+    container.GetTransform().SetPosition({0.0f, 3.2f, 0.0f});
     GetRoot().AddChild(container);
     
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
@@ -305,10 +305,25 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     mRotateAllOnText = &mRotateAllButton->CreateText({-0.05f, -0.23f, UiLayer::buttonText},
                                                      "On",
                                                      buttonTextProperties).GetSceneObject();
-    
     mRotateAllOffText = &mRotateAllButton->CreateText({-0.05f, -0.23f, UiLayer::buttonText},
                                                       "Off",
                                                       buttonTextProperties).GetSceneObject();
+
+    CreateText({-4.8f, -8.53f, UiLayer::text}, "Clear Effect", textProperties, container);
+
+    Pht::Vec3 clearEffectButtonPosition {3.45f, -8.3f, UiLayer::textRectangle};
+    mClearEffectButton = std::make_unique<MenuButton>(engine,
+                                                      *this,
+                                                      container,
+                                                      clearEffectButtonPosition,
+                                                      buttonInputSize,
+                                                      settingsButtonStyle);
+    mShrinkClearEffectText = &mClearEffectButton->CreateText({-0.7f, -0.23f, UiLayer::buttonText},
+                                                             "Shrink",
+                                                             buttonTextProperties).GetSceneObject();
+    mFlyClearEffectText = &mClearEffectButton->CreateText({-0.05f, -0.23f, UiLayer::buttonText},
+                                                          "Fly",
+                                                          buttonTextProperties).GetSceneObject();
 
     MenuButton::Style backButtonStyle;
     backButtonStyle.mPressedScale = 1.05f;
@@ -529,4 +544,14 @@ void SettingsMenuView::SetRotateAllOnIsVisible(bool isVisible) {
 void SettingsMenuView::SetRotateAllOffIsVisible(bool isVisible) {
     mRotateAllOffText->SetIsVisible(isVisible);
     mRotateAllDisabledIcon->SetIsVisible(isVisible);
+}
+
+void SettingsMenuView::EnableFlyClearEffect() {
+    mFlyClearEffectText->SetIsVisible(true);
+    mShrinkClearEffectText->SetIsVisible(false);
+}
+
+void SettingsMenuView::EnableShrinkClearEffect() {
+    mShrinkClearEffectText->SetIsVisible(true);
+    mFlyClearEffectText->SetIsVisible(false);
 }

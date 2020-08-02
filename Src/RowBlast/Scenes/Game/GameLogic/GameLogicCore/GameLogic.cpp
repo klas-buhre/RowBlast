@@ -597,7 +597,18 @@ void GameLogic::HandleClearedFilledRows(const Field::RemovedSubCells& removedSub
                                         Pht::Optional<int> landedPieceId) {
     PlayClearBlocksSound(mEngine);
     mScoreManager.OnClearedFilledRows(removedSubCells, landedPieceId);
-    mFlyingBlocksSystem.AddBlockRows(removedSubCells);
+
+    switch (mSettingsService.GetClearRowsEffect()) {
+        case ClearRowsEffect::Shrink:
+            mFlyingBlocksSystem.AddBlockRowsWithShrinkEffect(removedSubCells);
+            break;
+        case ClearRowsEffect::Fly:
+            mFlyingBlocksSystem.AddBlocks(removedSubCells);
+            break;
+        default:
+            mFlyingBlocksSystem.AddBlockRowsWithShrinkEffect(removedSubCells);
+            break;
+    }
 }
 
 GameLogic::Result GameLogic::HandleSettingsChange() {

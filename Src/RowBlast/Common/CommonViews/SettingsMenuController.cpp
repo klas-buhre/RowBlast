@@ -130,6 +130,22 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
         
         UpdateViewToReflectSettings();
     }
+    
+    if (mView.GetClearEffectButton().IsClicked(touchEvent)) {
+        switch (settingsService.GetClearRowsEffect()) {
+            case ClearRowsEffect::Shrink:
+                settingsService.SetClearRowsEffect(ClearRowsEffect::Fly);
+                break;
+            case ClearRowsEffect::Fly:
+                settingsService.SetClearRowsEffect(ClearRowsEffect::Shrink);
+                break;
+            default:
+                settingsService.SetClearRowsEffect(ClearRowsEffect::Shrink);
+                break;
+        }
+        
+        UpdateViewToReflectSettings();
+    }
 
     if (mView.GetBackButton().IsClicked(touchEvent) ||
         mView.GetCloseButton().IsClicked(touchEvent)) {
@@ -168,4 +184,13 @@ void SettingsMenuController::UpdateViewToReflectSettings() {
     auto& audio = mEngine.GetAudio();
     mView.SetSoundIsOn(audio.IsSoundEnabled());
     mView.SetMusicIsOn(audio.IsMusicEnabled());
+    
+    switch (settingsService.GetClearRowsEffect()) {
+        case ClearRowsEffect::Shrink:
+            mView.EnableShrinkClearEffect();
+            break;
+        case ClearRowsEffect::Fly:
+            mView.EnableFlyClearEffect();
+            break;
+    }
 }

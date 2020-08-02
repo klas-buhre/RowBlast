@@ -13,6 +13,7 @@ namespace {
     const std::string isMusicEnabledMember {"isMusicEnabled"};
     const std::string isGhostPieceEnabledMember {"isGhostPieceEnabled"};
     const std::string isRotateAllPiecesEnabledMember {"isRotateAllPiecesEnabled"};
+    const std::string clearRowsEffectMember {"clearRowsEffect"};
     
     std::string ToString(ControlType controlType) {
         switch (controlType) {
@@ -41,6 +42,27 @@ namespace {
         }
 
         assert(!"Unsupported control type");
+    }
+    
+    std::string ToString(ClearRowsEffect clearRowsEffect) {
+        switch (clearRowsEffect) {
+            case ClearRowsEffect::Shrink:
+                return "Shrink";
+            case ClearRowsEffect::Fly:
+                return "Fly";
+        }
+    }
+    
+    ClearRowsEffect ReadClearRowsEffect(const rapidjson::Document& document) {
+        auto clearRowsEffect = Pht::Json::ReadString(document, clearRowsEffectMember);
+        if (clearRowsEffect == "Shrink") {
+            return ClearRowsEffect::Shrink;
+        }
+        if (clearRowsEffect == "Fly") {
+            return ClearRowsEffect::Fly;
+        }
+        
+        assert(!"Unsupported clear rows effect");
     }
 }
 
@@ -73,6 +95,11 @@ void SettingsService::SetIsMusicEnabled(bool isMusicEnabled) {
     SaveState();
 }
 
+void SettingsService::SetClearRowsEffect(ClearRowsEffect clearRowsEffect) {
+    mClearRowsEffect = clearRowsEffect;
+    SaveState();
+}
+
 void SettingsService::SaveState() {
     rapidjson::Document document;
     auto& allocator = document.GetAllocator();
@@ -83,6 +110,7 @@ void SettingsService::SaveState() {
     Pht::Json::AddBool(document, isMusicEnabledMember, mIsMusicEnabled, allocator);
     Pht::Json::AddBool(document, isGhostPieceEnabledMember, mIsGhostPieceEnabled, allocator);
     Pht::Json::AddBool(document, isRotateAllPiecesEnabledMember, mIsRotateAllPiecesEnabled, allocator);
+    Pht::Json::AddString(document, clearRowsEffectMember, ToString(mClearRowsEffect), allocator);
 
     std::string jsonString;
     Pht::Json::EncodeDocument(document, jsonString);
@@ -111,6 +139,11 @@ bool SettingsService::LoadState() {
     if (document.HasMember(isRotateAllPiecesEnabledMember.c_str())) {
         mIsRotateAllPiecesEnabled = Pht::Json::ReadBool(document, isRotateAllPiecesEnabledMember);
     }
-
+    
+    // mClearRowsEffect added in release 1.1.4. Need to check if it exists before reading it.
+    if (document.HasMember(clearRowsEffectMember.c_str())) {
+        mClearRowsEffect = ReadClearRowsEffect(document);
+    }
+    
     return true;
 }

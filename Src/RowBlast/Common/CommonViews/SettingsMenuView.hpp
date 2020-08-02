@@ -36,6 +36,8 @@ namespace RowBlast {
         void EnableSwipeControls();
         void SetGhostPieceIsEnabled(bool ghostPieceIsEnabled);
         void SetRotateAllIsEnabled(bool rotateAllIsEnabled);
+        void EnableFlyClearEffect();
+        void EnableShrinkClearEffect();
 
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;
@@ -63,6 +65,10 @@ namespace RowBlast {
 
         const MenuButton& GetMusicButton() const {
             return *mMusicButton;
+        }
+        
+        const MenuButton& GetClearEffectButton() const {
+            return *mClearEffectButton;
         }
 
         const MenuButton& GetBackButton() const {
@@ -103,6 +109,7 @@ namespace RowBlast {
         std::unique_ptr<MenuButton> mRotateAllButton;
         std::unique_ptr<MenuButton> mSoundButton;
         std::unique_ptr<MenuButton> mMusicButton;
+        std::unique_ptr<MenuButton> mClearEffectButton;
         std::unique_ptr<MenuButton> mBackButton;
         Pht::SceneObject* mDragControlsText {nullptr};
         Pht::SceneObject* mDragControlsIcon1 {nullptr};
@@ -129,6 +136,8 @@ namespace RowBlast {
         Pht::SceneObject* mMusicOnIcon {nullptr};
         Pht::SceneObject* mMusicOffText {nullptr};
         Pht::SceneObject* mMusicOffIcon {nullptr};
+        Pht::SceneObject* mShrinkClearEffectText {nullptr};
+        Pht::SceneObject* mFlyClearEffectText {nullptr};
         bool mIsControlsButtonEnabled {true};
     };
 }

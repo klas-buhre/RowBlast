@@ -1,6 +1,5 @@
 Backlog:
   -Engine:
-    -Purchasing
     -Metal
     -Entity Component System
     -Net/HTTP
@@ -45,9 +44,8 @@ Backlog:
      mostly be the target audience and in the playtest they are not.
 
 Ongoing tasks:
+    -Maybe the settings menu should have checkboxes instead.
     -Figure out why some levels in the progress information is missing on gameanalytics.com.
-    -Maybe the clear rows effect could be selected in the settings menu; shrinking blocks or flying
-     blocks.
     -Purchasing
         -Dialogs:
             -No internet connection.    Special icon.   [OK]
