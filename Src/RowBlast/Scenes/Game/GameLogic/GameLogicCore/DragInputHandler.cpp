@@ -160,7 +160,6 @@ void DragInputHandler::HandleOngoingTouchInDraggingState(const Pht::TouchEvent& 
 void DragInputHandler::HandleTouchEnd(const Pht::TouchEvent& touchEvent) {
     switch (mState) {
         case State::Idle:
-            HandleTouchEndInIdleState();
             break;
         case State::TouchingPreviewPieceButton:
             HandleTouchEndInTouchingPreviewPieceButtonState(touchEvent);
@@ -184,12 +183,6 @@ void DragInputHandler::HandleTouchEndInDraggingState(const Pht::TouchEvent& touc
     NotifyGameLogicIfPieceMovedGridPosition();
     mGameLogic.HandleDragPieceTouchEnd();
     EndDrag();
-}
-
-void DragInputHandler::HandleTouchEndInIdleState() {
-    if (mGameLogic.GetControlType() == ControlType::Drag) {
-        mGameLogic.RotatePreviewPieces();
-    }
 }
 
 void DragInputHandler::EndDrag() {

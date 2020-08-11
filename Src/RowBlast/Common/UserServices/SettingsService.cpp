@@ -12,7 +12,6 @@ namespace {
     const std::string isSoundEnabledMember {"isSoundEnabled"};
     const std::string isMusicEnabledMember {"isMusicEnabled"};
     const std::string isGhostPieceEnabledMember {"isGhostPieceEnabled"};
-    const std::string isRotateAllPiecesEnabledMember {"isRotateAllPiecesEnabled"};
     const std::string clearRowsEffectMember {"clearRowsEffect"};
     
     std::string ToString(ControlType controlType) {
@@ -80,11 +79,6 @@ void SettingsService::SetIsGhostPieceEnabled(bool isGhostPieceEnabled) {
     SaveState();
 }
 
-void SettingsService::SetIsRotateAllPiecesEnabled(bool isRotateAllPiecesEnabled) {
-    mIsRotateAllPiecesEnabled = isRotateAllPiecesEnabled;
-    SaveState();
-}
-
 void SettingsService::SetIsSoundEnabled(bool isSoundEnabled) {
     mIsSoundEnabled = isSoundEnabled;
     SaveState();
@@ -109,7 +103,6 @@ void SettingsService::SaveState() {
     Pht::Json::AddBool(document, isSoundEnabledMember, mIsSoundEnabled, allocator);
     Pht::Json::AddBool(document, isMusicEnabledMember, mIsMusicEnabled, allocator);
     Pht::Json::AddBool(document, isGhostPieceEnabledMember, mIsGhostPieceEnabled, allocator);
-    Pht::Json::AddBool(document, isRotateAllPiecesEnabledMember, mIsRotateAllPiecesEnabled, allocator);
     Pht::Json::AddString(document, clearRowsEffectMember, ToString(mClearRowsEffect), allocator);
 
     std::string jsonString;
@@ -135,11 +128,6 @@ bool SettingsService::LoadState() {
         mIsGhostPieceEnabled = Pht::Json::ReadBool(document, isGhostPieceEnabledMember);
     }
 
-    // mIsRotateAllPiecesEnabled added in release 1.0.2. Need to check if it exists before reading it.
-    if (document.HasMember(isRotateAllPiecesEnabledMember.c_str())) {
-        mIsRotateAllPiecesEnabled = Pht::Json::ReadBool(document, isRotateAllPiecesEnabledMember);
-    }
-    
     // mClearRowsEffect added in release 1.1.4. Need to check if it exists before reading it.
     if (document.HasMember(clearRowsEffectMember.c_str())) {
         mClearRowsEffect = ReadClearRowsEffect(document);

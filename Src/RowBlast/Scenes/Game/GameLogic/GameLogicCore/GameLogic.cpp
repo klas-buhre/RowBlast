@@ -1172,24 +1172,6 @@ void GameLogic::RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) {
     }
 }
 
-void GameLogic::RotatePreviewPieces() {
-    if (!mSettingsService.IsRotateAllPiecesEnabled()) {
-        return;
-    }
-
-    RotatePreviewPieces(mCurrentMove.mPreviewPieceRotations.mRotations, Pht::Optional<int> {});
-    RotatePreviewPieces(mCurrentMove.mPreviewPieceRotations.mHudRotations, 4);
-}
-
-void GameLogic::RotatePreviewPieces(PreviewPieceRotations& previewPieceRotations,
-                                    Pht::Optional<int> numRotations) {
-    RotatePreviewPiece(previewPieceRotations.mActive, mCurrentMove.mPieceType, numRotations);
-    RotatePreviewPiece(previewPieceRotations.mSelectable0, mCurrentMove.mSelectablePieces[0],
-                       numRotations);
-    RotatePreviewPiece(previewPieceRotations.mSelectable1, mCurrentMove.mSelectablePieces[1],
-                       numRotations);
-}
-
 void GameLogic::RotatePreviewPiece(Rotation& previewPieceRotation,
                                    const Piece* pieceType,
                                    Pht::Optional<int> numRotationsOptional) {

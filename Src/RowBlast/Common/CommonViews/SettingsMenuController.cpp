@@ -95,16 +95,6 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
         UpdateViewToReflectSettings();
     }
 
-    if (mView.GetRotateAllButton().IsClicked(touchEvent)) {
-        if (settingsService.IsRotateAllPiecesEnabled()) {
-            settingsService.SetIsRotateAllPiecesEnabled(false);
-        } else {
-            settingsService.SetIsRotateAllPiecesEnabled(true);
-        }
-        
-        UpdateViewToReflectSettings();
-    }
-
     if (mView.GetSoundButton().IsClicked(touchEvent)) {
         auto& audio = mEngine.GetAudio();
         if (audio.IsSoundEnabled()) {
@@ -179,7 +169,6 @@ void SettingsMenuController::UpdateViewToReflectSettings() {
     }
 
     mView.SetGhostPieceIsEnabled(settingsService.IsGhostPieceEnabled());
-    mView.SetRotateAllIsEnabled(settingsService.IsRotateAllPiecesEnabled());
     
     auto& audio = mEngine.GetAudio();
     mView.SetSoundIsOn(audio.IsSoundEnabled());

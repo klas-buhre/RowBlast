@@ -107,7 +107,6 @@ namespace RowBlast {
         void SelectMove(const Move& move) override;
         void OnFallingPieceAnimationFinished(bool finalMovementWasADrop) override;
         void RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) override;
-        void RotatePreviewPieces() override;
         void RotateFallingPiece(const Pht::TouchEvent& touchEvent) override;
         void SwitchPiece() override;
         void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) override;
@@ -266,8 +265,6 @@ namespace RowBlast {
                                                      bool resetIsPulledDownFlags = true);
         void PullDownLoosePiecesClearObjective();
         void PullDownLoosePiecesAsteroidObjective();
-        void RotatePreviewPieces(PreviewPieceRotations& previewPieceRotations,
-                                 Pht::Optional<int> numRotations);
         void RotatePreviewPiece(Rotation& previewPieceRotation,
                                 const Piece* pieceType,
                                 Pht::Optional<int> numRotations);

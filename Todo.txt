@@ -44,8 +44,12 @@ Backlog:
      mostly be the target audience and in the playtest they are not.
 
 Ongoing tasks:
-    -Maybe the settings menu should have checkboxes instead.
+    -The controls and clear effect in the settings menu should have radio buttons.
+    -Try to post on indie-dev forums, for example reddit.
     -Figure out why some levels in the progress information is missing on gameanalytics.com.
+    -Consider introducing lasers and bombs earlier to make it a more compact tutorial. Maybe
+     tutorial up to level 5 or 6, and those levels have only retry button. And maybe make some of
+     the earlier a bit simpler (?) to reduce churn.
     -Purchasing
         -Dialogs:
             -No internet connection.    Special icon.   [OK]

@@ -45,7 +45,6 @@ void GestureInputHandler::HandleTouch(const Pht::TouchEvent& touchEvent) {
             ExitBeingDraggedDownState();
             if (TouchIsTap()) {
                 mGameLogic.RotateFallingPiece(touchEvent);
-                mGameLogic.RotatePreviewPieces();
                 return;
             }
             if (TouchIsSwipeUp()) {

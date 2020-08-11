@@ -263,52 +263,6 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                         "Off",
                                                         buttonTextProperties).GetSceneObject();
 
-    CreateLPieceIcon(engine, container, {-5.5f, -6.08f, UiLayer::text}, smallBlockSize, smallBlockOffset);
-    GuiUtils::CreateIcon(engine,
-                         *this,
-                         "rotate.png",
-                         {-5.5f, -6.08f, UiLayer::text},
-                         {1.1f, 1.1f},
-                         container).GetTransform().SetRotation({0.0f, 0.0f, 90.0f});
-    CreateText({-4.8f, -6.33f, UiLayer::text}, "Rotate All Pieces", textProperties, container);
-    
-    Pht::Vec3 rotateAllButtonPosition {3.45f, -6.1f, UiLayer::textRectangle};
-    mRotateAllButton = std::make_unique<MenuButton>(engine,
-                                                    *this,
-                                                    container,
-                                                    rotateAllButtonPosition,
-                                                    buttonInputSize,
-                                                    settingsButtonStyle);
-    CreateLPieceIcon(engine,
-                     *mRotateAllButton,
-                     {-0.7f, 0.07f, UiLayer::buttonText},
-                     smallBlockSize,
-                     smallBlockOffset,
-                     iconColor,
-                     iconShadowColor,
-                     iconShadowOffset,
-                     0.0f);
-    mRotateAllButton->CreateIcon("rotate.png",
-                                 {-0.7f, 0.07f, UiLayer::buttonText},
-                                 {1.1f, 1.1f},
-                                 iconColor,
-                                 iconShadowColor,
-                                 iconShadowOffset).GetTransform().SetRotation({0.0f, 0.0f, 90.0f});
-    mRotateAllDisabledIcon = &mRotateAllButton->CreateIcon("disable.png",
-                                                           {-0.7f, 0.07f, UiLayer::buttonText},
-                                                           {1.2f, 1.2f},
-                                                           iconColor,
-                                                           iconShadowColor,
-                                                           Pht::Vec3{-0.0f, -0.2f, UiLayer::textShadow});
-    mRotateAllDisabledIcon->GetTransform().SetScale({1.0f, 0.3f, 1.0f});
-    mRotateAllDisabledIcon->GetTransform().SetRotation({0.0f, 0.0f, -45.0f});
-    mRotateAllOnText = &mRotateAllButton->CreateText({-0.05f, -0.23f, UiLayer::buttonText},
-                                                     "On",
-                                                     buttonTextProperties).GetSceneObject();
-    mRotateAllOffText = &mRotateAllButton->CreateText({-0.05f, -0.23f, UiLayer::buttonText},
-                                                      "Off",
-                                                      buttonTextProperties).GetSceneObject();
-
     CreateText({-4.8f, -8.53f, UiLayer::text}, "Clear Effect", textProperties, container);
 
     Pht::Vec3 clearEffectButtonPosition {3.45f, -8.3f, UiLayer::textRectangle};
@@ -481,11 +435,6 @@ void SettingsMenuView::SetGhostPieceIsEnabled(bool ghostPieceIsEnabled) {
     SetGhostPieceOffIsVisible(!ghostPieceIsEnabled);
 }
 
-void SettingsMenuView::SetRotateAllIsEnabled(bool rotateAllIsEnabled) {
-    SetRotateAllOnIsVisible(rotateAllIsEnabled);
-    SetRotateAllOffIsVisible(!rotateAllIsEnabled);
-}
-
 void SettingsMenuView::SetMusicOnIsVisible(bool isVisible) {
     mMusicOnText->SetIsVisible(isVisible);
     mMusicOnIcon->SetIsVisible(isVisible);
@@ -534,16 +483,6 @@ void SettingsMenuView::SetGhostPieceOnIsVisible(bool isVisible) {
 void SettingsMenuView::SetGhostPieceOffIsVisible(bool isVisible) {
     mGhostPieceOffText->SetIsVisible(isVisible);
     mGhostPieceDisabledIcon->SetIsVisible(isVisible);
-}
-
-void SettingsMenuView::SetRotateAllOnIsVisible(bool isVisible) {
-    mRotateAllOnText->SetIsVisible(isVisible);
-    mRotateAllDisabledIcon->SetIsVisible(!isVisible);
-}
-
-void SettingsMenuView::SetRotateAllOffIsVisible(bool isVisible) {
-    mRotateAllOffText->SetIsVisible(isVisible);
-    mRotateAllDisabledIcon->SetIsVisible(isVisible);
 }
 
 void SettingsMenuView::EnableFlyClearEffect() {

@@ -35,7 +35,6 @@ namespace RowBlast {
         void EnableClickControls();
         void EnableSwipeControls();
         void SetGhostPieceIsEnabled(bool ghostPieceIsEnabled);
-        void SetRotateAllIsEnabled(bool rotateAllIsEnabled);
         void EnableFlyClearEffect();
         void EnableShrinkClearEffect();
 
@@ -53,10 +52,6 @@ namespace RowBlast {
 
         const MenuButton& GetGhostPieceButton() const {
             return *mGhostPieceButton;
-        }
-
-        const MenuButton& GetRotateAllButton() const {
-            return *mRotateAllButton;
         }
 
         const MenuButton& GetSoundButton() const {
@@ -99,14 +94,11 @@ namespace RowBlast {
         void SetSwipeControlsIsVisible(bool isVisible);
         void SetGhostPieceOnIsVisible(bool isVisible);
         void SetGhostPieceOffIsVisible(bool isVisible);
-        void SetRotateAllOnIsVisible(bool isVisible);
-        void SetRotateAllOffIsVisible(bool isVisible);
 
         const CommonResources& mCommonResources;
         std::unique_ptr<MenuButton> mCloseButton;
         std::unique_ptr<MenuButton> mControlsButton;
         std::unique_ptr<MenuButton> mGhostPieceButton;
-        std::unique_ptr<MenuButton> mRotateAllButton;
         std::unique_ptr<MenuButton> mSoundButton;
         std::unique_ptr<MenuButton> mMusicButton;
         std::unique_ptr<MenuButton> mClearEffectButton;
@@ -125,9 +117,6 @@ namespace RowBlast {
         Pht::SceneObject* mGhostPieceDisabledIcon {nullptr};
         Pht::SceneObject* mGhostPieceOnText {nullptr};
         Pht::SceneObject* mGhostPieceOffText {nullptr};
-        Pht::SceneObject* mRotateAllDisabledIcon {nullptr};
-        Pht::SceneObject* mRotateAllOnText {nullptr};
-        Pht::SceneObject* mRotateAllOffText {nullptr};
         Pht::SceneObject* mSoundOnText {nullptr};
         Pht::SceneObject* mSoundOnIcon {nullptr};
         Pht::SceneObject* mSoundOffText {nullptr};

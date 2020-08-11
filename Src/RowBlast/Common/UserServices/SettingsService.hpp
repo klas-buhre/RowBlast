@@ -19,7 +19,6 @@ namespace RowBlast {
         
         void SetControlType(ControlType controlType);
         void SetIsGhostPieceEnabled(bool isGhostPieceEnabled);
-        void SetIsRotateAllPiecesEnabled(bool isRotateAllPiecesEnabled);
         void SetIsSoundEnabled(bool isSoundEnabled);
         void SetIsMusicEnabled(bool isMusicEnabled);
         void SetClearRowsEffect(ClearRowsEffect clearRowsEffect);
@@ -30,10 +29,6 @@ namespace RowBlast {
         
         bool IsGhostPieceEnabled() const {
             return mIsGhostPieceEnabled;
-        }
-
-        bool IsRotateAllPiecesEnabled() const {
-            return mIsRotateAllPiecesEnabled;
         }
 
         bool IsSoundEnabled() const {
@@ -54,7 +49,6 @@ namespace RowBlast {
 
         ControlType mControlType {ControlType::Drag};
         bool mIsGhostPieceEnabled {true};
-        bool mIsRotateAllPiecesEnabled {false};
         bool mIsSoundEnabled {true};
         bool mIsMusicEnabled {true};
         ClearRowsEffect mClearRowsEffect {ClearRowsEffect::Shrink};

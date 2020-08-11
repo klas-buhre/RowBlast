@@ -32,7 +32,6 @@ namespace RowBlast {
         virtual void SelectMove(const Move& move) = 0;
         virtual void OnFallingPieceAnimationFinished(bool finalMovementWasADrop) = 0;
         virtual void RotatePreviewPiece(PreviewPieceIndex previewPieceIndex) = 0;
-        virtual void RotatePreviewPieces() = 0;
         virtual void RotateFallingPiece(const Pht::TouchEvent& touchEvent) = 0;
         virtual void SwitchPiece() = 0;
         virtual void SetFallingPieceXPosWithCollisionDetection(float fallingPieceNewX) = 0;
