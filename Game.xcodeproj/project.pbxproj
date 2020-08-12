@@ -31,6 +31,8 @@
 		1750CAFD2326B6C10092B2E6 /* disable.png in Resources */ = {isa = PBXBuildFile; fileRef = 1750CAFC2326B6C10092B2E6 /* disable.png */; };
 		1750CB022328F9810092B2E6 /* SettingsMenuView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1750CAFE2328F9800092B2E6 /* SettingsMenuView.cpp */; };
 		1750CB032328F9810092B2E6 /* SettingsMenuController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */; };
+		17511CA824E41B4F00A01A2C /* RadioButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17511CA624E41B4E00A01A2C /* RadioButton.cpp */; };
+		17511CAC24E466F500A01A2C /* radio_button_selected.png in Resources */ = {isa = PBXBuildFile; fileRef = 17511CAB24E466F500A01A2C /* radio_button_selected.png */; };
 		1752255124B73E140002BE3E /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1752255024B73E140002BE3E /* StoreKit.framework */; };
 		1752255924B9F86A0002BE3E /* PurchasingIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = 1752255824B9F86A0002BE3E /* PurchasingIOS.mm */; };
 		1752256224BB66CC0002BE3E /* PurchaseEvent.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752256024BB66CC0002BE3E /* PurchaseEvent.cpp */; };
@@ -617,6 +619,9 @@
 		1750CAFF2328F9800092B2E6 /* SettingsMenuController.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuController.hpp; sourceTree = "<group>"; };
 		1750CB002328F9800092B2E6 /* SettingsMenuView.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SettingsMenuView.hpp; sourceTree = "<group>"; };
 		1750CB012328F9810092B2E6 /* SettingsMenuController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SettingsMenuController.cpp; sourceTree = "<group>"; };
+		17511CA624E41B4E00A01A2C /* RadioButton.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = RadioButton.cpp; sourceTree = "<group>"; };
+		17511CA724E41B4E00A01A2C /* RadioButton.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = RadioButton.hpp; sourceTree = "<group>"; };
+		17511CAB24E466F500A01A2C /* radio_button_selected.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = radio_button_selected.png; sourceTree = "<group>"; };
 		1752255024B73E140002BE3E /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		1752255624B8C6CC0002BE3E /* IPurchasing.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = IPurchasing.hpp; sourceTree = "<group>"; };
 		1752255824B9F86A0002BE3E /* PurchasingIOS.mm */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = PurchasingIOS.mm; sourceTree = "<group>"; };
@@ -1812,6 +1817,8 @@
 				62216A1F21EB376E001CB9A1 /* MenuButton.hpp */,
 				62216A2821EB376E001CB9A1 /* MenuWindow.cpp */,
 				62216A2521EB376E001CB9A1 /* MenuWindow.hpp */,
+				17511CA624E41B4E00A01A2C /* RadioButton.cpp */,
+				17511CA724E41B4E00A01A2C /* RadioButton.hpp */,
 				62216A2721EB376E001CB9A1 /* SlidingMenuAnimation.cpp */,
 				62216A2A21EB376E001CB9A1 /* SlidingMenuAnimation.hpp */,
 				62216A2621EB376E001CB9A1 /* SpinningWheelEffect.cpp */,
@@ -2526,6 +2533,7 @@
 				172DF55924C0ACF0002BD049 /* network.png */,
 				62A8E334222EC73300F1BF73 /* play.png */,
 				621F145D22396CA7004165A2 /* previous.png */,
+				17511CAB24E466F500A01A2C /* radio_button_selected.png */,
 				6229833C222E9761001A7E1C /* restart.png */,
 				6221D571223046E50098395A /* right_arrow.png */,
 				17DD46F5234D03EC00786C63 /* rotate.png */,
@@ -3637,6 +3645,7 @@
 				622169A021DE7EF6001CB9A1 /* logo.wav in Resources */,
 				6221D570223042980098395A /* circle.png in Resources */,
 				62276E8E2274A96000679BC6 /* level68.json in Resources */,
+				17511CAC24E466F500A01A2C /* radio_button_selected.png in Resources */,
 				1787AB082379D2BD00E3D314 /* terrain1_2888.obj in Resources */,
 				62216C5021ECDBAE001CB9A1 /* privacy_policy_english.txt in Resources */,
 				62276E622274A96000679BC6 /* level38.json in Resources */,
@@ -3971,6 +3980,7 @@
 				1752257A24BE1EB80002BE3E /* StoreMenuView.cpp in Sources */,
 				62216C1121EB377F001CB9A1 /* LongIPiece.cpp in Sources */,
 				623F5E6022B563A900242C10 /* Camera.cpp in Sources */,
+				17511CA824E41B4F00A01A2C /* RadioButton.cpp in Sources */,
 				62216BEA21EB377E001CB9A1 /* FieldSceneSystem.cpp in Sources */,
 				62243E9522B7952500EB922F /* OpenALSource.cpp in Sources */,
 				62216C1721EB377F001CB9A1 /* ValidMovesSearch.cpp in Sources */,
