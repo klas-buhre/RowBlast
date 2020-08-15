@@ -8,6 +8,8 @@
 
 // Game includes.
 #include "MenuButton.hpp"
+#include "RadioButton.hpp"
+#include "MenuWindow.hpp"
 
 namespace Pht {
     class IEngine;
@@ -25,7 +27,7 @@ namespace RowBlast {
 
         SettingsMenuView(Pht::IEngine& engine,
                          const CommonResources& commonResources,
-                         SceneId sceneId);
+                         PotentiallyZoomedScreen potentiallyZoomedScreen);
 
         void EnableControlsButton();
         void DisableControlsButton();
@@ -66,16 +68,13 @@ namespace RowBlast {
             return *mClearEffectButton;
         }
 
-        const MenuButton& GetBackButton() const {
-            return *mBackButton;
-        }
-        
     private:
         void CreateLPieceIcon(Pht::IEngine& engine,
                               Pht::SceneObject& parent,
                               const Pht::Vec3& position,
                               const Pht::Vec2& blockSize,
-                              float blockOffset);
+                              float blockOffset,
+                              float angle);
         Pht::SceneObject& CreateLPieceIcon(Pht::IEngine& engine,
                                            MenuButton& button,
                                            const Pht::Vec3& position,
@@ -102,7 +101,9 @@ namespace RowBlast {
         std::unique_ptr<MenuButton> mSoundButton;
         std::unique_ptr<MenuButton> mMusicButton;
         std::unique_ptr<MenuButton> mClearEffectButton;
-        std::unique_ptr<MenuButton> mBackButton;
+        std::unique_ptr<RadioButton> mDragAndDropButton;
+        std::unique_ptr<RadioButton> mSwipeButton;
+        std::unique_ptr<RadioButton> mSingleTapButton;
         Pht::SceneObject* mDragControlsText {nullptr};
         Pht::SceneObject* mDragControlsIcon1 {nullptr};
         Pht::SceneObject* mDragControlsIcon2 {nullptr};

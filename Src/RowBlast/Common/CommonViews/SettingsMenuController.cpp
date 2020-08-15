@@ -16,7 +16,11 @@ SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
                                                SettingsMenuView::SceneId sceneId) :
     mEngine {engine},
     mUserServices {userServices},
-    mView {engine, commonResources, sceneId},
+    mView {
+        engine,
+        commonResources,
+        sceneId == SettingsMenuView::SceneId::Game ? PotentiallyZoomedScreen::Yes : PotentiallyZoomedScreen::No
+    },
     mSlidingMenuAnimation {engine, mView},
     mSceneId {sceneId} {}
 
@@ -137,9 +141,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
         UpdateViewToReflectSettings();
     }
 
-    if (mView.GetBackButton().IsClicked(touchEvent) ||
-        mView.GetCloseButton().IsClicked(touchEvent)) {
-
+    if (mView.GetCloseButton().IsClicked(touchEvent)) {
         mDeferredResult = Result::GoBack;
         auto updateFade = mSceneId == SettingsMenuView::SceneId::Map ?
                           SlidingMenuAnimation::UpdateFade::Yes :

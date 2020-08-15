@@ -20,7 +20,7 @@ namespace {
         iconMaterial.SetAmbient(Pht::Color{0.95f, 0.95f, 0.95f});
         
         auto& sceneManager = engine.GetSceneManager();
-        return sceneManager.CreateRenderableObject(Pht::QuadMesh {1.7f, 1.7f, std::string{"radioButton"}},
+        return sceneManager.CreateRenderableObject(Pht::QuadMesh {1.1f, 1.1f, std::string{"radioButton"}},
                                                    iconMaterial);
     }
 }
