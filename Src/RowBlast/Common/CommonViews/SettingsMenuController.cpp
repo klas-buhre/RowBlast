@@ -26,9 +26,9 @@ SettingsMenuController::SettingsMenuController(Pht::IEngine& engine,
 
 void SettingsMenuController::SetUp(bool isControlTypeChangeAllowed) {
     if (isControlTypeChangeAllowed) {
-        mView.EnableControlsButton();
+        mView.EnableControlsSection();
     } else {
-        mView.DisableControlsButton();
+        mView.DisableControlsSection();
     }
 
     mSlidingMenuAnimation.SetUp(SlidingMenuAnimation::UpdateFade::No,
@@ -68,25 +68,17 @@ SettingsMenuController::Result SettingsMenuController::HandleInput() {
 SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchEvent& touchEvent) {
     auto& settingsService = mUserServices.GetSettingsService();
 
-    if (mView.IsControlsButtonEnabled()) {
-        if (mView.GetControlsButton().IsClicked(touchEvent)) {
-            switch (settingsService.GetControlType()) {
-                case ControlType::Drag:
-                    settingsService.SetControlType(ControlType::Click);
-                    break;
-                case ControlType::Click:
-                    settingsService.SetControlType(ControlType::Swipe);
-                    break;
-                case ControlType::Swipe:
-                    settingsService.SetControlType(ControlType::Drag);
-                    break;
-                default:
-                    settingsService.SetControlType(ControlType::Drag);
-                    break;
-            }
-            
+    if (mView.IsControlsSectionEnabled()) {
+        if (mView.GetDragAndDropButton().IsClicked(touchEvent)) {
+            settingsService.SetControlType(ControlType::Drag);
             UpdateViewToReflectSettings();
-        }
+        } else if (mView.GetSwipeButton().IsClicked(touchEvent)) {
+            settingsService.SetControlType(ControlType::Swipe);
+            UpdateViewToReflectSettings();
+        } else if (mView.GetSingleTapButtonButton().IsClicked(touchEvent)) {
+            settingsService.SetControlType(ControlType::Click);
+            UpdateViewToReflectSettings();
+        }    
     }
 
     if (mView.GetGhostPieceButton().IsClicked(touchEvent)) {
@@ -154,19 +146,20 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
 }
 
 void SettingsMenuController::UpdateViewToReflectSettings() {
+    mView.DeselectAllControlButtons();
     auto& settingsService = mUserServices.GetSettingsService();
     switch (settingsService.GetControlType()) {
         case ControlType::Drag:
-            mView.EnableDragControls();
+            mView.GetDragAndDropButton().SetIsSelected(true);
             break;
         case ControlType::Click:
-            mView.EnableClickControls();
+            mView.GetSingleTapButtonButton().SetIsSelected(true);
             break;
         case ControlType::Swipe:
-            mView.EnableSwipeControls();
+            mView.GetSwipeButton().SetIsSelected(true);
             break;
         default:
-            mView.EnableDragControls();
+            mView.GetDragAndDropButton().SetIsSelected(true);
             break;
     }
 

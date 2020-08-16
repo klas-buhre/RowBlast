@@ -144,9 +144,6 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                "Off",
                                                buttonTextProperties).GetSceneObject());
 
-
-
-
     auto blockOffset = 0.4f;
     Pht::Vec2 blockSize {0.39f, 0.39f};
     CreateLPieceIcon(engine, container, {-5.5f, -1.68f, UiLayer::text}, blockSize, blockOffset, 0.0f);
@@ -185,104 +182,31 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                         "Off",
                                                         buttonTextProperties).GetSceneObject();
 
-
-
-
-
-
-
-
+    auto& line2SceneObject =
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
+    line2SceneObject.GetTransform().SetPosition({0.0f, -2.9f, UiLayer::textRectangle});
+    container.AddChild(line2SceneObject);
+    
+    mControlsSection = &CreateSceneObject();
+    GetRoot().AddChild(*mControlsSection);
     GuiUtils::CreateIcon(engine,
                          *this,
                          "hand.png",
-                         {-5.55f, -3.88f, UiLayer::text},
+                         {-5.55f, -0.28f, UiLayer::text},
                          {0.9f, 0.9f},
-                         container);
-    CreateText({-4.8f, -4.13f, UiLayer::text}, "Controls:", textProperties, container);
-
-    Pht::Vec3 controlsButtonPosition {3.45f, -3.9f, UiLayer::textRectangle};
-    mControlsButton = std::make_unique<MenuButton>(engine,
-                                                   *this,
-                                                   container,
-                                                   controlsButtonPosition,
-                                                   buttonInputSize,
-                                                   settingsButtonStyle);
-    mControlsButton->GetSceneObject().SetIsVisible(false);
-    mDragControlsText = &(mControlsButton->CreateText({-1.55f, -0.23f, UiLayer::buttonText},
-                                                      "Drag&Drop",
-                                                      buttonTextProperties).GetSceneObject());
-    mDragControlsIcon1 = &mControlsButton->CreateIcon("hand.png",
-                                                      {-2.0f, -0.13f, UiLayer::buttonText},
-                                                      {0.9f, 0.9f},
-                                                      iconColor,
-                                                      iconShadowColor,
-                                                      iconShadowOffset);
-    auto smallBlockOffset = 0.2f;
-    Pht::Vec2 smallBlockSize {0.19f, 0.19f};
-    mDragControlsIcon2 = &CreateLPieceIcon(engine,
-                                           *mControlsButton,
-                                           {-1.93f, 0.43f, UiLayer::buttonText},
-                                           smallBlockSize,
-                                           smallBlockOffset,
-                                           iconColor,
-                                           {0.2f, 0.2f, 0.2f, 0.6f},
-                                           {-0.05f, 0.05f, UiLayer::textShadow},
-                                           90.0f);
-
-    mClickControlsText = &(mControlsButton->CreateText({-1.25f, -0.23f, UiLayer::buttonText},
-                                                       "SingleTap",
-                                                       buttonTextProperties).GetSceneObject());
-    mClickControlsIcon1 = &mControlsButton->CreateIcon("hand.png",
-                                                       {-1.85f, 0.03f, UiLayer::buttonText},
-                                                       {0.9f, 0.9f},
-                                                       iconColor,
-                                                       iconShadowColor,
-                                                       iconShadowOffset);
-    mClickControlsIcon2 = &mControlsButton->CreateIcon("circle.png",
-                                                       {-1.88f, 0.42f, UiLayer::buttonText},
-                                                       {0.36f, 0.36f},
-                                                       iconColor,
-                                                       iconShadowColor,
-                                                       iconShadowOffset);
-    mClickControlsIcon3 = &mControlsButton->CreateIcon("circle.png",
-                                                       {-1.88f, 0.42f, UiLayer::buttonText},
-                                                       {0.42f, 0.42f},
-                                                       iconColor,
-                                                       iconShadowColor,
-                                                       iconShadowOffset);
-                
-    mSwipeControlsText = &(mControlsButton->CreateText({-0.7f, -0.23f, UiLayer::buttonText},
-                                                       "Swipe",
-                                                       buttonTextProperties).GetSceneObject());
-    mSwipeControlsIcon1 = &mControlsButton->CreateIcon("hand.png",
-                                                       {-1.4f, 0.03f, UiLayer::buttonText},
-                                                       {0.9f, 0.9f},
-                                                       iconColor,
-                                                       iconShadowColor,
-                                                       iconShadowOffset);
-    mSwipeControlsIcon2 = &mControlsButton->CreateIcon("back.png",
-                                                       {-1.8f, 0.4f, UiLayer::buttonText},
-                                                       {0.42f, 0.42f},
-                                                       iconColor,
-                                                       iconShadowColor,
-                                                       iconShadowOffset);
-    mSwipeControlsIcon3 = &mControlsButton->CreateIcon("right_arrow.png",
-                                                       {-1.05f, 0.4f, UiLayer::buttonText},
-                                                       {0.42f, 0.42f},
-                                                       iconColor,
-                                                       iconShadowColor,
-                                                       iconShadowOffset);
-
-
-
+                         *mControlsSection);
+    CreateText({-4.8f, -0.53f, UiLayer::text}, "Controls:", textProperties, *mControlsSection);
 
     auto centeredTextProperties = textProperties;
     centeredTextProperties.mAlignment = Pht::TextAlignment::CenterX;
 
-    Pht::Vec2 controlsInputSize {3.0f, 3.0f};
+    Pht::Vec2 controlsInputSize {80.0f, 80.0f};
     auto& dragAndDropSection = CreateSceneObject();
     dragAndDropSection.GetTransform().SetPosition({-3.9f, -3.0f, UiLayer::root});
-    GetRoot().AddChild(dragAndDropSection);
+    mControlsSection->AddChild(dragAndDropSection);
+    
+    auto smallBlockOffset = 0.2f;
+    Pht::Vec2 smallBlockSize {0.19f, 0.19f};
 
     GuiUtils::CreateIcon(engine,
                          *this,
@@ -305,12 +229,9 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                        Pht::Vec3 {0.0f, -1.0f, 0.0f},
                                                        controlsInputSize);
 
-
-
-
     auto& swipeSection = CreateSceneObject();
     swipeSection.GetTransform().SetPosition({0.0f, -3.0f, UiLayer::root});
-    GetRoot().AddChild(swipeSection);
+    mControlsSection->AddChild(swipeSection);
 
     GuiUtils::CreateIcon(engine,
                          *this,
@@ -339,11 +260,9 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                  Pht::Vec3 {0.0f, -1.0f, 0.0f},
                                                  controlsInputSize);
  
-
-
     auto& singleTapSection = CreateSceneObject();
     singleTapSection.GetTransform().SetPosition({3.9f, -3.0f, UiLayer::root});
-    GetRoot().AddChild(singleTapSection);
+    mControlsSection->AddChild(singleTapSection);
 
     GuiUtils::CreateIcon(engine,
                          *this,
@@ -472,22 +391,14 @@ Pht::SceneObject& SettingsMenuView::CreateLPieceIcon(Pht::IEngine& engine,
     return iconContainer;
 }
 
-void SettingsMenuView::EnableControlsButton() {
-    mIsControlsButtonEnabled = true;
-    
-    auto& blueButtonRenderable =
-        mCommonResources.GetGuiResources().GetSmallBlueGlossyButton(PotentiallyZoomedScreen::Yes);
-    
-    mControlsButton->GetSceneObject().SetRenderable(&blueButtonRenderable);
+void SettingsMenuView::EnableControlsSection() {
+    mIsControlsSectionEnabled = true;
+    mControlsSection->SetIsVisible(true);
 }
 
-void SettingsMenuView::DisableControlsButton() {
-    mIsControlsButtonEnabled = false;
-
-    auto& grayButtonRenderable =
-        mCommonResources.GetGuiResources().GetSmallGrayGlossyButtonPotentiallyZoomedScreen();
-    
-    mControlsButton->GetSceneObject().SetRenderable(&grayButtonRenderable);
+void SettingsMenuView::DisableControlsSection() {
+    mIsControlsSectionEnabled = false;
+    mControlsSection->SetIsVisible(false);
 }
 
 void SettingsMenuView::SetMusicIsOn(bool musicIsOn) {
@@ -498,24 +409,6 @@ void SettingsMenuView::SetMusicIsOn(bool musicIsOn) {
 void SettingsMenuView::SetSoundIsOn(bool soundIsOn) {
     SetSoundOnIsVisible(soundIsOn);
     SetSoundOffIsVisible(!soundIsOn);
-}
-
-void SettingsMenuView::EnableDragControls() {
-    SetDragControlsIsVisible(true);
-    SetClickControlsIsVisible(false);
-    SetSwipeControlsIsVisible(false);
-}
-
-void SettingsMenuView::EnableClickControls() {
-    SetDragControlsIsVisible(false);
-    SetClickControlsIsVisible(true);
-    SetSwipeControlsIsVisible(false);
-}
-
-void SettingsMenuView::EnableSwipeControls() {
-    SetDragControlsIsVisible(false);
-    SetClickControlsIsVisible(false);
-    SetSwipeControlsIsVisible(true);
 }
 
 void SettingsMenuView::SetGhostPieceIsEnabled(bool ghostPieceIsEnabled) {
@@ -543,26 +436,6 @@ void SettingsMenuView::SetSoundOffIsVisible(bool isVisible) {
     mSoundOffIcon->SetIsVisible(isVisible);
 }
 
-void SettingsMenuView::SetDragControlsIsVisible(bool isVisible) {
-    mDragControlsText->SetIsVisible(isVisible);
-    mDragControlsIcon1->SetIsVisible(isVisible);
-    mDragControlsIcon2->SetIsVisible(isVisible);
-}
-
-void SettingsMenuView::SetClickControlsIsVisible(bool isVisible) {
-    mClickControlsText->SetIsVisible(isVisible);
-    mClickControlsIcon1->SetIsVisible(isVisible);
-    mClickControlsIcon2->SetIsVisible(isVisible);
-    mClickControlsIcon3->SetIsVisible(isVisible);
-}
-
-void SettingsMenuView::SetSwipeControlsIsVisible(bool isVisible) {
-    mSwipeControlsText->SetIsVisible(isVisible);
-    mSwipeControlsIcon1->SetIsVisible(isVisible);
-    mSwipeControlsIcon2->SetIsVisible(isVisible);
-    mSwipeControlsIcon3->SetIsVisible(isVisible);
-}
-
 void SettingsMenuView::SetGhostPieceOnIsVisible(bool isVisible) {
     mGhostPieceOnText->SetIsVisible(isVisible);
     mGhostPieceDisabledIcon->SetIsVisible(!isVisible);
@@ -581,4 +454,10 @@ void SettingsMenuView::EnableFlyClearEffect() {
 void SettingsMenuView::EnableShrinkClearEffect() {
     mShrinkClearEffectText->SetIsVisible(true);
     mFlyClearEffectText->SetIsVisible(false);
+}
+
+void SettingsMenuView::DeselectAllControlButtons() {
+    mDragAndDropButton->SetIsSelected(false);
+    mSwipeButton->SetIsSelected(false);
+    mSingleTapButton->SetIsSelected(false);
 }

@@ -57,7 +57,11 @@ bool RadioButton::IsClicked(const Pht::TouchEvent& event) {
     return isClicked;
 }
 
-void RadioButton::SetIsNotSelected() {
-    mIsSelected = false;
-    mRadioButtonSceneObject->SetRenderable(mNotSelectedRenderable.get());
+void RadioButton::SetIsSelected(bool isSelected) {
+    mIsSelected = isSelected;
+    if (isSelected) {
+        mRadioButtonSceneObject->SetRenderable(mSelectedRenderable.get());
+    } else {
+        mRadioButtonSceneObject->SetRenderable(mNotSelectedRenderable.get());
+    }
 }

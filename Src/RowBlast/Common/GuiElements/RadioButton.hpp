@@ -22,7 +22,7 @@ namespace RowBlast {
                     const Pht::Vec2& inputSize);
         
         bool IsClicked(const Pht::TouchEvent& event);
-        void SetIsNotSelected();
+        void SetIsSelected(bool isSelected);
         
         bool IsSelected() {
             return mIsSelected;

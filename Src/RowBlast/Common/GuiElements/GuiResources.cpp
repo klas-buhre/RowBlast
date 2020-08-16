@@ -240,14 +240,6 @@ GuiResources::GuiResources(Pht::IEngine& engine, const CommonResources& commonRe
                            ButtonColor::DarkBlue,
                            PotentiallyZoomedScreen::Yes)
     },
-    mSmallGrayGlossyButtonPotentiallyZoomedScreen {
-        CreateGlossyButton(engine,
-                           commonResources,
-                           ButtonSize::Small,
-                           ButtonColor::Gray,
-                           PotentiallyZoomedScreen::Yes)
-    },
-
     mLargeGreenGlossyButton {
         CreateGlossyButton(engine,
                            commonResources,

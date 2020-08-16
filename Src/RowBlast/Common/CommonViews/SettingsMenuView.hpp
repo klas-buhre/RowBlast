@@ -29,27 +29,21 @@ namespace RowBlast {
                          const CommonResources& commonResources,
                          PotentiallyZoomedScreen potentiallyZoomedScreen);
 
-        void EnableControlsButton();
-        void DisableControlsButton();
+        void EnableControlsSection();
+        void DisableControlsSection();
         void SetMusicIsOn(bool musicIsOn);
         void SetSoundIsOn(bool soundIsOn);
-        void EnableDragControls();
-        void EnableClickControls();
-        void EnableSwipeControls();
         void SetGhostPieceIsEnabled(bool ghostPieceIsEnabled);
         void EnableFlyClearEffect();
         void EnableShrinkClearEffect();
+        void DeselectAllControlButtons();
 
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;
         }
         
-        bool IsControlsButtonEnabled() const {
-            return mIsControlsButtonEnabled;
-        }
-
-        const MenuButton& GetControlsButton() const {
-            return *mControlsButton;
+        bool IsControlsSectionEnabled() const {
+            return mIsControlsSectionEnabled;
         }
 
         const MenuButton& GetGhostPieceButton() const {
@@ -66,6 +60,18 @@ namespace RowBlast {
         
         const MenuButton& GetClearEffectButton() const {
             return *mClearEffectButton;
+        }
+        
+        RadioButton& GetDragAndDropButton() {
+            return *mDragAndDropButton;
+        }
+
+        RadioButton& GetSwipeButton() {
+            return *mSwipeButton;
+        }
+
+        RadioButton& GetSingleTapButtonButton() {
+            return *mSingleTapButton;
         }
 
     private:
@@ -88,15 +94,11 @@ namespace RowBlast {
         void SetMusicOffIsVisible(bool isVisible);
         void SetSoundOnIsVisible(bool isVisible);
         void SetSoundOffIsVisible(bool isVisible);
-        void SetDragControlsIsVisible(bool isVisible);
-        void SetClickControlsIsVisible(bool isVisible);
-        void SetSwipeControlsIsVisible(bool isVisible);
         void SetGhostPieceOnIsVisible(bool isVisible);
         void SetGhostPieceOffIsVisible(bool isVisible);
 
         const CommonResources& mCommonResources;
         std::unique_ptr<MenuButton> mCloseButton;
-        std::unique_ptr<MenuButton> mControlsButton;
         std::unique_ptr<MenuButton> mGhostPieceButton;
         std::unique_ptr<MenuButton> mSoundButton;
         std::unique_ptr<MenuButton> mMusicButton;
@@ -104,17 +106,7 @@ namespace RowBlast {
         std::unique_ptr<RadioButton> mDragAndDropButton;
         std::unique_ptr<RadioButton> mSwipeButton;
         std::unique_ptr<RadioButton> mSingleTapButton;
-        Pht::SceneObject* mDragControlsText {nullptr};
-        Pht::SceneObject* mDragControlsIcon1 {nullptr};
-        Pht::SceneObject* mDragControlsIcon2 {nullptr};
-        Pht::SceneObject* mClickControlsText {nullptr};
-        Pht::SceneObject* mClickControlsIcon1 {nullptr};
-        Pht::SceneObject* mClickControlsIcon2 {nullptr};
-        Pht::SceneObject* mClickControlsIcon3 {nullptr};
-        Pht::SceneObject* mSwipeControlsText {nullptr};
-        Pht::SceneObject* mSwipeControlsIcon1 {nullptr};
-        Pht::SceneObject* mSwipeControlsIcon2 {nullptr};
-        Pht::SceneObject* mSwipeControlsIcon3 {nullptr};
+        Pht::SceneObject* mControlsSection {nullptr};
         Pht::SceneObject* mGhostPieceDisabledIcon {nullptr};
         Pht::SceneObject* mGhostPieceOnText {nullptr};
         Pht::SceneObject* mGhostPieceOffText {nullptr};
@@ -128,7 +120,7 @@ namespace RowBlast {
         Pht::SceneObject* mMusicOffIcon {nullptr};
         Pht::SceneObject* mShrinkClearEffectText {nullptr};
         Pht::SceneObject* mFlyClearEffectText {nullptr};
-        bool mIsControlsButtonEnabled {true};
+        bool mIsControlsSectionEnabled {true};
     };
 }
 
