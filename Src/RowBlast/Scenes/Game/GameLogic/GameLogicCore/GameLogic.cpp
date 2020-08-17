@@ -602,7 +602,7 @@ void GameLogic::HandleClearedFilledRows(const Field::RemovedSubCells& removedSub
         case ClearRowsEffect::Shrink:
             mFlyingBlocksSystem.AddBlockRowsWithShrinkEffect(removedSubCells);
             break;
-        case ClearRowsEffect::Fly:
+        case ClearRowsEffect::Throw:
             mFlyingBlocksSystem.AddBlocks(removedSubCells);
             break;
         default:

@@ -47,8 +47,8 @@ namespace {
         switch (clearRowsEffect) {
             case ClearRowsEffect::Shrink:
                 return "Shrink";
-            case ClearRowsEffect::Fly:
-                return "Fly";
+            case ClearRowsEffect::Throw:
+                return "Throw";
         }
     }
     
@@ -57,8 +57,8 @@ namespace {
         if (clearRowsEffect == "Shrink") {
             return ClearRowsEffect::Shrink;
         }
-        if (clearRowsEffect == "Fly") {
-            return ClearRowsEffect::Fly;
+        if (clearRowsEffect == "Throw") {
+            return ClearRowsEffect::Throw;
         }
         
         assert(!"Unsupported clear rows effect");

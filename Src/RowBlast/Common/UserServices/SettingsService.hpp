@@ -10,7 +10,7 @@ namespace RowBlast {
     
     enum class ClearRowsEffect {
         Shrink,
-        Fly
+        Throw
     };
 
     class SettingsService {

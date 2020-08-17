@@ -34,9 +34,8 @@ namespace RowBlast {
         void SetMusicIsOn(bool musicIsOn);
         void SetSoundIsOn(bool soundIsOn);
         void SetGhostPieceIsEnabled(bool ghostPieceIsEnabled);
-        void EnableFlyClearEffect();
-        void EnableShrinkClearEffect();
         void DeselectAllControlButtons();
+        void DeselectAllClearEffectButtons();
 
         const MenuButton& GetCloseButton() const {
             return *mCloseButton;
@@ -58,10 +57,6 @@ namespace RowBlast {
             return *mMusicButton;
         }
         
-        const MenuButton& GetClearEffectButton() const {
-            return *mClearEffectButton;
-        }
-        
         RadioButton& GetDragAndDropButton() {
             return *mDragAndDropButton;
         }
@@ -70,11 +65,25 @@ namespace RowBlast {
             return *mSwipeButton;
         }
 
-        RadioButton& GetSingleTapButtonButton() {
+        RadioButton& GetSingleTapButton() {
             return *mSingleTapButton;
+        }
+        
+        RadioButton& GetThrowButton() {
+            return *mThrowButton;
+        }
+
+        RadioButton& GetShrinkButton() {
+            return *mShrinkButton;
         }
 
     private:
+        void CreateNineSmallBlocks(Pht::IEngine& engine,
+                                   Pht::SceneObject& parent,
+                                   const Pht::Vec3& position);
+        void CreateThreeSmallBlocks(Pht::IEngine& engine,
+                                    Pht::SceneObject& parent,
+                                    const Pht::Vec3& position);
         void CreateLPieceIcon(Pht::IEngine& engine,
                               Pht::SceneObject& parent,
                               const Pht::Vec3& position,
@@ -102,10 +111,11 @@ namespace RowBlast {
         std::unique_ptr<MenuButton> mGhostPieceButton;
         std::unique_ptr<MenuButton> mSoundButton;
         std::unique_ptr<MenuButton> mMusicButton;
-        std::unique_ptr<MenuButton> mClearEffectButton;
         std::unique_ptr<RadioButton> mDragAndDropButton;
         std::unique_ptr<RadioButton> mSwipeButton;
         std::unique_ptr<RadioButton> mSingleTapButton;
+        std::unique_ptr<RadioButton> mThrowButton;
+        std::unique_ptr<RadioButton> mShrinkButton;
         Pht::SceneObject* mControlsSection {nullptr};
         Pht::SceneObject* mGhostPieceDisabledIcon {nullptr};
         Pht::SceneObject* mGhostPieceOnText {nullptr};
@@ -118,8 +128,6 @@ namespace RowBlast {
         Pht::SceneObject* mMusicOnIcon {nullptr};
         Pht::SceneObject* mMusicOffText {nullptr};
         Pht::SceneObject* mMusicOffIcon {nullptr};
-        Pht::SceneObject* mShrinkClearEffectText {nullptr};
-        Pht::SceneObject* mFlyClearEffectText {nullptr};
         bool mIsControlsSectionEnabled {true};
     };
 }

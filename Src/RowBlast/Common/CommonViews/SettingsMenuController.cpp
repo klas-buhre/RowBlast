@@ -75,7 +75,7 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
         } else if (mView.GetSwipeButton().IsClicked(touchEvent)) {
             settingsService.SetControlType(ControlType::Swipe);
             UpdateViewToReflectSettings();
-        } else if (mView.GetSingleTapButtonButton().IsClicked(touchEvent)) {
+        } else if (mView.GetSingleTapButton().IsClicked(touchEvent)) {
             settingsService.SetControlType(ControlType::Click);
             UpdateViewToReflectSettings();
         }    
@@ -117,19 +117,11 @@ SettingsMenuController::Result SettingsMenuController::OnTouch(const Pht::TouchE
         UpdateViewToReflectSettings();
     }
     
-    if (mView.GetClearEffectButton().IsClicked(touchEvent)) {
-        switch (settingsService.GetClearRowsEffect()) {
-            case ClearRowsEffect::Shrink:
-                settingsService.SetClearRowsEffect(ClearRowsEffect::Fly);
-                break;
-            case ClearRowsEffect::Fly:
-                settingsService.SetClearRowsEffect(ClearRowsEffect::Shrink);
-                break;
-            default:
-                settingsService.SetClearRowsEffect(ClearRowsEffect::Shrink);
-                break;
-        }
-        
+    if (mView.GetThrowButton().IsClicked(touchEvent)) {
+        settingsService.SetClearRowsEffect(ClearRowsEffect::Throw);
+        UpdateViewToReflectSettings();
+    } else if (mView.GetShrinkButton().IsClicked(touchEvent)) {
+        settingsService.SetClearRowsEffect(ClearRowsEffect::Shrink);
         UpdateViewToReflectSettings();
     }
 
@@ -153,7 +145,7 @@ void SettingsMenuController::UpdateViewToReflectSettings() {
             mView.GetDragAndDropButton().SetIsSelected(true);
             break;
         case ControlType::Click:
-            mView.GetSingleTapButtonButton().SetIsSelected(true);
+            mView.GetSingleTapButton().SetIsSelected(true);
             break;
         case ControlType::Swipe:
             mView.GetSwipeButton().SetIsSelected(true);
@@ -169,12 +161,16 @@ void SettingsMenuController::UpdateViewToReflectSettings() {
     mView.SetSoundIsOn(audio.IsSoundEnabled());
     mView.SetMusicIsOn(audio.IsMusicEnabled());
     
+    mView.DeselectAllClearEffectButtons();
     switch (settingsService.GetClearRowsEffect()) {
         case ClearRowsEffect::Shrink:
-            mView.EnableShrinkClearEffect();
+            mView.GetShrinkButton().SetIsSelected(true);
             break;
-        case ClearRowsEffect::Fly:
-            mView.EnableFlyClearEffect();
+        case ClearRowsEffect::Throw:
+            mView.GetThrowButton().SetIsSelected(true);
+            break;
+        default:
+            mView.GetThrowButton().SetIsSelected(true);
             break;
     }
 }

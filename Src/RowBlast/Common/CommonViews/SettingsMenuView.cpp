@@ -13,6 +13,11 @@
 
 using namespace RowBlast;
 
+namespace {
+    constexpr auto mediumBlockOffset = 0.22f;
+    Pht::Vec2 mediumBlockSize {0.2f, 0.2f};
+}
+
 SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                    const CommonResources& commonResources,
                                    PotentiallyZoomedScreen zoom) :
@@ -27,7 +32,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
 
     SetSize(menuWindow.GetSize());
     
-    CreateText({-2.2f, 8.25f, UiLayer::text},
+    CreateText({-2.2f, 8.35f, UiLayer::text},
                "SETTINGS",
                guiResources.GetLargeWhiteTextProperties(zoom));
 
@@ -54,11 +59,11 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     auto& sceneManager = engine.GetSceneManager();
     auto& lineSceneObject =
         CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
-    lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.5f, UiLayer::textRectangle});
+    lineSceneObject.GetTransform().SetPosition({0.0f, GetSize().y / 2.0f - 2.3f, UiLayer::textRectangle});
     GetRoot().AddChild(lineSceneObject);
     
     auto& container = CreateSceneObject();
-    container.GetTransform().SetPosition({0.0f, 3.6f, 0.0f});
+    container.GetTransform().SetPosition({0.0f, 3.8f, 0.0f});
     GetRoot().AddChild(container);
     
     auto& textProperties = guiResources.GetSmallWhiteTextProperties(zoom);
@@ -189,6 +194,8 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     
     mControlsSection = &CreateSceneObject();
     GetRoot().AddChild(*mControlsSection);
+    mControlsSection->GetTransform().SetPosition({0.0f, 0.3f, 0.0f});
+    
     GuiUtils::CreateIcon(engine,
                          *this,
                          "hand.png",
@@ -292,24 +299,89 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                      controlsInputSize);
 
 
+    auto& line3SceneObject =
+        CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
+    line3SceneObject.GetTransform().SetPosition({0.0f, -8.6f, UiLayer::textRectangle});
+    container.AddChild(line3SceneObject);
 
+    auto& clearRowsEffectSection = CreateSceneObject();
+    GetRoot().AddChild(clearRowsEffectSection);
+    clearRowsEffectSection.GetTransform().SetPosition({0.0f, 0.1f, 0.0f});
+    CreateNineSmallBlocks(engine, clearRowsEffectSection, {-5.5, -5.7f, UiLayer::text});
+    CreateText({-4.8f, -5.93f, UiLayer::text},
+               "Clear Row Effect:",
+               textProperties,
+               clearRowsEffectSection);
+               
+    Pht::Vec2 clearEffectInputSize {80.0f, 80.0f};
+    auto& throwSection = CreateSceneObject();
+    throwSection.GetTransform().SetPosition({-3.9f, -8.0f, UiLayer::root});
+    clearRowsEffectSection.AddChild(throwSection);
 
+    CreateNineSmallBlocks(engine, throwSection, {0.0f, 1.0f, UiLayer::text});
+    CreateText({0.0f, -0.15f, UiLayer::text}, "Throw", centeredTextProperties, throwSection);
+    
+    mThrowButton = std::make_unique<RadioButton>(engine,
+                                                 *this,
+                                                 throwSection,
+                                                 Pht::Vec3 {0.0f, -1.0f, 0.0f},
+                                                 clearEffectInputSize);
 
-    CreateText({-4.8f, -9.53f, UiLayer::text}, "Clear Effect", textProperties, container);
+    auto& shrinkSection = CreateSceneObject();
+    shrinkSection.GetTransform().SetPosition({0.0f, -8.0f, UiLayer::root});
+    clearRowsEffectSection.AddChild(shrinkSection);
 
-    Pht::Vec3 clearEffectButtonPosition {3.45f, -9.3f, UiLayer::textRectangle};
-    mClearEffectButton = std::make_unique<MenuButton>(engine,
-                                                      *this,
-                                                      container,
-                                                      clearEffectButtonPosition,
-                                                      buttonInputSize,
-                                                      settingsButtonStyle);
-    mShrinkClearEffectText = &mClearEffectButton->CreateText({-0.7f, -0.23f, UiLayer::buttonText},
-                                                             "Shrink",
-                                                             buttonTextProperties).GetSceneObject();
-    mFlyClearEffectText = &mClearEffectButton->CreateText({-0.05f, -0.23f, UiLayer::buttonText},
-                                                          "Fly",
-                                                          buttonTextProperties).GetSceneObject();
+    CreateNineSmallBlocks(engine, shrinkSection, {0.0f, 1.0f, UiLayer::text});
+    CreateText({0.0f, -0.15f, UiLayer::text}, "Shrink", centeredTextProperties, shrinkSection);
+    
+    mShrinkButton = std::make_unique<RadioButton>(engine,
+                                                  *this,
+                                                  shrinkSection,
+                                                  Pht::Vec3 {0.0f, -1.0f, 0.0f},
+                                                  clearEffectInputSize);
+}
+
+void SettingsMenuView::CreateNineSmallBlocks(Pht::IEngine& engine,
+                                             Pht::SceneObject& parent,
+                                             const Pht::Vec3& position) {
+    auto& iconContainer = CreateSceneObject();
+    parent.AddChild(iconContainer);
+
+    CreateThreeSmallBlocks(engine, iconContainer, {0.0f, mediumBlockOffset, 0.0f});
+    CreateThreeSmallBlocks(engine, iconContainer, {0.0f, 0.0f, 0.0f});
+    CreateThreeSmallBlocks(engine, iconContainer, {0.0f, -mediumBlockOffset, 0.0f});
+
+    auto& transform = iconContainer.GetTransform();
+    transform.SetPosition(position);
+}
+
+void SettingsMenuView::CreateThreeSmallBlocks(Pht::IEngine& engine,
+                                              Pht::SceneObject& parent,
+                                              const Pht::Vec3& position) {
+    auto& iconContainer = CreateSceneObject();
+    parent.AddChild(iconContainer);
+    
+    GuiUtils::CreateIcon(engine,
+                         *this,
+                         "block.png",
+                         {-mediumBlockOffset, 0.0f, 0.0f},
+                         mediumBlockSize,
+                         iconContainer);
+    GuiUtils::CreateIcon(engine,
+                         *this,
+                         "block.png",
+                         {0.0f, 0.0f, 0.0f},
+                         mediumBlockSize,
+                         iconContainer);
+    GuiUtils::CreateIcon(engine,
+                         *this,
+                         "block.png",
+                         {mediumBlockOffset, 0.0f, 0.0f},
+                         mediumBlockSize,
+                         iconContainer);
+
+    auto& transform = iconContainer.GetTransform();
+    transform.SetPosition(position);
 }
 
 void SettingsMenuView::CreateLPieceIcon(Pht::IEngine& engine,
@@ -446,18 +518,13 @@ void SettingsMenuView::SetGhostPieceOffIsVisible(bool isVisible) {
     mGhostPieceDisabledIcon->SetIsVisible(isVisible);
 }
 
-void SettingsMenuView::EnableFlyClearEffect() {
-    mFlyClearEffectText->SetIsVisible(true);
-    mShrinkClearEffectText->SetIsVisible(false);
-}
-
-void SettingsMenuView::EnableShrinkClearEffect() {
-    mShrinkClearEffectText->SetIsVisible(true);
-    mFlyClearEffectText->SetIsVisible(false);
-}
-
 void SettingsMenuView::DeselectAllControlButtons() {
     mDragAndDropButton->SetIsSelected(false);
     mSwipeButton->SetIsSelected(false);
     mSingleTapButton->SetIsSelected(false);
+}
+
+void SettingsMenuView::DeselectAllClearEffectButtons() {
+    mThrowButton->SetIsSelected(false);
+    mShrinkButton->SetIsSelected(false);
 }
