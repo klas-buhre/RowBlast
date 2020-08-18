@@ -78,6 +78,17 @@ namespace RowBlast {
         }
 
     private:
+        void CreateThrowIcon(Pht::IEngine& engine,
+                             Pht::SceneObject& parent,
+                             const Pht::Vec3& position);
+        void CreateShrinkIcon(Pht::IEngine& engine,
+                              Pht::SceneObject& parent,
+                              const Pht::Vec3& position);
+        void CreateBlock(Pht::IEngine& engine,
+                         Pht::SceneObject& parent,
+                         const Pht::Vec3& position,
+                         const Pht::Vec2& size,
+                         float rotation);
         void CreateNineSmallBlocks(Pht::IEngine& engine,
                                    Pht::SceneObject& parent,
                                    const Pht::Vec3& position);

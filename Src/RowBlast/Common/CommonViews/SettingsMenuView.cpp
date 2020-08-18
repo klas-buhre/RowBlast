@@ -14,8 +14,8 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto mediumBlockOffset = 0.22f;
-    Pht::Vec2 mediumBlockSize {0.2f, 0.2f};
+    constexpr auto mediumBlockOffset = 0.28f;
+    Pht::Vec2 mediumBlockSize {0.26f, 0.26f};
 }
 
 SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
@@ -194,7 +194,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     
     mControlsSection = &CreateSceneObject();
     GetRoot().AddChild(*mControlsSection);
-    mControlsSection->GetTransform().SetPosition({0.0f, 0.3f, 0.0f});
+    mControlsSection->GetTransform().SetPosition({0.0f, 0.5f, 0.0f});
     
     GuiUtils::CreateIcon(engine,
                          *this,
@@ -301,12 +301,12 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
 
     auto& line3SceneObject =
         CreateSceneObject(Pht::QuadMesh {GetSize().x - 1.5f, 0.06f}, lineMaterial, sceneManager);
-    line3SceneObject.GetTransform().SetPosition({0.0f, -8.6f, UiLayer::textRectangle});
+    line3SceneObject.GetTransform().SetPosition({0.0f, -8.4f, UiLayer::textRectangle});
     container.AddChild(line3SceneObject);
 
     auto& clearRowsEffectSection = CreateSceneObject();
     GetRoot().AddChild(clearRowsEffectSection);
-    clearRowsEffectSection.GetTransform().SetPosition({0.0f, 0.1f, 0.0f});
+    clearRowsEffectSection.GetTransform().SetPosition({0.0f, 0.3f, 0.0f});
     CreateNineSmallBlocks(engine, clearRowsEffectSection, {-5.5, -5.7f, UiLayer::text});
     CreateText({-4.8f, -5.93f, UiLayer::text},
                "Clear Row Effect:",
@@ -318,7 +318,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     throwSection.GetTransform().SetPosition({-3.9f, -8.0f, UiLayer::root});
     clearRowsEffectSection.AddChild(throwSection);
 
-    CreateNineSmallBlocks(engine, throwSection, {0.0f, 1.0f, UiLayer::text});
+    CreateThrowIcon(engine, throwSection, {0.0f, 1.0f, UiLayer::text});
     CreateText({0.0f, -0.15f, UiLayer::text}, "Throw", centeredTextProperties, throwSection);
     
     mThrowButton = std::make_unique<RadioButton>(engine,
@@ -331,7 +331,7 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
     shrinkSection.GetTransform().SetPosition({0.0f, -8.0f, UiLayer::root});
     clearRowsEffectSection.AddChild(shrinkSection);
 
-    CreateNineSmallBlocks(engine, shrinkSection, {0.0f, 1.0f, UiLayer::text});
+    CreateShrinkIcon(engine, shrinkSection, {0.0f, 1.0f, UiLayer::text});
     CreateText({0.0f, -0.15f, UiLayer::text}, "Shrink", centeredTextProperties, shrinkSection);
     
     mShrinkButton = std::make_unique<RadioButton>(engine,
@@ -339,6 +339,79 @@ SettingsMenuView::SettingsMenuView(Pht::IEngine& engine,
                                                   shrinkSection,
                                                   Pht::Vec3 {0.0f, -1.0f, 0.0f},
                                                   clearEffectInputSize);
+}
+
+void SettingsMenuView::CreateThrowIcon(Pht::IEngine& engine,
+                                       Pht::SceneObject& parent,
+                                       const Pht::Vec3& position) {
+    auto& iconContainer = CreateSceneObject();
+    parent.AddChild(iconContainer);
+
+    CreateThreeSmallBlocks(engine, iconContainer, {0.0f, mediumBlockOffset, 0.0f});
+    CreateBlock(engine,
+                iconContainer,
+                {-mediumBlockOffset, 0.0f, UiLayer::buttonText},
+                mediumBlockSize,
+                20.0f);
+    CreateBlock(engine,
+                iconContainer,
+                {0.0f, -mediumBlockOffset / 4.0f, UiLayer::buttonText},
+                mediumBlockSize,
+                40.0f);
+    CreateBlock(engine,
+                iconContainer,
+                {mediumBlockOffset, -mediumBlockOffset / 2.0f, UiLayer::buttonText},
+                mediumBlockSize,
+                60.0f);
+    CreateThreeSmallBlocks(engine, iconContainer, {0.0f, -mediumBlockOffset, 0.0f});
+
+    auto& transform = iconContainer.GetTransform();
+    transform.SetPosition(position);
+}
+
+void SettingsMenuView::CreateShrinkIcon(Pht::IEngine& engine,
+                                       Pht::SceneObject& parent,
+                                       const Pht::Vec3& position) {
+    auto& iconContainer = CreateSceneObject();
+    parent.AddChild(iconContainer);
+
+    CreateThreeSmallBlocks(engine, iconContainer, {0.0f, mediumBlockOffset, 0.0f});
+    CreateBlock(engine,
+                iconContainer,
+                {-mediumBlockOffset, 0.0f, UiLayer::buttonText},
+                mediumBlockSize / 1.5f,
+                20.0f);
+    CreateBlock(engine,
+                iconContainer,
+                {0.0f, 0.0f, UiLayer::buttonText},
+                mediumBlockSize / 2.0f,
+                40.0f);
+    CreateBlock(engine,
+                iconContainer,
+                {mediumBlockOffset, 0.0f, UiLayer::buttonText},
+                mediumBlockSize / 4.0f,
+                60.0f);
+    CreateThreeSmallBlocks(engine, iconContainer, {0.0f, -mediumBlockOffset, 0.0f});
+
+    auto& transform = iconContainer.GetTransform();
+    transform.SetPosition(position);
+}
+
+void SettingsMenuView::CreateBlock(Pht::IEngine& engine,
+                                   Pht::SceneObject& parent,
+                                   const Pht::Vec3& position,
+                                   const Pht::Vec2& size,
+                                   float rotation) {
+    auto& block = GuiUtils::CreateIconWithShadow(engine,
+                                                 GetSceneResources(),
+                                                 "block.png",
+                                                 position,
+                                                 size,
+                                                 parent,
+                                                 {0.95f, 0.95f, 0.95f, 1.0f},
+                                                 Pht::Vec4{0.2f, 0.2f, 0.2f, 0.75f},
+                                                 Pht::Vec3{-0.05f, -0.05f, UiLayer::textShadow});
+    block.GetTransform().SetRotation({0.0f, 0.0f, rotation});
 }
 
 void SettingsMenuView::CreateNineSmallBlocks(Pht::IEngine& engine,
