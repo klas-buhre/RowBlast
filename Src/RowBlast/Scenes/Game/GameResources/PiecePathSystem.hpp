@@ -59,7 +59,6 @@ namespace RowBlast {
         void SetSnapshotCell(int row, int column, Fill pieceSubCellFill);
         void SetSnapshotCellMovingSideways(int row, int column, Fill pieceSubCellFill);
         void ClearGrid();
-        void ClearBlastArea(const Pht::IVec2& position);
         void UpdateSceneObjects();
         Pht::RenderableObject& GetRenderableObject(Fill fill, BlockColor color, int visibleRow);
         int CalcRenderableIndex(Fill fill, BlockColor color, int visibleRow) const;

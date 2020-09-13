@@ -44,8 +44,13 @@ Backlog:
      mostly be the target audience and in the playtest they are not.
 
 Ongoing tasks:
+    -Fix bug in the last mail.
     -Try to post on indie-dev forums, for example reddit.
-    -Figure out why some levels in the progress information is missing on gameanalytics.com.
+        -Posted on flashback.org.
+        -Tried to post on r/puzzlevideogames but it does not show. Have contacted moderators to get
+         help.
+        -Post in the other subreddits that I tried a few months back.
+        
     -Consider introducing lasers and bombs earlier to make it a more compact tutorial. Maybe
      tutorial up to level 5 or 6, and those levels have only retry button. And maybe make some of
      the earlier a bit simpler (?) to reduce churn.
@@ -67,7 +72,6 @@ Ongoing tasks:
 
   Plan:
     -Major user stories:
-        -Purchasing                                                                 ~1 week
         -Haptic feedback?                                                           ~1 week
         -Items in the next release (match-3)                                        ~1-2 weeks
         -Interacting with publishers                                                ~1 week

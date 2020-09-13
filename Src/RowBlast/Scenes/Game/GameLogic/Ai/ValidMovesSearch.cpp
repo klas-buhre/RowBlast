@@ -687,17 +687,17 @@ void ValidMovesSearch::FindRemainingValidMovesConnectedToValidArea(ValidMoves& v
                                                                    MovingPiece piece) {
     auto numRotations = piece.mPieceType.GetNumRotations();
     auto rowBegin = piece.mPosition.y;
-    auto lowestVisibleRow = mField.GetLowestVisibleRow();
 
     for (auto rotation = 0; rotation < numRotations; ++rotation) {
         auto& pieceDimensions = piece.mPieceType.GetDimensions(piece.mRotation);
         auto columnBegin = -pieceDimensions.mXmin;
         auto columnEnd = mField.GetNumColumns() - pieceDimensions.mXmax;
+        auto lowestRow = mField.GetLowestVisibleRow() - pieceDimensions.mYmin;
         
         for (auto column = columnBegin; column < columnEnd; ++column) {
             piece.mPosition.x = column;
             
-            for (auto row = rowBegin; row >= lowestVisibleRow;) {
+            for (auto row = rowBegin; row >= lowestRow;) {
                 piece.mPosition.y = row;
                 
                 if (!IsCollision(piece, false)) {

@@ -159,15 +159,7 @@ void PiecePathSystem::ShowPath(const FallingPiece& fallingPiece,
         MovingPieceSnapshot finalSnapshot {finalPosition, lastMovement.GetRotation(), pieceType};
         PaintPieceSnapshot(finalSnapshot, SnapshotKind::Clear);
     }
-/*
-    auto& pieceType = fallingPiece.GetPieceType();
-    if (pieceType.IsBomb()) {
-        ClearBlastArea(finalPosition - Pht::IVec2{1, 1});
-    } else if (!pieceType.IsRowBomb()) {
-        MovingPieceSnapshot finalSnapshot {finalPosition, lastMovement.GetRotation(), pieceType};
-        PaintPieceSnapshot(finalSnapshot, SnapshotKind::Clear);
-    }
-*/
+
     UpdateSceneObjects();
 }
 
@@ -269,6 +261,10 @@ void PiecePathSystem::PaintPieceSnapshot(const MovingPieceSnapshot& movingPiece,
             auto row = piecePosition.y + pieceRow;
             auto column = piecePosition.x + pieceColumn;
             
+            if (row < 0) {
+                continue;
+            }
+            
             switch (snapshotKind) {
                 case SnapshotKind::Standard:
                     SetSnapshotCell(row, column, pieceSubCellFill);
@@ -364,26 +360,6 @@ void PiecePathSystem::SetSnapshotCell(int row, int column, Fill pieceSubCellFill
 void PiecePathSystem::SetSnapshotCellMovingSideways(int row, int column, Fill pieceSubCellFill) {
     if (pieceSubCellFill != Fill::Empty) {
         mPathGrid[row][column] = Fill::Full;
-    }
-}
-
-void PiecePathSystem::ClearBlastArea(const Pht::IVec2& position) {
-    const auto numRows = 5;
-    const auto numColumns = 5;
-    
-    for (auto areaRow = 0; areaRow < numRows; ++areaRow) {
-        auto isFirstOrLastRow = (areaRow == 0 || areaRow == numRows - 1);
-        auto columnBegin = isFirstOrLastRow ? 1 : 0;
-        auto columnEnd = isFirstOrLastRow ? numColumns - 1 : numColumns;
-        for (auto areaColumn = columnBegin; areaColumn < columnEnd; ++areaColumn) {
-            auto row = position.y + areaRow;
-            auto column = position.x + areaColumn;
-            if (row < 0 || row >= mNumRows || column < 0 || column >= mNumColumns) {
-                continue;
-            }
-            
-            mPathGrid[row][column] = Fill::Empty;
-        }
     }
 }
 
@@ -576,6 +552,10 @@ int PiecePathSystem::CalcRenderableIndex(Fill fill, BlockColor color, int visibl
     
     if (visibleRow > Field::maxNumRows) {
         visibleRow = Field::maxNumRows - 1;
+    }
+    
+    if (visibleRow < 0) {
+        visibleRow = 0;
     }
     
     assert(fillIndex >= 0 && fillIndex < numFillRenderables &&
