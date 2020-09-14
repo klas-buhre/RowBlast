@@ -44,16 +44,14 @@ Backlog:
      mostly be the target audience and in the playtest they are not.
 
 Ongoing tasks:
-    -Fix bug in the last mail.
+    -Consider introducing lasers and bombs earlier to make it a more compact tutorial. Maybe
+     tutorial up to level 5 or 6, and those levels have only retry button. And maybe make some of
+     the earlier a bit simpler (?) to reduce churn.
     -Try to post on indie-dev forums, for example reddit.
         -Posted on flashback.org.
         -Tried to post on r/puzzlevideogames but it does not show. Have contacted moderators to get
          help.
         -Post in the other subreddits that I tried a few months back.
-        
-    -Consider introducing lasers and bombs earlier to make it a more compact tutorial. Maybe
-     tutorial up to level 5 or 6, and those levels have only retry button. And maybe make some of
-     the earlier a bit simpler (?) to reduce churn.
     -Purchasing
         -Dialogs:
             -No internet connection.    Special icon.   [OK]
