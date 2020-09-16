@@ -33,7 +33,7 @@ Backlog:
      in a similar way as the SlidingFieldAnimation.
     -Animation that moves the pause button out of the screen.
   -Make ready for release:
-    -Maybe only one or two continues per game round? Like in Dr. Mario.
+    -Add version number in credits.txt.
     -Go through all user services and check that all state store/load is enabled.
     -Make sure analytics is enabled and that user terms accept is saved and checked.
     -Make sure analytics debug log is disabled.
@@ -44,6 +44,7 @@ Backlog:
      mostly be the target audience and in the playtest they are not.
 
 Ongoing tasks:
+    -Investigate the requirement that the user must approve idfa usage.
     -Consider introducing lasers and bombs earlier to make it a more compact tutorial. Maybe
      tutorial up to level 5 or 6, and those levels have only retry button. And maybe make some of
      the earlier a bit simpler (?) to reduce churn.
