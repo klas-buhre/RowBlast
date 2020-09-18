@@ -45,6 +45,7 @@
 		1752257C24BE1EB80002BE3E /* PurchaseSuccessfulDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752257324BE1EB80002BE3E /* PurchaseSuccessfulDialogView.cpp */; };
 		1752257D24BE1EB80002BE3E /* PurchaseCanceledDialogView.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752257424BE1EB80002BE3E /* PurchaseCanceledDialogView.cpp */; };
 		1752257E24BE1EB80002BE3E /* PurchaseSuccessfulDialogController.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1752257524BE1EB80002BE3E /* PurchaseSuccessfulDialogController.cpp */; };
+		1755A4362515251100C51668 /* libGameAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1755A4342515251100C51668 /* libGameAnalytics.a */; };
 		175BE1182379E9420049DF16 /* terrain1_4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 175BE1172379E9410049DF16 /* terrain1_4.jpg */; };
 		175BE129237C69B00049DF16 /* Terrain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 175BE127237C69AF0049DF16 /* Terrain.cpp */; };
 		1766C7442360CF0300C8E355 /* triangle_320.obj in Resources */ = {isa = PBXBuildFile; fileRef = 1766C7432360CF0300C8E355 /* triangle_320.obj */; };
@@ -78,7 +79,6 @@
 		17B8DBF424BF7C5A007AFDBB /* NetworkConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 17B8DBF224BF7C59007AFDBB /* NetworkConnection.m */; };
 		17D7AADF23A4F9A200C07ECE /* PiecePathSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 17D7AADD23A4F9A200C07ECE /* PiecePathSystem.cpp */; };
 		17DD46F6234D03ED00786C63 /* rotate.png in Resources */ = {isa = PBXBuildFile; fileRef = 17DD46F5234D03EC00786C63 /* rotate.png */; };
-		17DE663422DB4703009B3E78 /* libGameAnalytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 17DE663322DB4703009B3E78 /* libGameAnalytics.a */; };
 		17E53FC9235E169E005B91E0 /* cube_428.obj in Resources */ = {isa = PBXBuildFile; fileRef = 17E53FC8235E169E005B91E0 /* cube_428.obj */; };
 		17F21FF02389BF63009C37D3 /* TextTopGradient.frag in Resources */ = {isa = PBXBuildFile; fileRef = 17F21FEE2389BF62009C37D3 /* TextTopGradient.frag */; };
 		17F21FF12389BF63009C37D3 /* TextTopGradient.vert in Resources */ = {isa = PBXBuildFile; fileRef = 17F21FEF2389BF62009C37D3 /* TextTopGradient.vert */; };
@@ -646,6 +646,8 @@
 		1752257324BE1EB80002BE3E /* PurchaseSuccessfulDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseSuccessfulDialogView.cpp; sourceTree = "<group>"; };
 		1752257424BE1EB80002BE3E /* PurchaseCanceledDialogView.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseCanceledDialogView.cpp; sourceTree = "<group>"; };
 		1752257524BE1EB80002BE3E /* PurchaseSuccessfulDialogController.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PurchaseSuccessfulDialogController.cpp; sourceTree = "<group>"; };
+		1755A4342515251100C51668 /* libGameAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGameAnalytics.a; sourceTree = "<group>"; };
+		1755A4352515251100C51668 /* GameAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameAnalytics.h; sourceTree = "<group>"; };
 		175BE1172379E9410049DF16 /* terrain1_4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = terrain1_4.jpg; sourceTree = "<group>"; };
 		175BE127237C69AF0049DF16 /* Terrain.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Terrain.cpp; sourceTree = "<group>"; };
 		175BE128237C69AF0049DF16 /* Terrain.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Terrain.hpp; sourceTree = "<group>"; };
@@ -697,8 +699,6 @@
 		17D7AADD23A4F9A200C07ECE /* PiecePathSystem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = PiecePathSystem.cpp; sourceTree = "<group>"; };
 		17D7AADE23A4F9A200C07ECE /* PiecePathSystem.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = PiecePathSystem.hpp; sourceTree = "<group>"; };
 		17DD46F5234D03EC00786C63 /* rotate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rotate.png; sourceTree = "<group>"; };
-		17DE663222DB4703009B3E78 /* GameAnalytics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameAnalytics.h; sourceTree = "<group>"; };
-		17DE663322DB4703009B3E78 /* libGameAnalytics.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGameAnalytics.a; sourceTree = "<group>"; };
 		17E53FC8235E169E005B91E0 /* cube_428.obj */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = cube_428.obj; sourceTree = "<group>"; };
 		17F21FEE2389BF62009C37D3 /* TextTopGradient.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextTopGradient.frag; sourceTree = "<group>"; };
 		17F21FEF2389BF62009C37D3 /* TextTopGradient.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = TextTopGradient.vert; sourceTree = "<group>"; };
@@ -1606,11 +1606,11 @@
 				620A981D1EE2A3B400AD6C61 /* AVFoundation.framework in Frameworks */,
 				625698572182392C003A3A9D /* libfreetype.a in Frameworks */,
 				62411A971E61E62800035D2A /* GLKit.framework in Frameworks */,
-				17DE663422DB4703009B3E78 /* libGameAnalytics.a in Frameworks */,
 				1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */,
 				1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */,
 				288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */,
 				1752255124B73E140002BE3E /* StoreKit.framework in Frameworks */,
+				1755A4362515251100C51668 /* libGameAnalytics.a in Frameworks */,
 				4D27E4840F9AD71900447247 /* OpenGLES.framework in Frameworks */,
 				4D27E4B50F9AD7D600447247 /* QuartzCore.framework in Frameworks */,
 			);
@@ -2558,8 +2558,8 @@
 		623B949F21F4826E00B62D9B /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				17DE663222DB4703009B3E78 /* GameAnalytics.h */,
-				17DE663322DB4703009B3E78 /* libGameAnalytics.a */,
+				1755A4352515251100C51668 /* GameAnalytics.h */,
+				1755A4342515251100C51668 /* libGameAnalytics.a */,
 			);
 			path = iOS;
 			sourceTree = "<group>";

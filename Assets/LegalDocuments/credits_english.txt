@@ -9,9 +9,6 @@ TheCoffeeDrinker
 GAME PROGRAMMING
 TheCoffeeDrinker
 
-SPECIAL THANKS TO
-qubit
-
 
 
 THIRD-PARTY LICENSES
