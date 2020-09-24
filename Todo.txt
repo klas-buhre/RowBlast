@@ -44,19 +44,7 @@ Backlog:
      mostly be the target audience and in the playtest they are not.
 
 Ongoing tasks:
-    -Lifes:
-        -Tune the life refreash rate.
-            -Dr Mario: 30 min.
-            -Bubble Witch: 30 min.
-            -Candy Crush: 30 min.
-            -Candy Crush Soda: 30 min.
-            -Candy Crush Friends: 30 min.
-            -Toy Blast: 30 min.
-            -Diamond Diaries: 7 min 30 seconds.
-            -Diamond Digger: 10 min.
-            -BT21 Puzzle Star: 30 min.
-            -Dream Blast: 15 min.
-            -Toon Blast: 30 min.
+    -Reduce wait time in the tutorial animation dialogs.
     -Try to track with analytics at which level more moves were bought.
     -Consider introducing lasers and bombs earlier to make it a more compact tutorial. Maybe
      tutorial up to level 5 or 6, and those levels have only retry button. And maybe make some of
@@ -464,6 +452,23 @@ Comomon piece type sets:
         Green           18.0
         Blue            27.5
         Yellow          15.0
+
+
+
+Life refreash rate:
+    -Dr Mario: 30 min.
+    -Bubble Witch: 30 min.
+    -Candy Crush: 30 min.
+    -Candy Crush Soda: 30 min.
+    -Candy Crush Friends: 30 min.
+    -Toy Blast: 30 min.
+    -Alpha Betty: 15 min.
+    -Diamond Diaries: 7 min 30 seconds.
+    -Diamond Digger: 10 min.
+    -BT21 Puzzle Star: 30 min.
+    -Dream Blast: 15 min.
+    -Toon Blast: 30 min.
+
 
 
 Decision notes on level bombs:
