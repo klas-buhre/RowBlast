@@ -44,9 +44,26 @@ Backlog:
      mostly be the target audience and in the playtest they are not.
 
 Ongoing tasks:
+    -Lifes:
+        -Tune the life refreash rate.
+            -Dr Mario: 30 min.
+            -Bubble Witch: 30 min.
+            -Candy Crush: 30 min.
+            -Candy Crush Soda: 30 min.
+            -Candy Crush Friends: 30 min.
+            -Toy Blast: 30 min.
+            -Diamond Diaries: 7 min 30 seconds.
+            -Diamond Digger: 10 min.
+            -BT21 Puzzle Star: 30 min.
+            -Dream Blast: 15 min.
+            -Toon Blast: 30 min.
+    -Try to track with analytics at which level more moves were bought.
     -Consider introducing lasers and bombs earlier to make it a more compact tutorial. Maybe
      tutorial up to level 5 or 6, and those levels have only retry button. And maybe make some of
      the earlier a bit simpler (?) to reduce churn.
+        -In Dr Mario:
+            -Level row bombs introduced in level 6.
+            -Level bombs are introduced in level 8.
     -Try to post on indie-dev forums, for example reddit.
         -Posted on flashback.org.
         -Tried to post on r/puzzlevideogames but it does not show. Have contacted moderators to get

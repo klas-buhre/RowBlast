@@ -1167,10 +1167,13 @@ bool Tutorial::IsUndoMoveAllowed(int numMovesUsedIncludingCurrent) const {
         case 1:
             return false;
         case 2:
-            if (numMovesUsedIncludingCurrent >= 4) {
-                return true;
+            if (mUserServices.GetSettingsService().GetControlType() == ControlType::Click) {
+                if (numMovesUsedIncludingCurrent >= 4) {
+                    return true;
+                }
+                return false;
             }
-            return false;
+            return true;
         default:
             return true;
     }
