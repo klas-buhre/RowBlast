@@ -97,9 +97,11 @@ namespace Pht {
     
     class CustomAnalyticsEvent: public AnalyticsEvent {
     public:
-        CustomAnalyticsEvent(const std::string& id);
+        CustomAnalyticsEvent(const std::string& id,
+                             Pht::Optional<int> value = Pht::Optional<int> {});
         
         std::string mId;
+        Pht::Optional<int> mValue;
     };
 }
 

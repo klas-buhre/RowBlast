@@ -760,9 +760,7 @@ void GameController::AddMovesAndGoToPlayingState() {
     mUserServices.GetPurchasingService().WithdrawCoins(CoinWithdrawReason::AddMoves);
     mGameLogic.OnPurchasedMoreMoves();
     
-    Pht::CustomAnalyticsEvent analyticsEvent {
-        "Purchases:BoughtMoves:Level" + std::to_string(mLevel->GetId())
-    };
+    Pht::CustomAnalyticsEvent analyticsEvent {"BoughtMoves", mLevel->GetId()};
     mEngine.GetAnalytics().AddEvent(analyticsEvent);
     
     mAddingMovesAnimation.Start();

@@ -45,7 +45,6 @@ Backlog:
 
 Ongoing tasks:
     -Reduce wait time in the tutorial animation dialogs.
-    -Try to track with analytics at which level more moves were bought.
     -Consider introducing lasers and bombs earlier to make it a more compact tutorial. Maybe
      tutorial up to level 5 or 6, and those levels have only retry button. And maybe make some of
      the earlier a bit simpler (?) to reduce churn.

@@ -135,7 +135,12 @@ namespace {
         }
         
         void AddCustomEvent(const CustomAnalyticsEvent& event) {
-            [GameAnalytics addDesignEventWithEventId:[NSString stringWithUTF8String:event.mId.c_str()]];
+            if (event.mValue.HasValue()) {
+                [GameAnalytics addDesignEventWithEventId:[NSString stringWithUTF8String:event.mId.c_str()]
+                               value:@(event.mValue.GetValue())];
+            } else {
+                [GameAnalytics addDesignEventWithEventId:[NSString stringWithUTF8String:event.mId.c_str()]];
+            }
         }
     };
 }
