@@ -60,7 +60,7 @@ namespace RowBlast {
         }
         
         static constexpr auto addMovesPriceInCoins = 10;
-        static constexpr auto refillLivesPriceInCoins = 12;
+        static constexpr auto refillLivesPriceInCoins = 9;
         
     private:
         void UpdateInFetchingProductsState();

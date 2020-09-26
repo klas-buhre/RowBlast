@@ -44,6 +44,7 @@ Backlog:
      mostly be the target audience and in the playtest they are not.
 
 Ongoing tasks:
+    -Trim gold coin products (how many gold coins each product should be). Compare with other games.
     -Reduce wait time in the tutorial animation dialogs.
     -Consider introducing lasers and bombs earlier to make it a more compact tutorial. Maybe
      tutorial up to level 5 or 6, and those levels have only retry button. And maybe make some of
@@ -454,19 +455,20 @@ Comomon piece type sets:
 
 
 
-Life refreash rate:
-    -Dr Mario: 30 min.
-    -Bubble Witch: 30 min.
+Life refreash rate:                         Cost to refill lifes:
+    -Dr Mario: 30 min.                      12 gold bars
+    -Bubble Witch 3: 30 min.                12 gold bars
     -Candy Crush: 30 min.
     -Candy Crush Soda: 30 min.
     -Candy Crush Friends: 30 min.
     -Toy Blast: 30 min.
-    -Alpha Betty: 15 min.
-    -Diamond Diaries: 7 min 30 seconds.
-    -Diamond Digger: 10 min.
-    -BT21 Puzzle Star: 30 min.
-    -Dream Blast: 15 min.
-    -Toon Blast: 30 min.
+    -Alpha Betty: 15 min.                   9 gold bars (10 gold bars cost 12 kr)
+    -Diamond Diaries: 7 min 30 seconds.     9 gold bars (15 gold bars cost 25 kr)
+    -Diamond Digger: 10 min.                12 gold bars (10 gold bars cost 12 kr)
+    -Pet Rescue: 5 min.                     9 gold bars (9 gold bars cost 12 kr)
+    -BT21 Puzzle Star: 30 min.              9 rubies (25 rubies cost 25 kr)
+    -Dream Blast: 15 min.                   50 coins (150 coins cost 25 kr)
+    -Toon Blast: 30 min.                    100 coins (150 coins cost 25 kr)
 
 
 
