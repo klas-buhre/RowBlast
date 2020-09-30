@@ -44,8 +44,7 @@ Backlog:
      mostly be the target audience and in the playtest they are not.
 
 Ongoing tasks:
-    -Trim gold coin products (how many gold coins each product should be). Compare with other games.
-    -Reduce wait time in the tutorial animation dialogs.
+    -Tune gold coin products (how many gold coins each product should be). Compare with other games.
     -Consider introducing lasers and bombs earlier to make it a more compact tutorial. Maybe
      tutorial up to level 5 or 6, and those levels have only retry button. And maybe make some of
      the earlier a bit simpler (?) to reduce churn.

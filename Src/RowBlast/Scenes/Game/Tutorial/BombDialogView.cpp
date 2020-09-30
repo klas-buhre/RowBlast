@@ -20,13 +20,15 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto animationDuration = 3.5f;
-    constexpr auto clickMoveTime = 1.5f;
+    constexpr auto t = 0.69f;
+    constexpr auto animationDuration = 3.5f - t;
+    constexpr auto clickMoveTime = 1.5f - t;
+    constexpr auto bombPosition2Time = 1.65f - t;
+    constexpr auto detonationTime = 1.95f - t;
+    constexpr auto beginSwipeRightTime = 1.2f - t;
+    constexpr auto beginSwipeDownTime = 1.5f - t;
+    
     constexpr auto clickMoveDuration = 0.5f;
-    constexpr auto bombPosition2Time = 1.65f;
-    constexpr auto detonationTime = 1.95f;
-    constexpr auto beginSwipeRightTime = 1.0f;
-    constexpr auto beginSwipeDownTime = 1.5f;
     constexpr auto blockFlyDuration = 0.5f;
 }
 
