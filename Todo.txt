@@ -44,6 +44,16 @@ Backlog:
      mostly be the target audience and in the playtest they are not.
 
 Ongoing tasks:
+    -App purchases don't work anymore. Just receives unknown error. Does not even work when logged
+     in to another sanbox account. Mybe it has something to do with that I used the first snadbox
+     account (klas.buhre911.@gmail.com) to log into iOS on the Simulator?
+    -Localized priceds are not formatted correctly. Pound (£) becomes an L. Also, £ is in the
+     extended ASCII range so it is not present in the font. Euro is not even in the ASCII table so
+     another solution is needed. Prepend images of £ and € or add support for unicode and use a
+     unicode font for prices.
+    -Try to test in the simulator different locales to see that the prices and correncies format ok.
+    -Restore level 8 to former glory.
+    -Decide default clear row effect.
     -Tune gold coin products (how many gold coins each product should be). Compare with other games.
     -Consider introducing lasers and bombs earlier to make it a more compact tutorial. Maybe
      tutorial up to level 5 or 6, and those levels have only retry button. And maybe make some of
