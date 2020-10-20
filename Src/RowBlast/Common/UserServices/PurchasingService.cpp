@@ -12,7 +12,7 @@
 using namespace RowBlast;
 
 namespace {
-    constexpr auto fetchProductsTimeout = 10.0f;
+    constexpr auto fetchProductsTimeout = 20.0f;
     constexpr auto coinBalanceAtFirstLaunch = 50;
     constexpr auto maxCoinBalance = 99500;
     const std::string filename {"purchasing.dat"};
